@@ -1,79 +1,1142 @@
-<!-- ==================== MODULE: REWINDING INSPECTION ==================== -->
-<div class="app-viewport">
-  <div id="rwPageInit" class="auth-card">
-    <h2>📋 DATA ORDER - MOTOR REWINDING</h2>
-    <div id="rwInitAlert" class="alert-banner">Isikan semua baris dengan benar!</div>
-    <div class="form-group"><label>Brand Motor *</label><input type="text" id="rwInitBrand" class="form-control"></div>
-    <div class="form-group"><label>Type / Model *</label><input type="text" id="rwInitType" class="form-control"></div>
-    <div class="form-group"><label>Power (kW) *</label><input type="text" id="rwInitPower" class="form-control"></div>
-    <div class="form-group"><label>Nama Customer *</label><input type="text" id="rwInitCustomer" class="form-control"></div>
-    <div class="form-group"><label>No. SO *</label><input type="text" id="rwInitNoSO" class="form-control"></div>
-    <div class="form-group"><label>Tanggal *</label><input type="date" id="rwInitDate" class="form-control"></div>
-    <div class="form-group"><label>Nama Operator *</label><input type="text" id="rwInitOperator" class="form-control"></div>
-    <div class="form-group"><label>Nama Supervisor *</label><input type="text" id="rwInitSupervisor" class="form-control"></div>
-    <button type="button" class="btn-submit" style="background-color:#28a745;" onclick="rwProcessInitData()">MULAI INSPEKSI 🚀</button>
-    <button type="button" class="btn-back-home" onclick="resetToHome()">🏠 Kembali ke Home</button>
-  </div>
-  <div id="rwMainSystem" class="main-system">
-    <div class="tab-container">
-      <button class="nav-btn-home" onclick="resetToHome()">🏠 Home</button>
-      <button class="tab-btn active" onclick="rwSwitchTab('inspeksi', this)">Inspeksi</button>
-      <button class="tab-btn" onclick="rwSwitchTab('laporan', this)">Laporan</button>
-    </div>
-    <div id="tab-inspeksi" class="tab-content active">
-      <div class="sheet">
-        <table class="header-table">
-          <tr><td style="width: 120px;"><img src="logo-intidaya.jpg" style="max-height: 45px;"></td><td class="title-header">MOTOR REWINDING - INSPEKSI</td><td style="width: 120px;"><img src="logo-iso.jpg" style="max-height: 45px;"></td></tr>
-        </table>
-        <p style="padding: 10px; background: #f8fafc; border-radius: 4px;">ℹ️ Modul REWINDING sedang dalam tahap pengembangan.</p>
-        <button type="button" class="btn-action" onclick="rwOpenReview()">🔍 Preview</button>
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inspeksi & Analisa Rewinding Motor - PT Intidaya Dinamika Sejati</title>
+  <link rel="stylesheet" href="../css/shared.css">
+  <style>
+    * { box-sizing: border-box; font-family: 'Segoe UI', Arial, sans-serif; }
+    body { background-color: #525659; margin: 0; padding: 20px 10px; display: flex; justify-content: center; }
+    .app-viewport { width: 100%; max-width: 980px; display: flex; flex-direction: column; align-items: center; }
+    
+    .auth-card { background: white; width: 100%; max-width: 600px; padding: 25px; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.4); text-align: center; }
+    .auth-card h2 { margin-top: 0; color: #1e293b; font-size: 18px; border-bottom: 2px solid #007bff; padding-bottom: 10px; }
+    .form-group { margin-bottom: 12px; text-align: left; }
+    .form-group label { display: block; font-size: 12px; font-weight: bold; margin-bottom: 4px; color: #334155; }
+    .form-control { width: 100%; padding: 8px 10px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12px; outline: none; }
+    .form-control:focus { border-color: #007bff; }
+
+    .btn-submit { background-color: #28a745; color: white; border: none; padding: 12px 20px; width: 100%; font-size: 14px; font-weight: bold; border-radius: 4px; cursor: pointer; transition: 0.2s; margin-top: 10px; }
+    .btn-submit:hover { background-color: #218838; }
+    .btn-back-home { background-color: #64748b; color: white; border: none; padding: 10px 15px; width: 100%; font-size: 13px; font-weight: bold; border-radius: 4px; cursor: pointer; margin-top: 8px; }
+    .btn-back-home:hover { background-color: #475569; }
+
+    .main-system { width: 100%; display: none; overflow-x: auto; }
+    .tab-container { width: 100%; min-width: 750px; display: flex; gap: 5px; }
+    .tab-btn { background-color: #334155; color: #cbd5e1; border: none; padding: 12px 10px; font-weight: bold; font-size: 12px; border-radius: 8px 8px 0 0; cursor: pointer; flex: 1; text-align: center; }
+    .tab-btn.active { background-color: white; color: #007bff; }
+
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+    .sheet { background: white; width: 100%; min-width: 750px; padding: 20px; border: 1px solid #ccc; box-shadow: 0 0 10px rgba(0,0,0,0.3); border-radius: 0 0 8px 8px; margin-bottom: 20px; }
+    
+    .header-table, .form-table { width: 100%; border-collapse: collapse; margin-bottom: 12px; font-size: 11px; }
+    .header-table td, .form-table td, .form-table th { border: 1px solid #000; padding: 4px 3px; text-align: center; }
+    .title-header { font-weight: bold; font-size: 14px; background-color: #f2f2f2; }
+    .text-left { text-align: left !important; }
+    .text-input-left { text-align: left !important; padding-left: 4px; }
+    .bg-gray { background-color: #f2f2f2 !important; font-weight: bold; }
+    .bg-sub { background-color: #e2e8f0 !important; font-weight: bold; text-align: left; }
+
+    input, select, textarea { width: 100%; border: none; outline: none; background: transparent; font-size: 11px; text-align: center; font-family: inherit; }
+    textarea { resize: vertical; text-align: left; }
+    input[type="checkbox"], input[type="radio"] { cursor: pointer; width: auto; }
+
+    .btn-action { background-color: #007bff; color: white; padding: 14px 20px; border: none; font-size: 15px; font-weight: bold; cursor: pointer; border-radius: 4px; width: 100%; margin-top: 15px; }
+    .btn-add-row { background-color: #28a745; color: white; border: none; padding: 6px 12px; font-size: 11px; font-weight: bold; border-radius: 4px; cursor: pointer; margin-top: 6px; }
+    .btn-delete-row { background-color: #dc3545; color: white; border: none; padding: 2px 5px; font-size: 10px; font-weight: bold; border-radius: 3px; cursor: pointer; }
+    .btn-insert-row { background-color: #28a745; color: white; border: none; padding: 2px 5px; font-size: 10px; font-weight: bold; border-radius: 3px; cursor: pointer; margin-right: 2px; }
+
+    .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); justify-content: center; align-items: center; z-index: 1000; }
+    .modal-content { background: white; padding: 20px; border-radius: 8px; width: 1000px; max-width: 95vw; height: 90vh; display: flex; flex-direction: column; }
+    .modal-header { font-weight: bold; font-size: 16px; border-bottom: 2px solid #007bff; padding-bottom: 10px; margin-bottom: 15px; display: flex; justify-content: space-between; }
+    .close-modal { cursor: pointer; font-size: 20px; }
+
+    /* Layout tombol radio bertingkat (Tombol di atas, Teks di bawah) */
+    .opt-group {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 5px;
+    }
+    .opt-stack {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      font-size: 8.5px;
+      font-weight: bold;
+      cursor: pointer;
+      line-height: 1;
+    }
+    .opt-stack input[type="radio"] {
+      margin: 0 0 2px 0;
+      cursor: pointer;
+    }
+
+    @media print {
+      body { background: white; padding: 0; }
+      .sheet { box-shadow: none; border: none; width: 100%; page-break-after: always; }
+      .tab-container, .btn-action, .modal-overlay, .btn-add-row, .btn-delete-row, .btn-insert-row, .no-print, .auth-card { display: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="app-viewport">
+    <!-- FORM DATA ORDER REWINDING MOTOR -->
+    <div id="pageInit" class="auth-card">
+      <h2>DATA ORDER & PERSONEL - REWINDING MOTOR</h2>
+      <div id="initAlert" style="display:none; color:red; margin-bottom:10px; font-weight:bold;">Isikan semua baris dengan benar!</div>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+        <div class="form-group"><label>Customer *</label><input type="text" id="initCustomer" class="form-control" placeholder="PT. Padi Indonesia Maju"></div>
+        <div class="form-group"><label>No. SOA / SO *</label><input type="text" id="initNoSO" class="form-control" placeholder="SOA-SBY-13-26-03-0016"></div>
+        <div class="form-group"><label>Unit / Aplikasi *</label><input type="text" id="initUnit" class="form-control" placeholder="Motor Teco 55 kW"></div>
+        <div class="form-group"><label>No. JOB</label><input type="text" id="initNoJob" class="form-control" placeholder="JOB-RWD-01"></div>
+        <div class="form-group"><label>Merk *</label><input type="text" id="initBrand" class="form-control" placeholder="TECO / SIEMENS / ABB"></div>
+        <div class="form-group"><label>Tanggal Inspeksi *</label><input type="date" id="initDate" class="form-control"></div>
+        <div class="form-group"><label>Type / Serial Number *</label><input type="text" id="initType" class="form-control" placeholder="AEEF 55 KW - SN 7137567003"></div>
+        <div class="form-group"><label>Nama Operator / Teknisi *</label><input type="text" id="initOperator" class="form-control" placeholder="Eka Yudha W. / Supendi"></div>
       </div>
+      <div class="form-group" style="margin-top: 5px;"><label>Nama Supervisor / Leader *</label><input type="text" id="initSupervisor" class="form-control" placeholder="Puguh Febi L. / Haris Susanto"></div>
+      <button type="button" class="btn-submit" onclick="processInitData()">MULAI INSPEKSI REWINDING 🚀</button>
+      <button type="button" class="btn-back-home" onclick="window.location.href='../index.html'">🏠 Kembali ke Menu Utama</button>
     </div>
-    <div id="tab-laporan" class="tab-content">
-      <div class="sheet">
-        <div style="margin-top: 30px; display: flex; justify-content: space-between; text-align: center;">
-          <div style="width: 40%;"><b>Diperiksa:</b><br><br><br><u id="rwLblOp" style="font-weight: bold;">-</u></div>
-          <div style="width: 40%;"><b>Disetujui:</b><br><br><br><u id="rwLblSup" style="font-weight: bold;">-</u></div>
+
+    <!-- ==================== SISTEM UTAMA 4 TAB ==================== -->
+    <div id="mainSystem" class="main-system">
+
+      <!-- MENU TAB NAVIGASI -->
+      <div class="tab-container">
+        <button class="tab-btn active" onclick="switchTab('sparepart', this)">1. Spare Part</button>
+        <button class="tab-btn" onclick="switchTab('analisa', this)">2. Analisa & Workscope</button>
+        <button class="tab-btn" onclick="switchTab('pembongkaran', this)">3. Pembongkaran & Dimensi</button>
+        <button class="tab-btn" onclick="switchTab('electrical', this)">4. Electrical Test & Running</button>
+      </div>
+
+      <!-- ==================== TAB 1: SPARE PART ==================== -->
+      <div id="tab-sparepart" class="tab-content active">
+        <div class="sheet">
+          <table class="header-table">
+            <tr>
+              <td style="width: 120px; padding: 5px;"><img src="logo-intidaya.jpg" style="max-width: 100px; max-height: 50px; object-fit: contain;"></td>
+              <td class="title-header">INSPEKSI KEBUTUHAN SPARE PART<br>REWINDING & OVERHAUL MOTOR</td>
+              <td style="width: 120px; padding: 5px;"><img src="logo-iso.jpg" style="max-width: 100px; max-height: 50px; object-fit: contain;"></td>
+            </tr>
+          </table>
+
+          <table class="form-table">
+            <tr>
+              <td style="width: 15%;" class="text-left"><b>Customer</b></td><td style="width: 35%;"><input type="text" class="sync-customer"></td>
+              <td style="width: 15%;" class="text-left"><b>No. PO</b></td><td style="width: 35%;"><input type="text" placeholder="-"></td>
+            </tr>
+            <tr>
+              <td class="text-left"><b>Unit</b></td><td><input type="text" class="sync-unit"></td>
+              <td class="text-left"><b>No. SOA / SO</b></td><td><input type="text" class="sync-noso"></td>
+            </tr>
+            <tr>
+              <td class="text-left"><b>Merk</b></td><td><input type="text" class="sync-brand"></td>
+              <td class="text-left"><b>Tgl Inspeksi</b></td><td><input type="text" class="sync-date"></td>
+            </tr>
+            <tr>
+              <td class="text-left"><b>Type / SN</b></td><td><input type="text" class="sync-typesn"></td>
+              <td class="text-left"><b>No. JOB</b></td><td><input type="text" class="sync-nojob"></td>
+            </tr>
+          </table>
+
+          <datalist id="masterMidList"></datalist>
+
+          <table class="form-table" id="sparePartTable">
+            <thead>
+              <tr>
+                <th colspan="2" style="width: 24%;" class="text-left">Spare Part</th>
+                <th rowspan="2" style="width: 22%;">Kode / Dimensi</th>
+                <th rowspan="2" style="width: 14%;">MID</th>
+                <th rowspan="2" style="width: 6%;">Qty</th>
+                <th colspan="2" style="width: 10%;">Kondisi</th>
+                <th rowspan="2" style="width: 16%;">Keterangan</th>
+                <th rowspan="2" style="width: 8%;" class="no-print">Aksi</th>
+              </tr>
+              <tr>
+                <th style="width: 4%;">No</th>
+                <th style="width: 20%;">Nama Part</th>
+                <th style="width: 5%;">OK</th>
+                <th style="width: 5%;">NG</th>
+              </tr>
+            </thead>
+            <tbody id="sparePartTbody">
+              <tr><td class="row-num">1</td><td class="text-left"><input type="text" class="text-input-left" value="Bearing DE"></td><td><input type="text" list="masterMidList" class="part-code-input text-input-left" placeholder="Ketik kode/nama..." oninput="handleCodeSearch(this)"></td><td><input type="text" class="part-mid-input" placeholder="Auto / Manual..."></td><td><input type="number"></td><td><input type="radio" name="rwd_sp_1"></td><td><input type="radio" name="rwd_sp_1"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertSparePartRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteSparePartRow(this)">🗑️</button></td></tr>
+              <tr><td class="row-num">2</td><td class="text-left"><input type="text" class="text-input-left" value="Bearing NDE"></td><td><input type="text" list="masterMidList" class="part-code-input text-input-left" placeholder="Ketik kode/nama..." oninput="handleCodeSearch(this)"></td><td><input type="text" class="part-mid-input" placeholder="Auto / Manual..."></td><td><input type="number"></td><td><input type="radio" name="rwd_sp_2"></td><td><input type="radio" name="rwd_sp_2"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertSparePartRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteSparePartRow(this)">🗑️</button></td></tr>
+              <tr><td class="row-num">3</td><td class="text-left"><input type="text" class="text-input-left" value="Kawat Tembaga (Copper Wire)"></td><td><input type="text" list="masterMidList" class="part-code-input text-input-left" placeholder="Ketik kode/nama..." oninput="handleCodeSearch(this)"></td><td><input type="text" class="part-mid-input" placeholder="Auto / Manual..."></td><td><input type="number"></td><td><input type="radio" name="rwd_sp_3"></td><td><input type="radio" name="rwd_sp_3"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertSparePartRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteSparePartRow(this)">🗑️</button></td></tr>
+              <tr><td class="row-num">4</td><td class="text-left"><input type="text" class="text-input-left" value="Kertas Nomex / Insulasi"></td><td><input type="text" list="masterMidList" class="part-code-input text-input-left" placeholder="Ketik kode/nama..." oninput="handleCodeSearch(this)"></td><td><input type="text" class="part-mid-input" placeholder="Auto / Manual..."></td><td><input type="number"></td><td><input type="radio" name="rwd_sp_4"></td><td><input type="radio" name="rwd_sp_4"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertSparePartRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteSparePartRow(this)">🗑️</button></td></tr>
+              <tr><td class="row-num">5</td><td class="text-left"><input type="text" class="text-input-left" value="Varnish / Resin"></td><td><input type="text" list="masterMidList" class="part-code-input text-input-left" placeholder="Ketik kode/nama..." oninput="handleCodeSearch(this)"></td><td><input type="text" class="part-mid-input" placeholder="Auto / Manual..."></td><td><input type="number"></td><td><input type="radio" name="rwd_sp_5"></td><td><input type="radio" name="rwd_sp_5"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertSparePartRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteSparePartRow(this)">🗑️</button></td></tr>
+              <tr><td class="row-num">6</td><td class="text-left"><input type="text" class="text-input-left" value="Terminal Block / Board"></td><td><input type="text" list="masterMidList" class="part-code-input text-input-left" placeholder="Ketik kode/nama..." oninput="handleCodeSearch(this)"></td><td><input type="text" class="part-mid-input" placeholder="Auto / Manual..."></td><td><input type="number"></td><td><input type="radio" name="rwd_sp_6"></td><td><input type="radio" name="rwd_sp_6"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertSparePartRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteSparePartRow(this)">🗑️</button></td></tr>
+              <tr><td class="row-num">7</td><td class="text-left"><input type="text" class="text-input-left" value="Cooling Fan / Kipas"></td><td><input type="text" list="masterMidList" class="part-code-input text-input-left" placeholder="Ketik kode/nama..." oninput="handleCodeSearch(this)"></td><td><input type="text" class="part-mid-input" placeholder="Auto / Manual..."></td><td><input type="number"></td><td><input type="radio" name="rwd_sp_7"></td><td><input type="radio" name="rwd_sp_7"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertSparePartRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteSparePartRow(this)">🗑️</button></td></tr>
+              <tr><td class="row-num">8</td><td class="text-left"><input type="text" class="text-input-left" value="Oil Seal / V-Seal"></td><td><input type="text" list="masterMidList" class="part-code-input text-input-left" placeholder="Ketik kode/nama..." oninput="handleCodeSearch(this)"></td><td><input type="text" class="part-mid-input" placeholder="Auto / Manual..."></td><td><input type="number"></td><td><input type="radio" name="rwd_sp_8"></td><td><input type="radio" name="rwd_sp_8"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertSparePartRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteSparePartRow(this)">🗑️</button></td></tr>
+              <tr><td class="row-num">9</td><td class="text-left"><input type="text" class="text-input-left" placeholder="part tambahan..."></td><td><input type="text" list="masterMidList" class="part-code-input text-input-left" placeholder="Ketik kode/nama..." oninput="handleCodeSearch(this)"></td><td><input type="text" class="part-mid-input" placeholder="Auto / Manual..."></td><td><input type="number"></td><td><input type="radio" name="rwd_sp_9"></td><td><input type="radio" name="rwd_sp_9"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertSparePartRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteSparePartRow(this)">🗑️</button></td></tr>
+              <tr><td class="row-num">10</td><td class="text-left"><input type="text" class="text-input-left" placeholder="part tambahan..."></td><td><input type="text" list="masterMidList" class="part-code-input text-input-left" placeholder="Ketik kode/nama..." oninput="handleCodeSearch(this)"></td><td><input type="text" class="part-mid-input" placeholder="Auto / Manual..."></td><td><input type="number"></td><td><input type="radio" name="rwd_sp_10"></td><td><input type="radio" name="rwd_sp_10"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertSparePartRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteSparePartRow(this)">🗑️</button></td></tr>
+              <tr><td class="row-num">11</td><td class="text-left"><input type="text" class="text-input-left" placeholder="part tambahan..."></td><td><input type="text" list="masterMidList" class="part-code-input text-input-left" placeholder="Ketik kode/nama..." oninput="handleCodeSearch(this)"></td><td><input type="text" class="part-mid-input" placeholder="Auto / Manual..."></td><td><input type="number"></td><td><input type="radio" name="rwd_sp_11"></td><td><input type="radio" name="rwd_sp_11"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertSparePartRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteSparePartRow(this)">🗑️</button></td></tr>
+            </tbody>
+          </table>
+
+          <button type="button" class="btn-add-row" onclick="addSparePartRow()">➕ Tambah Baris Part</button>
+          
+          <div style="display: flex; gap: 10px; margin-top: 15px;" class="no-print">
+            <button type="button" class="btn-action" style="background-color: #eab308; color:#713f12; flex: 1;" onclick="backToDataOrder()">✏️ Edit Data Order</button>
+            <button type="button" class="btn-action" style="background-color: #64748b; flex: 1;" onclick="window.location.href='../index.html'">🏠 Kembali ke Home</button>
+            <button type="button" class="btn-action" style="background-color: #007bff; flex: 2;" onclick="openMergedReviewModal()">🔍 Preview Document (Merger 4 Tab)</button>
+          </div>
         </div>
-        <button type="button" class="btn-action" onclick="rwOpenReview()">🔍 Preview</button>
+      </div>
+
+      <!-- ==================== TAB 2: ANALISA & WORKSCOPE MOTOR ==================== -->
+      <div id="tab-analisa" class="tab-content">
+        <div class="sheet">
+          <table class="header-table">
+            <tr>
+              <td style="width: 120px; padding: 5px;"><img src="logo-intidaya.jpg" style="max-width: 100px; max-height: 50px; object-fit: contain;"></td>
+              <td class="title-header">CHECKLIST ANALISA MOTOR REWINDING<br><small style="font-size:10px; font-weight:normal;">Attc.02-IK-RWD-01-2021</small></td>
+              <td style="width: 120px; padding: 5px;"><img src="logo-iso.jpg" style="max-width: 100px; max-height: 50px; object-fit: contain;"></td>
+            </tr>
+          </table>
+
+          <table class="form-table">
+            <tr>
+              <td style="width: 15%;" class="text-left"><b>Customer</b></td><td style="width: 35%;"><input type="text" class="sync-customer"></td>
+              <td style="width: 15%;" class="text-left"><b>No. PO</b></td><td style="width: 35%;"><input type="text" placeholder="-"></td>
+            </tr>
+            <tr>
+              <td class="text-left"><b>Unit</b></td><td><input type="text" class="sync-unit"></td>
+              <td class="text-left"><b>No. SOA / SO</b></td><td><input type="text" class="sync-noso"></td>
+            </tr>
+            <tr>
+              <td class="text-left"><b>Merk</b></td><td><input type="text" class="sync-brand"></td>
+              <td class="text-left"><b>Tgl Inspeksi</b></td><td><input type="text" class="sync-date"></td>
+            </tr>
+            <tr>
+              <td class="text-left"><b>Type / SN</b></td><td><input type="text" class="sync-typesn"></td>
+              <td class="text-left"><b>No. JOB</b></td><td><input type="text" class="sync-nojob"></td>
+            </tr>
+          </table>
+
+          <!-- SECTION 1: DATA MOTOR / NAMEPLATE -->
+          <table class="form-table">
+            <thead>
+              <tr class="bg-gray"><th colspan="8" class="text-left">DATA MOTOR / NAMEPLATE</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="width: 12%;" class="bg-gray">HP</td><td style="width: 13%;"><input type="text"></td>
+                <td style="width: 12%;" class="bg-gray">VOLT (S)</td><td style="width: 13%;"><input type="text"></td>
+                <td style="width: 12%;" class="bg-gray">ARUS (A)</td><td style="width: 13%;"><input type="text"></td>
+                <td style="width: 12%;" class="bg-gray">PHASE</td><td style="width: 13%;"><input type="text"></td>
+              </tr>
+              <tr>
+                <td class="bg-gray">KW</td><td><input type="text"></td>
+                <td class="bg-gray">VOLT (R)</td><td><input type="text"></td>
+                <td class="bg-gray">FREKUENSI (Hz)</td><td><input type="text" value="50 Hz"></td>
+                <td class="bg-gray">FRAME</td><td><input type="text"></td>
+              </tr>
+              <tr>
+                <td class="bg-gray">KVA</td><td><input type="text"></td>
+                <td class="bg-gray">VOLT EXC</td><td><input type="text"></td>
+                <td class="bg-gray">JUMLAH POLE</td><td><input type="text" placeholder="2 / 4 / 6 / 8"></td>
+                <td class="bg-gray">RPM</td><td><input type="text"></td>
+              </tr>
+              <tr>
+                <td class="bg-gray">INSL. CLASS</td><td><input type="text" value="F / H"></td>
+                <td class="bg-gray">MODEL</td><td><input type="text"></td>
+                <td class="bg-gray">BERAT (kg)</td><td><input type="text"></td>
+                <td class="bg-gray">DIMENSI</td><td><input type="text"></td>
+              </tr>
+              <tr>
+                <td class="bg-gray">DE BEARING</td><td colspan="3"><input type="text" placeholder="Ukuran / Tipe Bearing DE"></td>
+                <td class="bg-gray">NDE BEARING</td><td colspan="3"><input type="text" placeholder="Ukuran / Tipe Bearing NDE"></td>
+              </tr>
+              <tr>
+                <td class="bg-gray">DONE BY</td><td colspan="3"><input type="text"></td>
+                <td class="bg-gray">STATUS</td>
+                <td colspan="3">
+                  <label><input type="radio" name="m_status" value="normal"> NORMAL</label> &nbsp;&nbsp;
+                  <label><input type="radio" name="m_status" value="urgent"> URGENT</label>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <!-- SECTION 2: NOTIFICATION / ANOTHER REQUEST -->
+          <table class="form-table">
+            <thead>
+              <tr class="bg-gray"><th class="text-left">NOTIFICATION / ANOTHER REQUEST</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><textarea rows="2" placeholder="Catatan khusus permintaan customer / temuan awal..."></textarea></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <!-- SECTION 3: WORKSCOPE -->
+          <table class="form-table">
+            <thead>
+              <tr class="bg-gray"><th colspan="4" class="text-left">WORKSCOPE</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="width: 25%; text-align: left;"><label><input type="checkbox"> OVERHAUL</label></td>
+                <td style="width: 25%; text-align: left;"><label><input type="checkbox"> REWINDING</label></td>
+                <td style="width: 25%; text-align: left;"><label><input type="checkbox"> TEST ONLY</label></td>
+                <td style="width: 25%; text-align: left;"><label><input type="checkbox"> SITE WORK</label></td>
+              </tr>
+              <tr>
+                <td class="text-left"><label><input type="checkbox"> WORKSHOP</label></td>
+                <td class="text-left"><label><input type="checkbox"> ONSITE</label></td>
+                <td class="text-left"><label><input type="checkbox"> INSULATION ONLY</label></td>
+                <td class="text-left"><label><input type="checkbox"> RESISTANCE ONLY</label></td>
+              </tr>
+              <tr class="bg-gray"><td colspan="4" class="text-left">Tahapan Pengerjaan Standar</td></tr>
+              <tr>
+                <td class="text-left"><label><input type="checkbox"> INITIAL TESTING</label></td>
+                <td class="text-left"><label><input type="checkbox"> DISASSEMBLY</label></td>
+                <td class="text-left"><label><input type="checkbox"> STEAM / CLEANING</label></td>
+                <td class="text-left"><label><input type="checkbox"> BAKE WINDINGS</label></td>
+              </tr>
+              <tr>
+                <td class="text-left"><label><input type="checkbox"> REWINDING STATOR/ROTOR</label></td>
+                <td class="text-left"><label><input type="checkbox"> VARNISH TREATMENT</label></td>
+                <td class="text-left"><label><input type="checkbox"> BAKE AND CURE</label></td>
+                <td class="text-left"><label><input type="checkbox"> REASSEMBLE & TEST</label></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <!-- SECTION 4: ADDITIONAL JOB -->
+          <table class="form-table">
+            <thead>
+              <tr class="bg-gray"><th colspan="3" class="text-left">ADDITIONAL JOB</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="width: 30%;" class="text-left"><b>BEARING FROM</b></td>
+                <td colspan="2" class="text-left">
+                  <label><input type="radio" name="bg_from"> IDS</label> &nbsp;&nbsp;&nbsp;&nbsp;
+                  <label><input type="radio" name="bg_from"> CUSTOMER</label>
+                </td>
+              </tr>
+              <tr>
+                <td class="text-left"><b>DYNAMIC BALANCING</b></td>
+                <td colspan="2" class="text-left">
+                  <label><input type="checkbox"> KOPLING</label> &nbsp;&nbsp;
+                  <label><input type="checkbox"> PULLEY</label> &nbsp;&nbsp;
+                  <input type="text" style="width: 50%; border-bottom: 1px solid #999; text-align: left;" placeholder="Lain-lain...">
+                </td>
+              </tr>
+              <tr>
+                <td class="text-left"><b>SKIMMING / UNDERCUTTING (DC)</b></td>
+                <td colspan="2" class="text-left"><label><input type="checkbox"> Skimming / Undercutting Komutator</label></td>
+              </tr>
+              <tr>
+                <td class="text-left"><b>REBUSHING HOUSING BEARING</b></td>
+                <td class="text-left" style="width: 35%;">
+                  Posisi: <label><input type="checkbox"> DE</label> &nbsp; <label><input type="checkbox"> NDE</label>
+                </td>
+                <td class="text-left">
+                  Metode: <label><input type="checkbox"> Shock</label> &nbsp; <label><input type="checkbox"> Welding</label> &nbsp; <label><input type="checkbox"> Machining</label>
+                </td>
+              </tr>
+              <tr>
+                <td class="text-left"><b>REPAIR JOURNAL SHAFT</b></td>
+                <td class="text-left">
+                  Posisi: <label><input type="checkbox"> DE</label> &nbsp; <label><input type="checkbox"> NDE</label>
+                </td>
+                <td class="text-left">
+                  Metode: <label><input type="checkbox"> Shock</label> &nbsp; <label><input type="checkbox"> Metal Spray</label> &nbsp; <label><input type="checkbox"> Welding</label> &nbsp; <label><input type="checkbox"> Fabrikasi Shaft</label>
+                </td>
+              </tr>
+              <tr>
+                <td class="text-left"><b>RENEW CARBON BRUSH</b></td>
+                <td colspan="2" class="text-left"><label><input type="checkbox"> Penggantian Carbon Brush</label></td>
+              </tr>
+              <tr>
+                <td class="text-left"><b>REPLACE SEAL / MECH SEAL</b></td>
+                <td colspan="2" class="text-left"><input type="text" placeholder="Ukuran / Tipe Seal..."></td>
+              </tr>
+              <tr>
+                <td class="text-left"><b>FAN COVER</b></td>
+                <td class="text-left"><label><input type="radio" name="fc_act"> REPLACE</label> &nbsp; <label><input type="radio" name="fc_act"> REPAIR</label></td>
+                <td class="text-left">Dia: <input type="text" style="width: 50px; border-bottom: 1px solid #999;"> mm x Pjg: <input type="text" style="width: 50px; border-bottom: 1px solid #999;"> mm</td>
+              </tr>
+              <tr>
+                <td class="text-left"><b>IMPELLER / FAN</b></td>
+                <td class="text-left"><label><input type="radio" name="fan_act"> REPLACE</label> &nbsp; <label><input type="radio" name="fan_act"> REPAIR</label></td>
+                <td class="text-left">Tipe: <label><input type="checkbox"> Klem</label> &nbsp; <label><input type="checkbox"> Snap Ring + Spie</label></td>
+              </tr>
+              <tr>
+                <td class="text-left"><b>ANOTHER PART</b></td>
+                <td colspan="2" class="text-left"><input type="text" placeholder="Pekerjaan tambahan lainnya..."></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <!-- Tanda Tangan Operator & SPV -->
+          <div style="margin-top: 25px; display: flex; justify-content: space-between; text-align: center;">
+            <div style="width: 40%;">
+              <b>Dibuat oleh (Operator):</b><br><br><br><br>
+              <u id="lblOperatorAnalisa" style="font-weight: bold;">( Nama Operator )</u>
+            </div>
+            <div style="width: 40%;">
+              <b>Diperiksa oleh (Supervisor):</b><br><br><br><br>
+              <u id="lblSupervisorAnalisa" style="font-weight: bold;">( Nama Supervisor )</u>
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 10px; margin-top: 15px;" class="no-print">
+            <button type="button" class="btn-action" style="background-color: #eab308; color:#713f12; flex: 1;" onclick="backToDataOrder()">✏️ Edit Data Order</button>
+            <button type="button" class="btn-action" style="background-color: #64748b; flex: 1;" onclick="window.location.href='../index.html'">🏠 Kembali ke Home</button>
+            <button type="button" class="btn-action" style="background-color: #007bff; flex: 2;" onclick="openMergedReviewModal()">🔍 Preview Document (Merger 4 Tab)</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ==================== TAB 3: CHECKLIST PEMBONGKARAN & DIMENSI ==================== -->
+      <div id="tab-pembongkaran" class="tab-content">
+        <div class="sheet">
+          <table class="header-table">
+            <tr>
+              <td style="width: 120px; padding: 5px;"><img src="logo-intidaya.jpg" style="max-width: 100px; max-height: 50px; object-fit: contain;"></td>
+              <td class="title-header">CHECKLIST PEMBONGKARAN & DIMENSI REWINDING<br><small style="font-size:10px; font-weight:normal;">Attc.04-IK-RWD-01-2021</small></td>
+              <td style="width: 120px; padding: 5px;"><img src="logo-iso.jpg" style="max-width: 100px; max-height: 50px; object-fit: contain;"></td>
+            </tr>
+          </table>
+
+          <table class="form-table">
+            <tr>
+              <td style="width: 15%;" class="text-left"><b>Customer</b></td><td style="width: 35%;"><input type="text" class="sync-customer"></td>
+              <td style="width: 15%;" class="text-left"><b>No. PO</b></td><td style="width: 35%;"><input type="text" placeholder="-"></td>
+            </tr>
+            <tr>
+              <td class="text-left"><b>Unit</b></td><td><input type="text" class="sync-unit"></td>
+              <td class="text-left"><b>No. SOA / SO</b></td><td><input type="text" class="sync-noso"></td>
+            </tr>
+            <tr>
+              <td class="text-left"><b>Merk</b></td><td><input type="text" class="sync-brand"></td>
+              <td class="text-left"><b>Tgl Inspeksi</b></td><td><input type="text" class="sync-date"></td>
+            </tr>
+            <tr>
+              <td class="text-left"><b>Type / SN</b></td><td><input type="text" class="sync-typesn"></td>
+              <td class="text-left"><b>No. JOB</b></td><td><input type="text" class="sync-nojob"></td>
+            </tr>
+          </table>
+
+          <!-- SECTION 1: CHECKLIST KONDISI PART PEMBONGKARAN -->
+          <table class="form-table">
+            <thead>
+              <tr class="bg-gray"><th colspan="14" class="text-left">CHECKLIST PEMERIKSAAN KONDISI AWAL PEMBONGKARAN</th></tr>
+              <tr>
+                <th rowspan="2" style="width: 16%;">Nama Part</th>
+                <th rowspan="2" style="width: 4%;">Qty</th>
+                <th colspan="2" style="width: 8%;">Kondisi</th>
+                <th colspan="2" style="width: 8%;">Ganti</th>
+                <th rowspan="2" style="width: 14%;">Ket</th>
+                <th rowspan="2" style="width: 16%;">Nama Part</th>
+                <th rowspan="2" style="width: 4%;">Qty</th>
+                <th colspan="2" style="width: 8%;">Kondisi</th>
+                <th colspan="2" style="width: 8%;">Ganti</th>
+                <th rowspan="2" style="width: 14%;">Ket</th>
+              </tr>
+              <tr>
+                <th style="width: 4%;">OK</th><th style="width: 4%;">NG</th>
+                <th style="width: 4%;">Y</th><th style="width: 4%;">N</th>
+                <th style="width: 4%;">OK</th><th style="width: 4%;">NG</th>
+                <th style="width: 4%;">Y</th><th style="width: 4%;">N</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="text-left">Stator Frame Assy</td><td><input type="number"></td>
+                <td><input type="radio" name="pb_k_1"></td><td><input type="radio" name="pb_k_1"></td>
+                <td><input type="radio" name="pb_g_1"></td><td><input type="radio" name="pb_g_1"></td>
+                <td><input type="text"></td>
+                <td class="text-left">Lock Ring</td><td><input type="number"></td>
+                <td><input type="radio" name="pb_kr_1"></td><td><input type="radio" name="pb_kr_1"></td>
+                <td><input type="radio" name="pb_gr_1"></td><td><input type="radio" name="pb_gr_1"></td>
+                <td><input type="text"></td>
+              </tr>
+              <tr>
+                <td class="text-left">Bearing DE</td><td><input type="number"></td>
+                <td><input type="radio" name="pb_k_2"></td><td><input type="radio" name="pb_k_2"></td>
+                <td><input type="radio" name="pb_g_2"></td><td><input type="radio" name="pb_g_2"></td>
+                <td><input type="text"></td>
+                <td class="text-left">Ring Gelombang</td><td><input type="number"></td>
+                <td><input type="radio" name="pb_kr_2"></td><td><input type="radio" name="pb_kr_2"></td>
+                <td><input type="radio" name="pb_gr_2"></td><td><input type="radio" name="pb_gr_2"></td>
+                <td><input type="text"></td>
+              </tr>
+              <tr>
+                <td class="text-left">Bearing NDE</td><td><input type="number"></td>
+                <td><input type="radio" name="pb_k_3"></td><td><input type="radio" name="pb_k_3"></td>
+                <td><input type="radio" name="pb_g_3"></td><td><input type="radio" name="pb_g_3"></td>
+                <td><input type="text"></td>
+                <td class="text-left">Nipple Grease</td><td><input type="number"></td>
+                <td><input type="radio" name="pb_kr_3"></td><td><input type="radio" name="pb_kr_3"></td>
+                <td><input type="radio" name="pb_gr_3"></td><td><input type="radio" name="pb_gr_3"></td>
+                <td><input type="text"></td>
+              </tr>
+              <tr>
+                <td class="text-left">Labyrinth Cap In DE</td><td><input type="number"></td>
+                <td><input type="radio" name="pb_k_4"></td><td><input type="radio" name="pb_k_4"></td>
+                <td><input type="radio" name="pb_g_4"></td><td><input type="radio" name="pb_g_4"></td>
+                <td><input type="text"></td>
+                <td class="text-left">Shaft Seal</td><td><input type="number"></td>
+                <td><input type="radio" name="pb_kr_4"></td><td><input type="radio" name="pb_kr_4"></td>
+                <td><input type="radio" name="pb_gr_4"></td><td><input type="radio" name="pb_gr_4"></td>
+                <td><input type="text"></td>
+              </tr>
+              <tr>
+                <td class="text-left">Labyrinth Cap In NDE</td><td><input type="number"></td>
+                <td><input type="radio" name="pb_k_5"></td><td><input type="radio" name="pb_k_5"></td>
+                <td><input type="radio" name="pb_g_5"></td><td><input type="radio" name="pb_g_5"></td>
+                <td><input type="text"></td>
+                <td class="text-left">V-Seal</td><td><input type="number"></td>
+                <td><input type="radio" name="pb_kr_5"></td><td><input type="radio" name="pb_kr_5"></td>
+                <td><input type="radio" name="pb_gr_5"></td><td><input type="radio" name="pb_gr_5"></td>
+                <td><input type="text"></td>
+              </tr>
+              <tr>
+                <td class="text-left">Labyrinth Cap Out DE</td><td><input type="number"></td>
+                <td><input type="radio" name="pb_k_6"></td><td><input type="radio" name="pb_k_6"></td>
+                <td><input type="radio" name="pb_g_6"></td><td><input type="radio" name="pb_g_6"></td>
+                <td><input type="text"></td>
+                <td class="text-left">O-Ring</td><td><input type="number"></td>
+                <td><input type="radio" name="pb_kr_6"></td><td><input type="radio" name="pb_kr_6"></td>
+                <td><input type="radio" name="pb_gr_6"></td><td><input type="radio" name="pb_gr_6"></td>
+                <td><input type="text"></td>
+              </tr>
+              <tr>
+                <td class="text-left">Labyrinth Cap Out NDE</td><td><input type="number"></td>
+                <td><input type="radio" name="pb_k_7"></td><td><input type="radio" name="pb_k_7"></td>
+                <td><input type="radio" name="pb_g_7"></td><td><input type="radio" name="pb_g_7"></td>
+                <td><input type="text"></td>
+                <td class="text-left">Commutator / Slipring</td><td><input type="number"></td>
+                <td><input type="radio" name="pb_kr_7"></td><td><input type="radio" name="pb_kr_7"></td>
+                <td><input type="radio" name="pb_gr_7"></td><td><input type="radio" name="pb_gr_7"></td>
+                <td><input type="text"></td>
+              </tr>
+              <tr>
+                <td class="text-left">Snap Ring</td><td><input type="number"></td>
+                <td><input type="radio" name="pb_k_8"></td><td><input type="radio" name="pb_k_8"></td>
+                <td><input type="radio" name="pb_g_8"></td><td><input type="radio" name="pb_g_8"></td>
+                <td><input type="text"></td>
+                <td class="text-left">Spie / Key</td><td><input type="number"></td>
+                <td><input type="radio" name="pb_kr_8"></td><td><input type="radio" name="pb_kr_8"></td>
+                <td><input type="radio" name="pb_gr_8"></td><td><input type="radio" name="pb_gr_8"></td>
+                <td><input type="text"></td>
+              </tr>
+              <tr>
+                <td class="text-left">Carbon Brushes</td><td><input type="number"></td>
+                <td><input type="radio" name="pb_k_9"></td><td><input type="radio" name="pb_k_9"></td>
+                <td><input type="radio" name="pb_g_9"></td><td><input type="radio" name="pb_g_9"></td>
+                <td><input type="text"></td>
+                <td class="text-left">Bolts + Nuts</td><td><input type="number"></td>
+                <td><input type="radio" name="pb_kr_9"></td><td><input type="radio" name="pb_kr_9"></td>
+                <td><input type="radio" name="pb_gr_9"></td><td><input type="radio" name="pb_gr_9"></td>
+                <td><input type="text"></td>
+              </tr>
+              <tr>
+                <td class="text-left">Brush Holder</td><td><input type="number"></td>
+                <td><input type="radio" name="pb_k_10"></td><td><input type="radio" name="pb_k_10"></td>
+                <td><input type="radio" name="pb_g_10"></td><td><input type="radio" name="pb_g_10"></td>
+                <td><input type="text"></td>
+                <td class="text-left">Air Duct</td><td><input type="number"></td>
+                <td><input type="radio" name="pb_kr_10"></td><td><input type="radio" name="pb_kr_10"></td>
+                <td><input type="radio" name="pb_gr_10"></td><td><input type="radio" name="pb_gr_10"></td>
+                <td><input type="text"></td>
+              </tr>
+              <tr>
+                <td class="text-left">Pulley + Key</td><td><input type="number"></td>
+                <td><input type="radio" name="pb_k_11"></td><td><input type="radio" name="pb_k_11"></td>
+                <td><input type="radio" name="pb_g_11"></td><td><input type="radio" name="pb_g_11"></td>
+                <td><input type="text"></td>
+                <td class="text-left">Exciter</td><td><input type="number"></td>
+                <td><input type="radio" name="pb_kr_11"></td><td><input type="radio" name="pb_kr_11"></td>
+                <td><input type="radio" name="pb_gr_11"></td><td><input type="radio" name="pb_gr_11"></td>
+                <td><input type="text"></td>
+              </tr>
+              <!-- 3 BARIS TAMBAHAN MANUAL INPUT -->
+              <tr>
+                <td class="text-left"><input type="text" class="text-input-left" placeholder="Part tambahan 1..."></td><td><input type="number"></td>
+                <td><input type="radio" name="pb_k_12"></td><td><input type="radio" name="pb_k_12"></td>
+                <td><input type="radio" name="pb_g_12"></td><td><input type="radio" name="pb_g_12"></td>
+                <td><input type="text"></td>
+                <td class="text-left"><input type="text" class="text-input-left" placeholder="Part tambahan 2..."></td><td><input type="number"></td>
+                <td><input type="radio" name="pb_kr_12"></td><td><input type="radio" name="pb_kr_12"></td>
+                <td><input type="radio" name="pb_gr_12"></td><td><input type="radio" name="pb_gr_12"></td>
+                <td><input type="text"></td>
+              </tr>
+              <tr>
+                <td class="text-left"><input type="text" class="text-input-left" placeholder="Part tambahan 3..."></td><td><input type="number"></td>
+                <td><input type="radio" name="pb_k_13"></td><td><input type="radio" name="pb_k_13"></td>
+                <td><input type="radio" name="pb_g_13"></td><td><input type="radio" name="pb_g_13"></td>
+                <td><input type="text"></td>
+                <td class="text-left"><input type="text" class="text-input-left" placeholder="Part tambahan 4..."></td><td><input type="number"></td>
+                <td><input type="radio" name="pb_kr_13"></td><td><input type="radio" name="pb_kr_13"></td>
+                <td><input type="radio" name="pb_gr_13"></td><td><input type="radio" name="pb_gr_13"></td>
+                <td><input type="text"></td>
+              </tr>
+              <tr>
+                <td class="text-left"><input type="text" class="text-input-left" placeholder="Part tambahan 5..."></td><td><input type="number"></td>
+                <td><input type="radio" name="pb_k_14"></td><td><input type="radio" name="pb_k_14"></td>
+                <td><input type="radio" name="pb_g_14"></td><td><input type="radio" name="pb_g_14"></td>
+                <td><input type="text"></td>
+                <td class="text-left"><input type="text" class="text-input-left" placeholder="Part tambahan 6..."></td><td><input type="number"></td>
+                <td><input type="radio" name="pb_kr_14"></td><td><input type="radio" name="pb_kr_14"></td>
+                <td><input type="radio" name="pb_gr_14"></td><td><input type="radio" name="pb_gr_14"></td>
+                <td><input type="text"></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <!-- SECTION 2: PENGUKURAN DIMENSI SHAFT ROTOR & RUN-OUT -->
+          <div style="margin: 15px 0 5px 0; font-weight: bold; font-size: 12px; color: #1e3a8a;">A. PENGUKURAN POROS (SHAFT ROTOR) & RUN-OUT (mm)</div>
+
+          <!-- GAMBAR SKEMATIK SHAFT ROTOR -->
+          <div style="text-align: center; margin: 8px 0; background: #ffffff; border: 1px solid #cbd5e1; border-radius: 4px; padding: 6px;">
+            <img src="../shaft-rotor-rewinding.png" alt="Drawing Shaft Rotor" style="max-width: 100%; max-height: 220px; object-fit: contain; display: block; margin: 0 auto;">
+          </div>
+
+          <!-- TABEL DIMENSI SHAFT -->
+          <table class="form-table">
+            <thead>
+              <tr class="bg-gray"><th colspan="12" class="text-left">1. DATA PENGUKURAN AWAL SHAFT ROTOR (mm)</th></tr>
+              <tr>
+                <th style="width: 12%;">Axis</th>
+                <th>A</th><th>B</th><th>C</th><th>D</th><th>e</th><th>E</th><th>F</th><th>f</th><th>G</th><th>H</th><th>I</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td class="bg-gray">0°</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
+              <tr><td class="bg-gray">90°</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
+              <tr><td class="bg-gray">Panjang</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
+              <tr>
+                <td class="bg-gray">Kondisi</td>
+                <td><div class="opt-group"><label class="opt-stack"><input type="radio" name="k_dim_A"><span>OK</span></label><label class="opt-stack"><input type="radio" name="k_dim_A"><span>NG</span></label></div></td>
+                <td><div class="opt-group"><label class="opt-stack"><input type="radio" name="k_dim_B"><span>OK</span></label><label class="opt-stack"><input type="radio" name="k_dim_B"><span>NG</span></label></div></td>
+                <td><div class="opt-group"><label class="opt-stack"><input type="radio" name="k_dim_C"><span>OK</span></label><label class="opt-stack"><input type="radio" name="k_dim_C"><span>NG</span></label></div></td>
+                <td><div class="opt-group"><label class="opt-stack"><input type="radio" name="k_dim_D"><span>OK</span></label><label class="opt-stack"><input type="radio" name="k_dim_D"><span>NG</span></label></div></td>
+                <td><div class="opt-group"><label class="opt-stack"><input type="radio" name="k_dim_e"><span>OK</span></label><label class="opt-stack"><input type="radio" name="k_dim_e"><span>NG</span></label></div></td>
+                <td><div class="opt-group"><label class="opt-stack"><input type="radio" name="k_dim_E"><span>OK</span></label><label class="opt-stack"><input type="radio" name="k_dim_E"><span>NG</span></label></div></td>
+                <td><div class="opt-group"><label class="opt-stack"><input type="radio" name="k_dim_F"><span>OK</span></label><label class="opt-stack"><input type="radio" name="k_dim_F"><span>NG</span></label></div></td>
+                <td><div class="opt-group"><label class="opt-stack"><input type="radio" name="k_dim_f"><span>OK</span></label><label class="opt-stack"><input type="radio" name="k_dim_f"><span>NG</span></label></div></td>
+                <td><div class="opt-group"><label class="opt-stack"><input type="radio" name="k_dim_G"><span>OK</span></label><label class="opt-stack"><input type="radio" name="k_dim_G"><span>NG</span></label></div></td>
+                <td><div class="opt-group"><label class="opt-stack"><input type="radio" name="k_dim_H"><span>OK</span></label><label class="opt-stack"><input type="radio" name="k_dim_H"><span>NG</span></label></div></td>
+                <td><div class="opt-group"><label class="opt-stack"><input type="radio" name="k_dim_I"><span>OK</span></label><label class="opt-stack"><input type="radio" name="k_dim_I"><span>NG</span></label></div></td>
+              </tr>
+              <tr><td class="bg-gray">Standar</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
+            </tbody>
+          </table>
+
+          <!-- TABEL RUN-OUT SHAFT -->
+          <table class="form-table">
+            <thead>
+              <tr class="bg-gray"><th colspan="12" class="text-left">2. DATA CEK KELURUSAN AWAL / RUN-OUT SHAFT (mm)</th></tr>
+              <tr>
+                <th style="width: 12%;">Axis</th>
+                <th>A</th><th>B</th><th>C</th><th>D</th><th>e</th><th>E</th><th>F</th><th>f</th><th>G</th><th>H</th><th>I</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td class="bg-gray">0° - 180°</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
+              <tr><td class="bg-gray">90° - 270°</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
+              <tr>
+                <td class="bg-gray">Kondisi</td>
+                <td><div class="opt-group"><label class="opt-stack"><input type="radio" name="k_ro_A"><span>OK</span></label><label class="opt-stack"><input type="radio" name="k_ro_A"><span>NG</span></label></div></td>
+                <td><div class="opt-group"><label class="opt-stack"><input type="radio" name="k_ro_B"><span>OK</span></label><label class="opt-stack"><input type="radio" name="k_ro_B"><span>NG</span></label></div></td>
+                <td><div class="opt-group"><label class="opt-stack"><input type="radio" name="k_ro_C"><span>OK</span></label><label class="opt-stack"><input type="radio" name="k_ro_C"><span>NG</span></label></div></td>
+                <td><div class="opt-group"><label class="opt-stack"><input type="radio" name="k_ro_D"><span>OK</span></label><label class="opt-stack"><input type="radio" name="k_ro_D"><span>NG</span></label></div></td>
+                <td><div class="opt-group"><label class="opt-stack"><input type="radio" name="k_ro_e"><span>OK</span></label><label class="opt-stack"><input type="radio" name="k_ro_e"><span>NG</span></label></div></td>
+                <td><div class="opt-group"><label class="opt-stack"><input type="radio" name="k_ro_E"><span>OK</span></label><label class="opt-stack"><input type="radio" name="k_ro_E"><span>NG</span></label></div></td>
+                <td><div class="opt-group"><label class="opt-stack"><input type="radio" name="k_ro_F"><span>OK</span></label><label class="opt-stack"><input type="radio" name="k_ro_F"><span>NG</span></label></div></td>
+                <td><div class="opt-group"><label class="opt-stack"><input type="radio" name="k_ro_f"><span>OK</span></label><label class="opt-stack"><input type="radio" name="k_ro_f"><span>NG</span></label></div></td>
+                <td><div class="opt-group"><label class="opt-stack"><input type="radio" name="k_ro_G"><span>OK</span></label><label class="opt-stack"><input type="radio" name="k_ro_G"><span>NG</span></label></div></td>
+                <td><div class="opt-group"><label class="opt-stack"><input type="radio" name="k_ro_H"><span>OK</span></label><label class="opt-stack"><input type="radio" name="k_ro_H"><span>NG</span></label></div></td>
+                <td><div class="opt-group"><label class="opt-stack"><input type="radio" name="k_ro_I"><span>OK</span></label><label class="opt-stack"><input type="radio" name="k_ro_I"><span>NG</span></label></div></td>
+              </tr>
+              <tr><td class="bg-gray">Standar</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
+            </tbody>
+          </table>
+
+          <!-- SECTION 3: PENGUKURAN END BELL & LABIRIN -->
+          <div style="margin: 15px 0 5px 0; font-weight: bold; font-size: 12px; color: #1e3a8a;">B. PENGUKURAN END BELL DE & NDE, CUP LABIRIN (mm)</div>
+
+          <!-- GAMBAR SKEMATIK END BELL / SIDE PLATE -->
+          <div style="text-align: center; margin: 8px 0; background: #ffffff; border: 1px solid #cbd5e1; border-radius: 4px; padding: 6px;">
+            <img src="../side-plate-rewinding.png" alt="Drawing End Bell / Side Plate" style="max-width: 100%; max-height: 220px; object-fit: contain; display: block; margin: 0 auto;">
+          </div>
+
+          <table class="form-table">
+            <thead>
+              <tr>
+                <th style="width: 12%;">Bagian / Axis</th>
+                <th>A</th><th>B</th><th>C</th><th>D</th>
+                <th>Cup In DE</th><th>Cup In NDE</th><th>Cup Out DE</th><th>Cup Out NDE</th>
+                <th>Pulley</th><th>Kipas</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td class="bg-gray">0°</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
+              <tr><td class="bg-gray">90°</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
+              <tr><td class="bg-gray">Panjang</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
+              <tr>
+                <td class="bg-gray">Kondisi</td>
+                <td><div class="opt-group"><label class="opt-stack"><input type="radio" name="k_eb_A"><span>OK</span></label><label class="opt-stack"><input type="radio" name="k_eb_A"><span>NG</span></label></div></td>
+                <td><div class="opt-group"><label class="opt-stack"><input type="radio" name="k_eb_B"><span>OK</span></label><label class="opt-stack"><input type="radio" name="k_eb_B"><span>NG</span></label></div></td>
+                <td><div class="opt-group"><label class="opt-stack"><input type="radio" name="k_eb_C"><span>OK</span></label><label class="opt-stack"><input type="radio" name="k_eb_C"><span>NG</span></label></div></td>
+                <td><div class="opt-group"><label class="opt-stack"><input type="radio" name="k_eb_D"><span>OK</span></label><label class="opt-stack"><input type="radio" name="k_eb_D"><span>NG</span></label></div></td>
+                <td><div class="opt-group"><label class="opt-stack"><input type="radio" name="k_eb_cupInDE"><span>OK</span></label><label class="opt-stack"><input type="radio" name="k_eb_cupInDE"><span>NG</span></label></div></td>
+                <td><div class="opt-group"><label class="opt-stack"><input type="radio" name="k_eb_cupInNDE"><span>OK</span></label><label class="opt-stack"><input type="radio" name="k_eb_cupInNDE"><span>NG</span></label></div></td>
+                <td><div class="opt-group"><label class="opt-stack"><input type="radio" name="k_eb_cupOutDE"><span>OK</span></label><label class="opt-stack"><input type="radio" name="k_eb_cupOutDE"><span>NG</span></label></div></td>
+                <td><div class="opt-group"><label class="opt-stack"><input type="radio" name="k_eb_cupOutNDE"><span>OK</span></label><label class="opt-stack"><input type="radio" name="k_eb_cupOutNDE"><span>NG</span></label></div></td>
+                <td><div class="opt-group"><label class="opt-stack"><input type="radio" name="k_eb_pulley"><span>OK</span></label><label class="opt-stack"><input type="radio" name="k_eb_pulley"><span>NG</span></label></div></td>
+                <td><div class="opt-group"><label class="opt-stack"><input type="radio" name="k_eb_kipas"><span>OK</span></label><label class="opt-stack"><input type="radio" name="k_eb_kipas"><span>NG</span></label></div></td>
+              </tr>
+              <tr><td class="bg-gray">Standar</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
+              <tr><td class="bg-gray">Keterangan</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
+            </tbody>
+          </table>
+
+          <!-- Tanda Tangan -->
+          <div style="margin-top: 25px; display: flex; justify-content: space-between; text-align: center;">
+            <div style="width: 40%;">
+              <b>Dibuat oleh (Operator):</b><br><br><br><br>
+              <u id="lblOperatorBongkar" style="font-weight: bold;">( Nama Operator )</u>
+            </div>
+            <div style="width: 40%;">
+              <b>Diperiksa oleh (Supervisor):</b><br><br><br><br>
+              <u id="lblSupervisorBongkar" style="font-weight: bold;">( Nama Supervisor )</u>
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 10px; margin-top: 15px;" class="no-print">
+            <button type="button" class="btn-action" style="background-color: #eab308; color:#713f12; flex: 1;" onclick="backToDataOrder()">✏️ Edit Data Order</button>
+            <button type="button" class="btn-action" style="background-color: #64748b; flex: 1;" onclick="window.location.href='../index.html'">🏠 Kembali ke Home</button>
+            <button type="button" class="btn-action" style="background-color: #007bff; flex: 2;" onclick="openMergedReviewModal()">🔍 Preview Document (Merger 4 Tab)</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ==================== TAB 4: ELECTRICAL TEST & RUNNING TEST ==================== -->
+      <div id="tab-electrical" class="tab-content">
+        <div class="sheet">
+          <table class="header-table">
+            <tr>
+              <td style="width: 120px; padding: 5px;"><img src="logo-intidaya.jpg" style="max-width: 100px; max-height: 50px; object-fit: contain;"></td>
+              <td class="title-header">CHECKLIST ELECTRICAL TEST REWINDING<br><small style="font-size:10px; font-weight:normal;">Attc.03-IK-RWD-01-2021</small></td>
+              <td style="width: 120px; padding: 5px;"><img src="logo-iso.jpg" style="max-width: 100px; max-height: 50px; object-fit: contain;"></td>
+            </tr>
+          </table>
+
+          <table class="form-table">
+            <tr>
+              <td style="width: 15%;" class="text-left"><b>Customer</b></td><td style="width: 35%;"><input type="text" class="sync-customer"></td>
+              <td style="width: 15%;" class="text-left"><b>No. PO</b></td><td style="width: 35%;"><input type="text" placeholder="-"></td>
+            </tr>
+            <tr>
+              <td class="text-left"><b>Unit</b></td><td><input type="text" class="sync-unit"></td>
+              <td class="text-left"><b>No. SOA / SO</b></td><td><input type="text" class="sync-noso"></td>
+            </tr>
+            <tr>
+              <td class="text-left"><b>Merk</b></td><td><input type="text" class="sync-brand"></td>
+              <td class="text-left"><b>Tgl Inspeksi</b></td><td><input type="text" class="sync-date"></td>
+            </tr>
+            <tr>
+              <td class="text-left"><b>Type / SN</b></td><td><input type="text" class="sync-typesn"></td>
+              <td class="text-left"><b>No. JOB</b></td><td><input type="text" class="sync-nojob"></td>
+            </tr>
+          </table>
+
+          <!-- A. MOTOR 3 PHASE -->
+          <table class="form-table">
+            <thead>
+              <tr class="bg-gray"><th colspan="6" class="text-left">A. DESKRIPSI MOTOR 3 PHASE</th><th colspan="4" class="text-left">TES AWAL / RUNNING TEST (NO LOAD)</th></tr>
+            </thead>
+            <tbody>
+              <tr class="bg-sub"><td colspan="6">1. Insulation Resistance Test (Megger - MΩ / GΩ)</td><td colspan="4">1. Arus (Current) & Tegangan (Voltage)</td></tr>
+              <tr>
+                <td style="width: 12%;" class="bg-gray">U - GND</td><td style="width: 13%;"><input type="text"></td>
+                <td style="width: 12%;" class="bg-gray">U - V</td><td style="width: 13%;"><input type="text"></td>
+                <td style="width: 12%;" class="bg-gray">Tipe</td><td style="width: 13%;"><input type="text" value="STATOR"></td>
+                <td style="width: 10%;" class="bg-gray">R (A)</td><td style="width: 10%;"><input type="text"></td>
+                <td style="width: 10%;" class="bg-gray">R - S (V)</td><td style="width: 10%;"><input type="text"></td>
+              </tr>
+              <tr>
+                <td class="bg-gray">V - GND</td><td><input type="text"></td>
+                <td class="bg-gray">V - W</td><td><input type="text"></td>
+                <td class="bg-gray">Kondisi</td><td><label><input type="radio" name="w3_cond"> OK</label> <label><input type="radio" name="w3_cond"> NG</label></td>
+                <td class="bg-gray">S (A)</td><td><input type="text"></td>
+                <td class="bg-gray">S - T (V)</td><td><input type="text"></td>
+              </tr>
+              <tr>
+                <td class="bg-gray">W - GND</td><td><input type="text"></td>
+                <td class="bg-gray">W - U</td><td><input type="text"></td>
+                <td class="bg-gray">RPM</td><td><input type="text"></td>
+                <td class="bg-gray">T (A)</td><td><input type="text"></td>
+                <td class="bg-gray">T - R (V)</td><td><input type="text"></td>
+              </tr>
+              <tr>
+                <td colspan="6" class="text-left"><b>Unbalance Current (%):</b> <input type="text" style="width: 80px; border-bottom: 1px solid #999;"> &nbsp;&nbsp; <b>Unbalance Voltage (%):</b> <input type="text" style="width: 80px; border-bottom: 1px solid #999;"></td>
+                <td colspan="4" class="bg-sub">2. Vibration Test (mm/s)</td>
+              </tr>
+              <tr class="bg-sub"><td colspan="6">2. Winding Resistance Test (Ohm - Ω)</td><td colspan="2">DE Side</td><td colspan="2">NDE Side</td></tr>
+              <tr>
+                <td class="bg-gray">U1 - U2</td><td><input type="text"></td>
+                <td class="bg-gray">V1 - V2</td><td><input type="text"></td>
+                <td class="bg-gray">W1 - W2</td><td><input type="text"></td>
+                <td class="bg-gray">Axial</td><td><input type="text"></td>
+                <td class="bg-gray">Axial</td><td><input type="text"></td>
+              </tr>
+              <tr>
+                <td colspan="3" class="bg-gray">Unbalance Resistance (%)</td>
+                <td colspan="3"><input type="text"></td>
+                <td class="bg-gray">Vertical</td><td><input type="text"></td>
+                <td class="bg-gray">Vertical</td><td><input type="text"></td>
+              </tr>
+              <tr>
+                <td colspan="6"></td>
+                <td class="bg-gray">Horizontal</td><td><input type="text"></td>
+                <td class="bg-gray">Horizontal</td><td><input type="text"></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <!-- B. MOTOR 1 PHASE -->
+          <table class="form-table">
+            <thead>
+              <tr class="bg-gray"><th colspan="4" class="text-left">B. DESKRIPSI MOTOR 1 PHASE (Jika Menggunakan 1 Phase)</th><th colspan="4" class="text-left">TES AWAL 1 PHASE</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="width: 15%;" class="bg-gray">LINE - GND</td><td style="width: 15%;"><input type="text"></td>
+                <td style="width: 15%;" class="bg-gray">LINE - NETRAL</td><td style="width: 15%;"><input type="text"></td>
+                <td style="width: 10%;" class="bg-gray">Arus Line</td><td style="width: 10%;"><input type="text"> A</td>
+                <td style="width: 10%;" class="bg-gray">Volt L-N</td><td style="width: 10%;"><input type="text"> V</td>
+              </tr>
+              <tr>
+                <td class="bg-gray">NETRAL - GND</td><td><input type="text"></td>
+                <td class="bg-gray">Resistance (Ω)</td><td><input type="text"></td>
+                <td class="bg-gray">Arus Netral</td><td><input type="text"> A</td>
+                <td class="bg-gray">RPM</td><td><input type="text"></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <!-- C. AKSESORIS & ELEMEN PENDUKUNG -->
+          <table class="form-table">
+            <thead>
+              <tr class="bg-gray"><th colspan="6" class="text-left">C. PENGECEKAN AKSESORIS & KOMPONEN TAMBAHAN</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="width: 16%;" class="bg-gray">THERMISTOR</td>
+                <td style="width: 34%;" class="text-left"><label><input type="checkbox"> REPLACE</label> &nbsp; Nilai R: <input type="text" style="width: 80px; border-bottom: 1px solid #999;"> Ω</td>
+                <td style="width: 16%;" class="bg-gray">HEATER</td>
+                <td style="width: 34%;" colspan="3" class="text-left"><label><input type="checkbox"> REPLACE</label> &nbsp; Nilai R: <input type="text" style="width: 80px; border-bottom: 1px solid #999;"> Ω</td>
+              </tr>
+              <tr>
+                <td class="bg-gray">TERMINAL MOTOR</td>
+                <td colspan="5" class="text-left">
+                  <label><input type="checkbox"> REPLACE</label> &nbsp;&nbsp; Kondisi: <input type="text" style="width: 120px; border-bottom: 1px solid #999;"> &nbsp;&nbsp; Tipe: <input type="text" style="width: 100px; border-bottom: 1px solid #999;"> &nbsp;&nbsp; Jarak Baut: <input type="text" style="width: 40px; border-bottom: 1px solid #999;"> mm
+                </td>
+              </tr>
+              <tr>
+                <td class="bg-gray">Pitch Baut Stator</td>
+                <td colspan="5" class="text-left">
+                  U1-V1: <input type="text" style="width: 40px; border-bottom: 1px solid #999;"> mm &nbsp;|&nbsp;
+                  V1-W1: <input type="text" style="width: 40px; border-bottom: 1px solid #999;"> mm &nbsp;|&nbsp;
+                  W1-U1: <input type="text" style="width: 40px; border-bottom: 1px solid #999;"> mm &nbsp;|&nbsp;
+                  U2-V2: <input type="text" style="width: 40px; border-bottom: 1px solid #999;"> mm &nbsp;|&nbsp;
+                  V2-W2: <input type="text" style="width: 40px; border-bottom: 1px solid #999;"> mm &nbsp;|&nbsp;
+                  W2-U2: <input type="text" style="width: 40px; border-bottom: 1px solid #999;"> mm
+                </td>
+              </tr>
+              <tr>
+                <td class="bg-gray">TERMINAL BOX</td>
+                <td class="text-left"><label><input type="radio" name="tbox_act"> REPLACE</label> <label><input type="radio" name="tbox_act"> REPAIR</label> &nbsp; P x L: <input type="text" style="width: 80px; border-bottom: 1px solid #999;"> mm</td>
+                <td class="bg-gray">TERMINAL COVER</td>
+                <td colspan="3" class="text-left"><label><input type="radio" name="tcov_act"> REPLACE</label> <label><input type="radio" name="tcov_act"> REPAIR</label> &nbsp; P x L: <input type="text" style="width: 80px; border-bottom: 1px solid #999;"> mm</td>
+              </tr>
+              <tr>
+                <td class="bg-gray">KABEL POWER</td><td><input type="text" placeholder="Kondisi isolasi / kabel..."></td>
+                <td class="bg-gray">KAPASITOR</td><td><input type="text" placeholder="Nilai µF / Kondisi..."></td>
+                <td class="bg-gray">SAKELAR / BAUT</td><td><input type="text" placeholder="Kondisi fisik..."></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <!-- Tanda Tangan -->
+          <div style="margin-top: 25px; display: flex; justify-content: space-between; text-align: center;">
+            <div style="width: 40%;">
+              <b>Dibuat oleh (Operator):</b><br><br><br><br>
+              <u id="lblOperatorElec" style="font-weight: bold;">( Nama Operator )</u>
+            </div>
+            <div style="width: 40%;">
+              <b>Diperiksa oleh (Leader Rewinding):</b><br><br><br><br>
+              <u id="lblSupervisorElec" style="font-weight: bold;">( Leader Rewinding )</u>
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 10px; margin-top: 15px;" class="no-print">
+            <button type="button" class="btn-action" style="background-color: #eab308; color:#713f12; flex: 1;" onclick="backToDataOrder()">✏️ Edit Data Order</button>
+            <button type="button" class="btn-action" style="background-color: #64748b; flex: 1;" onclick="window.location.href='../index.html'">🏠 Kembali ke Home</button>
+            <button type="button" class="btn-action" style="background-color: #007bff; flex: 2;" onclick="openMergedReviewModal()">🔍 Preview Document (Merger 4 Tab)</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ==================== MODAL PREVIEW MERGER 4 TAB ==================== -->
+  <div id="reviewModal" class="modal-overlay">
+    <div class="modal-content">
+      <div class="modal-header">
+        <span>📄 PREVIEW MERGER 4 TAB DOKUMEN REWINDING MOTOR</span>
+        <span class="close-modal" onclick="closeReviewModal()">&times;</span>
+      </div>
+      
+      <div id="previewSheetContainer" style="overflow-y: auto; flex: 1; background: #e5e7eb; padding: 15px; border-radius: 4px;"></div>
+
+      <div style="display: flex; gap: 10px; margin-top: 15px;">
+        <button type="button" class="btn-action" style="background-color: #6c757d; flex: 1;" onclick="closeReviewModal()">❌ Edit Kembali</button>
+        <button type="button" class="btn-action" style="background-color: #28a745; flex: 2;" onclick="generatePDF()">🖨️ Print to PDF / Save & Share</button>
       </div>
     </div>
   </div>
-</div>
-<div id="rwReviewModal" class="preview-modal">
-  <div class="preview-modal-content" style="width: 1000px; max-width: 95vw; height: 90vh; display: flex; flex-direction: column;">
-    <div class="preview-modal-header"><span>📄 PREVIEW - REWINDING</span><span class="close-modal" onclick="rwCloseReview()">&times;</span></div>
-    <div id="rwPreviewContainer" style="overflow-y: auto; flex: 1; background: #e5e7eb; padding: 15px;"></div>
-    <div style="display: flex; gap: 10px; margin-top: 15px;">
-      <button type="button" class="btn-action" style="background-color: #6c757d; flex: 1;" onclick="rwCloseReview()">❌ Tutup</button>
-      <button type="button" class="btn-action" style="background-color: #28a745; flex: 2;" onclick="printPage()">🖨️ Print</button>
-    </div>
-  </div>
-</div>
-<style>
-  .main-system { width: 100%; display: none; overflow-x: auto; }
-  .nav-btn-home { background-color: #dc3545; color: white; border: none; padding: 12px 15px; font-weight: bold; font-size: 13px; border-radius: 8px 8px 0 0; cursor: pointer; }
-  .nav-btn-home:hover { background-color: #bb2d3b; }
-  .preview-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); justify-content: center; align-items: center; z-index: 1000; }
-  .preview-modal-content { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
-  .preview-modal-header { font-weight: bold; font-size: 16px; border-bottom: 2px solid #007bff; padding-bottom: 10px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; }
-  .close-modal { cursor: pointer; font-size: 20px; color: #888; font-weight: bold; }
-</style>
-<script>
-  function rwProcessInitData() {
-    const op = document.getElementById('rwInitOperator').value || '-';
-    const sup = document.getElementById('rwInitSupervisor').value || '-';
-    document.getElementById('rwLblOp').textContent = op;
-    document.getElementById('rwLblSup').textContent = sup;
-    document.getElementById('rwPageInit').style.display = 'none';
-    document.getElementById('rwMainSystem').style.display = 'block';
-  }
-  function rwSwitchTab(t, b) {
-    document.querySelectorAll('#rwMainSystem .tab-content').forEach(el => el.classList.remove('active'));
-    document.querySelectorAll('#rwMainSystem .tab-btn').forEach(el => el.classList.remove('active'));
-    document.getElementById('tab-' + t).classList.add('active');
-    b.classList.add('active');
-  }
-  function rwOpenReview() { document.getElementById('rwReviewModal').style.display = 'flex'; }
-  function rwCloseReview() { document.getElementById('rwReviewModal').style.display = 'none'; }
-</script>
+
+  <!-- ==================== LOGIKA JAVASCRIPT ==================== -->
+  <script>
+    // 1. MASTER MID AUTOCOMPLETE SYSTEM
+    let masterMidDb = [];
+
+    function loadMasterMID() {
+      fetch('master_mid.json')
+        .then(res => {
+          if (!res.ok) throw new Error('File master_mid.json tidak ditemukan di root');
+          return res.json();
+        })
+        .then(data => { masterMidDb = data; })
+        .catch(err => {
+          fetch('../master_mid.json')
+            .then(res => res.json())
+            .then(data => { masterMidDb = data; })
+            .catch(e => console.error('Gagal memuat JSON:', e));
+        });
+    }
+
+    loadMasterMID();
+    const initDateElem = document.getElementById('initDate');
+    if (initDateElem) initDateElem.valueAsDate = new Date();
+
+    function handleCodeSearch(inputElem) {
+      const keyword = inputElem.value.trim().toLowerCase();
+      const datalist = document.getElementById('masterMidList');
+      const row = inputElem.closest('tr');
+      const midInput = row.querySelector('.part-mid-input');
+
+      if (!keyword || masterMidDb.length === 0) {
+        if (datalist) datalist.innerHTML = '';
+        return;
+      }
+
+      const exactMatch = masterMidDb.find(item => {
+        const nama = (item.name || '').toLowerCase();
+        const kode = (item.kode || '').toLowerCase();
+        return nama === keyword || kode === keyword;
+      });
+
+      if (exactMatch && midInput) {
+        midInput.value = exactMatch.mid || '';
+      }
+
+      if (datalist) {
+        datalist.innerHTML = '';
+        const filtered = masterMidDb
+          .filter(item => {
+            const nama = (item.name || '').toLowerCase();
+            const kode = (item.kode || '').toLowerCase();
+            const mid = (item.mid || '').toLowerCase();
+            return nama.includes(keyword) || kode.includes(keyword) || mid.includes(keyword);
+          })
+          .slice(0, 30);
+
+        filtered.forEach(item => {
+          const opt = document.createElement('option');
+          opt.value = item.name || item.kode;
+          opt.label = `MID: ${item.mid}`;
+          datalist.appendChild(opt);
+        });
+      }
+    }
+
+    // 2. PROSES INITIAL DATA ORDER & SINKRONISASI
+    function processInitData() {
+      const customer = document.getElementById('initCustomer').value.trim();
+      const unit = document.getElementById('initUnit').value.trim();
+      const noso = document.getElementById('initNoSO').value.trim();
+      const brand = document.getElementById('initBrand').value.trim();
+      const type = document.getElementById('initType').value.trim();
+      const nojob = document.getElementById('initNoJob').value.trim();
+      const date = document.getElementById('initDate').value;
+      const operator = document.getElementById('initOperator').value.trim();
+      const supervisor = document.getElementById('initSupervisor').value.trim();
+
+      if (!customer || !unit || !brand || !type || !noso || !date || !operator || !supervisor) {
+        document.getElementById('initAlert').style.display = 'block';
+        return;
+      }
+
+      document.getElementById('initAlert').style.display = 'none';
+
+      // Sinkronisasi ke seluruh header tabel
+      document.querySelectorAll('.sync-customer').forEach(el => el.value = customer);
+      document.querySelectorAll('.sync-unit').forEach(el => el.value = unit);
+      document.querySelectorAll('.sync-noso').forEach(el => el.value = noso);
+      document.querySelectorAll('.sync-brand').forEach(el => el.value = brand);
+      document.querySelectorAll('.sync-date').forEach(el => el.value = date);
+      document.querySelectorAll('.sync-typesn').forEach(el => el.value = type);
+      document.querySelectorAll('.sync-nojob').forEach(el => el.value = nojob);
+
+      // Tanda tangan
+      ['lblOperatorAnalisa', 'lblOperatorBongkar', 'lblOperatorElec'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.textContent = operator;
+      });
+
+      ['lblSupervisorAnalisa', 'lblSupervisorBongkar', 'lblSupervisorElec'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.textContent = supervisor;
+      });
+
+      document.getElementById('pageInit').style.display = 'none';
+      document.getElementById('mainSystem').style.display = 'block';
+    }
+
+    function backToDataOrder() {
+      document.getElementById('mainSystem').style.display = 'none';
+      document.getElementById('pageInit').style.display = 'block';
+    }
+
+    // 3. SWITCH TAB NAVIGASI
+    function switchTab(tabName, btnElement) {
+      document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+
+      document.getElementById('tab-' + tabName).classList.add('active');
+      btnElement.classList.add('active');
+    }
+
+    // 4. PREVIEW MERGER 4 TAB & CETAK PDF
+    function openMergedReviewModal() {
+      const tabIds = ['tab-sparepart', 'tab-analisa', 'tab-pembongkaran', 'tab-electrical'];
+      const container = document.getElementById('previewSheetContainer');
+      container.innerHTML = '';
+
+      tabIds.forEach(tabId => {
+        const mainSheet = document.querySelector('#' + tabId + ' .sheet');
+        if (!mainSheet) return;
+
+        const clonedSheet = mainSheet.cloneNode(true);
+        clonedSheet.querySelectorAll('.btn-action, .btn-add-row, .btn-insert-row, .btn-delete-row, .no-print').forEach(el => el.remove());
+
+        const originalInputs = mainSheet.querySelectorAll('input, select, textarea');
+        const clonedInputs = clonedSheet.querySelectorAll('input, select, textarea');
+
+        originalInputs.forEach((input, index) => {
+          const cloned = clonedInputs[index];
+          if (!cloned) return;
+
+          if (input.type === 'checkbox' || input.type === 'radio') {
+            const checkedSymbol = input.checked ? '✓' : '';
+            cloned.outerHTML = `<span style="font-weight:bold; font-size:11px;">${checkedSymbol}</span>`;
+          } else if (input.tagName === 'SELECT') {
+            const selectedText = input.options[input.selectedIndex] ? input.options[input.selectedIndex].text : input.value;
+            cloned.outerHTML = `<span style="font-weight:bold;">${selectedText}</span>`;
+          } else if (input.tagName === 'TEXTAREA') {
+            cloned.outerHTML = `<div style="text-align:left; white-space:pre-wrap;">${input.value || '-'}</div>`;
+          } else {
+            const val = input.value || '';
+            cloned.outerHTML = `<span>${val}</span>`;
+          }
+        });
+
+        container.appendChild(clonedSheet);
+      });
+
+      document.getElementById('reviewModal').style.display = 'flex';
+    }
+
+    function closeReviewModal() {
+      document.getElementById('reviewModal').style.display = 'none';
+    }
+
+    function generatePDF() {
+      closeReviewModal();
+      window.print();
+    }
+
+    // 5. MANAJEMEN BARIS SPARE PART
+    function deleteSparePartRow(btn) {
+      btn.closest('tr').remove();
+      reindexSparePartRows();
+    }
+
+    function reindexSparePartRows() {
+      const rows = document.querySelectorAll('#sparePartTbody tr');
+      rows.forEach((row, index) => {
+        const numCell = row.querySelector('.row-num');
+        if (numCell) numCell.textContent = index + 1;
+        const radios = row.querySelectorAll('input[type="radio"]');
+        radios.forEach(radio => radio.name = 'rwd_sp_' + (index + 1));
+      });
+    }
+
+    function insertSparePartRowBelow(btn) {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td class="row-num">-</td>
+        <td class="text-left"><input type="text" class="text-input-left" placeholder="Part baru..."></td>
+        <td><input type="text" list="masterMidList" class="part-code-input text-input-left" placeholder="Ketik kode/nama..." oninput="handleCodeSearch(this)"></td>
+        <td><input type="text" class="part-mid-input" placeholder="Auto / Manual..."></td>
+        <td><input type="number"></td>
+        <td><input type="radio"></td>
+        <td><input type="radio"></td>
+        <td><input type="text"></td>
+        <td class="no-print">
+          <button type="button" class="btn-insert-row" onclick="insertSparePartRowBelow(this)">➕</button>
+          <button type="button" class="btn-delete-row" onclick="deleteSparePartRow(this)">🗑️</button>
+        </td>`;
+      btn.closest('tr').parentNode.insertBefore(tr, btn.closest('tr').nextSibling);
+      reindexSparePartRows();
+    }
+
+    function addSparePartRow() {
+      const tbody = document.getElementById('sparePartTbody');
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td class="row-num">-</td>
+        <td class="text-left"><input type="text" class="text-input-left" placeholder="Part baru..."></td>
+        <td><input type="text" list="masterMidList" class="part-code-input text-input-left" placeholder="Ketik kode/nama..." oninput="handleCodeSearch(this)"></td>
+        <td><input type="text" class="part-mid-input" placeholder="Auto / Manual..."></td>
+        <td><input type="number"></td>
+        <td><input type="radio"></td>
+        <td><input type="radio"></td>
+        <td><input type="text"></td>
+        <td class="no-print">
+          <button type="button" class="btn-insert-row" onclick="insertSparePartRowBelow(this)">➕</button>
+          <button type="button" class="btn-delete-row" onclick="deleteSparePartRow(this)">🗑️</button>
+        </td>`;
+      tbody.appendChild(tr);
+      reindexSparePartRows();
+    }
+  </script>
+</body>
+</html>
