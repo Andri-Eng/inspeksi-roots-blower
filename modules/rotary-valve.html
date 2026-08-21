@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inspeksi Rotary Valve / Airlock - PT Intidaya Dinamika Sejati</title>
+  <link rel="stylesheet" href="../css/shared.css">
+  <style>
+    * { box-sizing: border-box; font-family: 'Segoe UI', Arial, sans-serif; }
+    body { background-color: #525659; margin: 0; padding: 20px 10px; display: flex; justify-content: center; }
+    .app-viewport { width: 100%; max-width: 950px; display: flex; flex-direction: column; align-items: center; }
+    
+    .auth-card { background: white; width: 100%; max-width: 550px; padding: 25px; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.4); text-align: center; }
+    .auth-card h2 { margin-top: 0; color: #1e293b; font-size: 18px; border-bottom: 2px solid #007bff; padding-bottom: 10px; }
+    .form-group { margin-bottom: 12px; text-align: left; }
+    .form-group label { display: block; font-size: 12px; font-weight: bold; margin-bottom: 4px; color: #334155; }
+    .form-control { width: 100%; padding: 8px 10px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 12px; outline: none; }
+    .form-control:focus { border-color: #007bff; }
+
+    .btn-submit { background-color: #28a745; color: white; border: none; padding: 12px 20px; width: 100%; font-size: 14px; font-weight: bold; border-radius: 4px; cursor: pointer; transition: 0.2s; margin-top: 10px; }
+    .btn-submit:hover { background-color: #218838; }
+    .btn-back-home { background-color: #64748b; color: white; border: none; padding: 10px 15px; width: 100%; font-size: 13px; font-weight: bold; border-radius: 4px; cursor: pointer; margin-top: 8px; }
+    .btn-back-home:hover { background-color: #475569; }
+
+    .main-system { width: 100%; display: none; overflow-x: auto; }
+    .tab-container { width: 100%; min-width: 700px; display: flex; gap: 6px; }
+    .tab-btn { background-color: #334155; color: #cbd5e1; border: none; padding: 12px 15px; font-weight: bold; font-size: 13px; border-radius: 8px 8px 0 0; cursor: pointer; flex: 1; text-align: center; }
+    .tab-btn.active { background-color: white; color: #007bff; }
+
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+    .sheet { background: white; width: 100%; min-width: 700px; padding: 20px; border: 1px solid #ccc; box-shadow: 0 0 10px rgba(0,0,0,0.3); border-radius: 0 0 8px 8px; margin-bottom: 20px; }
+    
+    .header-table, .form-table { width: 100%; border-collapse: collapse; margin-bottom: 12px; font-size: 11px; }
+    .header-table td, .form-table td, .form-table th { border: 1px solid #000; padding: 4px 6px; text-align: center; }
+    .title-header { font-weight: bold; font-size: 15px; background-color: #f2f2f2; }
+    .text-left { text-align: left !important; }
+    .text-input-left { text-align: left !important; padding-left: 4px; }
+    .bg-gray { background-color: #f2f2f2 !important; font-weight: bold; }
+
+    input, select { width: 100%; border: none; outline: none; background: transparent; font-size: 11px; text-align: center; }
+    
+    .btn-action { background-color: #007bff; color: white; padding: 14px 20px; border: none; font-size: 16px; font-weight: bold; cursor: pointer; border-radius: 4px; width: 100%; margin-top: 15px; }
+    .btn-add-row { background-color: #28a745; color: white; border: none; padding: 8px 15px; font-size: 12px; font-weight: bold; border-radius: 4px; cursor: pointer; margin-top: 8px; }
+    .btn-delete-row { background-color: #dc3545; color: white; border: none; padding: 2px 5px; font-size: 10px; font-weight: bold; border-radius: 3px; cursor: pointer; }
+    .btn-insert-row { background-color: #28a745; color: white; border: none; padding: 2px 5px; font-size: 10px; font-weight: bold; border-radius: 3px; cursor: pointer; margin-right: 2px; }
+
+    .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); justify-content: center; align-items: center; z-index: 1000; }
+    .modal-content { background: white; padding: 20px; border-radius: 8px; width: 1000px; max-width: 95vw; height: 90vh; display: flex; flex-direction: column; }
+    .modal-header { font-weight: bold; font-size: 16px; border-bottom: 2px solid #007bff; padding-bottom: 10px; margin-bottom: 15px; display: flex; justify-content: space-between; }
+    .close-modal { cursor: pointer; font-size: 20px; }
+
+    @media print {
+      body { background: white; padding: 0; }
+      .sheet { box-shadow: none; border: none; width: 100%; page-break-after: always; }
+      .tab-container, .btn-action, .modal-overlay, .btn-add-row, .btn-delete-row, .btn-insert-row, .no-print, .auth-card { display: none !important; }
+    }
+
+    /* ANOTASI & MARKER 4 ARAH */
+    .rotor-marker {
+        position: absolute;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 10;
+        user-select: none;
+    }
+    .rotor-marker.dir-down  { flex-direction: column; transform: translate(-50%, 0); }
+    .rotor-marker.dir-up    { flex-direction: column-reverse; transform: translate(-50%, -100%); }
+    .rotor-marker.dir-right { flex-direction: row; transform: translate(0, -50%); }
+    .rotor-marker.dir-left  { flex-direction: row-reverse; transform: translate(-100%, -50%); }
+
+    .rotor-badge {
+        background-color: #ffffff;
+        color: #000000;
+        border: 2px solid #dc2626;
+        font-weight: 800;
+        font-size: 13px;
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.25);
+        cursor: grab;
+        position: relative;
+        flex-shrink: 0;
+    }
+    .rotor-badge:active { cursor: grabbing; }
+
+    .dir-down .rotor-stem, .dir-up .rotor-stem { width: 2px; height: 30px; background-color: #dc2626; flex-shrink: 0; }
+    .dir-right .rotor-stem, .dir-left .rotor-stem { height: 2px; width: 30px; background-color: #dc2626; flex-shrink: 0; }
+
+    .rotor-arrow { cursor: crosshair !important; flex-shrink: 0; }
+    .dir-down .rotor-arrow  { width: 0; height: 0; border-left: 6px solid transparent; border-right: 6px solid transparent; border-top: 10px solid #dc2626; }
+    .dir-up .rotor-arrow    { width: 0; height: 0; border-left: 6px solid transparent; border-right: 6px solid transparent; border-bottom: 10px solid #dc2626; }
+    .dir-right .rotor-arrow { width: 0; height: 0; border-top: 6px solid transparent; border-bottom: 6px solid transparent; border-left: 10px solid #dc2626; }
+    .dir-left .rotor-arrow  { width: 0; height: 0; border-top: 6px solid transparent; border-bottom: 6px solid transparent; border-right: 10px solid #dc2626; }
+  </style>
+</head>
+<body>
+
+  <div class="app-viewport">
+    <!-- FORM DATA ORDER ROTARY VALVE -->
+    <div id="pageInit" class="auth-card">
+      <h2>DATA ORDER & PERSONEL - ROTARY VALVE / AIRLOCK</h2>
+      <div id="initAlert" style="display:none; color:red; margin-bottom:10px; font-weight:bold;">Isikan semua baris dengan benar!</div>
+      <div class="form-group"><label>Brand Rotary Valve *</label><input type="text" id="initBrand" class="form-control" placeholder="WAM / KOWA / ROTOLOK / DMN / SCHOEN"></div>
+      <div class="form-group"><label>Type / Model *</label><input type="text" id="initType" class="form-control" placeholder="RVS 200 / AL 250 / NF 10"></div>
+      <div class="form-group"><label>Serial Number (SN) *</label><input type="text" id="initSN" class="form-control" placeholder="SN-RV-99281"></div>
+      <div class="form-group"><label>Nama Customer *</label><input type="text" id="initCustomer" class="form-control" placeholder="PT. Semen Indonesia / Indofood"></div>
+      <div class="form-group"><label>No. SO / SOA / SOW *</label><input type="text" id="initNoSO" class="form-control" placeholder="SOA-RV-03-26-08-0021"></div>
+      <div class="form-group"><label>Tanggal Inspeksi *</label><input type="date" id="initDate" class="form-control"></div>
+      <div class="form-group"><label>Nama Operator / Teknisi *</label><input type="text" id="initOperator" class="form-control" placeholder="Nama operator..."></div>
+      <div class="form-group"><label>Nama Supervisor *</label><input type="text" id="initSupervisor" class="form-control" placeholder="Nama supervisor..."></div>
+      <button type="button" class="btn-submit" onclick="processInitData()">MULAI INSPEKSI 🚀</button>
+      <button type="button" class="btn-back-home" onclick="window.location.href='../index.html'">🏠 Kembali ke Menu Utama</button>
+    </div>
+
+    <!-- ==================== SISTEM UTAMA 4 TAB ==================== -->
+    <div id="mainSystem" class="main-system">
+
+      <!-- MENU TAB NAVIGASI -->
+      <div class="tab-container">
+        <button class="tab-btn active" onclick="switchTab('sparepart', this)">Spare Part</button>
+        <button class="tab-btn" onclick="switchTab('dimensi-rotor', this)">Dimensi Shaft Rotor</button>
+        <button class="tab-btn" onclick="switchTab('dimensi-housing', this)">Dimensi Housing & Cover</button>
+        <button class="tab-btn" onclick="switchTab('clearance-runout', this)">Run-out</button>
+      </div>
+
+      <!-- ==================== TAB 1: SPARE PART ==================== -->
+      <div id="tab-sparepart" class="tab-content active">
+        <div class="sheet">
+          <table class="header-table">
+            <tr>
+              <td style="width: 120px; padding: 5px;"><img src="logo-intidaya.jpg" style="max-width: 100px; max-height: 50px; object-fit: contain;"></td>
+              <td class="title-header">INSPEKSI NAMA PART<br>ROTARY VALVE / AIRLOCK</td>
+              <td style="width: 120px; padding: 5px;"><img src="logo-iso.jpg" style="max-width: 100px; max-height: 50px; object-fit: contain;"></td>
+            </tr>
+          </table>
+
+          <table class="form-table">
+            <tr><td style="width: 20%;" class="text-left"><b>BRAND</b></td><td style="width: 80%;"><input type="text" class="sync-brand"></td></tr>
+            <tr><td class="text-left"><b>TYPE/SN</b></td><td><input type="text" class="sync-typesn"></td></tr>
+            <tr><td class="text-left"><b>CUSTOMER</b></td><td><input type="text" class="sync-customer"></td></tr>
+            <tr><td class="text-left"><b>NO. SO</b></td><td><input type="text" class="sync-noso"></td></tr>
+          </table>
+
+          <datalist id="masterMidList"></datalist>
+
+          <table class="form-table" id="sparePartTable">
+            <thead>
+              <tr>
+                <th colspan="2" style="width: 24%;" class="text-left">Spare Part</th>
+                <th rowspan="2" style="width: 22%;">Kode/Dimensi</th>
+                <th rowspan="2" style="width: 14%;">MID</th>
+                <th rowspan="2" style="width: 6%;">Qty<br>(pcs)</th>
+                <th colspan="2" style="width: 10%;">Kondisi</th>
+                <th rowspan="2" style="width: 16%;">Keterangan</th>
+                <th rowspan="2" style="width: 8%;" class="no-print">Aksi</th>
+              </tr>
+              <tr>
+                <th style="width: 4%;">No</th>
+                <th style="width: 20%;">Nama Part</th>
+                <th style="width: 5%;">OK</th>
+                <th style="width: 5%;">NG</th>
+              </tr>
+            </thead>
+            <tbody id="sparePartTbody">
+              <tr><td class="row-num">1</td><td class="text-left"><input type="text" class="text-input-left" value="Bearing Drive Side (DE)"></td><td><input type="text" list="masterMidList" class="part-code-input text-input-left" placeholder="Ketik kode/nama..." oninput="handleCodeSearch(this)"></td><td><input type="text" class="part-mid-input" placeholder="Auto / Manual..."></td><td><input type="number"></td><td><input type="radio" name="cond_1"></td><td><input type="radio" name="cond_1"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertSparePartRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteSparePartRow(this)">🗑️</button></td></tr>
+              <tr><td class="row-num">2</td><td class="text-left"><input type="text" class="text-input-left" value="Bearing Non-Drive (NDE)"></td><td><input type="text" list="masterMidList" class="part-code-input text-input-left" placeholder="Ketik kode/nama..." oninput="handleCodeSearch(this)"></td><td><input type="text" class="part-mid-input" placeholder="Auto / Manual..."></td><td><input type="number"></td><td><input type="radio" name="cond_2"></td><td><input type="radio" name="cond_2"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertSparePartRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteSparePartRow(this)">🗑️</button></td></tr>
+              <tr><td class="row-num">3</td><td class="text-left"><input type="text" class="text-input-left" value="Gland Packing"></td><td><input type="text" list="masterMidList" class="part-code-input text-input-left" placeholder="Ketik kode/nama..." oninput="handleCodeSearch(this)"></td><td><input type="text" class="part-mid-input" placeholder="Auto / Manual..."></td><td><input type="number"></td><td><input type="radio" name="cond_3"></td><td><input type="radio" name="cond_3"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertSparePartRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteSparePartRow(this)">🗑️</button></td></tr>
+              <tr><td class="row-num">4</td><td class="text-left"><input type="text" class="text-input-left" value="Shaft Seal / Oil Seal"></td><td><input type="text" list="masterMidList" class="part-code-input text-input-left" placeholder="Ketik kode/nama..." oninput="handleCodeSearch(this)"></td><td><input type="text" class="part-mid-input" placeholder="Auto / Manual..."></td><td><input type="number"></td><td><input type="radio" name="cond_4"></td><td><input type="radio" name="cond_4"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertSparePartRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteSparePartRow(this)">🗑️</button></td></tr>
+              <tr><td class="row-num">5</td><td class="text-left"><input type="text" class="text-input-left" value="Locknut"></td><td><input type="text" list="masterMidList" class="part-code-input text-input-left" placeholder="Ketik kode/nama..." oninput="handleCodeSearch(this)"></td><td><input type="text" class="part-mid-input" placeholder="Auto / Manual..."></td><td><input type="number"></td><td><input type="radio" name="cond_5"></td><td><input type="radio" name="cond_5"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertSparePartRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteSparePartRow(this)">🗑️</button></td></tr>
+              <tr><td class="row-num">6</td><td class="text-left"><input type="text" class="text-input-left" value="Gasket"></td><td><input type="text" list="masterMidList" class="part-code-input text-input-left" placeholder="Ketik kode/nama..." oninput="handleCodeSearch(this)"></td><td><input type="text" class="part-mid-input" placeholder="Auto / Manual..."></td><td><input type="number"></td><td><input type="radio" name="cond_6"></td><td><input type="radio" name="cond_6"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertSparePartRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteSparePartRow(this)">🗑️</button></td></tr>
+              <tr><td class="row-num">7</td><td class="text-left"><input type="text" class="text-input-left" value="O-ring"></td><td><input type="text" list="masterMidList" class="part-code-input text-input-left" placeholder="Ketik kode/nama..." oninput="handleCodeSearch(this)"></td><td><input type="text" class="part-mid-input" placeholder="Auto / Manual..."></td><td><input type="number"></td><td><input type="radio" name="cond_7"></td><td><input type="radio" name="cond_7"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertSparePartRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteSparePartRow(this)">🗑️</button></td></tr>
+              <tr><td class="row-num">7</td><td class="text-left"><input type="text" class="text-input-left" placeholder="part tambahan""></td><td><input type="text" list="masterMidList" class="part-code-input text-input-left" placeholder="Ketik kode/nama..." oninput="handleCodeSearch(this)"></td><td><input type="text" class="part-mid-input" placeholder="Auto / Manual..."></td><td><input type="number"></td><td><input type="radio" name="cond_7"></td><td><input type="radio" name="cond_7"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertSparePartRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteSparePartRow(this)">🗑️</button></td></tr>
+              <tr><td class="row-num">7</td><td class="text-left"><input type="text" class="text-input-left" placeholder="part tambahan...""></td><td><input type="text" list="masterMidList" class="part-code-input text-input-left" placeholder="Ketik kode/nama..." oninput="handleCodeSearch(this)"></td><td><input type="text" class="part-mid-input" placeholder="Auto / Manual..."></td><td><input type="number"></td><td><input type="radio" name="cond_7"></td><td><input type="radio" name="cond_7"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertSparePartRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteSparePartRow(this)">🗑️</button></td></tr>
+              <tr><td class="row-num">8</td><td class="text-left"><input type="text" class="text-input-left" placeholder="part tambahan..."></td><td><input type="text" list="masterMidList" class="part-code-input text-input-left" placeholder="Ketik kode/nama..." oninput="handleCodeSearch(this)"></td><td><input type="text" class="part-mid-input" placeholder="Auto / Manual..."></td><td><input type="number"></td><td><input type="radio" name="cond_8"></td><td><input type="radio" name="cond_8"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertSparePartRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteSparePartRow(this)">🗑️</button></td></tr>
+            </tbody>
+          </table>
+
+          <button type="button" class="btn-add-row" onclick="addSparePartRow()">➕ Tambah Baris di Paling Bawah</button>
+          
+          <div style="display: flex; gap: 10px; margin-top: 15px;" class="no-print">
+            <button type="button" class="btn-action" style="background-color: #eab308; color:#713f12; flex: 1;" onclick="backToDataOrder()">✏️ Edit Data Order</button>
+            <button type="button" class="btn-action" style="background-color: #64748b; flex: 1;" onclick="window.location.href='../index.html'">🏠 Kembali ke Home</button>
+            <button type="button" class="btn-action" style="background-color: #007bff; flex: 2;" onclick="openMergedReviewModal()">🔍 Preview Document (Merger 4 Tab)</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ==================== TAB 2: DIMENSI ROTOR POCKET ==================== -->
+      <div id="tab-dimensi-rotor" class="tab-content">
+        <div class="sheet">
+          <table class="header-table">
+            <tr>
+              <td style="width: 120px; padding: 5px;"><img src="logo-intidaya.jpg" style="max-width: 100px; max-height: 50px; object-fit: contain;"></td>
+              <td class="title-header">INSPEKSI ROTOR & VISUAL<br>ROTARY VALVE / AIRLOCK</td>
+              <td style="width: 120px; padding: 5px;"><img src="logo-iso.jpg" style="max-width: 100px; max-height: 50px; object-fit: contain;"></td>
+            </tr>
+          </table>
+
+          <table class="form-table">
+            <tr><td style="width: 20%;" class="text-left"><b>BRAND</b></td><td style="width: 80%;"><input type="text" class="sync-brand"></td></tr>
+            <tr><td class="text-left"><b>TYPE/SN</b></td><td><input type="text" class="sync-typesn"></td></tr>
+            <tr><td class="text-left"><b>CUSTOMER</b></td><td><input type="text" class="sync-customer"></td></tr>
+            <tr><td class="text-left"><b>NO. SO</b></td><td><input type="text" class="sync-noso"></td></tr>
+          </table>
+
+          <!-- AREA UPLOAD & ANOTASI ROTOR POCKET -->
+          <div class="rotor-annotator-wrapper" style="border: 1px solid #000; padding: 12px; margin: 10px 0; background: #fafafa;">
+              <div style="display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 10px;">
+                  <label style="background: #1e3a8a; color: #fff; padding: 6px 14px; border-radius: 4px; cursor: pointer; font-size: 13px; font-weight: bold;">
+                      📷 Ambil Foto / Upload
+                      <input type="file" id="rotorImageInput" accept="image/*" style="display: none;" onchange="loadAnnotatorImage(event, 'rotorPreviewImg', 'placeholderTextRotor', 'statusModeRotor')">
+                  </label>
+                  <button type="button" onclick="toggleAddMarkerMode('rotor')" id="btnModePanahRotor" style="background: #0284c7; color: #fff; border: none; padding: 6px 14px; border-radius: 4px; cursor: pointer; font-size: 13px;">
+                      ➕ Mode Tambah Panah
+                  </button>
+                  <button type="button" onclick="undoLastMarker('rotorAnnotationArea', 'rotor')" style="background: #eab308; color: #000; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 13px;">
+                      ↩️ Hapus Terakhir
+                  </button>
+                  <button type="button" onclick="resetAnnotatorCanvas('rotorAnnotationArea', 'rotorPreviewImg', 'placeholderTextRotor', 'rotorImageInput', 'btnModePanahRotor', 'statusModeRotor', 'rotor')" style="background: #dc2626; color: #fff; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 13px;">
+                      🗑️ Reset
+                  </button>
+                  <span id="statusModeRotor" style="font-size: 12px; color: #555; margin-left: auto;">Pilih foto terlebih dahulu.</span>
+              </div>
+              <div id="rotorAnnotationArea" style="position: relative; width: 100%; min-height: 260px; border: 2px dashed #cbd5e1; background: #fff; display: flex; justify-content: center; align-items: center; overflow: hidden; user-select: none;">
+                  <img id="rotorPreviewImg" src="" alt="Preview Rotor" style="display: none; max-width: 100%; max-height: 450px; object-fit: contain; pointer-events: none;">
+                  <span id="placeholderTextRotor" style="color: #94a3b8; font-size: 14px;">Belum ada gambar yang diunggah</span>
+              </div>
+          </div>
+
+          <table class="form-table">
+            <thead>
+              <tr>
+                <th rowspan="2" style="width: 5%;">Area</th>
+                <th rowspan="2" style="width: 28%;">Deskripsi Pengukuran Rotor Vane</th>
+                <th rowspan="2" style="width: 14%;">Standar (mm)</th>
+                <th colspan="3" style="width: 27%;">Pengukuran Aktual (mm)</th>
+                <th colspan="2" style="width: 10%;">Visual Check</th>
+                <th rowspan="2" style="width: 12%;">Keterangan</th>
+                <th rowspan="2" style="width: 4%;" class="no-print">Aksi</th>
+              </tr>
+              <tr>
+                <th>Posisi 1</th><th>Posisi 2</th><th>Panjang/Depth</th><th>OK</th><th>NG</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="bg-gray"><td colspan="10" class="text-left" style="font-weight: bold;">Poros & Vane Pocket Rotor</td></tr>
+              <tr><td>A</td><td class="text-left"><input type="text" placeholder="Pulley / sproket..."></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="vrv_A"></td><td><input type="radio" name="vrv_A"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
+              <tr><td>B</td><td class="text-left"><input type="text" placeholder="Bearing DE..."></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="vrv_B"></td><td><input type="radio" name="vrv_B"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
+              <tr><td>C</td><td class="text-left"><input type="text" placeholder="Seal DE..."></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="vrv_C"></td><td><input type="radio" name="vrv_C"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
+              <tr><td>D</td><td class="text-left"><input type="text" placeholder="Puncak -1..."></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="vrv_D"></td><td><input type="radio" name="vrv_D"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
+              <tr><td>E</td><td class="text-left"><input type="text" placeholder="Puncak -2..."></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="vrv_E"></td><td><input type="radio" name="vrv_E"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
+              <tr><td>F</td><td class="text-left"><input type="text" placeholder="Puncak -3..."></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="vrv_F"></td><td><input type="radio" name="vrv_F"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
+              <tr><td>G</td><td class="text-left"><input type="text" placeholder="Bearing NDE..."></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="vrv_G"></td><td><input type="radio" name="vrv_G"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
+              <tr><td>H</td><td class="text-left"><input type="text" placeholder="Bagian rotor tambahan..."></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="vrv_H"></td><td><input type="radio" name="vrv_H"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
+            </tbody>
+          </table>
+
+          <div style="display: flex; gap: 10px; margin-top: 15px;" class="no-print">
+            <button type="button" class="btn-action" style="background-color: #eab308; color:#713f12; flex: 1;" onclick="backToDataOrder()">✏️ Edit Data Order</button>
+            <button type="button" class="btn-action" style="background-color: #64748b; flex: 1;" onclick="window.location.href='../index.html'">🏠 Kembali ke Home</button>
+            <button type="button" class="btn-action" style="background-color: #007bff; flex: 2;" onclick="openMergedReviewModal()">🔍 Preview Document (Merger 4 Tab)</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ==================== TAB 3: DIMENSI HOUSING & END COVER ==================== -->
+      <div id="tab-dimensi-housing" class="tab-content">
+        <div class="sheet">
+          <table class="header-table">
+            <tr>
+              <td style="width: 120px; padding: 5px;"><img src="logo-intidaya.jpg" style="max-width: 100px; max-height: 50px; object-fit: contain;"></td>
+              <td class="title-header">INSPEKSI HOSING & VISUAL<br>ROTARY VALVE / AIRLOCK</td>
+              <td style="width: 120px; padding: 5px;"><img src="logo-iso.jpg" style="max-width: 100px; max-height: 50px; object-fit: contain;"></td>
+            </tr>
+          </table>
+
+          <table class="form-table">
+            <tr><td style="width: 20%;" class="text-left"><b>BRAND</b></td><td style="width: 80%;"><input type="text" class="sync-brand"></td></tr>
+            <tr><td class="text-left"><b>TYPE/SN</b></td><td><input type="text" class="sync-typesn"></td></tr>
+            <tr><td class="text-left"><b>CUSTOMER</b></td><td><input type="text" class="sync-customer"></td></tr>
+            <tr><td class="text-left"><b>NO. SO</b></td><td><input type="text" class="sync-noso"></td></tr>
+          </table>
+
+          <!-- AREA UPLOAD & ANOTASI HOUSING & COVER -->
+          <div class="rotor-annotator-wrapper" style="border: 1px solid #000; padding: 12px; margin: 10px 0; background: #fafafa;">
+              <div style="display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 10px;">
+                  <label style="background: #1e3a8a; color: #fff; padding: 6px 14px; border-radius: 4px; cursor: pointer; font-size: 13px; font-weight: bold;">
+                      📷 Ambil Foto / Upload
+                      <input type="file" id="housingImageInput" accept="image/*" style="display: none;" onchange="loadAnnotatorImage(event, 'housingPreviewImg', 'placeholderTextHousing', 'statusModeHousing')">
+                  </label>
+                  <button type="button" onclick="toggleAddMarkerMode('housing')" id="btnModePanahHousing" style="background: #0284c7; color: #fff; border: none; padding: 6px 14px; border-radius: 4px; cursor: pointer; font-size: 13px;">
+                      ➕ Mode Tambah Panah
+                  </button>
+                  <button type="button" onclick="undoLastMarker('housingAnnotationArea', 'housing')" style="background: #eab308; color: #000; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 13px;">
+                      ↩️ Hapus Terakhir
+                  </button>
+                  <button type="button" onclick="resetAnnotatorCanvas('housingAnnotationArea', 'housingPreviewImg', 'placeholderTextHousing', 'housingImageInput', 'btnModePanahHousing', 'statusModeHousing', 'housing')" style="background: #dc2626; color: #fff; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 13px;">
+                      🗑️ Reset
+                  </button>
+                  <span id="statusModeHousing" style="font-size: 12px; color: #555; margin-left: auto;">Pilih foto terlebih dahulu.</span>
+              </div>
+              <div id="housingAnnotationArea" style="position: relative; width: 100%; min-height: 260px; border: 2px dashed #cbd5e1; background: #fff; display: flex; justify-content: center; align-items: center; overflow: hidden; user-select: none;">
+                  <img id="housingPreviewImg" src="" alt="Preview Housing" style="display: none; max-width: 100%; max-height: 450px; object-fit: contain; pointer-events: none;">
+                  <span id="placeholderTextHousing" style="color: #94a3b8; font-size: 14px;">Belum ada gambar yang diunggah</span>
+              </div>
+          </div>
+
+          <table class="form-table">
+            <thead>
+              <tr>
+                <th rowspan="2" style="width: 5%;">Area</th>
+                <th rowspan="2" style="width: 28%;">Deskripsi Bagian Housing & Cover</th>
+                <th rowspan="2" style="width: 14%;">Standar (mm)</th>
+                <th colspan="3" style="width: 27%;">Pengukuran Aktual (mm)</th>
+                <th colspan="2" style="width: 10%;">Visual Check</th>
+                <th rowspan="2" style="width: 12%;">Keterangan</th>
+                <th rowspan="2" style="width: 4%;" class="no-print">Aksi</th>
+              </tr>
+              <tr>
+                <th>0° / Atas</th><th>90° / Samping</th><th>Panjang Body</th><th>OK</th><th>NG</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="bg-gray"><td colspan="10" class="text-left" style="font-weight: bold;">Casing Bore & Side End Covers</td></tr>
+              <tr><td>A</td><td class="text-left"><input type="text" placeholder="Hosing Bearing DE..."></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="vch_A"></td><td><input type="radio" name="vch_A"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
+              <tr><td>B</td><td class="text-left"><input type="text" placeholder="Hosing seal DE..."></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="vch_B"></td><td><input type="radio" name="vch_B"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
+              <tr><td>C</td><td class="text-left"><input type="text" placeholder="Hosing Bearing NDE..."></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="vch_C"></td><td><input type="radio" name="vch_C"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
+              <tr><td>D</td><td class="text-left"><input type="text" placeholder="Hosing seal NDE..."></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="vch_D"></td><td><input type="radio" name="vch_D"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
+              <tr><td>E</td><td class="text-left"><input type="text" placeholder="Bagian housing tambahan..."></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="vch_E"></td><td><input type="radio" name="vch_E"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
+              <tr><td>F</td><td class="text-left"><input type="text" placeholder="Bagian housing tambahan..."></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="vch_F"></td><td><input type="radio" name="vch_F"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
+              <tr><td>G</td><td class="text-left"><input type="text" placeholder="Bagian housing tambahan..."></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="vch_G"></td><td><input type="radio" name="vch_G"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
+              <tr><td>H</td><td class="text-left"><input type="text" placeholder="Bagian housing tambahan..."></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="vch_H"></td><td><input type="radio" name="vch_H"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
+            </tbody>
+          </table>
+
+          <div style="display: flex; gap: 10px; margin-top: 15px;" class="no-print">
+            <button type="button" class="btn-action" style="background-color: #eab308; color:#713f12; flex: 1;" onclick="backToDataOrder()">✏️ Edit Data Order</button>
+            <button type="button" class="btn-action" style="background-color: #64748b; flex: 1;" onclick="window.location.href='../index.html'">🏠 Kembali ke Home</button>
+            <button type="button" class="btn-action" style="background-color: #007bff; flex: 2;" onclick="openMergedReviewModal()">🔍 Preview Document (Merger 4 Tab)</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ==================== TAB 4: RUN-OUT ==================== -->
+      <div id="tab-clearance-runout" class="tab-content">
+        <div class="sheet">
+          <table class="header-table">
+            <tr>
+              <td style="width: 120px; padding: 5px;"><img src="logo-intidaya.jpg" style="max-width: 100px; max-height: 50px; object-fit: contain;"></td>
+              <td class="title-header">INSPEKSI RUN-OUT & VISUAL<br>ROTARY VALVE / AIRLOCK</td>
+              <td style="width: 120px; padding: 5px;"><img src="logo-iso.jpg" style="max-width: 100px; max-height: 50px; object-fit: contain;"></td>
+            </tr>
+          </table>
+
+          <table class="form-table">
+            <tr><td style="width: 20%;" class="text-left"><b>BRAND</b></td><td style="width: 80%;"><input type="text" class="sync-brand"></td></tr>
+            <tr><td class="text-left"><b>TYPE/SN</b></td><td><input type="text" class="sync-typesn"></td></tr>
+            <tr><td class="text-left"><b>CUSTOMER</b></td><td><input type="text" class="sync-customer"></td></tr>
+            <tr><td class="text-left"><b>NO. SO</b></td><td><input type="text" class="sync-noso"></td></tr>
+          </table>
+
+          <!-- AREA UPLOAD & ANOTASI RUN-OUT & CLEARANCE -->
+          <div class="rotor-annotator-wrapper" style="border: 1px solid #000; padding: 12px; margin: 10px 0; background: #fafafa;">
+              <div style="display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 10px;">
+                  <label style="background: #1e3a8a; color: #fff; padding: 6px 14px; border-radius: 4px; cursor: pointer; font-size: 13px; font-weight: bold;">
+                      📷 Ambil Foto / Upload
+                      <input type="file" id="runoutImageInput" accept="image/*" style="display: none;" onchange="loadAnnotatorImage(event, 'runoutPreviewImg', 'placeholderTextRunout', 'statusModeRunout')">
+                  </label>
+                  <button type="button" onclick="toggleAddMarkerMode('runout')" id="btnModePanahRunout" style="background: #0284c7; color: #fff; border: none; padding: 6px 14px; border-radius: 4px; cursor: pointer; font-size: 13px;">
+                      ➕ Mode Tambah Panah
+                  </button>
+                  <button type="button" onclick="undoLastMarker('runoutAnnotationArea', 'runout')" style="background: #eab308; color: #000; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 13px;">
+                      ↩️ Hapus Terakhir
+                  </button>
+                  <button type="button" onclick="resetAnnotatorCanvas('runoutAnnotationArea', 'runoutPreviewImg', 'placeholderTextRunout', 'runoutImageInput', 'btnModePanahRunout', 'statusModeRunout', 'runout')" style="background: #dc2626; color: #fff; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 13px;">
+                      🗑️ Reset
+                  </button>
+                  <span id="statusModeRunout" style="font-size: 12px; color: #555; margin-left: auto;">Pilih foto terlebih dahulu.</span>
+              </div>
+              <div id="runoutAnnotationArea" style="position: relative; width: 100%; min-height: 260px; border: 2px dashed #cbd5e1; background: #fff; display: flex; justify-content: center; align-items: center; overflow: hidden; user-select: none;">
+                  <img id="runoutPreviewImg" src="" alt="Preview Runout" style="display: none; max-width: 100%; max-height: 450px; object-fit: contain; pointer-events: none;">
+                  <span id="placeholderTextRunout" style="color: #94a3b8; font-size: 14px;">Belum ada gambar yang diunggah</span>
+              </div>
+          </div>
+
+          <!-- TABEL 1: CLEARANCE CELAH ROTARY VALVE -->
+          <table class="form-table">
+            <thead>
+              <tr class="bg-gray"><th colspan="9" class="text-left">A. PEMERIKSAAN CELAH OPERASIONAL (CLEARANCE FEELER GAUGE)</th></tr>
+              <tr>
+                <th style="width: 5%;">No</th>
+                <th style="width: 32%;">Posisi Celah (Clearance)</th>
+                <th style="width: 15%;">Standar Pabrik (mm)</th>
+                <th style="width: 12%;">Top / 0°</th>
+                <th style="width: 12%;">Bottom / 180°</th>
+                <th colspan="2" style="width: 10%;">Hasil</th>
+                <th style="width: 14%;">Keterangan</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>1</td><td class="text-left"><input type="text" value="Radial Clearance (Rotor ke Body)"></td><td><input type="text" placeholder="0.10 - 0.20 mm"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="cl_1"></td><td><input type="radio" name="cl_1"></td><td><input type="text"></td></tr>
+              <tr><td>2</td><td class="text-left"><input type="text" value="Axial Clearance DE (Rotor ke Cover DE)"></td><td><input type="text" placeholder="0.15 - 0.25 mm"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="cl_2"></td><td><input type="radio" name="cl_2"></td><td><input type="text"></td></tr>
+              <tr><td>3</td><td class="text-left"><input type="text" value="Axial Clearance NDE (Rotor ke Cover NDE)"></td><td><input type="text" placeholder="0.15 - 0.25 mm"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="cl_3"></td><td><input type="radio" name="cl_3"></td><td><input type="text"></td></tr>
+            </tbody>
+          </table>
+
+          <!-- TABEL 2: RUN-OUT POROS -->
+          <table class="form-table" style="margin-top: 10px;">
+            <thead>
+              <tr class="bg-gray"><th colspan="10" class="text-left">B. PEMERIKSAAN KEBENGKOKAN POROS (RUN-OUT DIAL GAUGE)</th></tr>
+              <tr>
+                <th rowspan="2" style="width: 5%;">Area</th>
+                <th rowspan="2" style="width: 28%;">Posisi Pengukuran Poros</th>
+                <th colspan="4" style="width: 32%;">Pengukuran Dial (mm)</th>
+                <th rowspan="2" style="width: 9%;">TIR</th>
+                <th colspan="2" style="width: 10%;">Hasil</th>
+                <th rowspan="2" style="width: 12%;">Keterangan</th>
+                <th rowspan="2" style="width: 4%;" class="no-print">Aksi</th>
+              </tr>
+              <tr>
+                <th>0°</th><th>90°</th><th>180°</th><th>270°</th><th>OK</th><th>NG</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>1</td><td class="text-left"><input type="text" placeholder="Pulley atau sproket..."></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="rvro_1"></td><td><input type="radio" name="rvro_1"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertRunoutRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
+              <tr><td>2</td><td class="text-left"><input type="text" placeholder="Dudukan Bearing DE..."></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="rvro_2"></td><td><input type="radio" name="rvro_2"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertRunoutRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
+              <tr><td>3</td><td class="text-left"><input type="text" placeholder="Rotor..."></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="rvro_3"></td><td><input type="radio" name="rvro_3"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertRunoutRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
+              <tr><td>4</td><td class="text-left"><input type="text" placeholder="Dudukan Bearing NDE..."></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="rvro_4"></td><td><input type="radio" name="rvro_4"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertRunoutRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
+              <tr><td>5</td><td class="text-left"><input type="text" placeholder="Area runout tambahan..."></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="rvro_5"></td><td><input type="radio" name="rvro_5"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertRunoutRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
+            </tbody>
+          </table>
+
+          <!-- Tanda Tangan Operator & Supervisor -->
+          <div style="margin-top: 30px; display: flex; justify-content: space-between; text-align: center;">
+            <div style="width: 40%;">
+              <b>Diperiksa oleh Operator:</b><br><br><br><br>
+              <u id="lblOperator" style="font-weight: bold;">( Nama Operator )</u>
+            </div>
+            <div style="width: 40%;">
+              <b>Disetujui oleh Supervisor:</b><br><br><br><br>
+              <u id="lblSupervisor" style="font-weight: bold;">( Nama Supervisor )</u>
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 10px; margin-top: 15px;" class="no-print">
+            <button type="button" class="btn-action" style="background-color: #eab308; color:#713f12; flex: 1;" onclick="backToDataOrder()">✏️ Edit Data Order</button>
+            <button type="button" class="btn-action" style="background-color: #64748b; flex: 1;" onclick="window.location.href='../index.html'">🏠 Kembali ke Home</button>
+            <button type="button" class="btn-action" style="background-color: #007bff; flex: 2;" onclick="openMergedReviewModal()">🔍 Preview Document (Merger 4 Tab Utuh)</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ==================== MODAL PREVIEW MERGER DOKUMEN ==================== -->
+  <div id="reviewModal" class="modal-overlay">
+    <div class="modal-content">
+      <div class="modal-header">
+        <span>📄 PREVIEW MERGER 4 TAB DOKUMEN INSPEKSI ROTARY VALVE</span>
+        <span class="close-modal" onclick="closeReviewModal()">&times;</span>
+      </div>
+      
+      <div id="previewSheetContainer" style="overflow-y: auto; flex: 1; background: #e5e7eb; padding: 15px; border-radius: 4px;"></div>
+
+      <div style="display: flex; gap: 10px; margin-top: 15px;">
+        <button type="button" class="btn-action" style="background-color: #6c757d; flex: 1;" onclick="closeReviewModal()">❌ Edit Kembali</button>
+        <button type="button" class="btn-action" style="background-color: #28a745; flex: 2;" onclick="generatePDF()">🖨️ Print to PDF / Save & Share</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== LOGIKA JAVASCRIPT ==================== -->
+  <script>
+    // 1. MASTER MID AUTOCOMPLETE SYSTEM
+    let masterMidDb = [];
+
+    function loadMasterMID() {
+      fetch('master_mid.json')
+        .then(res => {
+          if (!res.ok) throw new Error('File master_mid.json tidak ditemukan di root');
+          return res.json();
+        })
+        .then(data => { masterMidDb = data; })
+        .catch(err => {
+          fetch('../master_mid.json')
+            .then(res => res.json())
+            .then(data => { masterMidDb = data; })
+            .catch(e => console.error('Gagal memuat JSON:', e));
+        });
+    }
+
+    loadMasterMID();
+    const initDateElem = document.getElementById('initDate');
+    if (initDateElem) initDateElem.valueAsDate = new Date();
+
+    function handleCodeSearch(inputElem) {
+      const keyword = inputElem.value.trim().toLowerCase();
+      const datalist = document.getElementById('masterMidList');
+      const row = inputElem.closest('tr');
+      const midInput = row.querySelector('.part-mid-input');
+
+      if (!keyword || masterMidDb.length === 0) {
+        if (datalist) datalist.innerHTML = '';
+        return;
+      }
+
+      const exactMatch = masterMidDb.find(item => {
+        const nama = (item.name || '').toLowerCase();
+        const kode = (item.kode || '').toLowerCase();
+        return nama === keyword || kode === keyword;
+      });
+
+      if (exactMatch && midInput) {
+        midInput.value = exactMatch.mid || '';
+      }
+
+      if (datalist) {
+        datalist.innerHTML = '';
+        const filtered = masterMidDb
+          .filter(item => {
+            const nama = (item.name || '').toLowerCase();
+            const kode = (item.kode || '').toLowerCase();
+            const mid = (item.mid || '').toLowerCase();
+            return nama.includes(keyword) || kode.includes(keyword) || mid.includes(keyword);
+          })
+          .slice(0, 30);
+
+        filtered.forEach(item => {
+          const opt = document.createElement('option');
+          opt.value = item.name || item.kode;
+          opt.label = `MID: ${item.mid}`;
+          datalist.appendChild(opt);
+        });
+      }
+    }
+
+    // 2. PROSES INITIAL DATA ORDER
+    function processInitData() {
+      const brand = document.getElementById('initBrand').value.trim();
+      const type = document.getElementById('initType').value.trim();
+      const sn = document.getElementById('initSN').value.trim();
+      const customer = document.getElementById('initCustomer').value.trim();
+      const noso = document.getElementById('initNoSO').value.trim();
+      const date = document.getElementById('initDate').value;
+      const operator = document.getElementById('initOperator').value.trim();
+      const supervisor = document.getElementById('initSupervisor').value.trim();
+
+      if (!brand || !type || !sn || !customer || !noso || !date || !operator || !supervisor) {
+        document.getElementById('initAlert').style.display = 'block';
+        return;
+      }
+
+      document.getElementById('initAlert').style.display = 'none';
+
+      document.querySelectorAll('.sync-brand').forEach(el => el.value = brand);
+      document.querySelectorAll('.sync-typesn').forEach(el => el.value = type + ' / ' + sn);
+      document.querySelectorAll('.sync-customer').forEach(el => el.value = customer);
+      document.querySelectorAll('.sync-noso').forEach(el => el.value = noso);
+
+      document.getElementById('lblOperator').textContent = operator;
+      document.getElementById('lblSupervisor').textContent = supervisor;
+
+      document.getElementById('pageInit').style.display = 'none';
+      document.getElementById('mainSystem').style.display = 'block';
+    }
+
+    function backToDataOrder() {
+      document.getElementById('mainSystem').style.display = 'none';
+      document.getElementById('pageInit').style.display = 'block';
+    }
+
+    // 3. SWITCH TAB NAVIGASI
+    function switchTab(tabName, btnElement) {
+      document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+
+      document.getElementById('tab-' + tabName).classList.add('active');
+      btnElement.classList.add('active');
+    }
+
+    // 4. PREVIEW MERGER 4 TAB & CETAK PDF
+    function openMergedReviewModal() {
+      const tabIds = ['tab-sparepart', 'tab-dimensi-rotor', 'tab-dimensi-housing', 'tab-clearance-runout'];
+      const container = document.getElementById('previewSheetContainer');
+      container.innerHTML = '';
+
+      tabIds.forEach(tabId => {
+        const mainSheet = document.querySelector('#' + tabId + ' .sheet');
+        if (!mainSheet) return;
+
+        const clonedSheet = mainSheet.cloneNode(true);
+        clonedSheet.querySelectorAll('.btn-action, .btn-add-row, .btn-insert-row, .btn-delete-row, .no-print').forEach(el => el.remove());
+
+        const originalInputs = mainSheet.querySelectorAll('input, select');
+        const clonedInputs = clonedSheet.querySelectorAll('input, select');
+
+        originalInputs.forEach((input, index) => {
+          const cloned = clonedInputs[index];
+          if (!cloned) return;
+
+          if (input.type === 'radio') {
+            const checkedSymbol = input.checked ? '✓' : '';
+            cloned.outerHTML = `<span style="font-weight:bold; font-size:12px;">${checkedSymbol}</span>`;
+          } else if (input.tagName === 'SELECT') {
+            const selectedText = input.options[input.selectedIndex] ? input.options[input.selectedIndex].text : input.value;
+            cloned.outerHTML = `<span style="font-weight:bold;">${selectedText}</span>`;
+          } else {
+            const val = input.value || '';
+            cloned.outerHTML = `<span>${val}</span>`;
+          }
+        });
+
+        container.appendChild(clonedSheet);
+      });
+
+      document.getElementById('reviewModal').style.display = 'flex';
+    }
+
+    function closeReviewModal() {
+      document.getElementById('reviewModal').style.display = 'none';
+    }
+
+    function generatePDF() {
+      closeReviewModal();
+      window.print();
+    }
+
+    // 5. MANAJEMEN BARIS TABEL
+    function deleteSparePartRow(btn) {
+      btn.closest('tr').remove();
+      reindexSparePartRows();
+    }
+
+    function deleteGeneralRow(btn) {
+      btn.closest('tr').remove();
+    }
+
+    function reindexSparePartRows() {
+      const rows = document.querySelectorAll('#sparePartTbody tr');
+      rows.forEach((row, index) => {
+        const numCell = row.querySelector('.row-num');
+        if (numCell) numCell.textContent = index + 1;
+        const radios = row.querySelectorAll('input[type="radio"]');
+        radios.forEach(radio => radio.name = 'cond_' + (index + 1));
+      });
+    }
+
+    function insertSparePartRowBelow(btn) {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td class="row-num">-</td>
+        <td class="text-left"><input type="text" class="text-input-left" placeholder="Part baru..."></td>
+        <td><input type="text" list="masterMidList" class="part-code-input text-input-left" placeholder="Ketik kode/nama..." oninput="handleCodeSearch(this)"></td>
+        <td><input type="text" class="part-mid-input" placeholder="Auto / Manual..."></td>
+        <td><input type="number"></td>
+        <td><input type="radio"></td>
+        <td><input type="radio"></td>
+        <td><input type="text"></td>
+        <td class="no-print">
+          <button type="button" class="btn-insert-row" onclick="insertSparePartRowBelow(this)">➕</button>
+          <button type="button" class="btn-delete-row" onclick="deleteSparePartRow(this)">🗑️</button>
+        </td>`;
+      btn.closest('tr').parentNode.insertBefore(tr, btn.closest('tr').nextSibling);
+      reindexSparePartRows();
+    }
+
+    function addSparePartRow() {
+      const tbody = document.getElementById('sparePartTbody');
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td class="row-num">-</td>
+        <td class="text-left"><input type="text" class="text-input-left" placeholder="Part baru..."></td>
+        <td><input type="text" list="masterMidList" class="part-code-input text-input-left" placeholder="Ketik kode/nama..." oninput="handleCodeSearch(this)"></td>
+        <td><input type="text" class="part-mid-input" placeholder="Auto / Manual..."></td>
+        <td><input type="number"></td>
+        <td><input type="radio"></td>
+        <td><input type="radio"></td>
+        <td><input type="text"></td>
+        <td class="no-print">
+          <button type="button" class="btn-insert-row" onclick="insertSparePartRowBelow(this)">➕</button>
+          <button type="button" class="btn-delete-row" onclick="deleteSparePartRow(this)">🗑️</button>
+        </td>`;
+      tbody.appendChild(tr);
+      reindexSparePartRows();
+    }
+
+    function insertGeneralRowBelow(btn) {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>-</td>
+        <td class="text-left"><input type="text" class="text-input-left" placeholder="Bagian baru..."></td>
+        <td><input type="text"></td>
+        <td><input type="text"></td>
+        <td><input type="text"></td>
+        <td><input type="text"></td>
+        <td><input type="radio"></td>
+        <td><input type="radio"></td>
+        <td><input type="text"></td>
+        <td class="no-print">
+          <button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button>
+          <button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button>
+        </td>`;
+      btn.closest('tr').parentNode.insertBefore(tr, btn.closest('tr').nextSibling);
+    }
+
+    function insertRunoutRowBelow(btn) {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>-</td>
+        <td class="text-left"><input type="text" class="text-input-left" placeholder="Area baru..."></td>
+        <td><input type="text"></td>
+        <td><input type="text"></td>
+        <td><input type="text"></td>
+        <td><input type="text"></td>
+        <td><input type="text"></td>
+        <td><input type="radio"></td>
+        <td><input type="radio"></td>
+        <td><input type="text"></td>
+        <td class="no-print">
+          <button type="button" class="btn-insert-row" onclick="insertRunoutRowBelow(this)">➕</button>
+          <button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button>
+        </td>`;
+      btn.closest('tr').parentNode.insertBefore(tr, btn.closest('tr').nextSibling);
+    }
+
+    // ==================== ENGINE ANOTASI & PANAH DINAMIS 4-ARAH (SNAP 0, 90, 180, 270) ====================
+    const annotatorState = {
+      rotor: { code: 65, isAdd: false },
+      housing: { code: 65, isAdd: false },
+      runout: { code: 65, isAdd: false }
+    };
+
+    function loadAnnotatorImage(event, imgId, placeholderId, statusId) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const preview = document.getElementById(imgId);
+        preview.src = e.target.result;
+        preview.style.display = 'block';
+        document.getElementById(placeholderId).style.display = 'none';
+        document.getElementById(statusId).innerText = "Klik 'Mode Tambah Panah' lalu klik pada titik target gambar.";
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function updateAnnotatorButtonState(type) {
+  const state = annotatorState[type];
+  const btn = document.getElementById('btnModePanah' + type.charAt(0).toUpperCase() + type.slice(1));
+  const area = document.getElementById(type + 'AnnotationArea');
+  const status = document.getElementById('statusMode' + type.charAt(0).toUpperCase() + type.slice(1));
+
+  if (state.isAdd) {
+    btn.style.background = '#16a34a';
+    btn.innerText = '🎯 Klik 1x pada Gambar';
+    area.style.cursor = 'crosshair';
+    status.innerText = `Klik 1 titik untuk menaruh panah (${String.fromCharCode(state.code)}).`;
+  } else {
+    btn.style.background = '#0284c7';
+    btn.innerText = '➕ Tambah Panah';
+    area.style.cursor = 'default';
+    status.innerText = `Siap. Panah berikutnya: (${String.fromCharCode(state.code)}). Klik "Tambah Panah" bila perlu.`;
+  }
+}
+
+function toggleAddMarkerMode(type) {
+  const state = annotatorState[type];
+  const previewImg = document.getElementById(type + 'PreviewImg');
+  if (!previewImg.src || previewImg.style.display === 'none') {
+    alert('Silakan unggah foto komponen terlebih dahulu.');
+    return;
+  }
+  state.isAdd = !state.isAdd;
+  updateAnnotatorButtonState(type);
+}
+
+function setupAnnotatorAreaListener(type) {
+  const area = document.getElementById(type + 'AnnotationArea');
+  area.addEventListener('click', function(e) {
+    const state = annotatorState[type];
+    if (!state.isAdd) return;
+    if (e.target.closest('.rotor-marker')) return;
+
+    const rect = area.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    const label = String.fromCharCode(state.code);
+    createUniversalMarker(area, x, y, label);
+
+    state.code++;
+    
+    // OTOMATIS NONAKTIFKAN MODE: Tidak akan membuat panah baru lagi saat mengedit
+    state.isAdd = false;
+    updateAnnotatorButtonState(type);
+  });
+}
+
+    function createUniversalMarker(containerArea, x, y, label) {
+      const marker = document.createElement('div');
+      marker.className = 'rotor-marker dir-down';
+      marker.setAttribute('data-dir', 'down');
+      marker.style.left = `${x}px`;
+      marker.style.top = `${y}px`;
+
+      marker.innerHTML = `
+        <div class="rotor-badge" title="Tahan & geser untuk memindahkan lingkaran">${label}</div>
+        <div class="rotor-stem" style="height: 30px;"></div>
+        <div class="rotor-arrow" title="Tarik ke arah manapun (Snap 0°, 90°, 180°, 270°)"></div>
+      `;
+
+      const badge = marker.querySelector('.rotor-badge');
+      const stem = marker.querySelector('.rotor-stem');
+      const arrow = marker.querySelector('.rotor-arrow');
+
+      // 1. Drag Pindah Posisi Lingkaran/Badge
+      badge.addEventListener('mousedown', function(e) {
+        e.stopPropagation();
+        let shiftX = e.clientX - marker.getBoundingClientRect().left - (marker.offsetWidth / 2);
+        let shiftY = e.clientY - marker.getBoundingClientRect().top - (marker.offsetHeight / 2);
+
+        function onMouseMove(moveEvent) {
+          const rect = containerArea.getBoundingClientRect();
+          let newX = moveEvent.clientX - rect.left - shiftX;
+          let newY = moveEvent.clientY - rect.top - shiftY;
+
+          marker.style.left = `${newX}px`;
+          marker.style.top = `${newY}px`;
+        }
+
+        function onMouseUp() {
+          document.removeEventListener('mousemove', onMouseMove);
+          document.removeEventListener('mouseup', onMouseUp);
+        }
+
+        document.addEventListener('mousemove', onMouseMove);
+        document.addEventListener('mouseup', onMouseUp);
+      });
+
+      // 2. Drag Ujung Panah Mengikuti Arah Kursor (Snap 0°, 90°, 180°, 270°)
+      arrow.addEventListener('mousedown', function(e) {
+        e.stopPropagation();
+
+        function onArrowMove(moveEvent) {
+          const badgeRect = badge.getBoundingClientRect();
+          const badgeCenterX = badgeRect.left + badgeRect.width / 2;
+          const badgeCenterY = badgeRect.top + badgeRect.height / 2;
+
+          const dx = moveEvent.clientX - badgeCenterX;
+          const dy = moveEvent.clientY - badgeCenterY;
+
+          // Derajat trigonometri (atan2)
+          const angle = Math.atan2(dy, dx) * (180 / Math.PI);
+          let dir = 'down';
+          let stemLen = 30;
+
+          // Kuadran Snap 4 Sudut
+          if (angle >= -45 && angle <= 45) {
+            dir = 'right'; // 0°
+            stemLen = Math.max(10, Math.abs(dx) - 18);
+          } else if (angle > 45 && angle <= 135) {
+            dir = 'down';  // 90°
+            stemLen = Math.max(10, Math.abs(dy) - 18);
+          } else if (angle < -45 && angle >= -135) {
+            dir = 'up';    // 270°
+            stemLen = Math.max(10, Math.abs(dy) - 18);
+          } else {
+            dir = 'left';  // 180°
+            stemLen = Math.max(10, Math.abs(dx) - 18);
+          }
+
+          marker.className = `rotor-marker dir-${dir}`;
+          marker.setAttribute('data-dir', dir);
+
+          if (dir === 'down' || dir === 'up') {
+            stem.style.width = '';
+            stem.style.height = `${stemLen}px`;
+          } else {
+            stem.style.height = '';
+            stem.style.width = `${stemLen}px`;
+          }
+        }
+
+        function onArrowUp() {
+          document.removeEventListener('mousemove', onArrowMove);
+          document.removeEventListener('mouseup', onArrowUp);
+        }
+
+        document.addEventListener('mousemove', onArrowMove);
+        document.addEventListener('mouseup', onArrowUp);
+      });
+
+      containerArea.appendChild(marker);
+    }
+
+    function undoLastMarker(areaId, type) {
+      const area = document.getElementById(areaId);
+      const markers = area.querySelectorAll('.rotor-marker');
+      if (markers.length > 0) {
+        markers[markers.length - 1].remove();
+        annotatorState[type].code = Math.max(65, annotatorState[type].code - 1);
+        document.getElementById('statusMode' + type.charAt(0).toUpperCase() + type.slice(1)).innerText = `Label terakhir dihapus. Siap untuk (${String.fromCharCode(annotatorState[type].code)})`;
+      }
+    }
+
+    function resetAnnotatorCanvas(areaId, imgId, placeholderId, inputId, btnId, statusId, type) {
+      const area = document.getElementById(areaId);
+      area.querySelectorAll('.rotor-marker').forEach(m => m.remove());
+      const preview = document.getElementById(imgId);
+      preview.src = '';
+      preview.style.display = 'none';
+      document.getElementById(placeholderId).style.display = 'block';
+      document.getElementById(inputId).value = '';
+      annotatorState[type].code = 65;
+      annotatorState[type].isAdd = false;
+      const btn = document.getElementById(btnId);
+      btn.style.background = '#0284c7';
+      btn.innerText = '➕ Mode Tambah Panah';
+      document.getElementById(statusId).innerText = 'Area berhasil di-reset.';
+    }
+
+    // Inisialisasi Listener untuk Tab 2, 3, dan 4
+    setupAnnotatorAreaListener('rotor');
+    setupAnnotatorAreaListener('housing');
+    setupAnnotatorAreaListener('runout');
+  </script>
+</body>
+</html>

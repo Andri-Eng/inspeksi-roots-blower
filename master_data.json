@@ -1,0 +1,31 @@
+{
+  "5BE150H": {
+    "gap_piston_bore": "0.18-0.25",
+    "gap_piston_spacer": "0.10-0.12",
+    "rotor_housing_dr_1": "0.04-0.06",
+    "rotor_housing_dr_2": "0.04-0.06",
+    "rotor_housing_dr_3": "0.04-0.06",
+    "rotor_housing_dn_1": "0.04-0.06",
+    "rotor_housing_dn_2": "0.04-0.06",
+    "rotor_housing_dn_3": "0.04-0.06",
+    "rotor_rotor_dr_1": "0.12-0.18",
+    "rotor_rotor_dr_2": "0.12-0.18",
+    "rotor_rotor_dr_3": "0.12-0.18",
+    "rotor_rotor_dn_1": "0.14-0.20",
+    "rotor_rotor_dn_2": "0.14-0.20",
+    "rotor_rotor_dn_3": "0.14-0.20",
+    "rotor_sideplate_dr_1": "0.10-0.17",
+    "rotor_sideplate_dr_2": "0.10-0.17",
+    "rotor_sideplate_dr_3": "0.10-0.17",
+    "rotor_sideplate_dn_1": "0.05-0.11",
+    "rotor_sideplate_dn_2": "0.05-0.11",
+    "rotor_sideplate_dn_3": "0.05-0.11",
+    "rotor_sideplate_ds_1": "0.10-0.17",
+    "rotor_sideplate_ds_2": "0.10-0.17",
+    "rotor_sideplate_ds_3": "0.10-0.17",
+    "rotor_sideplate_nds_1": "0.05-0.11",
+    "rotor_sideplate_nds_2": "0.05-0.11",
+    "rotor_sideplate_nds_3": "0.05-0.11",
+    "backlash_gear": "0.03-0.08"
+  }
+}

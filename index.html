@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sistem Inspeksi Assembly & Industrial Repair - PT Intidaya Dinamika Sejati</title>
+  <link rel="stylesheet" href="css/shared.css">
+  <style>
+    /* STYLING BACKGROUND HERO DENGAN GAMBAR EXPLODED VIEW */
+    .hero-wrapper {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; 
+      height: 100vh;
+      background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('root-blower-exploded.jpg') center/cover no-repeat !important;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: clamp(20px, 4vw, 40px) clamp(20px, 5vw, 60px);
+      z-index: 999;
+      box-sizing: border-box;
+    }
+
+    /* ==================== MODERN DYNAMIC LOGIN MODAL ==================== */
+    #pageLoginModal {
+      backdrop-filter: blur(12px) saturate(180%);
+      -webkit-backdrop-filter: blur(12px) saturate(180%);
+      background-color: rgba(15, 23, 42, 0.75);
+      animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .login-card-modern {
+      background: linear-gradient(135deg, rgba(30, 41, 59, 0.95) 0%, rgba(15, 23, 42, 0.98) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 20px;
+      padding: 35px 30px;
+      width: 100%;
+      max-width: 420px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6), 0 0 35px rgba(59, 130, 246, 0.15);
+      position: relative;
+      overflow: hidden;
+      transform-origin: center;
+      animation: scaleUp 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .login-card-modern::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #00f2fe, #4facfe, #00c6ff);
+      box-shadow: 0 0 12px #00f2fe;
+    }
+
+    .login-badge-header {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 54px;
+      height: 54px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(37, 99, 235, 0.05));
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      font-size: 26px;
+      margin-bottom: 12px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+
+    .login-title {
+      font-size: 20px;
+      font-weight: 800;
+      color: #f8fafc;
+      margin: 0 0 6px 0;
+      letter-spacing: -0.02em;
+    }
+
+    .login-subtitle {
+      font-size: 12px;
+      color: #94a3b8;
+      margin: 0 0 24px 0;
+    }
+
+    .input-wrapper-dynamic {
+      position: relative;
+      margin-bottom: 18px;
+      text-align: left;
+    }
+
+    .input-icon-prefix {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 16px;
+      color: #94a3b8;
+      pointer-events: none;
+      transition: color 0.25s;
+    }
+
+    .input-field-dynamic {
+      width: 100%;
+      padding: 13px 42px 13px 40px !important;
+      background: rgba(15, 23, 42, 0.8) !important;
+      border: 1px solid rgba(71, 85, 105, 0.8) !important;
+      border-radius: 12px !important;
+      font-size: 14px !important;
+      color: #ffffff !important;
+      outline: none;
+      transition: all 0.25s ease;
+      box-sizing: border-box;
+    }
+
+    .input-field-dynamic:focus {
+      border-color: #38bdf8 !important;
+      background: rgba(15, 23, 42, 0.95) !important;
+      box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.25), 0 0 15px rgba(56, 189, 248, 0.15) !important;
+    }
+
+    .input-field-dynamic:focus + .input-icon-prefix {
+      color: #38bdf8;
+    }
+
+    .toggle-pwd-btn {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: #94a3b8;
+      cursor: pointer;
+      font-size: 15px;
+      padding: 4px;
+      transition: color 0.2s;
+    }
+    .toggle-pwd-btn:hover { color: #f8fafc; }
+
+    .btn-login-gradient {
+      background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 50%, #0284c7 100%);
+      color: white;
+      border: none;
+      padding: 13px 20px;
+      width: 100%;
+      font-size: 14px;
+      font-weight: 700;
+      border-radius: 12px;
+      cursor: pointer;
+      box-shadow: 0 8px 20px -4px rgba(37, 99, 235, 0.5);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .btn-login-gradient:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 25px -4px rgba(37, 99, 235, 0.7);
+      filter: brightness(1.1);
+    }
+
+    .btn-cancel-glass {
+      background: transparent;
+      color: #94a3b8;
+      border: 1px solid rgba(148, 163, 184, 0.2);
+      padding: 10px 18px;
+      width: 100%;
+      font-size: 12px;
+      font-weight: 600;
+      border-radius: 10px;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: all 0.2s;
+    }
+
+    .btn-cancel-glass:hover {
+      color: #f1f5f9;
+      border-color: rgba(241, 245, 249, 0.4);
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes scaleUp { from { opacity: 0; transform: scale(0.92); } to { opacity: 1; transform: scale(1); } }
+  </style>
+</head>
+<body>
+
+  <!-- ==================== HALAMAN HERO LANDING PAGE ==================== -->
+  <div id="pageHero" class="hero-wrapper">
+    <div class="hero-header">
+      <img src="logo-intidaya.jpg" alt="Logo Intidaya">
+      <span class="company-title">PT INTIDAYA DINAMIKA SEJATI</span>
+    </div>
+
+    <div class="hero-content">
+      <h1>Powering Industry with<br>High-Performance Pump<br>& Blower Systems</h1>
+      <p>OFFICIAL DISTRIBUTOR OF BECKER PUMPS AND PEDRO GIL IN INDONESIA</p>
+      <button type="button" class="btn-start-analysis" onclick="openLoginModal()">START ANALYSIS ➔</button>
+    </div>
+
+    <!-- Debug: Clear Session Button (Remove in production) -->
+    <div style="text-align: center; margin-top: 20px;">
+      <small style="color: #cbd5e1; cursor: pointer; text-decoration: underline;" onclick="clearSession(); location.reload();">
+        🔄 Clear Session
+      </small>
+    </div>
+  </div>
+
+  <!-- ==================== POP-UP LOGIN SYSTEM MODERN ==================== -->
+  <div id="pageLoginModal" class="modal-overlay" style="display: none; align-items: center; justify-content: center;">
+    <div class="login-card-modern">
+      
+      <div style="text-align: center;">
+        <div class="login-badge-header">🔐</div>
+        <h3 class="login-title">LOGIN OPERATOR / TEKNISI</h3>
+        <p class="login-subtitle">Masuk untuk memulai inspeksi & validasi data</p>
+      </div>
+
+      <div id="loginAlert" class="alert-banner" style="display: none;">Username atau Password salah!</div>
+      <div id="loginSuccess" class="success-banner" style="display: none;">Login berhasil! 🎉</div>
+
+      <!-- Input Username -->
+      <div class="input-wrapper-dynamic">
+        <input type="text" id="loginUser" class="input-field-dynamic" placeholder="Username / ID Teknisi..." autocomplete="off">
+        <span class="input-icon-prefix">👤</span>
+      </div>
+
+      <!-- Input Password dengan Show/Hide Eye -->
+      <div class="input-wrapper-dynamic">
+        <input type="password" id="loginPass" class="input-field-dynamic" placeholder="Password akses...">
+        <span class="input-icon-prefix">🔑</span>
+        <button type="button" class="toggle-pwd-btn" onclick="togglePasswordVisibility()">👁️</button>
+      </div>
+
+      <!-- Action Buttons -->
+      <div style="margin-top: 10px;">
+        <button type="button" class="btn-login-gradient" onclick="processLogin()">
+          <span>MASUK SISTEM</span>
+          <span style="font-size: 16px;">➔</span>
+        </button>
+        <button type="button" class="btn-cancel-glass" onclick="closeLoginModal()">✕ Batal</button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ==================== MODAL SUB MENU SELEKSI KATEGORI ==================== -->
+  <div id="pageCategoryMenu" class="modal-overlay">
+    <div class="modal-card">
+      <h2>📋 PILIH KATEGORI INSPEKSI / ANALISIS</h2>
+      <div class="category-grid">
+        <button type="button" class="btn-category" onclick="selectCategory('ROOT BLOWER')">ROOT BLOWER</button>
+        <button type="button" class="btn-category" onclick="selectCategory('VACUUM PUMP')">VACUUM PUMP</button>
+        <button type="button" class="btn-category" onclick="selectCategory('REWINDING')">REWINDING</button>
+        <button type="button" class="btn-category" onclick="selectCategory('GEARBOX')">GEARBOX</button>
+        <button type="button" class="btn-category" onclick="selectCategory('ROTARY VALVE')">ROTARY VALVE</button>
+        <button type="button" class="btn-category" onclick="selectCategory('OTHER')">OTHER</button>
+      </div>
+      <button type="button" class="btn-modal-close" onclick="closeCategoryMenu()">✕ Logout / Kembali</button>
+    </div>
+  </div>
+
+  <div id="moduleContainer"></div>
+
+  <script src="js/config.js"></script>
+  <script src="js/shared.js"></script>
+  <script>
+    // ==================== DEBUG LOGGING ====================
+    console.log('=== Sistem Inspeksi PT Intidaya Loaded ===');
+    console.log('Current Session:', getSession());
+
+    // ==================== TOGGLE PASSWORD VISIBILITY (BARU) ====================
+    function togglePasswordVisibility() {
+      const pwdInput = document.getElementById('loginPass');
+      const btn = event.currentTarget;
+      if (pwdInput.type === 'password') {
+        pwdInput.type = 'text';
+        btn.textContent = '🙈';
+      } else {
+        pwdInput.type = 'password';
+        btn.textContent = '👁️';
+      }
+    }
+    
+    // ==================== LOGIN MANAGEMENT ====================
+    function openLoginModal() {
+      document.getElementById('pageLoginModal').style.display = 'flex';
+      document.getElementById('loginUser').value = '';
+      document.getElementById('loginPass').value = '';
+      document.getElementById('loginAlert').style.display = 'none';
+      document.getElementById('loginSuccess').style.display = 'none';
+    }
+
+    function closeLoginModal() {
+      document.getElementById('pageLoginModal').style.display = 'none';
+    }
+
+    function processLogin() {
+      const username = document.getElementById('loginUser').value.trim();
+      const password = document.getElementById('loginPass').value.trim();
+
+      console.log('🔐 Login attempt:', { username, password });
+
+      if (!username || !password) {
+        document.getElementById('loginAlert').style.display = 'block';
+        document.getElementById('loginAlert').textContent = 'Username dan Password tidak boleh kosong!';
+        return;
+      }
+
+      const validUser = validateCredentials(username, password);
+
+      if (validUser) {
+        console.log('✅ Login BERHASIL:', validUser);
+        document.getElementById('loginAlert').style.display = 'none';
+        document.getElementById('loginSuccess').style.display = 'block';
+        document.getElementById('loginSuccess').textContent = `✓ Login berhasil! Selamat datang ${validUser.role}.`;
+        
+        saveSession(username, validUser.role);
+        console.log('📝 Session tersimpan:', getSession());
+
+        setTimeout(() => {
+          closeLoginModal();
+          openCategoryMenu();
+        }, 1000);
+      } else {
+        console.log('❌ Login GAGAL: Invalid credentials');
+        document.getElementById('loginAlert').style.display = 'block';
+        document.getElementById('loginAlert').textContent = 'Username atau Password salah! Coba lagi.';
+        document.getElementById('loginPass').value = '';
+      }
+    }
+
+    // ==================== CATEGORY MENU ====================
+    function openCategoryMenu() { 
+      const session = getSession();
+      if (!session) {
+        openLoginModal();
+        return;
+      }
+      document.getElementById('pageCategoryMenu').style.display = 'flex'; 
+    }
+
+    function closeCategoryMenu() { 
+      document.getElementById('pageCategoryMenu').style.display = 'none'; 
+    }
+
+    function selectCategory(categoryName) {
+      const moduleConfig = INSPECTION_MODULES[categoryName];
+      
+      if (!moduleConfig) {
+        alert('Kategori tidak ditemukan!');
+        return;
+      }
+
+      console.log('📋 Kategori dipilih:', categoryName);
+      
+      // HIDE HERO PAGE & CATEGORY MENU TERLEBIH DAHULU
+      document.getElementById('pageHero').style.display = 'none';
+      closeCategoryMenu();
+      
+      // KEMUDIAN load module
+      loadModule(categoryName).then(success => {
+        if (success) {
+          console.log('✅ Module loaded, hero page sudah hidden');
+        } else {
+          console.log('❌ Load module failed, tampilkan hero page kembali');
+          document.getElementById('pageHero').style.display = 'flex';
+          openCategoryMenu();
+        }
+      });
+    }
+
+    // ==================== BACK TO HOME ====================
+    function resetToHome() {
+      console.log('🔙 Kembali ke Home - Clear session & module');
+      clearSession();
+      
+      // Hide & clear module container TOTAL
+      const moduleContainer = document.getElementById('moduleContainer');
+      if (moduleContainer) {
+        moduleContainer.style.display = 'none';
+        moduleContainer.innerHTML = '';
+        console.log('🗑️ Module container hidden & cleared');
+      }
+      
+      // Tampilkan hero page
+      document.getElementById('pageHero').style.display = 'flex';
+      document.getElementById('pageCategoryMenu').style.display = 'none';
+      document.getElementById('pageLoginModal').style.display = 'none';
+      
+      console.log('✅ Kembali ke Hero Page');
+    }
+
+    // Initialize on page load
+    window.addEventListener('load', function() {
+      console.log('🔄 Page Load Initialize');
+      
+      // Reset sesi lama agar halaman selalu mulai bersih dari Landing Page awal
+      clearSession();
+
+      // Pastikan container modul kosong
+      const moduleContainer = document.getElementById('moduleContainer');
+      if (moduleContainer) {
+        moduleContainer.innerHTML = '';
+      }
+      
+      // Tampilkan HANYA Hero Landing Page
+      document.getElementById('pageHero').style.display = 'flex';
+      document.getElementById('pageLoginModal').style.display = 'none';
+      document.getElementById('pageCategoryMenu').style.display = 'none';
+      
+      console.log('🏠 Landing Page Awal Ditampilkan Penuh');
+    });
+  </script>
+</body>
+</html>

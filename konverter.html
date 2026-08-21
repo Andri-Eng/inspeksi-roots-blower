@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Konverter Excel ke JSON (Master MID)</title>
+  <!-- Memanggil library pembaca Excel -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+</head>
+<body style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; padding: 40px; background-color: #f1f5f9;">
+  
+  <div style="background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); max-width: 600px; margin: auto;">
+    <h2 style="color: #1e293b; margin-top: 0;">🛠️ Konverter Master MID</h2>
+    <p style="color: #475569; line-height: 1.6;">
+      Pilih file <b>master MID-1.xlsx</b> Anda, dan sistem akan otomatis mengonversinya menjadi file <b>master_mid.json</b> yang siap dimasukkan ke folder project Anda.
+    </p>
+    
+    <div style="margin-top: 20px; padding: 20px; border: 2px dashed #cbd5e1; border-radius: 8px; text-align: center; background: #f8fafc;">
+      <input type="file" id="fileUpload" accept=".xlsx, .xls" style="font-size: 16px; cursor: pointer;" />
+    </div>
+  </div>
+  
+  <script>
+    document.getElementById('fileUpload').addEventListener('change', function(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const data = new Uint8Array(e.target.result);
+        const workbook = XLSX.read(data, {type: 'array'});
+        
+        // Membaca Sheet pertama dari Excel
+        const sheetName = workbook.SheetNames[0];
+        const sheet = workbook.Sheets[sheetName];
+        
+        // Konversi ke JSON mentah
+        const rawJson = XLSX.utils.sheet_to_json(sheet);
+        
+        // Membentuk format JSON sesuai struktur di project Inspeksi Blower kita
+        const formattedJson = rawJson.map(row => ({
+          kode: row["Item Name"] ? row["Item Name"].toString().trim() : "",
+          mid: row["mid"] ? row["mid"].toString().trim() : "",
+          name: row["Item Name"] ? row["Item Name"].toString().trim() : ""
+        }));
+        
+        // Buat Blob file untuk didownload
+        const jsonString = JSON.stringify(formattedJson, null, 2);
+        const blob = new Blob([jsonString], { type: "application/json" });
+        const url = URL.createObjectURL(blob);
+        
+        // Trigger download otomatis
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = "master_mid.json";
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        
+        alert("✅ Berhasil! File master_mid.json telah didownload.\n\nSilakan pindahkan file tersebut ke dalam folder project Anda.");
+      };
+      reader.readAsArrayBuffer(file);
+    });
+  </script>
+</body>
+</html>
