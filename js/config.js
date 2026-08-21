@@ -3,7 +3,7 @@
 // Credentials & Authentication
 const VALID_CREDENTIALS = [
   { username: 'admin', password: 'admin123', role: 'Administrator' },
-  { username: 'teknisi1', password: 'tech123', role: 'Teknisi' },
+  { username: 'teknisi', password: 'tech123', role: 'Teknisi' },
   { username: 'supervisor', password: 'sup123', role: 'Supervisor' }
 ];
 
