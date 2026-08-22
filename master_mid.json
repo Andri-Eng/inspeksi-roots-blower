@@ -1,4 +1,4 @@
-[
+﻿[
   {
     "kode": "V-SEAL VS 60",
     "mid": "",
@@ -10,9 +10,9 @@
     "name": "BAUT HEXAGONAL 4.6 M10 X 1,25 X 70"
   },
   {
-    "kode": "Slep per tempat Bensin metal duduk Ø30mm - 64mm metal jalan Ø30mm-52mm",
+    "kode": "Slep per tempat Bensin metal duduk Ã˜30mm - 64mm metal jalan Ã˜30mm-52mm",
     "mid": "",
-    "name": "Slep per tempat Bensin metal duduk Ø30mm - 64mm metal jalan Ø30mm-52mm"
+    "name": "Slep per tempat Bensin metal duduk Ã˜30mm - 64mm metal jalan Ã˜30mm-52mm"
   },
   {
     "kode": "VACUUM RELIEF VALVE PN : 99999999991 (RV01) (0-300MBAR)",
@@ -615,9 +615,9 @@
     "name": "MOTOR ABB M2BAX 132 MA4 7,5 KW 1457 RPM 4P 16A"
   },
   {
-    "kode": "MOTOR BONFIGLIOLI BN 160 L-4 FA 15 KW 1460 ROM 4P 30A",
+    "kode": "MOTOR BONFIGLIOLI BN 160 L-4 FA 15 KWÂ 1460Â ROMÂ 4PÂ 30A",
     "mid": "",
-    "name": "MOTOR BONFIGLIOLI BN 160 L-4 FA 15 KW 1460 ROM 4P 30A"
+    "name": "MOTOR BONFIGLIOLI BN 160 L-4 FA 15 KWÂ 1460Â ROMÂ 4PÂ 30A"
   },
   {
     "kode": "KABEL NYYHY 4 X 2,5 HITAM (SUPREME)",
@@ -650,9 +650,9 @@
     "name": "KERTAS NOMEX DIA. 0,20 MM"
   },
   {
-    "kode": "THERMISTOR YGM3 C665 (PTC 155°) BLUE - YELLOW - BLACK",
+    "kode": "THERMISTOR YGM3 C665 (PTC 155Â°) BLUE - YELLOW - BLACK",
     "mid": "",
-    "name": "THERMISTOR YGM3 C665 (PTC 155°) BLUE - YELLOW - BLACK"
+    "name": "THERMISTOR YGM3 C665 (PTC 155Â°) BLUE - YELLOW - BLACK"
   },
   {
     "kode": "TALI NYLON ROPE/RTA 8 MM",
@@ -1305,9 +1305,9 @@
     "name": "TERMINAL MOTOR YT 63 - 80"
   },
   {
-    "kode": "THERMISTOR 120 OHM PTC (PTC 150°)",
+    "kode": "THERMISTOR 120 OHM PTC (PTC 150Â°)",
     "mid": "",
-    "name": "THERMISTOR 120 OHM PTC (PTC 150°)"
+    "name": "THERMISTOR 120 OHM PTC (PTC 150Â°)"
   },
   {
     "kode": "BOX PANEL T 500 MM X L 400 MM X TBL 200 MM",
@@ -2140,9 +2140,9 @@
     "name": "HEAT SHRINK DIA 30 MM HITAM"
   },
   {
-    "kode": "KAPASITOR 80 µF 450 VAC",
+    "kode": "KAPASITOR 80 ÂµF 450 VAC",
     "mid": "",
-    "name": "KAPASITOR 80 µF 450 VAC"
+    "name": "KAPASITOR 80 ÂµF 450 VAC"
   },
   {
     "kode": "TERMINAL MOTOR TB-5",
@@ -2520,9 +2520,9 @@
     "name": "FAN MOTOR ID 40 MM X OD 230 MM"
   },
   {
-    "kode": "LAPP CABLE ÖLFLEX SERVO FD 796 CP 4G25, PN 0027956, NO 340669",
+    "kode": "LAPP CABLE Ã–LFLEX SERVO FD 796 CP 4G25, PN 0027956, NO 340669",
     "mid": "",
-    "name": "LAPP CABLE ÖLFLEX SERVO FD 796 CP 4G25, PN 0027956, NO 340669"
+    "name": "LAPP CABLE Ã–LFLEX SERVO FD 796 CP 4G25, PN 0027956, NO 340669"
   },
   {
     "kode": "FAN MOTOR ID 58 MM X OD 350 MM",
@@ -2615,14 +2615,14 @@
     "name": "FAN MOTOR DIA AS 62 MM X OD 350 MM"
   },
   {
-    "kode": "KAPASITOR 6 μF 400 VAC",
+    "kode": "KAPASITOR 6 Î¼F 400 VAC",
     "mid": "",
-    "name": "KAPASITOR 6 μF 400 VAC"
+    "name": "KAPASITOR 6 Î¼F 400 VAC"
   },
   {
-    "kode": "KAPASITOR 2,5 μF 450 VAC",
+    "kode": "KAPASITOR 2,5 Î¼F 450 VAC",
     "mid": "",
-    "name": "KAPASITOR 2,5 μF 450 VAC"
+    "name": "KAPASITOR 2,5 Î¼F 450 VAC"
   },
   {
     "kode": "KABEL NYYHY 5 X 0,75 MM",
@@ -2700,9 +2700,9 @@
     "name": "FAN MOTOR ID 18 MM X OD 162 MM X T 25 MM"
   },
   {
-    "kode": "KAPASITOR 12,5 μF 450 VAC",
+    "kode": "KAPASITOR 12,5 Î¼F 450 VAC",
     "mid": "",
-    "name": "KAPASITOR 12,5 μF 450 VAC"
+    "name": "KAPASITOR 12,5 Î¼F 450 VAC"
   },
   {
     "kode": "FAN MOTOR ID 45 MM X OD 275 MM",
@@ -2725,14 +2725,14 @@
     "name": "INVERTER CUTES CT2000 FG-4-5A 5,5 kW/7,5 HP"
   },
   {
-    "kode": "THERMISTOR YGM3 C515 (PTC 150°) : BLACK - YELLOW - YELLOW - BLACK",
+    "kode": "THERMISTOR YGM3 C515 (PTC 150Â°) : BLACK - YELLOW - YELLOW - BLACK",
     "mid": "",
-    "name": "THERMISTOR YGM3 C515 (PTC 150°) : BLACK - YELLOW - YELLOW - BLACK"
+    "name": "THERMISTOR YGM3 C515 (PTC 150Â°) : BLACK - YELLOW - YELLOW - BLACK"
   },
   {
-    "kode": "THERMISTOR YGM3 C510 (PTC 100°) : RED - YELLOW - YELLOW - RED",
+    "kode": "THERMISTOR YGM3 C510 (PTC 100Â°) : RED - YELLOW - YELLOW - RED",
     "mid": "",
-    "name": "THERMISTOR YGM3 C510 (PTC 100°) : RED - YELLOW - YELLOW - RED"
+    "name": "THERMISTOR YGM3 C510 (PTC 100Â°) : RED - YELLOW - YELLOW - RED"
   },
   {
     "kode": "TERMINAL MOTOR TB 8 - S (95 MM X 60 MM)",
@@ -2845,14 +2845,14 @@
     "name": "PRESSURE TRANSDUSER AUTONICS TPS20-G24F8-00"
   },
   {
-    "kode": "THERMISTOR YGM3 C508 (PTC 80°) : WHITE - YELLOW - YELLOW - WHITE",
+    "kode": "THERMISTOR YGM3 C508 (PTC 80Â°) : WHITE - YELLOW - YELLOW - WHITE",
     "mid": "",
-    "name": "THERMISTOR YGM3 C508 (PTC 80°) : WHITE - YELLOW - YELLOW - WHITE"
+    "name": "THERMISTOR YGM3 C508 (PTC 80Â°) : WHITE - YELLOW - YELLOW - WHITE"
   },
   {
-    "kode": "THERMISTOR YGM3 C518 (PTC 180°) : RED - YELLOW - YELLOW - WHITE",
+    "kode": "THERMISTOR YGM3 C518 (PTC 180Â°) : RED - YELLOW - YELLOW - WHITE",
     "mid": "",
-    "name": "THERMISTOR YGM3 C518 (PTC 180°) : RED - YELLOW - YELLOW - WHITE"
+    "name": "THERMISTOR YGM3 C518 (PTC 180Â°) : RED - YELLOW - YELLOW - WHITE"
   },
   {
     "kode": "TERMINAL MOTOR Y2-250-280",
@@ -2860,9 +2860,9 @@
     "name": "TERMINAL MOTOR Y2-250-280"
   },
   {
-    "kode": "THERMISTOR YGM3 C516 (PTC 160°) : BLUE - YELLOW - YELLOW - RED",
+    "kode": "THERMISTOR YGM3 C516 (PTC 160Â°) : BLUE - YELLOW - YELLOW - RED",
     "mid": "",
-    "name": "THERMISTOR YGM3 C516 (PTC 160°) : BLUE - YELLOW - YELLOW - RED"
+    "name": "THERMISTOR YGM3 C516 (PTC 160Â°) : BLUE - YELLOW - YELLOW - RED"
   },
   {
     "kode": "FUSE & HOLDER 32 A",
@@ -2890,9 +2890,9 @@
     "name": "HMI SIEMENS 4\" BASIC KTP400 6AV2123-2DB03-0AX0"
   },
   {
-    "kode": "PLC SIEMENS S7-1200 CPU 1214C AC-DC-RLY 6ES7214- 1BG40-0XB0",
+    "kode": "PLCÂ SIEMENSÂ S7-1200Â CPUÂ 1214CÂ AC-DC-RLYÂ 6ES7214- 1BG40-0XB0",
     "mid": "",
-    "name": "PLC SIEMENS S7-1200 CPU 1214C AC-DC-RLY 6ES7214- 1BG40-0XB0"
+    "name": "PLCÂ SIEMENSÂ S7-1200Â CPUÂ 1214CÂ AC-DC-RLYÂ 6ES7214- 1BG40-0XB0"
   },
   {
     "kode": "VFD SIEMENS SINAMICS G120C 3.0kW 6SL3210-1KE17-5UF1",
@@ -3030,9 +3030,9 @@
     "name": "THERMAL PROTECTOR 17 AM 034E5"
   },
   {
-    "kode": "TERMINAL BLOCK 6MM² 800 V",
+    "kode": "TERMINAL BLOCK 6MMÂ² 800 V",
     "mid": "",
-    "name": "TERMINAL BLOCK 6MM² 800 V"
+    "name": "TERMINAL BLOCK 6MMÂ² 800 V"
   },
   {
     "kode": "MCB 2P 2A SCHNEIDER DOMF01202",
@@ -3045,9 +3045,9 @@
     "name": "TERMINAL TECO YT 71-2 (ORANGE)"
   },
   {
-    "kode": "THERMAL PROTECTOR 17 AM 31 (120°C)",
+    "kode": "THERMAL PROTECTOR 17 AM 31 (120Â°C)",
     "mid": "",
-    "name": "THERMAL PROTECTOR 17 AM 31 (120°C)"
+    "name": "THERMAL PROTECTOR 17 AM 31 (120Â°C)"
   },
   {
     "kode": "FAN MOTOR ID 14 MM X OD 127 MM",
@@ -3090,9 +3090,9 @@
     "name": "ETERNA KABEL NYM 2X2.5 MM"
   },
   {
-    "kode": "THERMISTOR YGM3 C513 (PTC 130°) : BLUE - YELLOW - YELLOW - BLUE",
+    "kode": "THERMISTOR YGM3 C513 (PTC 130Â°) : BLUE - YELLOW - YELLOW - BLUE",
     "mid": "",
-    "name": "THERMISTOR YGM3 C513 (PTC 130°) : BLUE - YELLOW - YELLOW - BLUE"
+    "name": "THERMISTOR YGM3 C513 (PTC 130Â°) : BLUE - YELLOW - YELLOW - BLUE"
   },
   {
     "kode": "KABEL NYVIN DIA. 95 MM",
@@ -3280,9 +3280,9 @@
     "name": "SOFT STARTER SCHNEIDER ATS22 - CONTROL 220 V POWER 230 V (22 kW)/400 .. 440 (45kW)"
   },
   {
-    "kode": "KAPASITOR 40 μF 450 VAC",
+    "kode": "KAPASITOR 40 Î¼F 450 VAC",
     "mid": "",
-    "name": "KAPASITOR 40 μF 450 VAC"
+    "name": "KAPASITOR 40 Î¼F 450 VAC"
   },
   {
     "kode": "LASDOP PRESS CE 2-X (1,5 MM - 2,5 MM)",
@@ -3290,9 +3290,9 @@
     "name": "LASDOP PRESS CE 2-X (1,5 MM - 2,5 MM)"
   },
   {
-    "kode": "KAPASITOR CD60 150 μF 250 VAC (STARTING)",
+    "kode": "KAPASITOR CD60 150 Î¼F 250 VAC (STARTING)",
     "mid": "",
-    "name": "KAPASITOR CD60 150 μF 250 VAC (STARTING)"
+    "name": "KAPASITOR CD60 150 Î¼F 250 VAC (STARTING)"
   },
   {
     "kode": "EXTERNAL FAN ID 13 MM X OD 120 MM X TBL 15 MM",
@@ -3735,9 +3735,9 @@
     "name": "TERMINAL BLOCK MINI FORT TUK-3N 25A"
   },
   {
-    "kode": "SWITCH HUB  TP LINK 8 PORT",
+    "kode": "SWITCH HUB  TPÂ LINKÂ 8Â PORT",
     "mid": "",
-    "name": "SWITCH HUB  TP LINK 8 PORT"
+    "name": "SWITCH HUB  TPÂ LINKÂ 8Â PORT"
   },
   {
     "kode": "KABEL NYA-GY 1X70 MM (METAL KMI)",
@@ -3825,9 +3825,9 @@
     "name": "BALL FRONT TANGKI 1000 L X TBL 6 MM"
   },
   {
-    "kode": "PRESSURE GAUGE TYPE DIAL DIA. 4\" TEKANAN 0 - 3 KG/CM²",
+    "kode": "PRESSURE GAUGE TYPE DIAL DIA. 4\" TEKANAN 0 - 3 KG/CMÂ²",
     "mid": "",
-    "name": "PRESSURE GAUGE TYPE DIAL DIA. 4\" TEKANAN 0 - 3 KG/CM²"
+    "name": "PRESSURE GAUGE TYPE DIAL DIA. 4\" TEKANAN 0 - 3 KG/CMÂ²"
   },
   {
     "kode": "RS PRO STEEL M8 BALL AND SOCKET JOINT 39.5 MM x 38 MM",
@@ -3940,9 +3940,9 @@
     "name": "CLAMP PLAT 2MM X DIA. 802"
   },
   {
-    "kode": "RUBBER MATERIAL NBR DIA.800 X 60",
+    "kode": "RUBBER MATERIAL NBR DIA.800 XÂ 60",
     "mid": "",
-    "name": "RUBBER MATERIAL NBR DIA.800 X 60"
+    "name": "RUBBER MATERIAL NBR DIA.800 XÂ 60"
   },
   {
     "kode": "O-RING ID 215 X TBL 3 MM",
@@ -4060,9 +4060,9 @@
     "name": "TAPPER BUSH 2517 - 35 ( ID 35 MM X OD 85,5 MM X TBL 44,5 MM )"
   },
   {
-    "kode": "SKF 23516 CCK/C3W33 SPHERICAL ROLLER BEARING",
+    "kode": "SKF 23516 CCK/C3W33 SPHERICAL ROLLERÂ BEARING",
     "mid": "",
-    "name": "SKF 23516 CCK/C3W33 SPHERICAL ROLLER BEARING"
+    "name": "SKF 23516 CCK/C3W33 SPHERICAL ROLLERÂ BEARING"
   },
   {
     "kode": "SKF ADAPTER SLEEVE H 3156",
@@ -4420,9 +4420,9 @@
     "name": "BAUT GALVANIS M20 X 2,5 X 60 MM"
   },
   {
-    "kode": "GATE VALVE Ø 10\" CAST STEEL RISING STEM ANSI 300 FLANGE END",
+    "kode": "GATE VALVE Ã˜ 10\" CAST STEEL RISING STEM ANSI 300 FLANGE END",
     "mid": "",
-    "name": "GATE VALVE Ø 10\" CAST STEEL RISING STEM ANSI 300 FLANGE END"
+    "name": "GATE VALVE Ã˜ 10\" CAST STEEL RISING STEM ANSI 300 FLANGE END"
   },
   {
     "kode": "TAPPER BUSH 3020 DIA. 70 MM",
@@ -4520,9 +4520,9 @@
     "name": "RING GELOMBANG ID 40,5MM X OD 50,5MM X TBL 0,5MM"
   },
   {
-    "kode": "TAPPER LOCK Ø AS 55",
+    "kode": "TAPPER LOCK Ã˜ AS 55",
     "mid": "",
-    "name": "TAPPER LOCK Ø AS 55"
+    "name": "TAPPER LOCK Ã˜ AS 55"
   },
   {
     "kode": "OIL SEAL TC VITON ID 60 X OD 110 X T 12 MM",
@@ -8990,9 +8990,9 @@
     "name": "AS STAINLESS STEEL 316 DIA. 19 MM"
   },
   {
-    "kode": "PT 100 TEMPERATURE TRANSMITTER 4-20mA OUTPUT 0-150°C",
+    "kode": "PT 100 TEMPERATURE TRANSMITTER 4-20mA OUTPUT 0-150Â°C",
     "mid": "",
-    "name": "PT 100 TEMPERATURE TRANSMITTER 4-20mA OUTPUT 0-150°C"
+    "name": "PT 100 TEMPERATURE TRANSMITTER 4-20mA OUTPUT 0-150Â°C"
   },
   {
     "kode": "2-WIRE WZP PT100 SENSOR SUHU",
@@ -13175,9 +13175,9 @@
     "name": "KEY SPIE P 300 MM X L 20 MM X T 12 MM"
   },
   {
-    "kode": "BAUT L M6 × 30MM",
+    "kode": "BAUT L M6 Ã— 30MM",
     "mid": "",
-    "name": "BAUT L M6 × 30MM"
+    "name": "BAUT L M6 Ã— 30MM"
   },
   {
     "kode": "PIPA SYPHON DIA. 1/2\"",
@@ -13270,9 +13270,9 @@
     "name": "FLEXIBLE HOSE STAINLESS 3/4\" (FEMALE ALL) P. 300 MM"
   },
   {
-    "kode": "BUTTERFLY VALVE 10” DN 250",
+    "kode": "BUTTERFLY VALVE 10â€ DN 250",
     "mid": "",
-    "name": "BUTTERFLY VALVE 10” DN 250"
+    "name": "BUTTERFLY VALVE 10â€ DN 250"
   },
   {
     "kode": "TAPERLOCK ID 24 KODE BUSCH 1610",
@@ -13470,9 +13470,9 @@
     "name": "PIPA AC 3 PK"
   },
   {
-    "kode": "DYNABOLT DIA 3/4 ” X 4",
+    "kode": "DYNABOLT DIA 3/4 â€ X 4",
     "mid": "",
-    "name": "DYNABOLT DIA 3/4 ” X 4"
+    "name": "DYNABOLT DIA 3/4 â€ X 4"
   },
   {
     "kode": "BRACKET AC",
@@ -13545,19 +13545,19 @@
     "name": "INNER BEARING ID 45 X OD 50 X TBL 25 MM"
   },
   {
-    "kode": "REDUCER DN 80 – 65",
+    "kode": "REDUCER DN 80 â€“ 65",
     "mid": "",
-    "name": "REDUCER DN 80 – 65"
+    "name": "REDUCER DN 80 â€“ 65"
   },
   {
-    "kode": "FLANGE DN 65 – 2 ½” PN10 PCD 145 4 LUBANG",
+    "kode": "FLANGE DN 65 â€“ 2 Â½â€ PN10 PCD 145 4 LUBANG",
     "mid": "",
-    "name": "FLANGE DN 65 – 2 ½” PN10 PCD 145 4 LUBANG"
+    "name": "FLANGE DN 65 â€“ 2 Â½â€ PN10 PCD 145 4 LUBANG"
   },
   {
-    "kode": "FLANGE DN 80 – 3” PN10 PCD 160 8 LUBANG",
+    "kode": "FLANGE DN 80 â€“ 3â€ PN10 PCD 160 8 LUBANG",
     "mid": "",
-    "name": "FLANGE DN 80 – 3” PN10 PCD 160 8 LUBANG"
+    "name": "FLANGE DN 80 â€“ 3â€ PN10 PCD 160 8 LUBANG"
   },
   {
     "kode": "MECH SEAL (MG13/28) ID 28 X OD 48 X TBL 58 MM",
@@ -15120,9 +15120,9 @@
     "name": "FRAME DEPAN"
   },
   {
-    "kode": "SPRING CUSTOM DIA. 74MM PANJANG 200 : Ø KAWAT 6MM : PITCH 12MM",
+    "kode": "SPRING CUSTOM DIA. 74MM PANJANG 200 : Ã˜ KAWAT 6MM : PITCH 12MM",
     "mid": "",
-    "name": "SPRING CUSTOM DIA. 74MM PANJANG 200 : Ø KAWAT 6MM : PITCH 12MM"
+    "name": "SPRING CUSTOM DIA. 74MM PANJANG 200 : Ã˜ KAWAT 6MM : PITCH 12MM"
   },
   {
     "kode": "THERMO LURUS KUNINGAN 600 DEG X CONN. 1/2\" SENSOR 6 CM MERK WIBEROCK",
@@ -15130,9 +15130,9 @@
     "name": "THERMO LURUS KUNINGAN 600 DEG X CONN. 1/2\" SENSOR 6 CM MERK WIBEROCK"
   },
   {
-    "kode": "XTO-674-04H (CHECK VALCE 80°C, PORT 1/2\") MERK SMC",
+    "kode": "XTO-674-04H (CHECK VALCE 80Â°C, PORT 1/2\") MERK SMC",
     "mid": "",
-    "name": "XTO-674-04H (CHECK VALCE 80°C, PORT 1/2\") MERK SMC"
+    "name": "XTO-674-04H (CHECK VALCE 80Â°C, PORT 1/2\") MERK SMC"
   },
   {
     "kode": "SNAPRING S - 62",
@@ -15240,14 +15240,14 @@
     "name": "REDUCER LAS SCH 40 SS 316 4\" X 2\" (SEAMLESS)"
   },
   {
-    "kode": "ELBOW LAS SCH 40 90ᵒ SS 316 2\" (SEAMLESS LONG RADIUS)",
+    "kode": "ELBOW LAS SCH 40 90áµ’ SS 316 2\" (SEAMLESS LONG RADIUS)",
     "mid": "",
-    "name": "ELBOW LAS SCH 40 90ᵒ SS 316 2\" (SEAMLESS LONG RADIUS)"
+    "name": "ELBOW LAS SCH 40 90áµ’ SS 316 2\" (SEAMLESS LONG RADIUS)"
   },
   {
-    "kode": "ELBOW LAS SCH 40 45ᵒ SS 316 2\" (SEAMLESS)",
+    "kode": "ELBOW LAS SCH 40 45áµ’ SS 316 2\" (SEAMLESS)",
     "mid": "",
-    "name": "ELBOW LAS SCH 40 45ᵒ SS 316 2\" (SEAMLESS)"
+    "name": "ELBOW LAS SCH 40 45áµ’ SS 316 2\" (SEAMLESS)"
   },
   {
     "kode": "PIPA SCH 40 SS 316 1/2\" (SEAMLESS)",
@@ -15395,9 +15395,9 @@
     "name": "SEAL TEFLON TBL 6 MM"
   },
   {
-    "kode": "PA66 (POLYAMIDE 66) Ø 120",
+    "kode": "PA66 (POLYAMIDE 66) Ã˜ 120",
     "mid": "",
-    "name": "PA66 (POLYAMIDE 66) Ø 120"
+    "name": "PA66 (POLYAMIDE 66) Ã˜ 120"
   },
   {
     "kode": "OIL SEAL TC NBR ID 65 X OD 88 X T 12 MM",
@@ -15900,9 +15900,9 @@
     "name": "MANUFACTURE & SUPPLY NEW 32''X 78'' MILL NO 4 PRESSURE FEEDER TOP CONVENTIONAL ROLLER ASSEMBLY CI SHELL SIZE OD 812.8MM X 1981.2MM"
   },
   {
-    "kode": "MANUFACTURE & SUPPLY NEW 38X 78'' MILL NO ÍI & III PERFORATED TOP ROLLER ASSEMBLY CI SHELL SIZE OD 965MM X 1982MM",
+    "kode": "MANUFACTURE & SUPPLY NEW 38X 78'' MILL NO ÃI & III PERFORATED TOP ROLLER ASSEMBLY CI SHELL SIZE OD 965MM X 1982MM",
     "mid": "",
-    "name": "MANUFACTURE & SUPPLY NEW 38X 78'' MILL NO ÍI & III PERFORATED TOP ROLLER ASSEMBLY CI SHELL SIZE OD 965MM X 1982MM"
+    "name": "MANUFACTURE & SUPPLY NEW 38X 78'' MILL NO ÃI & III PERFORATED TOP ROLLER ASSEMBLY CI SHELL SIZE OD 965MM X 1982MM"
   },
   {
     "kode": "MANUFACTURE & SUPPLY NEW MILL CONVENTIONAL ROLLER ASSEMBLY CI SHELL SIZE OD 915MM X 1981",
@@ -15950,9 +15950,9 @@
     "name": "Automatic Drain Selenoid Valve 220 V 1/2\""
   },
   {
-    "kode": "SHOCK DRAT STAINLESS 1/2\"",
+    "kode": "SHOCK DRAT STAINLESSÂ 1/2\"",
     "mid": "",
-    "name": "SHOCK DRAT STAINLESS 1/2\""
+    "name": "SHOCK DRAT STAINLESSÂ 1/2\""
   },
   {
     "kode": "TIMING BELT POWERGRIP HTD-1160-8M-30",
@@ -16480,9 +16480,9 @@
     "name": "OIL SEAL TC NBR ID 25 X OD 37 X T 6 MM"
   },
   {
-    "kode": "MATERIAL SHAFT 34CRNIMO6 - Ø610 X 5200",
+    "kode": "MATERIAL SHAFT 34CRNIMO6 - Ã˜610 X 5200",
     "mid": "",
-    "name": "MATERIAL SHAFT 34CRNIMO6 - Ø610 X 5200"
+    "name": "MATERIAL SHAFT 34CRNIMO6 - Ã˜610 X 5200"
   },
   {
     "kode": "OIL FILTER C-2601",
@@ -16620,9 +16620,9 @@
     "name": "KAWAT LAS ALUMUNIUM ESAB OK ALUMAROD 5183 DIA 1,2MM"
   },
   {
-    "kode": "KAWAT LAS STAINLESS STEEL ESAB WELD M 308LSI DIA 1,2MM",
+    "kode": "KAWAT LAS STAINLESS STEEL ESAB WELD M 308LSI DIAÂ 1,2MM",
     "mid": "",
-    "name": "KAWAT LAS STAINLESS STEEL ESAB WELD M 308LSI DIA 1,2MM"
+    "name": "KAWAT LAS STAINLESS STEEL ESAB WELD M 308LSI DIAÂ 1,2MM"
   },
   {
     "kode": "ROPE COUPLING MODEL NO : EAPL_RC_G3_SZ 16",
@@ -16710,14 +16710,14 @@
     "name": "KLEM SELANG UK 60MM"
   },
   {
-    "kode": "PULLEY SPZ Ø170 - 2 JALUR",
+    "kode": "PULLEY SPZ Ã˜170 - 2 JALUR",
     "mid": "",
-    "name": "PULLEY SPZ Ø170 - 2 JALUR"
+    "name": "PULLEY SPZ Ã˜170 - 2 JALUR"
   },
   {
-    "kode": "PULLEY SPZ Ø190 - 2 JALUR",
+    "kode": "PULLEY SPZ Ã˜190 - 2 JALUR",
     "mid": "",
-    "name": "PULLEY SPZ Ø190 - 2 JALUR"
+    "name": "PULLEY SPZ Ã˜190 - 2 JALUR"
   },
   {
     "kode": "V-BELT XPZ 1750 LD/LW",
@@ -17060,9 +17060,9 @@
     "name": "BAUT SS M6 P30 (FULL DRAT)"
   },
   {
-    "kode": "KAWAT STAINLESS Ø4MM",
+    "kode": "KAWAT STAINLESS Ã˜4MM",
     "mid": "",
-    "name": "KAWAT STAINLESS Ø4MM"
+    "name": "KAWAT STAINLESS Ã˜4MM"
   },
   {
     "kode": "EXTERNAL SNAP RING S-72",
@@ -17745,9 +17745,9 @@
     "name": "BAUT L JF (STAINLESS) M12 X 1,75 X PJG. 70 MM"
   },
   {
-    "kode": "PRESSURE GAUGE 2.5\" (0-6 BAR) TIPE PAYUNG BODY STAINLESS CONN 1/4\" WITH OIL GLICERINE MERK ARMATHEM",
+    "kode": "PRESSURE GAUGE 2.5\" (0-6 BAR) TIPE PAYUNG BODY STAINLESS CONN 1/4\" WITH OIL GLICERINEÂ MERKÂ ARMATHEM",
     "mid": "",
-    "name": "PRESSURE GAUGE 2.5\" (0-6 BAR) TIPE PAYUNG BODY STAINLESS CONN 1/4\" WITH OIL GLICERINE MERK ARMATHEM"
+    "name": "PRESSURE GAUGE 2.5\" (0-6 BAR) TIPE PAYUNG BODY STAINLESS CONN 1/4\" WITH OIL GLICERINEÂ MERKÂ ARMATHEM"
   },
   {
     "kode": "NEPPLE GREASE 45 DERAJAT (3/16\" X 24G)",
@@ -17760,9 +17760,9 @@
     "name": "TEFLON SHEET (HDPE) TBL. 15 MM"
   },
   {
-    "kode": "FAG NU 2314 E M1 C 3",
+    "kode": "FAG NU 2314 E M1Â CÂ 3",
     "mid": "",
-    "name": "FAG NU 2314 E M1 C 3"
+    "name": "FAG NU 2314 E M1Â CÂ 3"
   },
   {
     "kode": "SKF QJ 314 MA",
@@ -17850,14 +17850,14 @@
     "name": "RING PIR BAJA M34"
   },
   {
-    "kode": "FILTER CARTRIDGE EQUIVALENT 730505 ID1 13 x ID 5 x OD 40 x T 64mm",
+    "kode": "FILTER CARTRIDGE EQUIVALENT 730505 ID1 13 x ID 5 x OD 40 xÂ TÂ 64mm",
     "mid": "",
-    "name": "FILTER CARTRIDGE EQUIVALENT 730505 ID1 13 x ID 5 x OD 40 x T 64mm"
+    "name": "FILTER CARTRIDGE EQUIVALENT 730505 ID1 13 x ID 5 x OD 40 xÂ TÂ 64mm"
   },
   {
-    "kode": "FILTER CARTRIDGE EQUIVALENT 730507 ID1 18 x ID2 5 x OD 60 x T 64mm",
+    "kode": "FILTER CARTRIDGE EQUIVALENT 730507 ID1 18 x ID2 5 x OD 60Â xÂ TÂ 64mm",
     "mid": "",
-    "name": "FILTER CARTRIDGE EQUIVALENT 730507 ID1 18 x ID2 5 x OD 60 x T 64mm"
+    "name": "FILTER CARTRIDGE EQUIVALENT 730507 ID1 18 x ID2 5 x OD 60Â xÂ TÂ 64mm"
   },
   {
     "kode": "MECHANICAL SEAL ID 40 MM X OD 75 MM X TBL 53 MM",
@@ -19865,14 +19865,14 @@
     "name": "LOCKNUT M70 X 2 X TBL 12 MM"
   },
   {
-    "kode": "SIGHT GLASS Ø33.24 1\" X 11G X P. 15 MM",
+    "kode": "SIGHT GLASS Ã˜33.24 1\" X 11G X P. 15 MM",
     "mid": "",
-    "name": "SIGHT GLASS Ø33.24 1\" X 11G X P. 15 MM"
+    "name": "SIGHT GLASS Ã˜33.24 1\" X 11G X P. 15 MM"
   },
   {
-    "kode": "PLUG TUTUP OLI Ø33.24 1\" X 11G X P. 15 MM",
+    "kode": "PLUG TUTUP OLI Ã˜33.24 1\" X 11G X P. 15 MM",
     "mid": "",
-    "name": "PLUG TUTUP OLI Ø33.24 1\" X 11G X P. 15 MM"
+    "name": "PLUG TUTUP OLI Ã˜33.24 1\" X 11G X P. 15 MM"
   },
   {
     "kode": "RING GELOMBANG 5G ID 118 X OD 139 X TBL 1 MM",
@@ -23630,14 +23630,14 @@
     "name": "TANG SKUN 1.25-10"
   },
   {
-    "kode": "PROTECTIVE LENS Ø 20 X 3 MM",
+    "kode": "PROTECTIVE LENS Ã˜ 20 X 3 MM",
     "mid": "",
-    "name": "PROTECTIVE LENS Ø 20 X 3 MM"
+    "name": "PROTECTIVE LENS Ã˜ 20 X 3 MM"
   },
   {
-    "kode": "FOCUS LENS Ø 20 MM",
+    "kode": "FOCUS LENS Ã˜ 20 MM",
     "mid": "",
-    "name": "FOCUS LENS Ø 20 MM"
+    "name": "FOCUS LENS Ã˜ 20 MM"
   },
   {
     "kode": "ALMUNIUM LINER LASER WELDING",
@@ -25250,9 +25250,9 @@
     "name": "RODA TROLI NYLON 4\" HIDUP + REM RANGKA STAINLESS"
   },
   {
-    "kode": "CENTER DRILL TYPE A 60° HSS 3 X 60° X 8",
+    "kode": "CENTER DRILL TYPE A 60Â° HSS 3 X 60Â° X 8",
     "mid": "",
-    "name": "CENTER DRILL TYPE A 60° HSS 3 X 60° X 8"
+    "name": "CENTER DRILL TYPE A 60Â° HSS 3 X 60Â° X 8"
   },
   {
     "kode": "KUNCI RING PAS",
@@ -25500,9 +25500,9 @@
     "name": "NOZZLE HYPERTHERM 120930, SHIELDED, 40 - 80 AMP"
   },
   {
-    "kode": "HSS CENTER DRILL A TYPE 60° CD 5.0 X 12",
+    "kode": "HSS CENTER DRILL A TYPE 60Â° CD 5.0 X 12",
     "mid": "",
-    "name": "HSS CENTER DRILL A TYPE 60° CD 5.0 X 12"
+    "name": "HSS CENTER DRILL A TYPE 60Â° CD 5.0 X 12"
   },
   {
     "kode": "INDUSTRIAL COOLER CW5200",
@@ -25920,9 +25920,9 @@
     "name": "POLICE LINE (KUNING HITAM)"
   },
   {
-    "kode": "STANG GOUGING G4 1000 A – 2.1 M / 7 FEET KOBEWEL",
+    "kode": "STANG GOUGING G4 1000 A â€“ 2.1 M / 7 FEET KOBEWEL",
     "mid": "",
-    "name": "STANG GOUGING G4 1000 A – 2.1 M / 7 FEET KOBEWEL"
+    "name": "STANG GOUGING G4 1000 A â€“ 2.1 M / 7 FEET KOBEWEL"
   },
   {
     "kode": "PAKU 1 INCH",
@@ -26515,9 +26515,9 @@
     "name": "ENDMILL LONG SHANK 4 FLUTES SQUARE DIA. 8 MM X P. 150 MM CARBIDE"
   },
   {
-    "kode": "DOVETAIL ENDMIL D16 X 90° (D8XD16X75X4T) CARBIDE",
+    "kode": "DOVETAIL ENDMIL D16 X 90Â° (D8XD16X75X4T) CARBIDE",
     "mid": "",
-    "name": "DOVETAIL ENDMIL D16 X 90° (D8XD16X75X4T) CARBIDE"
+    "name": "DOVETAIL ENDMIL D16 X 90Â° (D8XD16X75X4T) CARBIDE"
   },
   {
     "kode": "KERTAS AMPLAS NO.100 UK. 30 X 30 CM",
@@ -30185,9 +30185,9 @@
     "name": "GREASE BEARING LGHP 2/1"
   },
   {
-    "kode": "HIGH CONCENTRATED CLEANER DR - 11 / DRATHON 11",
+    "kode": "HIGH CONCENTRATED CLEANER DRÂ -Â 11 / DRATHON 11",
     "mid": "",
-    "name": "HIGH CONCENTRATED CLEANER DR - 11 / DRATHON 11"
+    "name": "HIGH CONCENTRATED CLEANER DRÂ -Â 11 / DRATHON 11"
   },
   {
     "kode": "CAT POWDER COATING (ZEPHYR)GRAPHITE GREY RAL 7024",
@@ -30810,9 +30810,9 @@
     "name": "ORING SILIKON TBL 5 MM"
   },
   {
-    "kode": "WIRE MESH 1 INC",
+    "kode": "WIREÂ MESHÂ 1 INC",
     "mid": "",
-    "name": "WIRE MESH 1 INC"
+    "name": "WIREÂ MESHÂ 1 INC"
   },
   {
     "kode": "AS DRAT SS 304 M6 X 1 X P 1000 MM",
@@ -30905,14 +30905,14 @@
     "name": "RYU CORDLESS IMPACT WRENCH 20V"
   },
   {
-    "kode": "Kolter per lubang BensinØ61mm-89mm",
+    "kode": "Kolter per lubang BensinÃ˜61mm-89mm",
     "mid": "",
-    "name": "Kolter per lubang BensinØ61mm-89mm"
+    "name": "Kolter per lubang BensinÃ˜61mm-89mm"
   },
   {
-    "kode": "Kolter per lubang Diesel Ø84mm-108mm",
+    "kode": "Kolter per lubang Diesel Ã˜84mm-108mm",
     "mid": "",
-    "name": "Kolter per lubang Diesel Ø84mm-108mm"
+    "name": "Kolter per lubang Diesel Ã˜84mm-108mm"
   },
   {
     "kode": "Buka pasang Boring tanpa Kolter per lubang (manual)",
@@ -30925,14 +30925,14 @@
     "name": "Buka pasang Boring Kolter"
   },
   {
-    "kode": "Buka Pasang Boring Kolter Ø 97mm-108mm",
+    "kode": "Buka Pasang Boring Kolter Ã˜ 97mm-108mm",
     "mid": "",
-    "name": "Buka Pasang Boring Kolter Ø 97mm-108mm"
+    "name": "Buka Pasang Boring Kolter Ã˜ 97mm-108mm"
   },
   {
-    "kode": "Buka pasang Boring Kolter Ø84-91mm",
+    "kode": "Buka pasang Boring Kolter Ã˜84-91mm",
     "mid": "",
-    "name": "Buka pasang Boring Kolter Ø84-91mm"
+    "name": "Buka pasang Boring Kolter Ã˜84-91mm"
   },
   {
     "kode": "Buka pasang Metal Noken As per tempat (manual)",
@@ -30990,19 +30990,19 @@
     "name": "Sok Boring (Bensin dia.60-85mm)"
   },
   {
-    "kode": "Sok Doble Rumah Boring Ø112 (CD PS 135)",
+    "kode": "Sok Doble Rumah Boring Ã˜112 (CD PS 135)",
     "mid": "",
-    "name": "Sok Doble Rumah Boring Ø112 (CD PS 135)"
+    "name": "Sok Doble Rumah Boring Ã˜112 (CD PS 135)"
   },
   {
-    "kode": "Sok Doble Rumah Boring Ø 122 mm (Fuso)",
+    "kode": "Sok Doble Rumah Boring Ã˜ 122 mm (Fuso)",
     "mid": "",
-    "name": "Sok Doble Rumah Boring Ø 122 mm (Fuso)"
+    "name": "Sok Doble Rumah Boring Ã˜ 122 mm (Fuso)"
   },
   {
-    "kode": "Sok Doble Rumah Boring Ø 117 mm (Hino)",
+    "kode": "Sok Doble Rumah Boring Ã˜ 117 mm (Hino)",
     "mid": "",
-    "name": "Sok Doble Rumah Boring Ø 117 mm (Hino)"
+    "name": "Sok Doble Rumah Boring Ã˜ 117 mm (Hino)"
   },
   {
     "kode": "Pembuatan metal duduk per tempat",
@@ -31010,9 +31010,9 @@
     "name": "Pembuatan metal duduk per tempat"
   },
   {
-    "kode": "Bikin sok noken asØ30mm-40mm",
+    "kode": "Bikin sok noken asÃ˜30mm-40mm",
     "mid": "",
-    "name": "Bikin sok noken asØ30mm-40mm"
+    "name": "Bikin sok noken asÃ˜30mm-40mm"
   },
   {
     "kode": "Spray Pangkon Metal Duduk",
@@ -31080,14 +31080,14 @@
     "name": "Sok/Spray Pangkon Metal Duduk (mercy 1 tempat)"
   },
   {
-    "kode": "Popok Drat per tempat Ø52mm-55mm",
+    "kode": "Popok Drat per tempat Ã˜52mm-55mm",
     "mid": "",
-    "name": "Popok Drat per tempat Ø52mm-55mm"
+    "name": "Popok Drat per tempat Ã˜52mm-55mm"
   },
   {
-    "kode": "Popok tempat bearing Ø55mm-60mm",
+    "kode": "Popok tempat bearing Ã˜55mm-60mm",
     "mid": "",
-    "name": "Popok tempat bearing Ø55mm-60mm"
+    "name": "Popok tempat bearing Ã˜55mm-60mm"
   },
   {
     "kode": "Senter Gardan (Hino Lohan & Fuso)",
@@ -31140,19 +31140,19 @@
     "name": "Tapel gardan (L300, Traga)"
   },
   {
-    "kode": "Seser Ø33mm-53mm Bensin",
+    "kode": "Seser Ã˜33mm-53mm Bensin",
     "mid": "",
-    "name": "Seser Ø33mm-53mm Bensin"
+    "name": "Seser Ã˜33mm-53mm Bensin"
   },
   {
-    "kode": "Seser Ø 56mm-64mm Diesel",
+    "kode": "Seser Ã˜ 56mm-64mm Diesel",
     "mid": "",
-    "name": "Seser Ø 56mm-64mm Diesel"
+    "name": "Seser Ã˜ 56mm-64mm Diesel"
   },
   {
-    "kode": "Seser Ø73mm-84mm",
+    "kode": "Seser Ã˜73mm-84mm",
     "mid": "",
-    "name": "Seser Ø73mm-84mm"
+    "name": "Seser Ã˜73mm-84mm"
   },
   {
     "kode": "Buka pasang piston manual",
@@ -31170,19 +31170,19 @@
     "name": "Pas metal jalan"
   },
   {
-    "kode": "Bikin Metal jalan Ø 38mm-52 mm",
+    "kode": "Bikin Metal jalan Ã˜ 38mm-52 mm",
     "mid": "",
-    "name": "Bikin Metal jalan Ø 38mm-52 mm"
+    "name": "Bikin Metal jalan Ã˜ 38mm-52 mm"
   },
   {
-    "kode": "Bikin Metal Jalan (Diesel) Ø 53-66 mm",
+    "kode": "Bikin Metal Jalan (Diesel) Ã˜ 53-66 mm",
     "mid": "",
-    "name": "Bikin Metal Jalan (Diesel) Ø 53-66 mm"
+    "name": "Bikin Metal Jalan (Diesel) Ã˜ 53-66 mm"
   },
   {
-    "kode": "Sok bos pen piston Ø 36mm-40mm",
+    "kode": "Sok bos pen piston Ã˜ 36mm-40mm",
     "mid": "",
-    "name": "Sok bos pen piston Ø 36mm-40mm"
+    "name": "Sok bos pen piston Ã˜ 36mm-40mm"
   },
   {
     "kode": "Pengajuan Unit Backup Vacuum Pump KVT 3.140 SN : D 3164958",
@@ -31470,9 +31470,9 @@
     "name": "DIAL INDICATOR INSIZE 2301-10"
   },
   {
-    "kode": "THERMOMETER TYPE DIAL DIA. 4\" RANGE 0 - 150°C , MODEL RAKET",
+    "kode": "THERMOMETER TYPE DIAL DIA. 4\" RANGE 0 - 150Â°C , MODEL RAKET",
     "mid": "",
-    "name": "THERMOMETER TYPE DIAL DIA. 4\" RANGE 0 - 150°C , MODEL RAKET"
+    "name": "THERMOMETER TYPE DIAL DIA. 4\" RANGE 0 - 150Â°C , MODEL RAKET"
   },
   {
     "kode": "JANGKA SORONG DIGITAL UK 300 MERK INSIZE",
@@ -31815,9 +31815,9 @@
     "name": "PALU WIPRO PVC DEAD BLOW 50 MM 2LB"
   },
   {
-    "kode": "ANGLE GRINDER RYU 4” (RSG100-3 / TOOGLE) (GERINDA TANGAN)",
+    "kode": "ANGLE GRINDER RYU 4â€ (RSG100-3 / TOOGLE) (GERINDA TANGAN)",
     "mid": "",
-    "name": "ANGLE GRINDER RYU 4” (RSG100-3 / TOOGLE) (GERINDA TANGAN)"
+    "name": "ANGLE GRINDER RYU 4â€ (RSG100-3 / TOOGLE) (GERINDA TANGAN)"
   },
   {
     "kode": "TRACKER 2 KAKI 3\"",
@@ -31975,14 +31975,14 @@
     "name": "Selep rata blok 4 cyl (Tuangan)"
   },
   {
-    "kode": "Ganti Setteng per tempat Ø32mm-43mm (Bensin)",
+    "kode": "Ganti Setteng per tempat Ã˜32mm-43mm (Bensin)",
     "mid": "",
-    "name": "Ganti Setteng per tempat Ø32mm-43mm (Bensin)"
+    "name": "Ganti Setteng per tempat Ã˜32mm-43mm (Bensin)"
   },
   {
-    "kode": "Ganti Setteng per tempatØ 30mm-65mm (Diesel)",
+    "kode": "Ganti Setteng per tempatÃ˜ 30mm-65mm (Diesel)",
     "mid": "",
-    "name": "Ganti Setteng per tempatØ 30mm-65mm (Diesel)"
+    "name": "Ganti Setteng per tempatÃ˜ 30mm-65mm (Diesel)"
   },
   {
     "kode": "Pembuatan bos klep per tempat",
@@ -32000,14 +32000,14 @@
     "name": "Sok Nozzle 1 tempat"
   },
   {
-    "kode": "Pembuatan Bos Klep Ø14",
+    "kode": "Pembuatan Bos Klep Ã˜14",
     "mid": "",
-    "name": "Pembuatan Bos Klep Ø14"
+    "name": "Pembuatan Bos Klep Ã˜14"
   },
   {
-    "kode": "Pembuatan Bos Klep Ø30",
+    "kode": "Pembuatan Bos Klep Ã˜30",
     "mid": "",
-    "name": "Pembuatan Bos Klep Ø30"
+    "name": "Pembuatan Bos Klep Ã˜30"
   },
   {
     "kode": "Buka Busi Pemanas",
@@ -32020,19 +32020,19 @@
     "name": "Slep Klep"
   },
   {
-    "kode": "Slep per tempat diesel metal duduk Ø60mm-78mm\r\n metal jalan Ø53-65",
+    "kode": "Slep per tempat diesel metal duduk Ã˜60mm-78mm\r\n metal jalan Ã˜53-65",
     "mid": "",
-    "name": "Slep per tempat diesel metal duduk Ø60mm-78mm\r\n metal jalan Ø53-65"
+    "name": "Slep per tempat diesel metal duduk Ã˜60mm-78mm\r\n metal jalan Ã˜53-65"
   },
   {
-    "kode": "Slep per tempat metal duduk Ø73mm-104mm\r\n metal jalan Ø 62mm-90mm",
+    "kode": "Slep per tempat metal duduk Ã˜73mm-104mm\r\n metal jalan Ã˜ 62mm-90mm",
     "mid": "",
-    "name": "Slep per tempat metal duduk Ø73mm-104mm\r\n metal jalan Ø 62mm-90mm"
+    "name": "Slep per tempat metal duduk Ã˜73mm-104mm\r\n metal jalan Ã˜ 62mm-90mm"
   },
   {
-    "kode": "Slep pertempat metal jalan Ø 42mm-70mm",
+    "kode": "Slep pertempat metal jalan Ã˜ 42mm-70mm",
     "mid": "",
-    "name": "Slep pertempat metal jalan Ø 42mm-70mm"
+    "name": "Slep pertempat metal jalan Ã˜ 42mm-70mm"
   },
   {
     "kode": "Check + Poles spiling crankshaft baru",
@@ -32050,9 +32050,9 @@
     "name": "Pindah spey crankshaft tempat gigi"
   },
   {
-    "kode": "Poles per tempat diesel mainØ 60mm-100mm",
+    "kode": "Poles per tempat diesel mainÃ˜ 60mm-100mm",
     "mid": "",
-    "name": "Poles per tempat diesel mainØ 60mm-100mm"
+    "name": "Poles per tempat diesel mainÃ˜ 60mm-100mm"
   },
   {
     "kode": "Buka pasang gigi crankshaft",
@@ -32060,14 +32060,14 @@
     "name": "Buka pasang gigi crankshaft"
   },
   {
-    "kode": "Sok Seal Ø82mm - 100mm (Diesel)",
+    "kode": "Sok Seal Ã˜82mm - 100mm (Diesel)",
     "mid": "",
-    "name": "Sok Seal Ø82mm - 100mm (Diesel)"
+    "name": "Sok Seal Ã˜82mm - 100mm (Diesel)"
   },
   {
-    "kode": "Sok Seal Ø 60mm-70mm (Bensin)",
+    "kode": "Sok Seal Ã˜ 60mm-70mm (Bensin)",
     "mid": "",
-    "name": "Sok Seal Ø 60mm-70mm (Bensin)"
+    "name": "Sok Seal Ã˜ 60mm-70mm (Bensin)"
   },
   {
     "kode": "Pembuatan metal bulan",
@@ -32120,19 +32120,19 @@
     "name": "Slep Tempat Metal Bulan"
   },
   {
-    "kode": "Bubut Roda Gila Ø200mm-250mm",
+    "kode": "Bubut Roda Gila Ã˜200mm-250mm",
     "mid": "",
-    "name": "Bubut Roda Gila Ø200mm-250mm"
+    "name": "Bubut Roda Gila Ã˜200mm-250mm"
   },
   {
-    "kode": "Bubut Tromol Ø200mm-400mm",
+    "kode": "Bubut Tromol Ã˜200mm-400mm",
     "mid": "",
-    "name": "Bubut Tromol Ø200mm-400mm"
+    "name": "Bubut Tromol Ã˜200mm-400mm"
   },
   {
-    "kode": "Bubut Disk Brake 1 set Ø200mm-350mm",
+    "kode": "Bubut Disk Brake 1 set Ã˜200mm-350mm",
     "mid": "",
-    "name": "Bubut Disk Brake 1 set Ø200mm-350mm"
+    "name": "Bubut Disk Brake 1 set Ã˜200mm-350mm"
   },
   {
     "kode": "Bubut Druk Kopling",
@@ -32170,9 +32170,9 @@
     "name": "Buka pasang Gigi Susun Versneleng manual"
   },
   {
-    "kode": "Popok kones per tempat Ø150mm-160mm (nap gardan)",
+    "kode": "Popok kones per tempat Ã˜150mm-160mm (nap gardan)",
     "mid": "",
-    "name": "Popok kones per tempat Ø150mm-160mm (nap gardan)"
+    "name": "Popok kones per tempat Ã˜150mm-160mm (nap gardan)"
   },
   {
     "kode": "Pembuatan Baut Tanam",
@@ -32185,9 +32185,9 @@
     "name": "Potong Piston Posisi TOP"
   },
   {
-    "kode": "Sok As Balak per tempat Ø26mm-30mm",
+    "kode": "Sok As Balak per tempat Ã˜26mm-30mm",
     "mid": "",
-    "name": "Sok As Balak per tempat Ø26mm-30mm"
+    "name": "Sok As Balak per tempat Ã˜26mm-30mm"
   },
   {
     "kode": "Sok lubang Baut 1 tempat",
@@ -32195,14 +32195,14 @@
     "name": "Sok lubang Baut 1 tempat"
   },
   {
-    "kode": "Bos Kamrat Ø35mm-50mm",
+    "kode": "Bos Kamrat Ã˜35mm-50mm",
     "mid": "",
-    "name": "Bos Kamrat Ø35mm-50mm"
+    "name": "Bos Kamrat Ã˜35mm-50mm"
   },
   {
-    "kode": "Reparasi Pompa Oli Ø40mm-50mm",
+    "kode": "Reparasi Pompa Oli Ã˜40mm-50mm",
     "mid": "",
-    "name": "Reparasi Pompa Oli Ø40mm-50mm"
+    "name": "Reparasi Pompa Oli Ã˜40mm-50mm"
   },
   {
     "kode": "Scope lain-lain otomotif",
@@ -32535,19 +32535,19 @@
     "name": "BENCH VISE (RAGUM) 10\""
   },
   {
-    "kode": "CHAMFER GAUGE CODE: 160-010-11 RANGE: 30˚ (0-10mm) ACCUD",
+    "kode": "CHAMFER GAUGE CODE: 160-010-11 RANGE: 30Ëš (0-10mm) ACCUD",
     "mid": "",
-    "name": "CHAMFER GAUGE CODE: 160-010-11 RANGE: 30˚ (0-10mm) ACCUD"
+    "name": "CHAMFER GAUGE CODE: 160-010-11 RANGE: 30Ëš (0-10mm) ACCUD"
   },
   {
-    "kode": "CHAMFER GAUGE CODE: 160-010-12 RANGE: 45˚ (0-10mm) ACCUD",
+    "kode": "CHAMFER GAUGE CODE: 160-010-12 RANGE: 45Ëš (0-10mm) ACCUD",
     "mid": "",
-    "name": "CHAMFER GAUGE CODE: 160-010-12 RANGE: 45˚ (0-10mm) ACCUD"
+    "name": "CHAMFER GAUGE CODE: 160-010-12 RANGE: 45Ëš (0-10mm) ACCUD"
   },
   {
-    "kode": "CHAMFER GAUGE CODE: 160-010-13 RANGE: 60˚ (0-10mm) ACCUD",
+    "kode": "CHAMFER GAUGE CODE: 160-010-13 RANGE: 60Ëš (0-10mm) ACCUD",
     "mid": "",
-    "name": "CHAMFER GAUGE CODE: 160-010-13 RANGE: 60˚ (0-10mm) ACCUD"
+    "name": "CHAMFER GAUGE CODE: 160-010-13 RANGE: 60Ëš (0-10mm) ACCUD"
   },
   {
     "kode": "CENTRE PUNCH CHROME VANADIUM STEEL OD 8 X T 125 MM",
@@ -32570,9 +32570,9 @@
     "name": "HANDY TALKY V12 VEV"
   },
   {
-    "kode": "SMALL INDUCTION HEATER SKF 20-300MM 20-250˚C TIH 030M/230V",
+    "kode": "SMALL INDUCTION HEATER SKF 20-300MM 20-250ËšC TIH 030M/230V",
     "mid": "",
-    "name": "SMALL INDUCTION HEATER SKF 20-300MM 20-250˚C TIH 030M/230V"
+    "name": "SMALL INDUCTION HEATER SKF 20-300MM 20-250ËšC TIH 030M/230V"
   },
   {
     "kode": "KUNCI HOOK RANGE 95-165 TYPE: RV 1208-2 WIPRO",
@@ -32725,9 +32725,9 @@
     "name": "LEVER HOIST BLOCK 2T TOYO"
   },
   {
-    "kode": "OUTSIDE MICROMETER 0–25 MM 0.01 MM TYPE: 3203-25A INSIZE",
+    "kode": "OUTSIDE MICROMETER 0â€“25 MM 0.01 MM TYPE: 3203-25A INSIZE",
     "mid": "",
-    "name": "OUTSIDE MICROMETER 0–25 MM 0.01 MM TYPE: 3203-25A INSIZE"
+    "name": "OUTSIDE MICROMETER 0â€“25 MM 0.01 MM TYPE: 3203-25A INSIZE"
   },
   {
     "kode": "OUTSIDE MICROMETER 25-50 MM 0.01 MM TYPE: 3203-50A INSIZE",
@@ -34670,9 +34670,9 @@
     "name": "GATE VALVE SS304  (STAINLESS STEEL) 3IN JIS 10K INCH"
   },
   {
-    "kode": "HELICAL GEAR Z.20 Ø120MM×P112MM",
+    "kode": "HELICAL GEAR Z.20 Ã˜120MMÃ—P112MM",
     "mid": "",
-    "name": "HELICAL GEAR Z.20 Ø120MM×P112MM"
+    "name": "HELICAL GEAR Z.20 Ã˜120MMÃ—P112MM"
   },
   {
     "kode": "HELICAL GEAR ID 35 x OD 164 mm x TBL 51 mm (MECHANICAL LOWER PART 9) MERK Custom Fabrication",
@@ -34700,14 +34700,14 @@
     "name": "HELICAL GEAR (RIGHT) Z=59 ID 73.6-75 X OD 219 X TBL 60 MM (GM 90)"
   },
   {
-    "kode": "HELICAL GEAR 1 ID Ø 60.00 X OD Ø 229.00 MM X TBL 35 MM (Z : 98)",
+    "kode": "HELICAL GEAR 1 ID Ã˜ 60.00 X OD Ã˜ 229.00 MM X TBL 35 MM (Z : 98)",
     "mid": "",
-    "name": "HELICAL GEAR 1 ID Ø 60.00 X OD Ø 229.00 MM X TBL 35 MM (Z : 98)"
+    "name": "HELICAL GEAR 1 ID Ã˜ 60.00 X OD Ã˜ 229.00 MM X TBL 35 MM (Z : 98)"
   },
   {
-    "kode": "HELICAL GEAR 2 ID Ø28.00 X OD Ø51.00 X TEBAL 30.00 MM (Z : 20)",
+    "kode": "HELICAL GEAR 2 ID Ã˜28.00 X OD Ã˜51.00 X TEBAL 30.00 MM (Z : 20)",
     "mid": "",
-    "name": "HELICAL GEAR 2 ID Ø28.00 X OD Ø51.00 X TEBAL 30.00 MM (Z : 20)"
+    "name": "HELICAL GEAR 2 ID Ã˜28.00 X OD Ã˜51.00 X TEBAL 30.00 MM (Z : 20)"
   },
   {
     "kode": "HELICAL GEAR STEEL ID 40 X OD 95 X T 51.5 (Z 32) MM",
@@ -36330,9 +36330,9 @@
     "name": "KUNCI SNAP RING LURUS 8\""
   },
   {
-    "kode": "DIGITAL LEVEL 725 CODE: 725-360-01 RANGE: 0-360˚ (4x90˚) ACCUD",
+    "kode": "DIGITAL LEVEL 725 CODE: 725-360-01 RANGE: 0-360Ëš (4x90Ëš) ACCUD",
     "mid": "",
-    "name": "DIGITAL LEVEL 725 CODE: 725-360-01 RANGE: 0-360˚ (4x90˚) ACCUD"
+    "name": "DIGITAL LEVEL 725 CODE: 725-360-01 RANGE: 0-360Ëš (4x90Ëš) ACCUD"
   },
   {
     "kode": "BLOCK LEVEL 713 CODE: 713-012-02 RANGE: 300 mm ACCUD",
@@ -36910,9 +36910,9 @@
     "name": "KABEL DAYA H07RN-F 1 X 25 MM TITANEX"
   },
   {
-    "kode": "KABEL DAYA H07RN-F 6C 1,5 MM² 450/750 V",
+    "kode": "KABEL DAYA H07RN-F 6C 1,5 MMÂ² 450/750 V",
     "mid": "",
-    "name": "KABEL DAYA H07RN-F 6C 1,5 MM² 450/750 V"
+    "name": "KABEL DAYA H07RN-F 6C 1,5 MMÂ² 450/750 V"
   },
   {
     "kode": "KABEL ROLL 1 PHASA 20 METER",
@@ -36950,29 +36950,29 @@
     "name": "KABEL NYYHY 4 X 1,5 MM (JEMBO)"
   },
   {
-    "kode": "KABEL DAYA H07RN-F 4C 2,5 MM² 450/750 V",
+    "kode": "KABEL DAYA H07RN-F 4C 2,5 MMÂ² 450/750 V",
     "mid": "",
-    "name": "KABEL DAYA H07RN-F 4C 2,5 MM² 450/750 V"
+    "name": "KABEL DAYA H07RN-F 4C 2,5 MMÂ² 450/750 V"
   },
   {
-    "kode": "KABEL N2XSEBY 3 X 25 mm² SUPREME",
+    "kode": "KABEL N2XSEBY 3 X 25 mmÂ² SUPREME",
     "mid": "",
-    "name": "KABEL N2XSEBY 3 X 25 mm² SUPREME"
+    "name": "KABEL N2XSEBY 3 X 25 mmÂ² SUPREME"
   },
   {
-    "kode": "KABEL DAYA H07RN-F 4C 120 MM² 450/750 V",
+    "kode": "KABEL DAYA H07RN-F 4C 120 MMÂ² 450/750 V",
     "mid": "",
-    "name": "KABEL DAYA H07RN-F 4C 120 MM² 450/750 V"
+    "name": "KABEL DAYA H07RN-F 4C 120 MMÂ² 450/750 V"
   },
   {
-    "kode": "KABEL DAYA NYYHY 3 X 0,75 MM² 300/500 VOLT",
+    "kode": "KABEL DAYA NYYHY 3 X 0,75 MMÂ² 300/500 VOLT",
     "mid": "",
-    "name": "KABEL DAYA NYYHY 3 X 0,75 MM² 300/500 VOLT"
+    "name": "KABEL DAYA NYYHY 3 X 0,75 MMÂ² 300/500 VOLT"
   },
   {
-    "kode": "KABEL DAYA H07RN-F 4C 1,5 MM² 450/750 V",
+    "kode": "KABEL DAYA H07RN-F 4C 1,5 MMÂ² 450/750 V",
     "mid": "",
-    "name": "KABEL DAYA H07RN-F 4C 1,5 MM² 450/750 V"
+    "name": "KABEL DAYA H07RN-F 4C 1,5 MMÂ² 450/750 V"
   },
   {
     "kode": "KABEL SCREEN 12 X 0,75 METRIC",
@@ -37440,14 +37440,14 @@
     "name": "HARD DISK INTERNAL SURVEILLANCE SKYHAWK 8 TB ST8000VX010 SEAGATE"
   },
   {
-    "kode": "KAPASITOR CBB60 8 µF 450 VAC",
+    "kode": "KAPASITOR CBB60 8 ÂµF 450 VAC",
     "mid": "",
-    "name": "KAPASITOR CBB60 8 µF 450 VAC"
+    "name": "KAPASITOR CBB60 8 ÂµF 450 VAC"
   },
   {
-    "kode": "KAPASITOR PLASTIC 60 μF 450V UNICON",
+    "kode": "KAPASITOR PLASTIC 60 Î¼F 450V UNICON",
     "mid": "",
-    "name": "KAPASITOR PLASTIC 60 μF 450V UNICON"
+    "name": "KAPASITOR PLASTIC 60 Î¼F 450V UNICON"
   },
   {
     "kode": "KAPASITOR 12 UF 450 VAC",
@@ -37455,14 +37455,14 @@
     "name": "KAPASITOR 12 UF 450 VAC"
   },
   {
-    "kode": "KAPASITOR 15 µF 450 VAC",
+    "kode": "KAPASITOR 15 ÂµF 450 VAC",
     "mid": "",
-    "name": "KAPASITOR 15 µF 450 VAC"
+    "name": "KAPASITOR 15 ÂµF 450 VAC"
   },
   {
-    "kode": "KAPASITOR 250 µF 450 VAC",
+    "kode": "KAPASITOR 250 ÂµF 450 VAC",
     "mid": "",
-    "name": "KAPASITOR 250 µF 450 VAC"
+    "name": "KAPASITOR 250 ÂµF 450 VAC"
   },
   {
     "kode": "SKF MULTILOG CMON4116 - IMX16",
@@ -38540,9 +38540,9 @@
     "name": "DOUBLE ROW ANGULAR CONTACT BALL BEARING 3207 A/C3 SKF"
   },
   {
-    "kode": "SINGLE ROW ANGULAR CONTACT BALL BEARING WITH 40° CONTACT ANGLE AND NON-CONTACT SEALS ON BOTH SIDES 7308 BE-2RZP SKF",
+    "kode": "SINGLE ROW ANGULAR CONTACT BALL BEARING WITH 40Â° CONTACT ANGLE AND NON-CONTACT SEALS ON BOTH SIDES 7308 BE-2RZP SKF",
     "mid": "",
-    "name": "SINGLE ROW ANGULAR CONTACT BALL BEARING WITH 40° CONTACT ANGLE AND NON-CONTACT SEALS ON BOTH SIDES 7308 BE-2RZP SKF"
+    "name": "SINGLE ROW ANGULAR CONTACT BALL BEARING WITH 40Â° CONTACT ANGLE AND NON-CONTACT SEALS ON BOTH SIDES 7308 BE-2RZP SKF"
   },
   {
     "kode": "SINGLE ROW ANGULAR CONTACT BALL BEARING 7310 BEP SKF",
@@ -40375,39 +40375,39 @@
     "name": "SNAPRING S - 44"
   },
   {
-    "kode": "ELBOW 90° PVC DIA 4\"",
+    "kode": "ELBOW 90Â° PVC DIA 4\"",
     "mid": "",
-    "name": "ELBOW 90° PVC DIA 4\""
+    "name": "ELBOW 90Â° PVC DIA 4\""
   },
   {
-    "kode": "ELBOW 90° PVC DIA 6\"",
+    "kode": "ELBOW 90Â° PVC DIA 6\"",
     "mid": "",
-    "name": "ELBOW 90° PVC DIA 6\""
+    "name": "ELBOW 90Â° PVC DIA 6\""
   },
   {
-    "kode": "ELBOW 90° PVC DIA 12\"",
+    "kode": "ELBOW 90Â° PVC DIA 12\"",
     "mid": "",
-    "name": "ELBOW 90° PVC DIA 12\""
+    "name": "ELBOW 90Â° PVC DIA 12\""
   },
   {
-    "kode": "ELBOW TEMBAGA 90˚ DIA. 3/8\"",
+    "kode": "ELBOW TEMBAGA 90Ëš DIA. 3/8\"",
     "mid": "",
-    "name": "ELBOW TEMBAGA 90˚ DIA. 3/8\""
+    "name": "ELBOW TEMBAGA 90Ëš DIA. 3/8\""
   },
   {
-    "kode": "ELBOW TEMBAGA 90˚ 5/8\"",
+    "kode": "ELBOW TEMBAGA 90Ëš 5/8\"",
     "mid": "",
-    "name": "ELBOW TEMBAGA 90˚ 5/8\""
+    "name": "ELBOW TEMBAGA 90Ëš 5/8\""
   },
   {
-    "kode": "ELBOW TEMBAGA 90˚ 1/2\"",
+    "kode": "ELBOW TEMBAGA 90Ëš 1/2\"",
     "mid": "",
-    "name": "ELBOW TEMBAGA 90˚ 1/2\""
+    "name": "ELBOW TEMBAGA 90Ëš 1/2\""
   },
   {
-    "kode": "ELBOW TEMBAGA 90˚ 3/4\"",
+    "kode": "ELBOW TEMBAGA 90Ëš 3/4\"",
     "mid": "",
-    "name": "ELBOW TEMBAGA 90˚ 3/4\""
+    "name": "ELBOW TEMBAGA 90Ëš 3/4\""
   },
   {
     "kode": "EXPANDED METAL GM50105 METRIC",
@@ -40520,9 +40520,9 @@
     "name": "ELBOW WELDED ASTM A53 16 INCH SCH 40, 90 DERAJAT, LONG RADIUS"
   },
   {
-    "kode": "BATU GERINDA DRILL BIT GRINDER MACHINE CBN 200 ID 19 X OD 105 X T 15 (A 65°) MM",
+    "kode": "BATU GERINDA DRILL BIT GRINDER MACHINE CBN 200 ID 19 X OD 105 X T 15 (A 65Â°) MM",
     "mid": "",
-    "name": "BATU GERINDA DRILL BIT GRINDER MACHINE CBN 200 ID 19 X OD 105 X T 15 (A 65°) MM"
+    "name": "BATU GERINDA DRILL BIT GRINDER MACHINE CBN 200 ID 19 X OD 105 X T 15 (A 65Â°) MM"
   },
   {
     "kode": "GLASS FIBER PLATE E GLASS CPV600X525X6 MM",
@@ -40805,9 +40805,9 @@
     "name": "BESI IWF 200 X 100 X 5,5 X 8 MM X 12 M"
   },
   {
-    "kode": "KABEL DAYA H07RN-F 1C 25 MM² 450/750 V",
+    "kode": "KABEL DAYA H07RN-F 1C 25 MMÂ² 450/750 V",
     "mid": "",
-    "name": "KABEL DAYA H07RN-F 1C 25 MM² 450/750 V"
+    "name": "KABEL DAYA H07RN-F 1C 25 MMÂ² 450/750 V"
   },
   {
     "kode": "KAWAT LAS FCAW DIA. 1,2 MM E-71T-C (W71-T VD) QUE HAN DIEN",
@@ -41240,9 +41240,9 @@
     "name": "NEPPLE GREASE LURUS STEEL PLATING 5/16\" X 24 UNF INCH"
   },
   {
-    "kode": "NEPPLE GREASE M10 X 1 X P 25,5 METRIC (BENGKOK 45°)",
+    "kode": "NEPPLE GREASE M10 X 1 X P 25,5 METRIC (BENGKOK 45Â°)",
     "mid": "",
-    "name": "NEPPLE GREASE M10 X 1 X P 25,5 METRIC (BENGKOK 45°)"
+    "name": "NEPPLE GREASE M10 X 1 X P 25,5 METRIC (BENGKOK 45Â°)"
   },
   {
     "kode": "OIL FILTER 4587260 PERKINS",
@@ -41820,14 +41820,14 @@
     "name": "O-RING VITON ID 157 X OD 163 X T 3  METRIC"
   },
   {
-    "kode": "O‑RING VITON ID 45 X OD 51 X T 3 METRIC",
+    "kode": "Oâ€‘RING VITON ID 45 X OD 51 X T 3 METRIC",
     "mid": "",
-    "name": "O‑RING VITON ID 45 X OD 51 X T 3 METRIC"
+    "name": "Oâ€‘RING VITON ID 45 X OD 51 X T 3 METRIC"
   },
   {
-    "kode": "O‑RING VITON ID 250 X OD 256 X T 3 METRIC",
+    "kode": "Oâ€‘RING VITON ID 250 X OD 256 X T 3 METRIC",
     "mid": "",
-    "name": "O‑RING VITON ID 250 X OD 256 X T 3 METRIC"
+    "name": "Oâ€‘RING VITON ID 250 X OD 256 X T 3 METRIC"
   },
   {
     "kode": "O-RING VITON ID 96 X OD 103 X T. 3.5 METRIC",
@@ -45520,19 +45520,19 @@
     "name": "STANDARD RECOVERY DIODES 85 AMPERE HFR 120"
   },
   {
-    "kode": "THERMISTOR YGM3 C514 (PTC 140°) WHITE - YELLOW - BLUE",
+    "kode": "THERMISTOR YGM3 C514 (PTC 140Â°) WHITE - YELLOW - BLUE",
     "mid": "",
-    "name": "THERMISTOR YGM3 C514 (PTC 140°) WHITE - YELLOW - BLUE"
+    "name": "THERMISTOR YGM3 C514 (PTC 140Â°) WHITE - YELLOW - BLUE"
   },
   {
-    "kode": "THERMISTOR PTC SEMIKONDUKTOR / OKSIDA LOGAM  125°C (RED - GREEN)",
+    "kode": "THERMISTOR PTC SEMIKONDUKTOR / OKSIDA LOGAM  125Â°C (RED - GREEN)",
     "mid": "",
-    "name": "THERMISTOR PTC SEMIKONDUKTOR / OKSIDA LOGAM  125°C (RED - GREEN)"
+    "name": "THERMISTOR PTC SEMIKONDUKTOR / OKSIDA LOGAM  125Â°C (RED - GREEN)"
   },
   {
-    "kode": "THERMISTOR SEMIKONDUKTOR / OKSIDA LOGAM PTC 170°C (WHITE - GREEN)",
+    "kode": "THERMISTOR SEMIKONDUKTOR / OKSIDA LOGAM PTC 170Â°C (WHITE - GREEN)",
     "mid": "",
-    "name": "THERMISTOR SEMIKONDUKTOR / OKSIDA LOGAM PTC 170°C (WHITE - GREEN)"
+    "name": "THERMISTOR SEMIKONDUKTOR / OKSIDA LOGAM PTC 170Â°C (WHITE - GREEN)"
   },
   {
     "kode": "TAPPER BUSH 3535 DIA. 60 MM",
@@ -46205,9 +46205,9 @@
     "name": "ELBOW LAS SS316 6IN 90 DERAJAT LONG RADIUS SCH40"
   },
   {
-    "kode": "ELBOW LAS 45° SCH40 3 INCH",
+    "kode": "ELBOW LAS 45Â° SCH40 3 INCH",
     "mid": "",
-    "name": "ELBOW LAS 45° SCH40 3 INCH"
+    "name": "ELBOW LAS 45Â° SCH40 3 INCH"
   },
   {
     "kode": "ELBOW WELDED SS304 6IN 90 DERAJAT SCH40",
@@ -46780,9 +46780,9 @@
     "name": "BAG CLOSING SEWING HEAD STEEL DS - 2 (II) NEWLONG NLI FZC"
   },
   {
-    "kode": "Buka Pasang Boring Kolter Ø 97mm-108mm",
+    "kode": "Buka Pasang Boring Kolter Ã˜ 97mm-108mm",
     "mid": "",
-    "name": "Buka Pasang Boring Kolter Ø 97mm-108mm"
+    "name": "Buka Pasang Boring Kolter Ã˜ 97mm-108mm"
   },
   {
     "kode": "Sok Boring (Diesel 87-107mm)",
@@ -46795,19 +46795,19 @@
     "name": "Sok Boring (Bensin dia.60-85mm)"
   },
   {
-    "kode": "Sok Doble Rumah Boring Ø112 (CD PS 135)",
+    "kode": "Sok Doble Rumah Boring Ã˜112 (CD PS 135)",
     "mid": "",
-    "name": "Sok Doble Rumah Boring Ø112 (CD PS 135)"
+    "name": "Sok Doble Rumah Boring Ã˜112 (CD PS 135)"
   },
   {
-    "kode": "Sok Doble Rumah Boring Ø 122 mm",
+    "kode": "Sok Doble Rumah Boring Ã˜ 122 mm",
     "mid": "",
-    "name": "Sok Doble Rumah Boring Ø 122 mm"
+    "name": "Sok Doble Rumah Boring Ã˜ 122 mm"
   },
   {
-    "kode": "Sok Doble Rumah Boring Ø 117 mm (Hino)",
+    "kode": "Sok Doble Rumah Boring Ã˜ 117 mm (Hino)",
     "mid": "",
-    "name": "Sok Doble Rumah Boring Ø 117 mm (Hino)"
+    "name": "Sok Doble Rumah Boring Ã˜ 117 mm (Hino)"
   },
   {
     "kode": "SERVICE MOTOR",
@@ -47775,9 +47775,9 @@
     "name": "BECKERVADS 1500+ (30 KW)"
   },
   {
-    "kode": "BECKER VTLF 2.360 \r\n3~MOTOR  11.0/13.2 KW 1475/1780 RPM\r\n400 V +/-10% 50HZ , 460 V +/-10% 60HZ",
+    "kode": "BECKER VTLF 2.360 \r\n3~MOTORÂ  11.0/13.2 KW 1475/1780 RPM\r\n400 V +/-10% 50HZ , 460 V +/-10% 60HZ",
     "mid": "",
-    "name": "BECKER VTLF 2.360 \r\n3~MOTOR  11.0/13.2 KW 1475/1780 RPM\r\n400 V +/-10% 50HZ , 460 V +/-10% 60HZ"
+    "name": "BECKER VTLF 2.360 \r\n3~MOTORÂ  11.0/13.2 KW 1475/1780 RPM\r\n400 V +/-10% 50HZ , 460 V +/-10% 60HZ"
   },
   {
     "kode": "BOM FABRIKASI",
@@ -48575,9 +48575,9 @@
     "name": "REPAIR SET U5.100 - PN: 56630154200 BECKER"
   },
   {
-    "kode": "Repair Kit U 5.100 Index D PN 56630254200 - PN: 56630254200 BECKER",
+    "kode": "Repair Kit U 5.100Â Index D PN 56630254200 - PN: 56630254200 BECKER",
     "mid": "",
-    "name": "Repair Kit U 5.100 Index D PN 56630254200 - PN: 56630254200 BECKER"
+    "name": "Repair Kit U 5.100Â Index D PN 56630254200 - PN: 56630254200 BECKER"
   },
   {
     "kode": "REPAIR KIT U 5.101 PN 56630354200 - PN : 56630354200 BECKER",
@@ -48950,9 +48950,9 @@
     "name": "COUPLING RING ROTEX GS24/28 - PN: 90220010600 BECKER"
   },
   {
-    "kode": "RING  AR 60/75°SH A - PN: 90220020000 BECKER",
+    "kode": "RING  AR 60/75Â°SH A - PN: 90220020000 BECKER",
     "mid": "",
-    "name": "RING  AR 60/75°SH A - PN: 90220020000 BECKER"
+    "name": "RING  AR 60/75Â°SH A - PN: 90220020000 BECKER"
   },
   {
     "kode": "COUPLING DISC U5.100-155 - PN: 90220054200 BECKER",
@@ -49850,9 +49850,9 @@
     "name": "SERVICE ELEKTROMOTOR TYPE: MOTOR TECO, 75KW, 380V, 1475RPM PT. KUTAI TIMBER INDONESIA"
   },
   {
-    "kode": "Mill Roller New 38” x 78” Mill No.II Perforated Roller Assembly  OD 965 MM X 1981 MM",
+    "kode": "Mill Roller New 38â€ x 78â€ Mill No.II Perforated Roller Assembly  OD 965 MM X 1981 MM",
     "mid": "",
-    "name": "Mill Roller New 38” x 78” Mill No.II Perforated Roller Assembly  OD 965 MM X 1981 MM"
+    "name": "Mill Roller New 38â€ x 78â€ Mill No.II Perforated Roller Assembly  OD 965 MM X 1981 MM"
   },
   {
     "kode": "KIT MAJOR REPAIR LEYBOLD TRIVAC D40B PN : 19122D40KIT",
@@ -50025,14 +50025,14 @@
     "name": "PEDRO GIL EXAGONAL SCREW DIN931 M10x105 481033"
   },
   {
-    "kode": "DVP FILTERS WITH TRANSPARENT BOWL FCT 30B ½\"G PN: 9001010",
+    "kode": "DVP FILTERS WITH TRANSPARENT BOWL FCT 30B Â½\"G PN: 9001010",
     "mid": "",
-    "name": "DVP FILTERS WITH TRANSPARENT BOWL FCT 30B ½\"G PN: 9001010"
+    "name": "DVP FILTERS WITH TRANSPARENT BOWL FCT 30B Â½\"G PN: 9001010"
   },
   {
-    "kode": "DVP METAL BOWL FILTER FCM 192 1½\"G PN: 9001018",
+    "kode": "DVP METAL BOWL FILTER FCM 192 1Â½\"G PN: 9001018",
     "mid": "",
-    "name": "DVP METAL BOWL FILTER FCM 192 1½\"G PN: 9001018"
+    "name": "DVP METAL BOWL FILTER FCM 192 1Â½\"G PN: 9001018"
   },
   {
     "kode": "DVP METAL BOWL FILTER FCM 300 2\"G PN: 9001019",
@@ -50040,14 +50040,14 @@
     "name": "DVP METAL BOWL FILTER FCM 300 2\"G PN: 9001019"
   },
   {
-    "kode": "DVP METAL BOWL FILTER FCM 90 1¼\"G PN: 9001022",
+    "kode": "DVP METAL BOWL FILTER FCM 90 1Â¼\"G PN: 9001022",
     "mid": "",
-    "name": "DVP METAL BOWL FILTER FCM 90 1¼\"G PN: 9001022"
+    "name": "DVP METAL BOWL FILTER FCM 90 1Â¼\"G PN: 9001022"
   },
   {
-    "kode": "DVP METAL BOWL FILTER FCM 36 ½\"G PN: 9001024",
+    "kode": "DVP METAL BOWL FILTER FCM 36 Â½\"G PN: 9001024",
     "mid": "",
-    "name": "DVP METAL BOWL FILTER FCM 36 ½\"G PN: 9001024"
+    "name": "DVP METAL BOWL FILTER FCM 36 Â½\"G PN: 9001024"
   },
   {
     "kode": "FILTER HOSPITAL SVP FH 107 / TRIDENT T851V",
@@ -50345,9 +50345,9 @@
     "name": "SERVICE GEARBOX ERETAN MESIN GRINDING"
   },
   {
-    "kode": "FABRIKASI SHAFT (Material : SCM 440 Dimension : OD. Ø25.02 mm x pjg. 435 mm) U/ Area Packing 3In1 mesin Topack Semarang",
+    "kode": "FABRIKASI SHAFT (Material : SCM 440 Dimension : OD. Ã˜25.02 mm x pjg. 435 mm) U/ Area Packing 3In1 mesin Topack Semarang",
     "mid": "",
-    "name": "FABRIKASI SHAFT (Material : SCM 440 Dimension : OD. Ø25.02 mm x pjg. 435 mm) U/ Area Packing 3In1 mesin Topack Semarang"
+    "name": "FABRIKASI SHAFT (Material : SCM 440 Dimension : OD. Ã˜25.02 mm x pjg. 435 mm) U/ Area Packing 3In1 mesin Topack Semarang"
   },
   {
     "kode": "SERVICE VACUUM PUMP RUVAC H 7000 PT. PANVERTA CAKRAKENCANA",
@@ -50795,9 +50795,9 @@
     "name": "PEKERJAAN PENGGANTIAN PENGGERAK GILINGAN 1 & 2"
   },
   {
-    "kode": "RESHELLING TOP ROLL Ø 920 X 1980",
+    "kode": "RESHELLING TOP ROLL Ã˜ 920 X 1980",
     "mid": "",
-    "name": "RESHELLING TOP ROLL Ø 920 X 1980"
+    "name": "RESHELLING TOP ROLL Ã˜ 920 X 1980"
   },
   {
     "kode": "PERGANTIAN ROTOR UNIGRATOR",
@@ -50920,9 +50920,9 @@
     "name": "INCOMPLETED REPAIR KIT U5.71 - PN : 56630054100 BECKER"
   },
   {
-    "kode": "INCOMPLETED Repair Kit U 5.100 Index D PN 56630254200 - PN: 56630254200 BECKER",
+    "kode": "INCOMPLETED Repair Kit U 5.100Â Index D PN 56630254200 - PN: 56630254200 BECKER",
     "mid": "",
-    "name": "INCOMPLETED Repair Kit U 5.100 Index D PN 56630254200 - PN: 56630254200 BECKER"
+    "name": "INCOMPLETED Repair Kit U 5.100Â Index D PN 56630254200 - PN: 56630254200 BECKER"
   },
   {
     "kode": "BECKER DT 4.25 SECOND",
@@ -68525,9 +68525,9 @@
     "name": "BUSCH VANES KB 0040 PN: 0724118303"
   },
   {
-    "kode": "BUSCH COUPLING MOTOR SHAFT Ø 28MM PN: 0510000015 (SECOND)",
+    "kode": "BUSCH COUPLING MOTOR SHAFT Ã˜ 28MM PN: 0510000015 (SECOND)",
     "mid": "",
-    "name": "BUSCH COUPLING MOTOR SHAFT Ø 28MM PN: 0510000015 (SECOND)"
+    "name": "BUSCH COUPLING MOTOR SHAFT Ã˜ 28MM PN: 0510000015 (SECOND)"
   },
   {
     "kode": "FLENDER N-EUPEX COUPLING SET A-200",
@@ -69520,9 +69520,9 @@
     "name": "LOCK NUT GUK80X2 PN: RB1982930125 ROBUSCHI"
   },
   {
-    "kode": "SEALING CHAMBER; 120MM ID, 230MM OD;CI-G250;4 EA/SET (POS 20) - PN : RB2000600318 ROBUSCHI",
+    "kode": "SEALING CHAMBER; 120MM ID, 230MM OD;CI-G250;4 EA/SET (POS 20) - PN :Â RB2000600318 ROBUSCHI",
     "mid": "",
-    "name": "SEALING CHAMBER; 120MM ID, 230MM OD;CI-G250;4 EA/SET (POS 20) - PN : RB2000600318 ROBUSCHI"
+    "name": "SEALING CHAMBER; 120MM ID, 230MM OD;CI-G250;4 EA/SET (POS 20) - PN :Â RB2000600318 ROBUSCHI"
   },
   {
     "kode": "PLUG TC4 G   3/4\" PN: RB2011510901 ROBUSCHI",
@@ -73760,9 +73760,9 @@
     "name": "BECKER VT 4.10"
   },
   {
-    "kode": "REWINDING MOTOR – 43164253 - JASA SERVICE ELEKTROMOTOR 4 KW",
+    "kode": "REWINDING MOTOR â€“ 43164253 - JASA SERVICE ELEKTROMOTOR 4 KW",
     "mid": "",
-    "name": "REWINDING MOTOR – 43164253 - JASA SERVICE ELEKTROMOTOR 4 KW"
+    "name": "REWINDING MOTOR â€“ 43164253 - JASA SERVICE ELEKTROMOTOR 4 KW"
   },
   {
     "kode": "ORION DRY PUMP KRF25A-V-01-1269 SN490195 SECOND WITHOUT MOTOR",
@@ -74680,9 +74680,9 @@
     "name": "INDUSTRIAL REPAIR - ROLLER OCRIM  - SN 2243 AA"
   },
   {
-    "kode": "INDUSTRIAL REPAIR - ROLLER OCRIM - SN 5097 AA",
+    "kode": "INDUSTRIAL REPAIR - ROLLER OCRIMÂ - SN 5097 AA",
     "mid": "",
-    "name": "INDUSTRIAL REPAIR - ROLLER OCRIM - SN 5097 AA"
+    "name": "INDUSTRIAL REPAIR - ROLLER OCRIMÂ - SN 5097 AA"
   },
   {
     "kode": "SOW-2025-IDS-00140 - 771/E.SUD.BUM/RSMMB/V/2025",
@@ -75390,9 +75390,9 @@
     "name": "SERVICE ELECTROMOTOR Type : MOTOR JIAN PAI 75 KW - 2975 RPM  SN : JB / T11707-2013"
   },
   {
-    "kode": "MOTOR 4 KW-1446 RPM | 8,4 А",
+    "kode": "MOTOR 4 KW-1446 RPM | 8,4 Ð",
     "mid": "",
-    "name": "MOTOR 4 KW-1446 RPM | 8,4 А"
+    "name": "MOTOR 4 KW-1446 RPM | 8,4 Ð"
   },
   {
     "kode": "SERVICE ELECTRO MOTOR Type : MOTOR TATUNG 5,5 KW - 1460 RPM",
