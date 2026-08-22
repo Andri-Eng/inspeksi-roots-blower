@@ -51,10 +51,59 @@
     .close-modal { cursor: pointer; font-size: 20px; }
 
     @media print {
-      body { background: white; padding: 0; }
-      .sheet { box-shadow: none; border: none; width: 100%; page-break-after: always; }
-      .tab-container, .btn-action, .modal-overlay, .btn-add-row, .btn-delete-row, .btn-insert-row, .no-print, .auth-card { display: none !important; }
-    }
+  body { 
+    background: white !important; 
+    padding: 0 !important; 
+  }
+
+  /* Sembunyikan form input awal, halaman utama, dan tombol-tombol */
+  .app-viewport, 
+  .auth-card, 
+  .tab-container, 
+  .btn-action, 
+  .btn-add-row, 
+  .btn-delete-row, 
+  .btn-insert-row, 
+  .no-print, 
+  .close-modal, 
+  .modal-header { 
+    display: none !important; 
+  }
+
+  /* Tampilkan area modal preview saat mencetak */
+  .modal-overlay { 
+    display: block !important; 
+    position: static !important; 
+    background: transparent !important; 
+    width: 100% !important; 
+    height: auto !important; 
+  }
+  
+  .modal-content { 
+    border: none !important; 
+    box-shadow: none !important; 
+    padding: 0 !important; 
+    width: 100% !important; 
+    max-width: 100% !important; 
+    height: auto !important; 
+  }
+
+  #previewSheetContainer { 
+    background: transparent !important; 
+    padding: 0 !important; 
+    overflow: visible !important; 
+  }
+
+  /* Buat setiap lembar terpisah rapi menjadi 1 halaman PDF */
+  .sheet { 
+    box-shadow: none !important; 
+    border: none !important; 
+    width: 100% !important; 
+    margin-bottom: 0 !important; 
+    page-break-after: always !important; 
+    break-after: page !important;
+  }
+}
 
     /* ANOTASI & MARKER 4 ARAH */
     .rotor-marker {
@@ -606,10 +655,10 @@
       document.getElementById('reviewModal').style.display = 'none';
     }
 
-    function generatePDF() {
-      closeReviewModal();
-      window.print();
-    }
+   function generatePDF() {
+  // Modal dibiarkan terbuka agar 4 lembar preview yang ter-render tercetak seluruhnya
+  window.print();
+}
 
     // 5. MANAJEMEN BARIS TABEL
     function deleteSparePartRow(btn) {
