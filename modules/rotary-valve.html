@@ -628,9 +628,106 @@
     }
 
     function generatePDF() {
-      closeReviewModal();
-      window.print();
-    }
+  const container = document.getElementById('previewSheetContainer');
+  if (!container) {
+    alert('Area preview tidak ditemukan!');
+    return;
+  }
+
+  const content = container.innerHTML;
+
+  // Membuka jendela cetak terisolasi agar 4 sheet terpisah rapi menjadi 4 halaman PDF
+  const printWindow = window.open('', '_blank', 'width=950,height=800');
+
+  if (!printWindow) {
+    alert('Pop-up diblokir oleh browser. Harap izinkan pop-up untuk situs ini.');
+    return;
+  }
+
+  printWindow.document.open();
+  printWindow.document.write(`
+    <!DOCTYPE html>
+    <html lang="id">
+    <head>
+      <meta charset="UTF-8">
+      <title>Dokumen Inspeksi Rotary Valve / Airlock</title>
+      <style>
+        * { box-sizing: border-box; font-family: 'Segoe UI', Arial, sans-serif; }
+        body { margin: 0; padding: 0; background: #fff; }
+
+        @page {
+          size: A4 portrait;
+          margin: 8mm;
+        }
+
+        /* Memaksa setiap sheet menjadi 1 halaman A4 terpisah */
+        .sheet {
+          width: 100%;
+          box-sizing: border-box;
+          margin: 0;
+          padding: 0;
+          display: block !important;
+          page-break-after: always !important;
+          break-after: page !important;
+        }
+
+        .sheet:last-child {
+          page-break-after: auto !important;
+          break-after: auto !important;
+        }
+
+        table { width: 100%; border-collapse: collapse; margin-bottom: 8px; font-size: 10.5px; }
+        td, th { border: 1px solid #000; padding: 3px 5px; text-align: center; }
+        .title-header { font-weight: bold; font-size: 13px; background-color: #f2f2f2; }
+        .text-left { text-align: left !important; }
+        .text-input-left { text-align: left !important; padding-left: 4px; }
+        .bg-gray { background-color: #f2f2f2 !important; font-weight: bold; }
+
+        /* Style Anotasi & Panah Foto pada hasil print */
+        .rotor-annotator-wrapper { border: 1px solid #000; padding: 8px; margin: 8px 0; background: #fff; }
+        .rotor-annotator-wrapper button, 
+        .rotor-annotator-wrapper label, 
+        .rotor-annotator-wrapper span[id^="statusMode"] {
+          display: none !important;
+        }
+
+        .rotor-marker { position: absolute; display: flex; align-items: center; justify-content: center; z-index: 10; }
+        .rotor-marker.dir-down  { flex-direction: column; transform: translate(-50%, 0); }
+        .rotor-marker.dir-up    { flex-direction: column-reverse; transform: translate(-50%, -100%); }
+        .rotor-marker.dir-right { flex-direction: row; transform: translate(0, -50%); }
+        .rotor-marker.dir-left  { flex-direction: row-reverse; transform: translate(-100%, -50%); }
+
+        .rotor-badge {
+          background-color: #ffffff; color: #000000; border: 2px solid #dc2626;
+          font-weight: 800; font-size: 12px; width: 22px; height: 22px;
+          border-radius: 50%; display: flex; align-items: center; justify-content: center;
+        }
+        .dir-down .rotor-stem, .dir-up .rotor-stem { width: 2px; height: 28px; background-color: #dc2626; }
+        .dir-right .rotor-stem, .dir-left .rotor-stem { height: 2px; width: 28px; background-color: #dc2626; }
+        .dir-down .rotor-arrow  { width: 0; height: 0; border-left: 5px solid transparent; border-right: 5px solid transparent; border-top: 9px solid #dc2626; }
+        .dir-up .rotor-arrow    { width: 0; height: 0; border-left: 5px solid transparent; border-right: 5px solid transparent; border-bottom: 9px solid #dc2626; }
+        .dir-right .rotor-arrow { width: 0; height: 0; border-top: 5px solid transparent; border-bottom: 5px solid transparent; border-left: 9px solid #dc2626; }
+        .dir-left .rotor-arrow  { width: 0; height: 0; border-top: 5px solid transparent; border-bottom: 5px solid transparent; border-right: 9px solid #dc2626; }
+
+        img { max-width: 100%; max-height: 350px; object-fit: contain; }
+        .no-print, button { display: none !important; }
+      </style>
+    </head>
+    <body>
+      ${content}
+      <script>
+        window.onload = function() {
+          setTimeout(function() {
+            window.print();
+            window.onafterprint = function() { window.close(); };
+          }, 350);
+        };
+      <\/script>
+    </body>
+    </html>
+  `);
+  printWindow.document.close();
+}
 
     // 5. MANAJEMEN BARIS TABEL
     function deleteSparePartRow(btn) {
