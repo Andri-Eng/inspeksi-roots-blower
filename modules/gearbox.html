@@ -50,61 +50,6 @@
     .modal-header { font-weight: bold; font-size: 16px; border-bottom: 2px solid #007bff; padding-bottom: 10px; margin-bottom: 15px; display: flex; justify-content: space-between; }
     .close-modal { cursor: pointer; font-size: 20px; }
 
-    @media print {
-  body { 
-    background: white !important; 
-    padding: 0 !important; 
-  }
-
-  /* Sembunyikan form input awal, halaman utama, dan tombol-tombol */
-  .app-viewport, 
-  .auth-card, 
-  .tab-container, 
-  .btn-action, 
-  .btn-add-row, 
-  .btn-delete-row, 
-  .btn-insert-row, 
-  .no-print, 
-  .close-modal, 
-  .modal-header { 
-    display: none !important; 
-  }
-
-  /* Tampilkan area modal preview saat mencetak */
-  .modal-overlay { 
-    display: block !important; 
-    position: static !important; 
-    background: transparent !important; 
-    width: 100% !important; 
-    height: auto !important; 
-  }
-  
-  .modal-content { 
-    border: none !important; 
-    box-shadow: none !important; 
-    padding: 0 !important; 
-    width: 100% !important; 
-    max-width: 100% !important; 
-    height: auto !important; 
-  }
-
-  #previewSheetContainer { 
-    background: transparent !important; 
-    padding: 0 !important; 
-    overflow: visible !important; 
-  }
-
-  /* Buat setiap lembar terpisah rapi menjadi 1 halaman PDF */
-  .sheet { 
-    box-shadow: none !important; 
-    border: none !important; 
-    width: 100% !important; 
-    margin-bottom: 0 !important; 
-    page-break-after: always !important; 
-    break-after: page !important;
-  }
-}
-
     /* ANOTASI & MARKER 4 ARAH */
     .rotor-marker {
         position: absolute;
@@ -146,6 +91,90 @@
     .dir-up .rotor-arrow    { width: 0; height: 0; border-left: 6px solid transparent; border-right: 6px solid transparent; border-bottom: 10px solid #dc2626; }
     .dir-right .rotor-arrow { width: 0; height: 0; border-top: 6px solid transparent; border-bottom: 6px solid transparent; border-left: 10px solid #dc2626; }
     .dir-left .rotor-arrow  { width: 0; height: 0; border-top: 6px solid transparent; border-bottom: 6px solid transparent; border-right: 10px solid #dc2626; }
+
+    /* ==================== MEDIA PRINT PERBAIKAN TOTAL ==================== */
+    @page {
+      size: A4 portrait;
+      margin: 10mm;
+    }
+
+    @media print {
+      html, body {
+        background: #ffffff !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        width: 100% !important;
+        height: auto !important;
+        min-height: 100% !important;
+        display: block !important;
+        overflow: visible !important;
+      }
+
+      .app-viewport,
+      .tab-container,
+      .btn-action,
+      .btn-add-row,
+      .btn-delete-row,
+      .btn-insert-row,
+      .no-print,
+      .close-modal,
+      .modal-header {
+        display: none !important;
+      }
+
+      .modal-overlay {
+        display: block !important;
+        position: static !important;
+        background: transparent !important;
+        width: 100% !important;
+        height: auto !important;
+        padding: 0 !important;
+        margin: 0 !important;
+      }
+
+      .modal-content {
+        display: block !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        height: auto !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        border: none !important;
+        box-shadow: none !important;
+        background: transparent !important;
+      }
+
+      #previewSheetContainer {
+        display: block !important;
+        width: 100% !important;
+        height: auto !important;
+        overflow: visible !important;
+        background: transparent !important;
+        padding: 0 !important;
+      }
+
+      .sheet {
+        display: block !important;
+        box-shadow: none !important;
+        border: none !important;
+        width: 100% !important;
+        min-width: 0 !important;
+        margin: 0 0 20px 0 !important;
+        padding: 0 !important;
+        page-break-after: always !important;
+        break-after: page !important;
+      }
+
+      .sheet:last-child {
+        page-break-after: auto !important;
+        break-after: auto !important;
+      }
+
+      tr {
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+      }
+    }
   </style>
 </head>
 <body>
@@ -224,9 +253,7 @@
               <tr><td class="row-num">5</td><td class="text-left"><input type="text" class="text-input-left" placeholder="Locknut..."></td><td><input type="text" list="masterMidList" class="part-code-input text-input-left" placeholder="Ketik kode/nama..." oninput="handleCodeSearch(this)"></td><td><input type="text" class="part-mid-input" placeholder="Auto / Manual..."></td><td><input type="number"></td><td><input type="radio" name="cond_5"></td><td><input type="radio" name="cond_5"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertSparePartRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteSparePartRow(this)">🗑️</button></td></tr>
               <tr><td class="row-num">6</td><td class="text-left"><input type="text" class="text-input-left" placeholder="Gasket..."></td><td><input type="text" list="masterMidList" class="part-code-input text-input-left" placeholder="Ketik kode/nama..." oninput="handleCodeSearch(this)"></td><td><input type="text" class="part-mid-input" placeholder="Auto / Manual..."></td><td><input type="number"></td><td><input type="radio" name="cond_6"></td><td><input type="radio" name="cond_6"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertSparePartRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteSparePartRow(this)">🗑️</button></td></tr>
               <tr><td class="row-num">7</td><td class="text-left"><input type="text" class="text-input-left" placeholder="O-ring..."></td><td><input type="text" list="masterMidList" class="part-code-input text-input-left" placeholder="Ketik kode/nama..." oninput="handleCodeSearch(this)"></td><td><input type="text" class="part-mid-input" placeholder="Auto / Manual..."></td><td><input type="number"></td><td><input type="radio" name="cond_7"></td><td><input type="radio" name="cond_7"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertSparePartRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteSparePartRow(this)">🗑️</button></td></tr>
-              <tr><td class="row-num">7</td><td class="text-left"><input type="text" class="text-input-left" placeholder="part tambahan""></td><td><input type="text" list="masterMidList" class="part-code-input text-input-left" placeholder="Ketik kode/nama..." oninput="handleCodeSearch(this)"></td><td><input type="text" class="part-mid-input" placeholder="Auto / Manual..."></td><td><input type="number"></td><td><input type="radio" name="cond_7"></td><td><input type="radio" name="cond_7"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertSparePartRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteSparePartRow(this)">🗑️</button></td></tr>
-              <tr><td class="row-num">7</td><td class="text-left"><input type="text" class="text-input-left" placeholder="part tambahan...""></td><td><input type="text" list="masterMidList" class="part-code-input text-input-left" placeholder="Ketik kode/nama..." oninput="handleCodeSearch(this)"></td><td><input type="text" class="part-mid-input" placeholder="Auto / Manual..."></td><td><input type="number"></td><td><input type="radio" name="cond_7"></td><td><input type="radio" name="cond_7"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertSparePartRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteSparePartRow(this)">🗑️</button></td></tr>
-              <tr><td class="row-num">8</td><td class="text-left"><input type="text" class="text-input-left" placeholder="part tambahan..."></td><td><input type="text" list="masterMidList" class="part-code-input text-input-left" placeholder="Ketik kode/nama..." oninput="handleCodeSearch(this)"></td><td><input type="text" class="part-mid-input" placeholder="Auto / Manual..."></td><td><input type="number"></td><td><input type="radio" name="cond_8"></td><td><input type="radio" name="cond_8"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertSparePartRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteSparePartRow(this)">🗑️</button></td></tr>
+              <tr><td class="row-num">8</td><td class="text-left"><input type="text" class="text-input-left" placeholder="part tambahan"></td><td><input type="text" list="masterMidList" class="part-code-input text-input-left" placeholder="Ketik kode/nama..." oninput="handleCodeSearch(this)"></td><td><input type="text" class="part-mid-input" placeholder="Auto / Manual..."></td><td><input type="number"></td><td><input type="radio" name="cond_8"></td><td><input type="radio" name="cond_8"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertSparePartRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteSparePartRow(this)">🗑️</button></td></tr>
             </tbody>
           </table>
 
@@ -260,7 +287,7 @@
 
           <!-- AREA UPLOAD & ANOTASI ROTOR POCKET -->
           <div class="rotor-annotator-wrapper" style="border: 1px solid #000; padding: 12px; margin: 10px 0; background: #fafafa;">
-              <div style="display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 10px;">
+              <div style="display: flex; flex-wrap: gap; gap: 8px; align-items: center; margin-bottom: 10px;">
                   <label style="background: #1e3a8a; color: #fff; padding: 6px 14px; border-radius: 4px; cursor: pointer; font-size: 13px; font-weight: bold;">
                       📷 Ambil Foto / Upload
                       <input type="file" id="rotorImageInput" accept="image/*" style="display: none;" onchange="loadAnnotatorImage(event, 'rotorPreviewImg', 'placeholderTextRotor', 'statusModeRotor')">
@@ -655,10 +682,9 @@
       document.getElementById('reviewModal').style.display = 'none';
     }
 
-   function generatePDF() {
-  // Modal dibiarkan terbuka agar 4 lembar preview yang ter-render tercetak seluruhnya
-  window.print();
-}
+    function generatePDF() {
+      window.print();
+    }
 
     // 5. MANAJEMEN BARIS TABEL
     function deleteSparePartRow(btn) {
@@ -780,56 +806,54 @@
     }
 
     function updateAnnotatorButtonState(type) {
-  const state = annotatorState[type];
-  const btn = document.getElementById('btnModePanah' + type.charAt(0).toUpperCase() + type.slice(1));
-  const area = document.getElementById(type + 'AnnotationArea');
-  const status = document.getElementById('statusMode' + type.charAt(0).toUpperCase() + type.slice(1));
+      const state = annotatorState[type];
+      const btn = document.getElementById('btnModePanah' + type.charAt(0).toUpperCase() + type.slice(1));
+      const area = document.getElementById(type + 'AnnotationArea');
+      const status = document.getElementById('statusMode' + type.charAt(0).toUpperCase() + type.slice(1));
 
-  if (state.isAdd) {
-    btn.style.background = '#16a34a';
-    btn.innerText = '🎯 Klik 1x pada Gambar';
-    area.style.cursor = 'crosshair';
-    status.innerText = `Klik 1 titik untuk menaruh panah (${String.fromCharCode(state.code)}).`;
-  } else {
-    btn.style.background = '#0284c7';
-    btn.innerText = '➕ Tambah Panah';
-    area.style.cursor = 'default';
-    status.innerText = `Siap. Panah berikutnya: (${String.fromCharCode(state.code)}). Klik "Tambah Panah" bila perlu.`;
-  }
-}
+      if (state.isAdd) {
+        btn.style.background = '#16a34a';
+        btn.innerText = '🎯 Klik 1x pada Gambar';
+        area.style.cursor = 'crosshair';
+        status.innerText = `Klik 1 titik untuk menaruh panah (${String.fromCharCode(state.code)}).`;
+      } else {
+        btn.style.background = '#0284c7';
+        btn.innerText = '➕ Tambah Panah';
+        area.style.cursor = 'default';
+        status.innerText = `Siap. Panah berikutnya: (${String.fromCharCode(state.code)}). Klik "Tambah Panah" bila perlu.`;
+      }
+    }
 
-function toggleAddMarkerMode(type) {
-  const state = annotatorState[type];
-  const previewImg = document.getElementById(type + 'PreviewImg');
-  if (!previewImg.src || previewImg.style.display === 'none') {
-    alert('Silakan unggah foto komponen terlebih dahulu.');
-    return;
-  }
-  state.isAdd = !state.isAdd;
-  updateAnnotatorButtonState(type);
-}
+    function toggleAddMarkerMode(type) {
+      const state = annotatorState[type];
+      const previewImg = document.getElementById(type + 'PreviewImg');
+      if (!previewImg.src || previewImg.style.display === 'none') {
+        alert('Silakan unggah foto komponen terlebih dahulu.');
+        return;
+      }
+      state.isAdd = !state.isAdd;
+      updateAnnotatorButtonState(type);
+    }
 
-function setupAnnotatorAreaListener(type) {
-  const area = document.getElementById(type + 'AnnotationArea');
-  area.addEventListener('click', function(e) {
-    const state = annotatorState[type];
-    if (!state.isAdd) return;
-    if (e.target.closest('.rotor-marker')) return;
+    function setupAnnotatorAreaListener(type) {
+      const area = document.getElementById(type + 'AnnotationArea');
+      area.addEventListener('click', function(e) {
+        const state = annotatorState[type];
+        if (!state.isAdd) return;
+        if (e.target.closest('.rotor-marker')) return;
 
-    const rect = area.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
+        const rect = area.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
 
-    const label = String.fromCharCode(state.code);
-    createUniversalMarker(area, x, y, label);
+        const label = String.fromCharCode(state.code);
+        createUniversalMarker(area, x, y, label);
 
-    state.code++;
-    
-    // OTOMATIS NONAKTIFKAN MODE: Tidak akan membuat panah baru lagi saat mengedit
-    state.isAdd = false;
-    updateAnnotatorButtonState(type);
-  });
-}
+        state.code++;
+        state.isAdd = false;
+        updateAnnotatorButtonState(type);
+      });
+    }
 
     function createUniversalMarker(containerArea, x, y, label) {
       const marker = document.createElement('div');
@@ -848,7 +872,6 @@ function setupAnnotatorAreaListener(type) {
       const stem = marker.querySelector('.rotor-stem');
       const arrow = marker.querySelector('.rotor-arrow');
 
-      // 1. Drag Pindah Posisi Lingkaran/Badge
       badge.addEventListener('mousedown', function(e) {
         e.stopPropagation();
         let shiftX = e.clientX - marker.getBoundingClientRect().left - (marker.offsetWidth / 2);
@@ -872,7 +895,6 @@ function setupAnnotatorAreaListener(type) {
         document.addEventListener('mouseup', onMouseUp);
       });
 
-      // 2. Drag Ujung Panah Mengikuti Arah Kursor (Snap 0°, 90°, 180°, 270°)
       arrow.addEventListener('mousedown', function(e) {
         e.stopPropagation();
 
@@ -884,23 +906,21 @@ function setupAnnotatorAreaListener(type) {
           const dx = moveEvent.clientX - badgeCenterX;
           const dy = moveEvent.clientY - badgeCenterY;
 
-          // Derajat trigonometri (atan2)
           const angle = Math.atan2(dy, dx) * (180 / Math.PI);
           let dir = 'down';
           let stemLen = 30;
 
-          // Kuadran Snap 4 Sudut
           if (angle >= -45 && angle <= 45) {
-            dir = 'right'; // 0°
+            dir = 'right';
             stemLen = Math.max(10, Math.abs(dx) - 18);
           } else if (angle > 45 && angle <= 135) {
-            dir = 'down';  // 90°
+            dir = 'down';
             stemLen = Math.max(10, Math.abs(dy) - 18);
           } else if (angle < -45 && angle >= -135) {
-            dir = 'up';    // 270°
+            dir = 'up';
             stemLen = Math.max(10, Math.abs(dy) - 18);
           } else {
-            dir = 'left';  // 180°
+            dir = 'left';
             stemLen = Math.max(10, Math.abs(dx) - 18);
           }
 
@@ -954,7 +974,6 @@ function setupAnnotatorAreaListener(type) {
       document.getElementById(statusId).innerText = 'Area berhasil di-reset.';
     }
 
-    // Inisialisasi Listener untuk Tab 2, 3, dan 4
     setupAnnotatorAreaListener('rotor');
     setupAnnotatorAreaListener('housing');
     setupAnnotatorAreaListener('runout');
