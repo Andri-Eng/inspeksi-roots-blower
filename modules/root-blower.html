@@ -636,7 +636,6 @@
         return;
       }
 
-      // 1. Cek Exact Match
       const exactMatch = masterMidDb.find(item => {
         const itemName = getItemFieldValue(item, 'name').toLowerCase();
         const itemMid = getItemFieldValue(item, 'mid').toLowerCase();
@@ -647,7 +646,6 @@
         midInput.value = getItemFieldValue(exactMatch, 'mid');
       }
 
-      // 2. Render Rekomendasi
       if (datalist) {
         datalist.innerHTML = '';
         const filtered = masterMidDb
@@ -840,7 +838,7 @@
     // 5. UTILITY BARIS DOKUMEN
     function deleteSparePartRow(btn) { 
       btn.closest('tr').remove(); 
-      reindexSparePartRows();
+      reindexSparePartRows(); 
       saveFormState();
     }
     
@@ -943,11 +941,15 @@
       saveFormState();
     }
 
-    // ==================== AUTO-SAVE & AUTO-RESTORE ENGINE ====================
-    const STORAGE_KEY = 'INSPEKSI_ROOT_BLOWER_STATE';
+    // ==================== ENGINE AUTO-SAVE & AUTO-RESTORE TERPERBAIKI ====================
+    const STORAGE_KEY = 'INSPEKSI_ROOT_BLOWER_STATE_V2';
+    let isRestoring = false;
 
     function saveFormState() {
-      const isStarted = document.getElementById('mainSystem') && document.getElementById('mainSystem').style.display === 'block';
+      if (isRestoring) return;
+
+      const mainSystem = document.getElementById('mainSystem');
+      const isStarted = mainSystem && (mainSystem.style.display === 'block');
       
       const activeBtn = document.querySelector('.tab-btn.active');
       let activeTabName = 'clearance';
@@ -956,69 +958,120 @@
         if (match) activeTabName = match[1];
       }
 
-      const tbodies = [];
-      document.querySelectorAll('tbody').forEach((tb, idx) => {
-        tbodies.push({ idx: idx, html: tb.innerHTML });
+      // Simpan input form awal (pageInit)
+      const initData = {};
+      document.querySelectorAll('#pageInit input, #pageInit select').forEach(el => {
+        if (el.id) initData[el.id] = el.value;
       });
 
-      const inputData = [];
-      document.querySelectorAll('input, select, textarea').forEach((el, idx) => {
-        inputData.push({
-          idx: idx,
-          type: el.type,
-          value: el.value,
-          checked: el.checked
+      // Simpan struktur HTML tbody dan seluruh input per Tab
+      const tabData = {};
+      ['clearance', 'sparepart', 'dimensi-rotor', 'dimensi-sideplate', 'runout'].forEach(tabId => {
+        const tabEl = document.getElementById('tab-' + tabId);
+        if (!tabEl) return;
+        
+        const tbody = tabEl.querySelector('tbody');
+        const tbodyHtml = tbody ? tbody.innerHTML : '';
+
+        const inputs = [];
+        tabEl.querySelectorAll('input, select, textarea').forEach(inp => {
+          inputs.push({
+            type: inp.type,
+            name: inp.name || '',
+            value: inp.value,
+            checked: inp.checked
+          });
         });
+
+        tabData[tabId] = {
+          tbodyHtml: tbodyHtml,
+          inputs: inputs
+        };
       });
 
       const state = {
         isStarted: isStarted,
         activeTab: activeTabName,
-        tbodies: tbodies,
-        inputs: inputData
+        initData: initData,
+        tabData: tabData
       };
 
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      } catch (e) {
+        console.warn('Storage error:', e);
+      }
     }
 
     function restoreFormState() {
       const saved = localStorage.getItem(STORAGE_KEY);
       if (!saved) return;
 
+      isRestoring = true;
       try {
         const state = JSON.parse(saved);
 
-        if (state.tbodies && state.tbodies.length > 0) {
-          const currentTbodies = document.querySelectorAll('tbody');
-          state.tbodies.forEach(item => {
-            if (currentTbodies[item.idx]) {
-              currentTbodies[item.idx].innerHTML = item.html;
+        // 1. Pulihkan input pageInit
+        if (state.initData) {
+          Object.keys(state.initData).forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.value = state.initData[id];
+          });
+        }
+
+        // 2. Pulihkan struktur baris & input setiap tab
+        if (state.tabData) {
+          ['clearance', 'sparepart', 'dimensi-rotor', 'dimensi-sideplate', 'runout'].forEach(tabId => {
+            const tabEl = document.getElementById('tab-' + tabId);
+            if (!tabEl || !state.tabData[tabId]) return;
+
+            const data = state.tabData[tabId];
+            const tbody = tabEl.querySelector('tbody');
+            if (tbody && data.tbodyHtml) {
+              tbody.innerHTML = data.tbodyHtml;
+            }
+
+            const currentInputs = tabEl.querySelectorAll('input, select, textarea');
+            if (data.inputs) {
+              data.inputs.forEach((inpData, idx) => {
+                const el = currentInputs[idx];
+                if (el) {
+                  if (el.type === 'radio' || el.type === 'checkbox') {
+                    el.checked = inpData.checked;
+                  } else {
+                    el.value = inpData.value;
+                  }
+                }
+              });
             }
           });
         }
 
-        if (state.inputs && state.inputs.length > 0) {
-          const currentInputs = document.querySelectorAll('input, select, textarea');
-          state.inputs.forEach(item => {
-            const el = currentInputs[item.idx];
-            if (el) {
-              if (el.type === 'radio' || el.type === 'checkbox') {
-                el.checked = item.checked;
-              } else {
-                el.value = item.value;
-              }
-            }
-          });
-        }
+        // 3. Sinkronisasikan teks header & tanda tangan
+        const brand = document.getElementById('initBrand')?.value || '';
+        const type = document.getElementById('initType')?.value || '';
+        const sn = document.getElementById('initSN')?.value || '';
+        const customer = document.getElementById('initCustomer')?.value || '';
+        const noso = document.getElementById('initNoSO')?.value || '';
+        const date = document.getElementById('initDate')?.value || '';
+        const operator = document.getElementById('initOperator')?.value || '';
+        const supervisor = document.getElementById('initSupervisor')?.value || '';
 
+        document.querySelectorAll('.sync-brand').forEach(el => el.value = brand);
+        document.querySelectorAll('.sync-type').forEach(el => el.value = type);
+        document.querySelectorAll('.sync-sn').forEach(el => el.value = sn);
+        document.querySelectorAll('.sync-customer').forEach(el => el.value = customer);
+        document.querySelectorAll('.sync-typesn').forEach(el => el.value = type + ' / ' + sn);
+        document.querySelectorAll('.sync-noso').forEach(el => el.value = noso);
+        document.querySelectorAll('.sync-date').forEach(el => el.value = date);
+
+        if (document.getElementById('lblOperator')) document.getElementById('lblOperator').textContent = operator;
+        if (document.getElementById('lblSupervisor')) document.getElementById('lblSupervisor').textContent = supervisor;
+
+        // 4. Buka kembali halaman inspeksi dan tab terakhir
         if (state.isStarted) {
           document.getElementById('pageInit').style.display = 'none';
           document.getElementById('mainSystem').style.display = 'block';
-
-          const op = document.getElementById('initOperator')?.value || '';
-          const spv = document.getElementById('initSupervisor')?.value || '';
-          if (document.getElementById('lblOperator')) document.getElementById('lblOperator').textContent = op;
-          if (document.getElementById('lblSupervisor')) document.getElementById('lblSupervisor').textContent = spv;
 
           if (state.activeTab) {
             const targetBtn = Array.from(document.querySelectorAll('.tab-btn')).find(b => 
@@ -1030,13 +1083,21 @@
           }
         }
       } catch (e) {
-        console.error("Gagal memulihkan state:", e);
+        console.error("Gagal restore:", e);
+      } finally {
+        isRestoring = false;
       }
     }
 
     document.addEventListener('input', saveFormState);
     document.addEventListener('change', saveFormState);
-    window.addEventListener('DOMContentLoaded', restoreFormState);
+    
+    // Jalankan pemulihan saat DOM siap
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', restoreFormState);
+    } else {
+      restoreFormState();
+    }
   </script>
 </body>
 </html>
