@@ -284,21 +284,7 @@ function getCurrentUser() {
 
 // Initialize Page on Load
 function initializeAppOnLoad() {
-  const session = getSession();
-  
-  if (!session) {
-    // Jika belum login, tampilkan login modal
-    const loginModal = document.getElementById('pageLoginModal');
-    if (loginModal) {
-      loginModal.style.display = 'flex';
-    }
-  } else {
-    // Jika sudah login, tampilkan kategori menu
-    const heroPage = document.getElementById('pageHero');
-    if (heroPage) {
-      heroPage.style.display = 'none';
-    }
-  }
+  // Sengaja dikosongkan agar index.html mengontrol tampilan halaman utama sepenuhnya
 }
 
 // Add this to DOM when document is ready

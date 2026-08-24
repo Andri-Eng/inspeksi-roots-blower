@@ -400,28 +400,17 @@
       
       const session = getSession();
       const activeModule = localStorage.getItem('activeModule');
+      const moduleContainer = document.getElementById('moduleContainer');
 
-      if (session) {
-        console.log('✅ Sesi aktif ditemukan untuk user:', session.username);
-        if (activeModule) {
-          console.log('⚡ Mengembalikan modul aktif:', activeModule);
-          // Langsung muat modul tanpa menampilkan landing page
-          document.getElementById('pageHero').style.display = 'none';
-          document.getElementById('pageLoginModal').style.display = 'none';
-          document.getElementById('pageCategoryMenu').style.display = 'none';
-          selectCategory(activeModule);
-        } else {
-          console.log('⚡ Sesi aktif tetapi tidak ada modul, buka menu kategori');
-          document.getElementById('pageHero').style.display = 'none';
-          document.getElementById('pageLoginModal').style.display = 'none';
-          openCategoryMenu();
-        }
+      if (session && activeModule) {
+        console.log('⚡ Mengembalikan modul aktif:', activeModule);
+        // Langsung muat modul tanpa menampilkan landing page
+        document.getElementById('pageHero').style.display = 'none';
+        document.getElementById('pageLoginModal').style.display = 'none';
+        document.getElementById('pageCategoryMenu').style.display = 'none';
+        selectCategory(activeModule);
       } else {
-        // Jika tidak ada sesi login, pastikan bersih dan mulai dari landing page awal
-        clearSession();
-        localStorage.removeItem('activeModule');
-
-        const moduleContainer = document.getElementById('moduleContainer');
+        // SELALU mulai dari Landing Page awal jika tidak sedang aktif di modul
         if (moduleContainer) {
           moduleContainer.innerHTML = '';
         }
