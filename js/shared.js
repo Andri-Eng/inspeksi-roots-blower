@@ -106,6 +106,9 @@ async function loadModule(moduleName) {
       document.body.appendChild(newScript);
     });
 
+    // Initialize auto-save & restore data
+    initAutoSave(moduleName, container);
+
     console.log(`✅ Module ${moduleName} loaded successfully`);
     return true;
   } catch (error) {
@@ -304,3 +307,94 @@ if (document.readyState === 'loading') {
 } else {
   initializeAppOnLoad();
 }
+
+// ==================== AUTO SAVE & RESTORE FOR FORMS ====================
+function initAutoSave(moduleName, container) {
+  if (!container) return;
+  
+  // 1. Restore data if exists
+  restoreAutoSave(moduleName, container);
+  
+  // 2. Set up event listener for auto-save on any input changes
+  container.addEventListener('input', debounce(() => {
+    saveFormData(moduleName, container);
+  }, 500));
+  
+  container.addEventListener('change', () => {
+    saveFormData(moduleName, container);
+  });
+}
+
+function saveFormData(moduleName, container) {
+  const data = [];
+  container.querySelectorAll('input, select, textarea').forEach((el, index) => {
+    if (el.type === 'radio' || el.type === 'checkbox') {
+      data.push({ index, checked: el.checked, type: el.type, value: el.value });
+    } else {
+      data.push({ index, value: el.value, type: el.type });
+    }
+  });
+  localStorage.setItem(`draft_${moduleName}`, JSON.stringify(data));
+  console.log(`💾 Auto-saved draft for ${moduleName}`);
+}
+
+function restoreAutoSave(moduleName, container) {
+  const stored = localStorage.getItem(`draft_${moduleName}`);
+  if (!stored) return;
+  
+  try {
+    const data = JSON.parse(stored);
+    const elements = container.querySelectorAll('input, select, textarea');
+    data.forEach(item => {
+      const el = elements[item.index];
+      if (el) {
+        if (el.type === 'radio' || el.type === 'checkbox') {
+          el.checked = item.checked;
+        } else {
+          el.value = item.value;
+        }
+        // Trigger event input/change to run any local event listeners in modules
+        el.dispatchEvent(new Event('input', { bubbles: true }));
+        el.dispatchEvent(new Event('change', { bubbles: true }));
+      }
+    });
+    console.log(`🔌 Restored draft for ${moduleName}`);
+  } catch (e) {
+    console.error(`Failed to restore draft for ${moduleName}:`, e);
+  }
+}
+
+function clearModuleDraft(moduleName) {
+  localStorage.removeItem(`draft_${moduleName}`);
+  console.log(`🗑️ Cleared draft for ${moduleName}`);
+}
+
+// Simple debounce helper
+function debounce(func, wait) {
+  let timeout;
+  return function(...args) {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => func.apply(this, args), wait);
+  };
+}
+
+// Listen to any page-leaving actions that mean a reset or explicit navigation back to home
+document.addEventListener('click', function(e) {
+  const btn = e.target.closest('button, a');
+  if (btn) {
+    const text = btn.textContent || '';
+    const html = btn.outerHTML || '';
+    if (
+      text.includes('Kembali ke Home') || 
+      text.includes('Kembali ke Menu Utama') || 
+      html.includes('index.html')
+    ) {
+      const activeModule = localStorage.getItem('activeModule');
+      if (activeModule) {
+        // Option: clear module draft when going back to home so it starts clean next time
+        localStorage.removeItem(`draft_${activeModule}`);
+      }
+      localStorage.removeItem('activeModule');
+    }
+  }
+});

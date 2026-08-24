@@ -362,6 +362,8 @@
       loadModule(categoryName).then(success => {
         if (success) {
           console.log('✅ Module loaded, hero page sudah hidden');
+          // Simpan modul aktif ke localStorage agar persisten setelah refresh
+          localStorage.setItem('activeModule', categoryName);
         } else {
           console.log('❌ Load module failed, tampilkan hero page kembali');
           document.getElementById('pageHero').style.display = 'flex';
@@ -374,6 +376,7 @@
     function resetToHome() {
       console.log('🔙 Kembali ke Home - Clear session & module');
       clearSession();
+      localStorage.removeItem('activeModule');
       
       // Hide & clear module container TOTAL
       const moduleContainer = document.getElementById('moduleContainer');
@@ -391,25 +394,44 @@
       console.log('✅ Kembali ke Hero Page');
     }
 
-    // Initialize on page load
+    // Initialize on page load (mendukung pertahanan halaman setelah refresh)
     window.addEventListener('load', function() {
       console.log('🔄 Page Load Initialize');
       
-      // Reset sesi lama agar halaman selalu mulai bersih dari Landing Page awal
-      clearSession();
+      const session = getSession();
+      const activeModule = localStorage.getItem('activeModule');
 
-      // Pastikan container modul kosong
-      const moduleContainer = document.getElementById('moduleContainer');
-      if (moduleContainer) {
-        moduleContainer.innerHTML = '';
+      if (session) {
+        console.log('✅ Sesi aktif ditemukan untuk user:', session.username);
+        if (activeModule) {
+          console.log('⚡ Mengembalikan modul aktif:', activeModule);
+          // Langsung muat modul tanpa menampilkan landing page
+          document.getElementById('pageHero').style.display = 'none';
+          document.getElementById('pageLoginModal').style.display = 'none';
+          document.getElementById('pageCategoryMenu').style.display = 'none';
+          selectCategory(activeModule);
+        } else {
+          console.log('⚡ Sesi aktif tetapi tidak ada modul, buka menu kategori');
+          document.getElementById('pageHero').style.display = 'none';
+          document.getElementById('pageLoginModal').style.display = 'none';
+          openCategoryMenu();
+        }
+      } else {
+        // Jika tidak ada sesi login, pastikan bersih dan mulai dari landing page awal
+        clearSession();
+        localStorage.removeItem('activeModule');
+
+        const moduleContainer = document.getElementById('moduleContainer');
+        if (moduleContainer) {
+          moduleContainer.innerHTML = '';
+        }
+        
+        document.getElementById('pageHero').style.display = 'flex';
+        document.getElementById('pageLoginModal').style.display = 'none';
+        document.getElementById('pageCategoryMenu').style.display = 'none';
+        
+        console.log('🏠 Landing Page Awal Ditampilkan Penuh');
       }
-      
-      // Tampilkan HANYA Hero Landing Page
-      document.getElementById('pageHero').style.display = 'flex';
-      document.getElementById('pageLoginModal').style.display = 'none';
-      document.getElementById('pageCategoryMenu').style.display = 'none';
-      
-      console.log('🏠 Landing Page Awal Ditampilkan Penuh');
     });
   </script>
 </body>
