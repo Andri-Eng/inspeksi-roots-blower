@@ -26,6 +26,7 @@
     .tab-container { width: 100%; min-width: 700px; display: flex; gap: 6px; }
     .tab-btn { background-color: #334155; color: #cbd5e1; border: none; padding: 12px 15px; font-weight: bold; font-size: 13px; border-radius: 8px 8px 0 0; cursor: pointer; flex: 1; text-align: center; }
     .tab-btn.active { background-color: white; color: #007bff; }
+    .nav-btn-home { background-color: #dc3545; color: white; border: none; padding: 12px 15px; font-weight: bold; font-size: 13px; border-radius: 8px 8px 0 0; cursor: pointer; }
 
     .tab-content { display: none; }
     .tab-content.active { display: block; }
@@ -60,6 +61,45 @@
       body { background: white; padding: 0; }
       .sheet { box-shadow: none; border: none; width: 100%; page-break-after: always; }
       .tab-container, .btn-action, .modal-overlay, .btn-add-row, .btn-delete-row, .btn-insert-row, .no-print, .auth-card { display: none !important; }
+      
+      .sheet {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      @media (max-width: 992px) {
+        .app-viewport { padding: 10px 5px; }
+        .sheet { padding: 12px; }
+        .tab-btn, .nav-btn-home { padding: 10px 8px; font-size: 12px; }
+      }
+
+      @media (max-width: 600px) {
+        body { padding: 5px; }
+        .auth-card { padding: 15px; margin-top: 10px; }
+        .auth-card h2 { font-size: 15px; }
+        .tab-container {
+          overflow-x: auto;
+          white-space: nowrap;
+          -webkit-overflow-scrolling: touch;
+          padding-bottom: 4px;
+        }
+        .tab-btn, .nav-btn-home {
+          flex: none;
+          padding: 8px 12px;
+          font-size: 11px;
+        }
+        .sheet div[style*="display: flex"] {
+          flex-direction: column !important;
+          gap: 8px !important;
+        }
+        .btn-action {
+          width: 100% !important;
+          padding: 10px !important;
+          font-size: 13px !important;
+        }
+        .flex-section { flex-direction: column; }
+        .flex-section > div { width: 100% !important; }
+      }
     }
   </style>
 </head>
@@ -556,7 +596,6 @@
       </div>
 
     </div>
-
   </div>
 
   <!-- MODAL PREVIEW MERGER DOKUMEN -->
@@ -699,14 +738,11 @@
 
       document.getElementById('pageInit').style.display = 'none';
       document.getElementById('mainSystem').style.display = 'block';
-      
-      saveFormState();
     }
 
     function backToDataOrder() {
       document.getElementById('mainSystem').style.display = 'none';
       document.getElementById('pageInit').style.display = 'block';
-      saveFormState();
     }
 
     function switchTab(tabName, btnElement) {
@@ -715,7 +751,6 @@
 
       document.getElementById('tab-' + tabName).classList.add('active');
       btnElement.classList.add('active');
-      saveFormState();
     }
 
     function openMergedReviewModal() {
@@ -839,12 +874,10 @@
     function deleteSparePartRow(btn) { 
       btn.closest('tr').remove(); 
       reindexSparePartRows(); 
-      saveFormState();
     }
     
     function deleteGeneralRow(btn) { 
       btn.closest('tr').remove(); 
-      saveFormState();
     }
 
     function reindexSparePartRows() {
@@ -874,7 +907,6 @@
         </td>`;
       btn.closest('tr').parentNode.insertBefore(tr, btn.closest('tr').nextSibling);
       reindexSparePartRows();
-      saveFormState();
     }
 
     function addSparePartRow() {
@@ -895,7 +927,6 @@
         </td>`;
       tbody.appendChild(tr);
       reindexSparePartRows();
-      saveFormState();
     }
 
     function insertGeneralRowBelow(btn) {
@@ -916,7 +947,6 @@
           <button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button>
         </td>`;
       btn.closest('tr').parentNode.insertBefore(tr, btn.closest('tr').nextSibling);
-      saveFormState();
     }
 
     function insertRunoutRowBelow(btn) {
@@ -938,165 +968,6 @@
           <button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button>
         </td>`;
       btn.closest('tr').parentNode.insertBefore(tr, btn.closest('tr').nextSibling);
-      saveFormState();
-    }
-
-    // ==================== ENGINE AUTO-SAVE & AUTO-RESTORE TERPERBAIKI ====================
-    const STORAGE_KEY = 'INSPEKSI_ROOT_BLOWER_STATE_V2';
-    let isRestoring = false;
-
-    function saveFormState() {
-      if (isRestoring) return;
-
-      const mainSystem = document.getElementById('mainSystem');
-      const isStarted = mainSystem && (mainSystem.style.display === 'block');
-      
-      const activeBtn = document.querySelector('.tab-btn.active');
-      let activeTabName = 'clearance';
-      if (activeBtn) {
-        const match = activeBtn.getAttribute('onclick')?.match(/'([^']+)'/);
-        if (match) activeTabName = match[1];
-      }
-
-      // Simpan input form awal (pageInit)
-      const initData = {};
-      document.querySelectorAll('#pageInit input, #pageInit select').forEach(el => {
-        if (el.id) initData[el.id] = el.value;
-      });
-
-      // Simpan struktur HTML tbody dan seluruh input per Tab
-      const tabData = {};
-      ['clearance', 'sparepart', 'dimensi-rotor', 'dimensi-sideplate', 'runout'].forEach(tabId => {
-        const tabEl = document.getElementById('tab-' + tabId);
-        if (!tabEl) return;
-        
-        const tbody = tabEl.querySelector('tbody');
-        const tbodyHtml = tbody ? tbody.innerHTML : '';
-
-        const inputs = [];
-        tabEl.querySelectorAll('input, select, textarea').forEach(inp => {
-          inputs.push({
-            type: inp.type,
-            name: inp.name || '',
-            value: inp.value,
-            checked: inp.checked
-          });
-        });
-
-        tabData[tabId] = {
-          tbodyHtml: tbodyHtml,
-          inputs: inputs
-        };
-      });
-
-      const state = {
-        isStarted: isStarted,
-        activeTab: activeTabName,
-        initData: initData,
-        tabData: tabData
-      };
-
-      try {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-      } catch (e) {
-        console.warn('Storage error:', e);
-      }
-    }
-
-    function restoreFormState() {
-      const saved = localStorage.getItem(STORAGE_KEY);
-      if (!saved) return;
-
-      isRestoring = true;
-      try {
-        const state = JSON.parse(saved);
-
-        // 1. Pulihkan input pageInit
-        if (state.initData) {
-          Object.keys(state.initData).forEach(id => {
-            const el = document.getElementById(id);
-            if (el) el.value = state.initData[id];
-          });
-        }
-
-        // 2. Pulihkan struktur baris & input setiap tab
-        if (state.tabData) {
-          ['clearance', 'sparepart', 'dimensi-rotor', 'dimensi-sideplate', 'runout'].forEach(tabId => {
-            const tabEl = document.getElementById('tab-' + tabId);
-            if (!tabEl || !state.tabData[tabId]) return;
-
-            const data = state.tabData[tabId];
-            const tbody = tabEl.querySelector('tbody');
-            if (tbody && data.tbodyHtml) {
-              tbody.innerHTML = data.tbodyHtml;
-            }
-
-            const currentInputs = tabEl.querySelectorAll('input, select, textarea');
-            if (data.inputs) {
-              data.inputs.forEach((inpData, idx) => {
-                const el = currentInputs[idx];
-                if (el) {
-                  if (el.type === 'radio' || el.type === 'checkbox') {
-                    el.checked = inpData.checked;
-                  } else {
-                    el.value = inpData.value;
-                  }
-                }
-              });
-            }
-          });
-        }
-
-        // 3. Sinkronisasikan teks header & tanda tangan
-        const brand = document.getElementById('initBrand')?.value || '';
-        const type = document.getElementById('initType')?.value || '';
-        const sn = document.getElementById('initSN')?.value || '';
-        const customer = document.getElementById('initCustomer')?.value || '';
-        const noso = document.getElementById('initNoSO')?.value || '';
-        const date = document.getElementById('initDate')?.value || '';
-        const operator = document.getElementById('initOperator')?.value || '';
-        const supervisor = document.getElementById('initSupervisor')?.value || '';
-
-        document.querySelectorAll('.sync-brand').forEach(el => el.value = brand);
-        document.querySelectorAll('.sync-type').forEach(el => el.value = type);
-        document.querySelectorAll('.sync-sn').forEach(el => el.value = sn);
-        document.querySelectorAll('.sync-customer').forEach(el => el.value = customer);
-        document.querySelectorAll('.sync-typesn').forEach(el => el.value = type + ' / ' + sn);
-        document.querySelectorAll('.sync-noso').forEach(el => el.value = noso);
-        document.querySelectorAll('.sync-date').forEach(el => el.value = date);
-
-        if (document.getElementById('lblOperator')) document.getElementById('lblOperator').textContent = operator;
-        if (document.getElementById('lblSupervisor')) document.getElementById('lblSupervisor').textContent = supervisor;
-
-        // 4. Buka kembali halaman inspeksi dan tab terakhir
-        if (state.isStarted) {
-          document.getElementById('pageInit').style.display = 'none';
-          document.getElementById('mainSystem').style.display = 'block';
-
-          if (state.activeTab) {
-            const targetBtn = Array.from(document.querySelectorAll('.tab-btn')).find(b => 
-              b.getAttribute('onclick')?.includes(state.activeTab)
-            );
-            if (targetBtn) {
-              switchTab(state.activeTab, targetBtn);
-            }
-          }
-        }
-      } catch (e) {
-        console.error("Gagal restore:", e);
-      } finally {
-        isRestoring = false;
-      }
-    }
-
-    document.addEventListener('input', saveFormState);
-    document.addEventListener('change', saveFormState);
-    
-    // Jalankan pemulihan saat DOM siap
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', restoreFormState);
-    } else {
-      restoreFormState();
     }
   </script>
 </body>
