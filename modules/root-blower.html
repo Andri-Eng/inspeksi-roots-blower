@@ -61,45 +61,45 @@
       body { background: white; padding: 0; }
       .sheet { box-shadow: none; border: none; width: 100%; page-break-after: always; }
       .tab-container, .btn-action, .modal-overlay, .btn-add-row, .btn-delete-row, .btn-insert-row, .no-print, .auth-card { display: none !important; }
-      /* OPTIMASI RESPONSIF ANDROID & TABLET */
-    .sheet {
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
-    }
-
-    @media (max-width: 992px) {
-      .app-viewport { padding: 10px 5px; }
-      .sheet { padding: 12px; }
-      .tab-btn, .nav-btn-home { padding: 10px 8px; font-size: 12px; }
-    }
-
-    @media (max-width: 600px) {
-      body { padding: 5px; }
-      .auth-card { padding: 15px; margin-top: 10px; }
-      .auth-card h2 { font-size: 15px; }
-      .tab-container {
+      
+      .sheet {
         overflow-x: auto;
-        white-space: nowrap;
         -webkit-overflow-scrolling: touch;
-        padding-bottom: 4px;
       }
-      .tab-btn, .nav-btn-home {
-        flex: none;
-        padding: 8px 12px;
-        font-size: 11px;
+
+      @media (max-width: 992px) {
+        .app-viewport { padding: 10px 5px; }
+        .sheet { padding: 12px; }
+        .tab-btn, .nav-btn-home { padding: 10px 8px; font-size: 12px; }
       }
-      .sheet div[style*="display: flex"] {
-        flex-direction: column !important;
-        gap: 8px !important;
+
+      @media (max-width: 600px) {
+        body { padding: 5px; }
+        .auth-card { padding: 15px; margin-top: 10px; }
+        .auth-card h2 { font-size: 15px; }
+        .tab-container {
+          overflow-x: auto;
+          white-space: nowrap;
+          -webkit-overflow-scrolling: touch;
+          padding-bottom: 4px;
+        }
+        .tab-btn, .nav-btn-home {
+          flex: none;
+          padding: 8px 12px;
+          font-size: 11px;
+        }
+        .sheet div[style*="display: flex"] {
+          flex-direction: column !important;
+          gap: 8px !important;
+        }
+        .btn-action {
+          width: 100% !important;
+          padding: 10px !important;
+          font-size: 13px !important;
+        }
+        .flex-section { flex-direction: column; }
+        .flex-section > div { width: 100% !important; }
       }
-      .btn-action {
-        width: 100% !important;
-        padding: 10px !important;
-        font-size: 13px !important;
-      }
-      .flex-section { flex-direction: column; }
-      .flex-section > div { width: 100% !important; }
-    }
     }
   </style>
 </head>
@@ -322,7 +322,7 @@
         </div>
       </div>
 
-      <!-- TAB 2: SPARE PART (UPDATED DENGAN MID) -->
+      <!-- TAB 2: SPARE PART -->
       <div id="tab-sparepart" class="tab-content">
         <div class="sheet">
           <table class="header-table">
@@ -340,7 +340,6 @@
             <tr><td class="text-left"><b>NO. SO</b></td><td><input type="text" class="sync-noso"></td></tr>
           </table>
 
-          <!-- DATALIST UNTUK AUTOCOMPLETE -->
           <datalist id="masterMidList"></datalist>
 
           <table class="form-table" id="sparePartTable">
@@ -357,28 +356,28 @@
               <tr><th style="width: 4%;">No</th><th style="width: 20%;">Nama Part</th><th style="width: 5%;">OK</th><th style="width: 5%;">NG</th></tr>
             </thead>
             <tbody id="sparePartTbody">
-              <tr><td class="row-num">1</td><td class="text-left"><input type="text" class="text-input-left" value="Bearing DE-DR"></td><td><input type="text" list="masterMidList" class="part-code-input text-input-left" placeholder="Ketik kode/nama..." oninput="handleCodeSearch(this)"></td><td><input type="text" class="part-mid-input" placeholder="Auto / Manual..."></td><td><input type="number"></td><td><input type="radio" name="cond_1"></td><td><input type="radio" name="cond_1"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertSparePartRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteSparePartRow(this)">🗑️</button></td></tr>
-              <tr><td class="row-num">2</td><td class="text-left"><input type="text" class="text-input-left" value="Bearing DE-DN"></td><td><input type="text" list="masterMidList" class="part-code-input text-input-left" placeholder="Ketik kode/nama..." oninput="handleCodeSearch(this)"></td><td><input type="text" class="part-mid-input" placeholder="Auto / Manual..."></td><td><input type="number"></td><td><input type="radio" name="cond_2"></td><td><input type="radio" name="cond_2"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertSparePartRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteSparePartRow(this)">🗑️</button></td></tr>
-              <tr><td class="row-num">3</td><td class="text-left"><input type="text" class="text-input-left" value="Bearing NDE-DR"></td><td><input type="text" list="masterMidList" class="part-code-input text-input-left" placeholder="Ketik kode/nama..." oninput="handleCodeSearch(this)"></td><td><input type="text" class="part-mid-input" placeholder="Auto / Manual..."></td><td><input type="number"></td><td><input type="radio" name="cond_3"></td><td><input type="radio" name="cond_3"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertSparePartRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteSparePartRow(this)">🗑️</button></td></tr>
-              <tr><td class="row-num">4</td><td class="text-left"><input type="text" class="text-input-left" value="Bearing NDE-DN"></td><td><input type="text" list="masterMidList" class="part-code-input text-input-left" placeholder="Ketik kode/nama..." oninput="handleCodeSearch(this)"></td><td><input type="text" class="part-mid-input" placeholder="Auto / Manual..."></td><td><input type="number"></td><td><input type="radio" name="cond_4"></td><td><input type="radio" name="cond_4"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertSparePartRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteSparePartRow(this)">🗑️</button></td></tr>
-              <tr><td class="row-num">5</td><td class="text-left"><input type="text" class="text-input-left" value="Helical Gear"></td><td><input type="text" list="masterMidList" class="part-code-input text-input-left" placeholder="Ketik kode/nama..." oninput="handleCodeSearch(this)"></td><td><input type="text" class="part-mid-input" placeholder="Auto / Manual..."></td><td><input type="number"></td><td><input type="radio" name="cond_5"></td><td><input type="radio" name="cond_5"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertSparePartRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteSparePartRow(this)">🗑️</button></td></tr>
-              <tr><td class="row-num">6</td><td class="text-left"><input type="text" class="text-input-left" value="Sealing chamber"></td><td><input type="text" list="masterMidList" class="part-code-input text-input-left" placeholder="Ketik kode/nama..." oninput="handleCodeSearch(this)"></td><td><input type="text" class="part-mid-input" placeholder="Auto / Manual..."></td><td><input type="number"></td><td><input type="radio" name="cond_6"></td><td><input type="radio" name="cond_6"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertSparePartRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteSparePartRow(this)">🗑️</button></td></tr>
-              <tr><td class="row-num">7</td><td class="text-left"><input type="text" class="text-input-left" value="Sealing spacer"></td><td><input type="text" list="masterMidList" class="part-code-input text-input-left" placeholder="Ketik kode/nama..." oninput="handleCodeSearch(this)"></td><td><input type="text" class="part-mid-input" placeholder="Auto / Manual..."></td><td><input type="number"></td><td><input type="radio" name="cond_7"></td><td><input type="radio" name="cond_7"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertSparePartRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteSparePartRow(this)">🗑️</button></td></tr>
-              <tr><td class="row-num">8</td><td class="text-left"><input type="text" class="text-input-left" value="Shaft sleeve"></td><td><input type="text" list="masterMidList" class="part-code-input text-input-left" placeholder="Ketik kode/nama..." oninput="handleCodeSearch(this)"></td><td><input type="text" class="part-mid-input" placeholder="Auto / Manual..."></td><td><input type="number"></td><td><input type="radio" name="cond_8"></td><td><input type="radio" name="cond_8"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertSparePartRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteSparePartRow(this)">🗑️</button></td></tr>
-              <tr><td class="row-num">9</td><td class="text-left"><input type="text" class="text-input-left" value="Shaft seal"></td><td><input type="text" list="masterMidList" class="part-code-input text-input-left" placeholder="Ketik kode/nama..." oninput="handleCodeSearch(this)"></td><td><input type="text" class="part-mid-input" placeholder="Auto / Manual..."></td><td><input type="number"></td><td><input type="radio" name="cond_9"></td><td><input type="radio" name="cond_9"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertSparePartRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteSparePartRow(this)">🗑️</button></td></tr>
-              <tr><td class="row-num">10</td><td class="text-left"><input type="text" class="text-input-left" value="O-Ring"></td><td><input type="text" list="masterMidList" class="part-code-input text-input-left" placeholder="Ketik kode/nama..." oninput="handleCodeSearch(this)"></td><td><input type="text" class="part-mid-input" placeholder="Auto / Manual..."></td><td><input type="number"></td><td><input type="radio" name="cond_10"></td><td><input type="radio" name="cond_10"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertSparePartRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteSparePartRow(this)">🗑️</button></td></tr>
-              <tr><td class="row-num">11</td><td class="text-left"><input type="text" class="text-input-left" value="Flexible ring piston"></td><td><input type="text" list="masterMidList" class="part-code-input text-input-left" placeholder="Ketik kode/nama..." oninput="handleCodeSearch(this)"></td><td><input type="text" class="part-mid-input" placeholder="Auto / Manual..."></td><td><input type="number"></td><td><input type="radio" name="cond_11"></td><td><input type="radio" name="cond_11"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertSparePartRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteSparePartRow(this)">🗑️</button></td></tr>
-              <tr><td class="row-num">12</td><td class="text-left"><input type="text" class="text-input-left" value="Ring Gelombang"></td><td><input type="text" list="masterMidList" class="part-code-input text-input-left" placeholder="Ketik kode/nama..." oninput="handleCodeSearch(this)"></td><td><input type="text" class="part-mid-input" placeholder="Auto / Manual..."></td><td><input type="number"></td><td><input type="radio" name="cond_12"></td><td><input type="radio" name="cond_12"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertSparePartRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteSparePartRow(this)">🗑️</button></td></tr>
-              <tr><td class="row-num">13</td><td class="text-left"><input type="text" class="text-input-left" value="Baut hexagon"></td><td><input type="text" list="masterMidList" class="part-code-input text-input-left" placeholder="Ketik kode/nama..." oninput="handleCodeSearch(this)"></td><td><input type="text" class="part-mid-input" placeholder="Auto / Manual..."></td><td><input type="number"></td><td><input type="radio" name="cond_13"></td><td><input type="radio" name="cond_13"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertSparePartRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteSparePartRow(this)">🗑️</button></td></tr>
-              <tr><td class="row-num">14</td><td class="text-left"><input type="text" class="text-input-left" value="Ring Seting"></td><td><input type="text" list="masterMidList" class="part-code-input text-input-left" placeholder="Ketik kode/nama..." oninput="handleCodeSearch(this)"></td><td><input type="text" class="part-mid-input" placeholder="Auto / Manual..."></td><td><input type="number"></td><td><input type="radio" name="cond_14"></td><td><input type="radio" name="cond_14"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertSparePartRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteSparePartRow(this)">🗑️</button></td></tr>
-              <tr><td class="row-num">15</td><td class="text-left"><input type="text" class="text-input-left" value="Center Pin"></td><td><input type="text" list="masterMidList" class="part-code-input text-input-left" placeholder="Ketik kode/nama..." oninput="handleCodeSearch(this)"></td><td><input type="text" class="part-mid-input" placeholder="Auto / Manual..."></td><td><input type="number"></td><td><input type="radio" name="cond_15"></td><td><input type="radio" name="cond_15"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertSparePartRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteSparePartRow(this)">🗑️</button></td></tr>
-              <tr><td class="row-num">16</td><td class="text-left"><input type="text" class="text-input-left" value="Sight Glass"></td><td><input type="text" list="masterMidList" class="part-code-input text-input-left" placeholder="Ketik kode/nama..." oninput="handleCodeSearch(this)"></td><td><input type="text" class="part-mid-input" placeholder="Auto / Manual..."></td><td><input type="number"></td><td><input type="radio" name="cond_16"></td><td><input type="radio" name="cond_16"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertSparePartRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteSparePartRow(this)">🗑️</button></td></tr>
-              <tr><td class="row-num">17</td><td class="text-left"><input type="text" class="text-input-left" value="Snap Ring"></td><td><input type="text" list="masterMidList" class="part-code-input text-input-left" placeholder="Ketik kode/nama..." oninput="handleCodeSearch(this)"></td><td><input type="text" class="part-mid-input" placeholder="Auto / Manual..."></td><td><input type="number"></td><td><input type="radio" name="cond_17"></td><td><input type="radio" name="cond_17"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertSparePartRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteSparePartRow(this)">🗑️</button></td></tr>
-              <tr><td class="row-num">18</td><td class="text-left"><input type="text" class="text-input-left" value="Pulley"></td><td><input type="text" list="masterMidList" class="part-code-input text-input-left" placeholder="Ketik kode/nama..." oninput="handleCodeSearch(this)"></td><td><input type="text" class="part-mid-input" placeholder="Auto / Manual..."></td><td><input type="number"></td><td><input type="radio" name="cond_18"></td><td><input type="radio" name="cond_18"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertSparePartRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteSparePartRow(this)">🗑️</button></td></tr>
-              <tr><td class="row-num">19</td><td class="text-left"><input type="text" class="text-input-left" value="Spie"></td><td><input type="text" list="masterMidList" class="part-code-input text-input-left" placeholder="Ketik kode/nama..." oninput="handleCodeSearch(this)"></td><td><input type="text" class="part-mid-input" placeholder="Auto / Manual..."></td><td><input type="number"></td><td><input type="radio" name="cond_19"></td><td><input type="radio" name="cond_19"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertSparePartRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteSparePartRow(this)">🗑️</button></td></tr>
-              <tr><td class="row-num">20</td><td class="text-left"><input type="text" class="text-input-left" placeholder="Nama part tambahan..."></td><td><input type="text" list="masterMidList" class="part-code-input text-input-left" placeholder="Ketik kode/nama..." oninput="handleCodeSearch(this)"></td><td><input type="text" class="part-mid-input" placeholder="Auto / Manual..."></td><td><input type="number"></td><td><input type="radio" name="cond_20"></td><td><input type="radio" name="cond_20"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertSparePartRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteSparePartRow(this)">🗑️</button></td></tr>
-              <tr><td class="row-num">21</td><td class="text-left"><input type="text" class="text-input-left" placeholder="Nama part tambahan..."></td><td><input type="text" list="masterMidList" class="part-code-input text-input-left" placeholder="Ketik kode/nama..." oninput="handleCodeSearch(this)"></td><td><input type="text" class="part-mid-input" placeholder="Auto / Manual..."></td><td><input type="number"></td><td><input type="radio" name="cond_21"></td><td><input type="radio" name="cond_21"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertSparePartRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteSparePartRow(this)">🗑️</button></td></tr>
-              <tr><td class="row-num">22</td><td class="text-left"><input type="text" class="text-input-left" placeholder="Nama part tambahan..."></td><td><input type="text" list="masterMidList" class="part-code-input text-input-left" placeholder="Ketik kode/nama..." oninput="handleCodeSearch(this)"></td><td><input type="text" class="part-mid-input" placeholder="Auto / Manual..."></td><td><input type="number"></td><td><input type="radio" name="cond_22"></td><td><input type="radio" name="cond_22"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertSparePartRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteSparePartRow(this)">🗑️</button></td></tr>
+              <tr><td class="row-num">1</td><td class="text-left"><input type="text" class="text-input-left" value="Bearing DE-DR"></td><td><input type="text" list="masterMidList" class="part-code-input text-input-left" placeholder="Ketik kode/nama..." oninput="handleCodeSearch(this)"></td><td><input type="text" class="part-mid-input" placeholder="Auto / Manual..."></td><td><input type="number"></td><td><input type="radio" name="cond_1" value="OK"></td><td><input type="radio" name="cond_1" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertSparePartRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteSparePartRow(this)">🗑️</button></td></tr>
+              <tr><td class="row-num">2</td><td class="text-left"><input type="text" class="text-input-left" value="Bearing DE-DN"></td><td><input type="text" list="masterMidList" class="part-code-input text-input-left" placeholder="Ketik kode/nama..." oninput="handleCodeSearch(this)"></td><td><input type="text" class="part-mid-input" placeholder="Auto / Manual..."></td><td><input type="number"></td><td><input type="radio" name="cond_2" value="OK"></td><td><input type="radio" name="cond_2" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertSparePartRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteSparePartRow(this)">🗑️</button></td></tr>
+              <tr><td class="row-num">3</td><td class="text-left"><input type="text" class="text-input-left" value="Bearing NDE-DR"></td><td><input type="text" list="masterMidList" class="part-code-input text-input-left" placeholder="Ketik kode/nama..." oninput="handleCodeSearch(this)"></td><td><input type="text" class="part-mid-input" placeholder="Auto / Manual..."></td><td><input type="number"></td><td><input type="radio" name="cond_3" value="OK"></td><td><input type="radio" name="cond_3" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertSparePartRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteSparePartRow(this)">🗑️</button></td></tr>
+              <tr><td class="row-num">4</td><td class="text-left"><input type="text" class="text-input-left" value="Bearing NDE-DN"></td><td><input type="text" list="masterMidList" class="part-code-input text-input-left" placeholder="Ketik kode/nama..." oninput="handleCodeSearch(this)"></td><td><input type="text" class="part-mid-input" placeholder="Auto / Manual..."></td><td><input type="number"></td><td><input type="radio" name="cond_4" value="OK"></td><td><input type="radio" name="cond_4" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertSparePartRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteSparePartRow(this)">🗑️</button></td></tr>
+              <tr><td class="row-num">5</td><td class="text-left"><input type="text" class="text-input-left" value="Helical Gear"></td><td><input type="text" list="masterMidList" class="part-code-input text-input-left" placeholder="Ketik kode/nama..." oninput="handleCodeSearch(this)"></td><td><input type="text" class="part-mid-input" placeholder="Auto / Manual..."></td><td><input type="number"></td><td><input type="radio" name="cond_5" value="OK"></td><td><input type="radio" name="cond_5" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertSparePartRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteSparePartRow(this)">🗑️</button></td></tr>
+              <tr><td class="row-num">6</td><td class="text-left"><input type="text" class="text-input-left" value="Sealing chamber"></td><td><input type="text" list="masterMidList" class="part-code-input text-input-left" placeholder="Ketik kode/nama..." oninput="handleCodeSearch(this)"></td><td><input type="text" class="part-mid-input" placeholder="Auto / Manual..."></td><td><input type="number"></td><td><input type="radio" name="cond_6" value="OK"></td><td><input type="radio" name="cond_6" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertSparePartRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteSparePartRow(this)">🗑️</button></td></tr>
+              <tr><td class="row-num">7</td><td class="text-left"><input type="text" class="text-input-left" value="Sealing spacer"></td><td><input type="text" list="masterMidList" class="part-code-input text-input-left" placeholder="Ketik kode/nama..." oninput="handleCodeSearch(this)"></td><td><input type="text" class="part-mid-input" placeholder="Auto / Manual..."></td><td><input type="number"></td><td><input type="radio" name="cond_7" value="OK"></td><td><input type="radio" name="cond_7" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertSparePartRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteSparePartRow(this)">🗑️</button></td></tr>
+              <tr><td class="row-num">8</td><td class="text-left"><input type="text" class="text-input-left" value="Shaft sleeve"></td><td><input type="text" list="masterMidList" class="part-code-input text-input-left" placeholder="Ketik kode/nama..." oninput="handleCodeSearch(this)"></td><td><input type="text" class="part-mid-input" placeholder="Auto / Manual..."></td><td><input type="number"></td><td><input type="radio" name="cond_8" value="OK"></td><td><input type="radio" name="cond_8" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertSparePartRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteSparePartRow(this)">🗑️</button></td></tr>
+              <tr><td class="row-num">9</td><td class="text-left"><input type="text" class="text-input-left" value="Shaft seal"></td><td><input type="text" list="masterMidList" class="part-code-input text-input-left" placeholder="Ketik kode/nama..." oninput="handleCodeSearch(this)"></td><td><input type="text" class="part-mid-input" placeholder="Auto / Manual..."></td><td><input type="number"></td><td><input type="radio" name="cond_9" value="OK"></td><td><input type="radio" name="cond_9" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertSparePartRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteSparePartRow(this)">🗑️</button></td></tr>
+              <tr><td class="row-num">10</td><td class="text-left"><input type="text" class="text-input-left" value="O-Ring"></td><td><input type="text" list="masterMidList" class="part-code-input text-input-left" placeholder="Ketik kode/nama..." oninput="handleCodeSearch(this)"></td><td><input type="text" class="part-mid-input" placeholder="Auto / Manual..."></td><td><input type="number"></td><td><input type="radio" name="cond_10" value="OK"></td><td><input type="radio" name="cond_10" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertSparePartRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteSparePartRow(this)">🗑️</button></td></tr>
+              <tr><td class="row-num">11</td><td class="text-left"><input type="text" class="text-input-left" value="Flexible ring piston"></td><td><input type="text" list="masterMidList" class="part-code-input text-input-left" placeholder="Ketik kode/nama..." oninput="handleCodeSearch(this)"></td><td><input type="text" class="part-mid-input" placeholder="Auto / Manual..."></td><td><input type="number"></td><td><input type="radio" name="cond_11" value="OK"></td><td><input type="radio" name="cond_11" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertSparePartRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteSparePartRow(this)">🗑️</button></td></tr>
+              <tr><td class="row-num">12</td><td class="text-left"><input type="text" class="text-input-left" value="Ring Gelombang"></td><td><input type="text" list="masterMidList" class="part-code-input text-input-left" placeholder="Ketik kode/nama..." oninput="handleCodeSearch(this)"></td><td><input type="text" class="part-mid-input" placeholder="Auto / Manual..."></td><td><input type="number"></td><td><input type="radio" name="cond_12" value="OK"></td><td><input type="radio" name="cond_12" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertSparePartRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteSparePartRow(this)">🗑️</button></td></tr>
+              <tr><td class="row-num">13</td><td class="text-left"><input type="text" class="text-input-left" value="Baut hexagon"></td><td><input type="text" list="masterMidList" class="part-code-input text-input-left" placeholder="Ketik kode/nama..." oninput="handleCodeSearch(this)"></td><td><input type="text" class="part-mid-input" placeholder="Auto / Manual..."></td><td><input type="number"></td><td><input type="radio" name="cond_13" value="OK"></td><td><input type="radio" name="cond_13" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertSparePartRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteSparePartRow(this)">🗑️</button></td></tr>
+              <tr><td class="row-num">14</td><td class="text-left"><input type="text" class="text-input-left" value="Ring Seting"></td><td><input type="text" list="masterMidList" class="part-code-input text-input-left" placeholder="Ketik kode/nama..." oninput="handleCodeSearch(this)"></td><td><input type="text" class="part-mid-input" placeholder="Auto / Manual..."></td><td><input type="number"></td><td><input type="radio" name="cond_14" value="OK"></td><td><input type="radio" name="cond_14" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertSparePartRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteSparePartRow(this)">🗑️</button></td></tr>
+              <tr><td class="row-num">15</td><td class="text-left"><input type="text" class="text-input-left" value="Center Pin"></td><td><input type="text" list="masterMidList" class="part-code-input text-input-left" placeholder="Ketik kode/nama..." oninput="handleCodeSearch(this)"></td><td><input type="text" class="part-mid-input" placeholder="Auto / Manual..."></td><td><input type="number"></td><td><input type="radio" name="cond_15" value="OK"></td><td><input type="radio" name="cond_15" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertSparePartRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteSparePartRow(this)">🗑️</button></td></tr>
+              <tr><td class="row-num">16</td><td class="text-left"><input type="text" class="text-input-left" value="Sight Glass"></td><td><input type="text" list="masterMidList" class="part-code-input text-input-left" placeholder="Ketik kode/nama..." oninput="handleCodeSearch(this)"></td><td><input type="text" class="part-mid-input" placeholder="Auto / Manual..."></td><td><input type="number"></td><td><input type="radio" name="cond_16" value="OK"></td><td><input type="radio" name="cond_16" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertSparePartRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteSparePartRow(this)">🗑️</button></td></tr>
+              <tr><td class="row-num">17</td><td class="text-left"><input type="text" class="text-input-left" value="Snap Ring"></td><td><input type="text" list="masterMidList" class="part-code-input text-input-left" placeholder="Ketik kode/nama..." oninput="handleCodeSearch(this)"></td><td><input type="text" class="part-mid-input" placeholder="Auto / Manual..."></td><td><input type="number"></td><td><input type="radio" name="cond_17" value="OK"></td><td><input type="radio" name="cond_17" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertSparePartRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteSparePartRow(this)">🗑️</button></td></tr>
+              <tr><td class="row-num">18</td><td class="text-left"><input type="text" class="text-input-left" value="Pulley"></td><td><input type="text" list="masterMidList" class="part-code-input text-input-left" placeholder="Ketik kode/nama..." oninput="handleCodeSearch(this)"></td><td><input type="text" class="part-mid-input" placeholder="Auto / Manual..."></td><td><input type="number"></td><td><input type="radio" name="cond_18" value="OK"></td><td><input type="radio" name="cond_18" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertSparePartRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteSparePartRow(this)">🗑️</button></td></tr>
+              <tr><td class="row-num">19</td><td class="text-left"><input type="text" class="text-input-left" value="Spie"></td><td><input type="text" list="masterMidList" class="part-code-input text-input-left" placeholder="Ketik kode/nama..." oninput="handleCodeSearch(this)"></td><td><input type="text" class="part-mid-input" placeholder="Auto / Manual..."></td><td><input type="number"></td><td><input type="radio" name="cond_19" value="OK"></td><td><input type="radio" name="cond_19" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertSparePartRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteSparePartRow(this)">🗑️</button></td></tr>
+              <tr><td class="row-num">20</td><td class="text-left"><input type="text" class="text-input-left" placeholder="Nama part tambahan..."></td><td><input type="text" list="masterMidList" class="part-code-input text-input-left" placeholder="Ketik kode/nama..." oninput="handleCodeSearch(this)"></td><td><input type="text" class="part-mid-input" placeholder="Auto / Manual..."></td><td><input type="number"></td><td><input type="radio" name="cond_20" value="OK"></td><td><input type="radio" name="cond_20" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertSparePartRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteSparePartRow(this)">🗑️</button></td></tr>
+              <tr><td class="row-num">21</td><td class="text-left"><input type="text" class="text-input-left" placeholder="Nama part tambahan..."></td><td><input type="text" list="masterMidList" class="part-code-input text-input-left" placeholder="Ketik kode/nama..." oninput="handleCodeSearch(this)"></td><td><input type="text" class="part-mid-input" placeholder="Auto / Manual..."></td><td><input type="number"></td><td><input type="radio" name="cond_21" value="OK"></td><td><input type="radio" name="cond_21" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertSparePartRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteSparePartRow(this)">🗑️</button></td></tr>
+              <tr><td class="row-num">22</td><td class="text-left"><input type="text" class="text-input-left" placeholder="Nama part tambahan..."></td><td><input type="text" list="masterMidList" class="part-code-input text-input-left" placeholder="Ketik kode/nama..." oninput="handleCodeSearch(this)"></td><td><input type="text" class="part-mid-input" placeholder="Auto / Manual..."></td><td><input type="number"></td><td><input type="radio" name="cond_22" value="OK"></td><td><input type="radio" name="cond_22" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertSparePartRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteSparePartRow(this)">🗑️</button></td></tr>
             </tbody>
           </table>
 
@@ -422,35 +421,37 @@
             </thead>
             <tbody>
               <tr class="bg-gray"><td colspan="10" class="text-left" style="font-weight: bold;">Rotor DR (Driver)</td></tr>
-              <tr><td>A</td><td class="text-left"><input type="text" value="Pulley"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="rot_A"></td><td><input type="radio" name="rot_A"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
-              <tr><td>B</td><td class="text-left"><input type="text" value="Shaft sleeve"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="rot_B"></td><td><input type="radio" name="rot_B"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
-              <tr><td>C</td><td class="text-left"><input type="text" value="Bearing DEDR"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="rot_A"></td><td><input type="radio" name="rot_A"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
-              <tr><td>D</td><td class="text-left"><input type="text" value="Sealing Spacer DEDR"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="rot_A"></td><td><input type="radio" name="rot_A"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
-              <tr><td>E</td><td class="text-left"><input type="text" value="Panjang Lobe DR"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="rot_A"></td><td><input type="radio" name="rot_A"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
-              <tr><td>F</td><td class="text-left"><input type="text" value="Sealing Spacer NDEDR"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="rot_A"></td><td><input type="radio" name="rot_A"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
-              <tr><td>G</td><td class="text-left"><input type="text" value="Bearing NDEDR"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="rot_A"></td><td><input type="radio" name="rot_A"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
-              <tr><td>H</td><td class="text-left"><input type="text" value="Locknut"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="rot_A"></td><td><input type="radio" name="rot_A"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
-              <tr><td>I</td><td class="text-left"><input type="text" value="Gear DR"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="rot_A"></td><td><input type="radio" name="rot_A"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
-              <tr><td>J</td><td class="text-left"><input type="text" value="Locknut Gear DR"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="rot_A"></td><td><input type="radio" name="rot_A"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
-              <tr><td>K</td><td class="text-left"><input type="text" value="Puncak Lobe DR-1"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="rot_A"></td><td><input type="radio" name="rot_A"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
-              <tr><td>L</td><td class="text-left"><input type="text" value="Puncak Lobe DR-2"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="rot_A"></td><td><input type="radio" name="rot_A"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
-              <tr><td>M</td><td class="text-left"><input type="text" value="Puncak Lobe DR-3"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="rot_A"></td><td><input type="radio" name="rot_A"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
-              <tr><td>N</td><td class="text-left"><input type="text" value="Lebar Spie"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="rot_A"></td><td><input type="radio" name="rot_A"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
-              <tr><td>O</td><td class="text-left"><input type="text" value="Tinggi Spie"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="rot_A"></td><td><input type="radio" name="rot_A"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
-              <tr><td>P</td><td class="text-left"><input type="text" value="Panjang Spie"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="rot_A"></td><td><input type="radio" name="rot_A"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
-              <tr><td>Q</td><td class="text-left"><input type="text" value="Locknut DEDN"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="rot_A"></td><td><input type="radio" name="rot_A"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
-              <tr><td>R</td><td class="text-left"><input type="text" value="Bearing DEDN"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="rot_A"></td><td><input type="radio" name="rot_A"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
-              <tr><td>S</td><td class="text-left"><input type="text" value="Sealing Spacer DEDN"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="rot_A"></td><td><input type="radio" name="rot_A"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
-              <tr><td>T</td><td class="text-left"><input type="text" value="Panjang Lobe DN"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="rot_A"></td><td><input type="radio" name="rot_A"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
-              <tr><td>U</td><td class="text-left"><input type="text" value="Sealing Spacer NDEDN"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="rot_A"></td><td><input type="radio" name="rot_A"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
-              <tr><td>V</td><td class="text-left"><input type="text" value="Bearing NDEDN"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="rot_A"></td><td><input type="radio" name="rot_A"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
-              <tr><td>W</td><td class="text-left"><input type="text" value="Locknut"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="rot_A"></td><td><input type="radio" name="rot_A"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
-              <tr><td>X</td><td class="text-left"><input type="text" value="Gear DN"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="rot_A"></td><td><input type="radio" name="rot_A"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
-              <tr><td>Y</td><td class="text-left"><input type="text" value="Locknut Gear DN"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="rot_A"></td><td><input type="radio" name="rot_A"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
-              <tr><td>Z</td><td class="text-left"><input type="text" value="Puncak Lobe DN-1"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="rot_A"></td><td><input type="radio" name="rot_A"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
-              <tr><td>A1</td><td class="text-left"><input type="text" value="Puncak Lobe DN-2"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="rot_A"></td><td><input type="radio" name="rot_A"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
-              <tr><td>B1</td><td class="text-left"><input type="text" value="Puncak Lobe DN-3"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="rot_A"></td><td><input type="radio" name="rot_A"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
-              <tr><td>N</td><td class="text-left"><input type="text" placeholder="Nama part tambahan..."></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="rot_A"></td><td><input type="radio" name="rot_A"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
+              <tr><td>A</td><td class="text-left"><input type="text" value="Pulley"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="rot_DR_A" value="OK"></td><td><input type="radio" name="rot_DR_A" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
+              <tr><td>B</td><td class="text-left"><input type="text" value="Shaft sleeve"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="rot_DR_B" value="OK"></td><td><input type="radio" name="rot_DR_B" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
+              <tr><td>C</td><td class="text-left"><input type="text" value="Bearing DEDR"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="rot_DR_C" value="OK"></td><td><input type="radio" name="rot_DR_C" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
+              <tr><td>D</td><td class="text-left"><input type="text" value="Sealing Spacer DEDR"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="rot_DR_D" value="OK"></td><td><input type="radio" name="rot_DR_D" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
+              <tr><td>E</td><td class="text-left"><input type="text" value="Panjang Lobe DR"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="rot_DR_E" value="OK"></td><td><input type="radio" name="rot_DR_E" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
+              <tr><td>F</td><td class="text-left"><input type="text" value="Sealing Spacer NDEDR"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="rot_DR_F" value="OK"></td><td><input type="radio" name="rot_DR_F" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
+              <tr><td>G</td><td class="text-left"><input type="text" value="Bearing NDEDR"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="rot_DR_G" value="OK"></td><td><input type="radio" name="rot_DR_G" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
+              <tr><td>H</td><td class="text-left"><input type="text" value="Locknut"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="rot_DR_H" value="OK"></td><td><input type="radio" name="rot_DR_H" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
+              <tr><td>I</td><td class="text-left"><input type="text" value="Gear DR"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="rot_DR_I" value="OK"></td><td><input type="radio" name="rot_DR_I" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
+              <tr><td>J</td><td class="text-left"><input type="text" value="Locknut Gear DR"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="rot_DR_J" value="OK"></td><td><input type="radio" name="rot_DR_J" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
+              <tr><td>K</td><td class="text-left"><input type="text" value="Puncak Lobe DR-1"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="rot_DR_K" value="OK"></td><td><input type="radio" name="rot_DR_K" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
+              <tr><td>L</td><td class="text-left"><input type="text" value="Puncak Lobe DR-2"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="rot_DR_L" value="OK"></td><td><input type="radio" name="rot_DR_L" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
+              <tr><td>M</td><td class="text-left"><input type="text" value="Puncak Lobe DR-3"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="rot_DR_M" value="OK"></td><td><input type="radio" name="rot_DR_M" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
+              <tr><td>N</td><td class="text-left"><input type="text" value="Lebar Spie"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="rot_DR_N" value="OK"></td><td><input type="radio" name="rot_DR_N" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
+              <tr><td>O</td><td class="text-left"><input type="text" value="Tinggi Spie"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="rot_DR_O" value="OK"></td><td><input type="radio" name="rot_DR_O" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
+              <tr><td>P</td><td class="text-left"><input type="text" value="Panjang Spie"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="rot_DR_P" value="OK"></td><td><input type="radio" name="rot_DR_P" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
+              
+              <tr class="bg-gray"><td colspan="10" class="text-left" style="font-weight: bold;">Rotor DN (Driven)</td></tr>
+              <tr><td>Q</td><td class="text-left"><input type="text" value="Locknut DEDN"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="rot_DN_Q" value="OK"></td><td><input type="radio" name="rot_DN_Q" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
+              <tr><td>R</td><td class="text-left"><input type="text" value="Bearing DEDN"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="rot_DN_R" value="OK"></td><td><input type="radio" name="rot_DN_R" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
+              <tr><td>S</td><td class="text-left"><input type="text" value="Sealing Spacer DEDN"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="rot_DN_S" value="OK"></td><td><input type="radio" name="rot_DN_S" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
+              <tr><td>T</td><td class="text-left"><input type="text" value="Panjang Lobe DN"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="rot_DN_T" value="OK"></td><td><input type="radio" name="rot_DN_T" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
+              <tr><td>U</td><td class="text-left"><input type="text" value="Sealing Spacer NDEDN"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="rot_DN_U" value="OK"></td><td><input type="radio" name="rot_DN_U" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
+              <tr><td>V</td><td class="text-left"><input type="text" value="Bearing NDEDN"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="rot_DN_V" value="OK"></td><td><input type="radio" name="rot_DN_V" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
+              <tr><td>W</td><td class="text-left"><input type="text" value="Locknut"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="rot_DN_W" value="OK"></td><td><input type="radio" name="rot_DN_W" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
+              <tr><td>X</td><td class="text-left"><input type="text" value="Gear DN"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="rot_DN_X" value="OK"></td><td><input type="radio" name="rot_DN_X" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
+              <tr><td>Y</td><td class="text-left"><input type="text" value="Locknut Gear DN"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="rot_DN_Y" value="OK"></td><td><input type="radio" name="rot_DN_Y" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
+              <tr><td>Z</td><td class="text-left"><input type="text" value="Puncak Lobe DN-1"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="rot_DN_Z" value="OK"></td><td><input type="radio" name="rot_DN_Z" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
+              <tr><td>A1</td><td class="text-left"><input type="text" value="Puncak Lobe DN-2"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="rot_DN_A1" value="OK"></td><td><input type="radio" name="rot_DN_A1" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
+              <tr><td>B1</td><td class="text-left"><input type="text" value="Puncak Lobe DN-3"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="rot_DN_B1" value="OK"></td><td><input type="radio" name="rot_DN_B1" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
+              <tr><td>Extra</td><td class="text-left"><input type="text" placeholder="Nama part tambahan..."></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="rot_DN_Extra" value="OK"></td><td><input type="radio" name="rot_DN_Extra" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
             </tbody>
           </table>
 
@@ -493,18 +494,20 @@
             </thead>
             <tbody>
               <tr class="bg-gray"><td colspan="10" class="text-left" style="font-weight: bold;">Sideplate DE</td></tr>
-              <tr><td>A</td><td class="text-left"><input type="text" value="Sealing chamber DE-DR"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="sp_A"></td><td><input type="radio" name="sp_A"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
-              <tr><td>B</td><td class="text-left"><input type="text" value="Sealing chamber DE-DN"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="sp_A"></td><td><input type="radio" name="sp_A"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
-              <tr><td>C</td><td class="text-left"><input type="text" value="Hosing Bearing DE-DR"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="sp_A"></td><td><input type="radio" name="sp_A"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
-              <tr><td>D</td><td class="text-left"><input type="text" value="Hosing Bearing DE-DN"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="sp_A"></td><td><input type="radio" name="sp_A"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
-              <tr><td>E</td><td class="text-left"><input type="text" value="Surface Side Plate DE"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="sp_A"></td><td><input type="radio" name="sp_A"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
-              <tr><td>F</td><td class="text-left"><input type="text" value="Sealing Chamber NDE-DR"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="sp_A"></td><td><input type="radio" name="sp_A"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
-              <tr><td>G</td><td class="text-left"><input type="text" value="Sealing chamber NDE-DN"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="sp_A"></td><td><input type="radio" name="sp_A"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
-              <tr><td>H</td><td class="text-left"><input type="text" value="Hosing Bearing NDE-DR"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="sp_A"></td><td><input type="radio" name="sp_A"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
-              <tr><td>I</td><td class="text-left"><input type="text" value="Hosing Bearing NDE-DN"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="sp_A"></td><td><input type="radio" name="sp_A"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
-              <tr><td>J</td><td class="text-left"><input type="text" value="Surface Side Plade NDE"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="sp_A"></td><td><input type="radio" name="sp_A"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
-              <tr><td>K</td><td class="text-left"><input type="text" placeholder="nama part..""></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="sp_A"></td><td><input type="radio" name="sp_A"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
-              <tr><td>L</td><td class="text-left"><input type="text" placeholder="nama part..""></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="sp_A"></td><td><input type="radio" name="sp_A"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
+              <tr><td>A</td><td class="text-left"><input type="text" value="Sealing chamber DE-DR"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="sp_A" value="OK"></td><td><input type="radio" name="sp_A" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
+              <tr><td>B</td><td class="text-left"><input type="text" value="Sealing chamber DE-DN"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="sp_B" value="OK"></td><td><input type="radio" name="sp_B" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
+              <tr><td>C</td><td class="text-left"><input type="text" value="Hosing Bearing DE-DR"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="sp_C" value="OK"></td><td><input type="radio" name="sp_C" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
+              <tr><td>D</td><td class="text-left"><input type="text" value="Hosing Bearing DE-DN"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="sp_D" value="OK"></td><td><input type="radio" name="sp_D" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
+              <tr><td>E</td><td class="text-left"><input type="text" value="Surface Side Plate DE"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="sp_E" value="OK"></td><td><input type="radio" name="sp_E" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
+              
+              <tr class="bg-gray"><td colspan="10" class="text-left" style="font-weight: bold;">Sideplate NDE</td></tr>
+              <tr><td>F</td><td class="text-left"><input type="text" value="Sealing Chamber NDE-DR"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="sp_F" value="OK"></td><td><input type="radio" name="sp_F" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
+              <tr><td>G</td><td class="text-left"><input type="text" value="Sealing chamber NDE-DN"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="sp_G" value="OK"></td><td><input type="radio" name="sp_G" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
+              <tr><td>H</td><td class="text-left"><input type="text" value="Hosing Bearing NDE-DR"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="sp_H" value="OK"></td><td><input type="radio" name="sp_H" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
+              <tr><td>I</td><td class="text-left"><input type="text" value="Hosing Bearing NDE-DN"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="sp_I" value="OK"></td><td><input type="radio" name="sp_I" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
+              <tr><td>J</td><td class="text-left"><input type="text" value="Surface Side Plade NDE"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="sp_J" value="OK"></td><td><input type="radio" name="sp_J" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
+              <tr><td>K</td><td class="text-left"><input type="text" placeholder="Nama part tambahan..."></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="sp_K" value="OK"></td><td><input type="radio" name="sp_K" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
+              <tr><td>L</td><td class="text-left"><input type="text" placeholder="Nama part tambahan..."></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="sp_L" value="OK"></td><td><input type="radio" name="sp_L" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
             </tbody>
           </table>
 
@@ -527,7 +530,7 @@
             </tr>
           </table>
 
-                    <table class="form-table">
+          <table class="form-table">
             <tr><td style="width: 20%;" class="text-left"><b>BRAND</b></td><td style="width: 80%;"><input type="text" class="sync-brand"></td></tr>
             <tr><td class="text-left"><b>TYPE/SN</b></td><td><input type="text" class="sync-typesn"></td></tr>
             <tr><td class="text-left"><b>CUSTOMER</b></td><td><input type="text" class="sync-customer"></td></tr>
@@ -547,27 +550,29 @@
             </thead>
             <tbody>
               <tr class="bg-gray"><td colspan="11" class="text-left" style="font-weight: bold;">Rotor DR (Driver)</td></tr>
-              <tr><td>A</td><td class="text-left"><input type="text" value="Pulley"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="ro_A"></td><td><input type="radio" name="ro_A"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertRunoutRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
-              <tr><td>B</td><td class="text-left"><input type="text" value="Inner Seal"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="ro_A"></td><td><input type="radio" name="ro_A"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertRunoutRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
-              <tr><td>C</td><td class="text-left"><input type="text" value="Bearing DE-DR"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="ro_A"></td><td><input type="radio" name="ro_A"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertRunoutRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
-              <tr><td>D</td><td class="text-left"><input type="text" value="Sealing Spacer DE-DR"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="ro_A"></td><td><input type="radio" name="ro_A"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertRunoutRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
-              <tr><td>E</td><td class="text-left"><input type="text" value="Puncak Lobe DR-1"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="ro_A"></td><td><input type="radio" name="ro_A"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertRunoutRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
-              <tr><td>F</td><td class="text-left"><input type="text" value="Puncak Lobe DR-2"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="ro_A"></td><td><input type="radio" name="ro_A"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertRunoutRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
-              <tr><td>G</td><td class="text-left"><input type="text" value="Puncak Lobe DR-3"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="ro_A"></td><td><input type="radio" name="ro_A"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertRunoutRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
-              <tr><td>H</td><td class="text-left"><input type="text" value="Sealing Spacer NDE-DR"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="ro_A"></td><td><input type="radio" name="ro_A"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertRunoutRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
-              <tr><td>I</td><td class="text-left"><input type="text" value="Bearing NDE-DR"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="ro_A"></td><td><input type="radio" name="ro_A"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertRunoutRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
-              <tr><td>J</td><td class="text-left"><input type="text" value="Gear DR"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="ro_A"></td><td><input type="radio" name="ro_A"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertRunoutRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
-              <tr><td>K</td><td class="text-left"><input type="text" value="Bearing DE-DN"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="ro_A"></td><td><input type="radio" name="ro_A"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertRunoutRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
-              <tr><td>L</td><td class="text-left"><input type="text" value="Sealing Spacer DE-DN"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="ro_A"></td><td><input type="radio" name="ro_A"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertRunoutRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
-              <tr><td>M</td><td class="text-left"><input type="text" value="Puncak Lobe DN-1"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="ro_A"></td><td><input type="radio" name="ro_A"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertRunoutRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
-              <tr><td>N</td><td class="text-left"><input type="text" value="Puncak Lobe DN-2"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="ro_A"></td><td><input type="radio" name="ro_A"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertRunoutRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
-              <tr><td>O</td><td class="text-left"><input type="text" value="Puncak Lobe DN-3"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="ro_A"></td><td><input type="radio" name="ro_A"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertRunoutRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
-              <tr><td>P</td><td class="text-left"><input type="text" value="Sealing Spacer NDE-DN"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="ro_A"></td><td><input type="radio" name="ro_A"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertRunoutRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
-              <tr><td>Q</td><td class="text-left"><input type="text" value="Bearing NDE-DN"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="ro_A"></td><td><input type="radio" name="ro_A"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertRunoutRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
-              <tr><td>R</td><td class="text-left"><input type="text" value="Gear DN"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="ro_A"></td><td><input type="radio" name="ro_A"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertRunoutRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
-              <tr><td>S</td><td class="text-left"><input type="text" placeholder="nama part..""></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="ro_A"></td><td><input type="radio" name="ro_A"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertRunoutRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
-              <tr><td>T</td><td class="text-left"><input type="text" placeholder="nama part..""></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="ro_A"></td><td><input type="radio" name="ro_A"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertRunoutRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
-              <tr><td>U</td><td class="text-left"><input type="text" placeholder="nama part..""></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="ro_A"></td><td><input type="radio" name="ro_A"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertRunoutRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
+              <tr><td>A</td><td class="text-left"><input type="text" value="Pulley"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="ro_A" value="OK"></td><td><input type="radio" name="ro_A" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertRunoutRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
+              <tr><td>B</td><td class="text-left"><input type="text" value="Inner Seal"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="ro_B" value="OK"></td><td><input type="radio" name="ro_B" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertRunoutRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
+              <tr><td>C</td><td class="text-left"><input type="text" value="Bearing DE-DR"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="ro_C" value="OK"></td><td><input type="radio" name="ro_C" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertRunoutRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
+              <tr><td>D</td><td class="text-left"><input type="text" value="Sealing Spacer DE-DR"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="ro_D" value="OK"></td><td><input type="radio" name="ro_D" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertRunoutRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
+              <tr><td>E</td><td class="text-left"><input type="text" value="Puncak Lobe DR-1"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="ro_E" value="OK"></td><td><input type="radio" name="ro_E" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertRunoutRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
+              <tr><td>F</td><td class="text-left"><input type="text" value="Puncak Lobe DR-2"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="ro_F" value="OK"></td><td><input type="radio" name="ro_F" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertRunoutRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
+              <tr><td>G</td><td class="text-left"><input type="text" value="Puncak Lobe DR-3"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="ro_G" value="OK"></td><td><input type="radio" name="ro_G" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertRunoutRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
+              <tr><td>H</td><td class="text-left"><input type="text" value="Sealing Spacer NDE-DR"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="ro_H" value="OK"></td><td><input type="radio" name="ro_H" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertRunoutRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
+              <tr><td>I</td><td class="text-left"><input type="text" value="Bearing NDE-DR"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="ro_I" value="OK"></td><td><input type="radio" name="ro_I" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertRunoutRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
+              <tr><td>J</td><td class="text-left"><input type="text" value="Gear DR"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="ro_J" value="OK"></td><td><input type="radio" name="ro_J" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertRunoutRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
+              
+              <tr class="bg-gray"><td colspan="11" class="text-left" style="font-weight: bold;">Rotor DN (Driven)</td></tr>
+              <tr><td>K</td><td class="text-left"><input type="text" value="Bearing DE-DN"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="ro_K" value="OK"></td><td><input type="radio" name="ro_K" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertRunoutRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
+              <tr><td>L</td><td class="text-left"><input type="text" value="Sealing Spacer DE-DN"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="ro_L" value="OK"></td><td><input type="radio" name="ro_L" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertRunoutRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
+              <tr><td>M</td><td class="text-left"><input type="text" value="Puncak Lobe DN-1"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="ro_M" value="OK"></td><td><input type="radio" name="ro_M" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertRunoutRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
+              <tr><td>N</td><td class="text-left"><input type="text" value="Puncak Lobe DN-2"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="ro_N" value="OK"></td><td><input type="radio" name="ro_N" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertRunoutRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
+              <tr><td>O</td><td class="text-left"><input type="text" value="Puncak Lobe DN-3"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="ro_O" value="OK"></td><td><input type="radio" name="ro_O" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertRunoutRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
+              <tr><td>P</td><td class="text-left"><input type="text" value="Sealing Spacer NDE-DN"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="ro_P" value="OK"></td><td><input type="radio" name="ro_P" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertRunoutRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
+              <tr><td>Q</td><td class="text-left"><input type="text" value="Bearing NDE-DN"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="ro_Q" value="OK"></td><td><input type="radio" name="ro_Q" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertRunoutRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
+              <tr><td>R</td><td class="text-left"><input type="text" value="Gear DN"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="ro_R" value="OK"></td><td><input type="radio" name="ro_R" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertRunoutRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
+              <tr><td>S</td><td class="text-left"><input type="text" placeholder="Nama part tambahan..."></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="ro_S" value="OK"></td><td><input type="radio" name="ro_S" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertRunoutRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
+              <tr><td>T</td><td class="text-left"><input type="text" placeholder="Nama part tambahan..."></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="ro_T" value="OK"></td><td><input type="radio" name="ro_T" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertRunoutRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
+              <tr><td>U</td><td class="text-left"><input type="text" placeholder="Nama part tambahan..."></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="ro_U" value="OK"></td><td><input type="radio" name="ro_U" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertRunoutRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
             </tbody>
           </table>
 
@@ -591,7 +596,6 @@
       </div>
 
     </div>
-
   </div>
 
   <!-- MODAL PREVIEW MERGER DOKUMEN -->
@@ -616,7 +620,6 @@
     let masterMidDb = [];
 
     function loadMasterMID() {
-      // Coba fetch dari root utama atau path modul
       const fetchUrl = window.location.pathname.includes('/modules/') ? '../master_mid.json' : 'master_mid.json';
 
       fetch(fetchUrl)
@@ -629,7 +632,6 @@
           console.log('✅ Master MID Berhasil Dimuat (Root Blower):', masterMidDb.length, 'data.');
         })
         .catch(err => {
-          // Fallback kedua jika path berbeda
           fetch('/master_mid.json')
             .then(r => r.json())
             .then(d => {
@@ -639,7 +641,6 @@
         });
     }
 
-    // Fungsi bantu membaca key MID
     function getItemFieldValue(item, fieldType) {
       if (!item) return '';
       const keys = Object.keys(item);
@@ -655,7 +656,7 @@
           k.trim().toLowerCase() === 'kode' || 
           k.toLowerCase().includes('nama') || 
           k.toLowerCase().includes('deskripsi') || 
-          k.toLowerCase().includes('description') ||
+          k.toLowerCase().includes('description') || 
           k.toLowerCase().includes('item')
         );
         return key ? String(item[key]).trim() : (item.name || item.kode || '');
@@ -674,7 +675,6 @@
         return;
       }
 
-      // 1. Cek Exact Match
       const exactMatch = masterMidDb.find(item => {
         const itemName = getItemFieldValue(item, 'name').toLowerCase();
         const itemMid = getItemFieldValue(item, 'mid').toLowerCase();
@@ -685,7 +685,6 @@
         midInput.value = getItemFieldValue(exactMatch, 'mid');
       }
 
-      // 2. Render Rekomendasi
       if (datalist) {
         datalist.innerHTML = '';
         const filtered = masterMidDb
@@ -707,30 +706,8 @@
       }
     }
 
-    // JALANKAN SAAT MODUL TERBUKA
     loadMasterMID();
 
-    // 1. NAVIGASI HERO LANDING PAGE & SUB MENU
-    function openCategoryMenu() {
-      document.getElementById('pageCategoryMenu').style.display = 'flex';
-    }
-
-    function closeCategoryMenu() {
-      document.getElementById('pageCategoryMenu').style.display = 'none';
-    }
-
-    function selectCategory(type) {
-      if (type === 'ROOT BLOWER') {
-        document.getElementById('pageCategoryMenu').style.display = 'none';
-        document.getElementById('pageHero').style.display = 'none';
-        document.getElementById('pageInit').style.display = 'block';
-        document.getElementById('initDate').valueAsDate = new Date();
-      } else {
-        alert('Modul inspeksi untuk "' + type + '" saat ini masih dalam tahap pengembangan.');
-      }
-    }
-
-    // 2. PROSES INITIAL DATA
     function processInitData() {
       const brand = document.getElementById('initBrand').value.trim();
       const type = document.getElementById('initType').value.trim();
@@ -763,13 +740,11 @@
       document.getElementById('mainSystem').style.display = 'block';
     }
 
-      // FUNGSI KEMBALI KE FORM DATA ORDER TANPA HAPUS ISIAN
     function backToDataOrder() {
       document.getElementById('mainSystem').style.display = 'none';
       document.getElementById('pageInit').style.display = 'block';
     }
 
-    // 3. SWITCH TAB
     function switchTab(tabName, btnElement) {
       document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
       document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
@@ -778,7 +753,6 @@
       btnElement.classList.add('active');
     }
 
-    // 4. PREVIEW MERGER & PDF
     function openMergedReviewModal() {
       const tabIds = ['tab-clearance', 'tab-sparepart', 'tab-dimensi-rotor', 'tab-dimensi-sideplate', 'tab-runout'];
       const container = document.getElementById('previewSheetContainer');
@@ -789,7 +763,7 @@
         if (!mainSheet) return;
 
         const clonedSheet = mainSheet.cloneNode(true);
-        clonedSheet.querySelectorAll('.btn-action, .btn-add-row, .no-print').forEach(el => el.remove());
+        clonedSheet.querySelectorAll('.btn-action, .btn-add-row, .btn-insert-row, .btn-delete-row, .no-print').forEach(el => el.remove());
 
         const originalInputs = mainSheet.querySelectorAll('input, select');
         const clonedInputs = clonedSheet.querySelectorAll('input, select');
@@ -820,85 +794,91 @@
       document.getElementById('reviewModal').style.display = 'none';
     }
 
-function generatePDF() {
-  const container = document.getElementById('previewSheetContainer');
-  if (!container) {
-    alert('Area preview tidak ditemukan!');
-    return;
-  }
+    function generatePDF() {
+      const container = document.getElementById('previewSheetContainer');
+      if (!container) {
+        alert('Area preview tidak ditemukan!');
+        return;
+      }
 
-  const content = container.innerHTML;
+      const content = container.innerHTML;
+      const printWindow = window.open('', '_blank', 'width=950,height=800');
 
-  // Buka jendela cetak terisolasi agar 4 sheet terpisah rapi menjadi 4 halaman PDF
-  const printWindow = window.open('', '_blank', 'width=950,height=800');
+      if (!printWindow) {
+        alert('Pop-up diblokir oleh browser. Harap izinkan pop-up untuk situs ini.');
+        return;
+      }
 
-  if (!printWindow) {
-    alert('Pop-up diblokir oleh browser. Harap izinkan pop-up untuk situs ini.');
-    return;
-  }
+      printWindow.document.open();
+      printWindow.document.write(`
+        <!DOCTYPE html>
+        <html lang="id">
+        <head>
+          <meta charset="UTF-8">
+          <title>Dokumen Inspeksi Roots Blower</title>
+          <style>
+            * { box-sizing: border-box; font-family: 'Segoe UI', Arial, sans-serif; }
+            body { margin: 0; padding: 0; background: #fff; }
 
-  printWindow.document.open();
-  printWindow.document.write(`
-    <!DOCTYPE html>
-    <html lang="id">
-    <head>
-      <meta charset="UTF-8">
-      <title>Dokumen Inspeksi Vacuum Pump</title>
-      <style>
-        * { box-sizing: border-box; font-family: 'Segoe UI', Arial, sans-serif; }
-        body { margin: 0; padding: 0; background: #fff; }
+            @page {
+              size: A4 portrait;
+              margin: 8mm;
+            }
 
-        @page {
-          size: A4 portrait;
-          margin: 8mm;
-        }
+            .sheet {
+              width: 100%;
+              box-sizing: border-box;
+              margin: 0;
+              padding: 0;
+              display: block !important;
+              page-break-after: always !important;
+              break-after: page !important;
+            }
 
-        /* Memaksa setiap sheet menjadi 1 halaman A4 terpisah */
-        .sheet {
-          width: 100%;
-          box-sizing: border-box;
-          margin: 0;
-          padding: 0;
-          display: block !important;
-          page-break-after: always !important;
-          break-after: page !important;
-        }
+            .sheet:last-child {
+              page-break-after: auto !important;
+              break-after: auto !important;
+            }
 
-        .sheet:last-child {
-          page-break-after: auto !important;
-          break-after: auto !important;
-        }
+            table { width: 100%; border-collapse: collapse; margin-bottom: 8px; font-size: 10.5px; }
+            td, th { border: 1px solid #000; padding: 3px 5px; text-align: center; }
+            .title-header { font-weight: bold; font-size: 13px; background-color: #f2f2f2; }
+            .text-left { text-align: left !important; }
+            .text-input-left { text-align: left !important; padding-left: 4px; }
+            .bg-green { background-color: #92D050 !important; font-weight: bold; }
+            .bg-yellow { background-color: #FFFF00 !important; font-weight: bold; }
+            .bg-gray { background-color: #f2f2f2 !important; font-weight: bold; }
+            .status-ok { background-color: #c6efce; color: #006100; font-weight: bold; }
 
-        table { width: 100%; border-collapse: collapse; margin-bottom: 8px; font-size: 10.5px; }
-        td, th { border: 1px solid #000; padding: 3px 5px; text-align: center; }
-        .title-header { font-weight: bold; font-size: 13px; background-color: #f2f2f2; }
-        .text-left { text-align: left !important; }
-        .text-input-left { text-align: left !important; padding-left: 4px; }
-        .bg-gray { background-color: #f2f2f2 !important; font-weight: bold; }
+            img { max-width: 100%; max-height: 120px; object-fit: contain; display: block; margin: 0 auto; }
+            .no-print, button { display: none !important; }
+          </style>
+        </head>
+        <body>
+          ${content}
+          <script>
+            window.onload = function() {
+              setTimeout(function() {
+                window.print();
+                window.onafterprint = function() { window.close(); };
+              }, 350);
+            };
+          <\/script>
+        </body>
+        </html>
+      `);
+      printWindow.document.close();
+    }
 
-        /* Format gambar ilustrasi teknis pada cetak */
-        img { max-width: 100%; max-height: 140px; object-fit: contain; display: block; margin: 0 auto; }
-        .no-print, button { display: none !important; }
-      </style>
-    </head>
-    <body>
-      ${content}
-      <script>
-        window.onload = function() {
-          setTimeout(function() {
-            window.print();
-            window.onafterprint = function() { window.close(); };
-          }, 350);
-        };
-      <\/script>
-    </body>
-    </html>
-  `);
-  printWindow.document.close();
-}
     // 5. UTILITY BARIS DOKUMEN
-    function deleteSparePartRow(btn) { btn.closest('tr').remove(); reindexSparePartRows(); }
-    function deleteGeneralRow(btn) { btn.closest('tr').remove(); }
+    function deleteSparePartRow(btn) { 
+      btn.closest('tr').remove(); 
+      reindexSparePartRows(); 
+    }
+    
+    function deleteGeneralRow(btn) { 
+      btn.closest('tr').remove(); 
+    }
 
     function reindexSparePartRows() {
       const rows = document.querySelectorAll('#sparePartTbody tr');
@@ -912,29 +892,82 @@ function generatePDF() {
 
     function insertSparePartRowBelow(btn) {
       const tr = document.createElement('tr');
-      tr.innerHTML = `<td class="row-num">-</td><td class="text-left"><input type="text" class="text-input-left" placeholder="Part baru..."></td><td><input type="text" list="masterMidList" class="part-code-input text-input-left" placeholder="Ketik kode/nama..." oninput="handleCodeSearch(this)"></td><td><input type="text" class="part-mid-input" placeholder="Auto / Manual..."></td><td><input type="number"></td><td><input type="radio"></td><td><input type="radio"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertSparePartRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteSparePartRow(this)">🗑️</button></td>`;
+      tr.innerHTML = `
+        <td class="row-num">-</td>
+        <td class="text-left"><input type="text" class="text-input-left" placeholder="Part baru..."></td>
+        <td><input type="text" list="masterMidList" class="part-code-input text-input-left" placeholder="Ketik kode/nama..." oninput="handleCodeSearch(this)"></td>
+        <td><input type="text" class="part-mid-input" placeholder="Auto / Manual..."></td>
+        <td><input type="number"></td>
+        <td><input type="radio" name="cond_new" value="OK"></td>
+        <td><input type="radio" name="cond_new" value="NG"></td>
+        <td><input type="text"></td>
+        <td class="no-print">
+          <button type="button" class="btn-insert-row" onclick="insertSparePartRowBelow(this)">➕</button>
+          <button type="button" class="btn-delete-row" onclick="deleteSparePartRow(this)">🗑️</button>
+        </td>`;
       btn.closest('tr').parentNode.insertBefore(tr, btn.closest('tr').nextSibling);
       reindexSparePartRows();
-    }
-
-    function insertGeneralRowBelow(btn) {
-      const tr = document.createElement('tr');
-      tr.innerHTML = `<td>-</td><td class="text-left"><input type="text" placeholder="Part baru..."></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio"></td><td><input type="radio"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td>`;
-      btn.closest('tr').parentNode.insertBefore(tr, btn.closest('tr').nextSibling);
-    }
-
-    function insertRunoutRowBelow(btn) {
-      const tr = document.createElement('tr');
-      tr.innerHTML = `<td>-</td><td class="text-left"><input type="text" placeholder="Area baru..."></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio"></td><td><input type="radio"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertRunoutRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td>`;
-      btn.closest('tr').parentNode.insertBefore(tr, btn.closest('tr').nextSibling);
     }
 
     function addSparePartRow() {
       const tbody = document.getElementById('sparePartTbody');
       const tr = document.createElement('tr');
-      tr.innerHTML = `<td class="row-num">-</td><td class="text-left"><input type="text" class="text-input-left" placeholder="Part baru..."></td><td><input type="text" list="masterMidList" class="part-code-input text-input-left" placeholder="Ketik kode/nama..." oninput="handleCodeSearch(this)"></td><td><input type="text" class="part-mid-input" placeholder="Auto / Manual..."></td><td><input type="number"></td><td><input type="radio"></td><td><input type="radio"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertSparePartRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteSparePartRow(this)">🗑️</button></td>`;
+      tr.innerHTML = `
+        <td class="row-num">-</td>
+        <td class="text-left"><input type="text" class="text-input-left" placeholder="Part baru..."></td>
+        <td><input type="text" list="masterMidList" class="part-code-input text-input-left" placeholder="Ketik kode/nama..." oninput="handleCodeSearch(this)"></td>
+        <td><input type="text" class="part-mid-input" placeholder="Auto / Manual..."></td>
+        <td><input type="number"></td>
+        <td><input type="radio" name="cond_new" value="OK"></td>
+        <td><input type="radio" name="cond_new" value="NG"></td>
+        <td><input type="text"></td>
+        <td class="no-print">
+          <button type="button" class="btn-insert-row" onclick="insertSparePartRowBelow(this)">➕</button>
+          <button type="button" class="btn-delete-row" onclick="deleteSparePartRow(this)">🗑️</button>
+        </td>`;
       tbody.appendChild(tr);
       reindexSparePartRows();
+    }
+
+    function insertGeneralRowBelow(btn) {
+      const uniqueName = 'gen_radio_' + Date.now() + '_' + Math.floor(Math.random() * 1000);
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>-</td>
+        <td class="text-left"><input type="text" placeholder="Part baru..."></td>
+        <td><input type="text"></td>
+        <td><input type="text"></td>
+        <td><input type="text"></td>
+        <td><input type="text"></td>
+        <td><input type="radio" name="${uniqueName}" value="OK"></td>
+        <td><input type="radio" name="${uniqueName}" value="NG"></td>
+        <td><input type="text"></td>
+        <td class="no-print">
+          <button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button>
+          <button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button>
+        </td>`;
+      btn.closest('tr').parentNode.insertBefore(tr, btn.closest('tr').nextSibling);
+    }
+
+    function insertRunoutRowBelow(btn) {
+      const uniqueName = 'runout_radio_' + Date.now() + '_' + Math.floor(Math.random() * 1000);
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>-</td>
+        <td class="text-left"><input type="text" placeholder="Area baru..."></td>
+        <td><input type="text"></td>
+        <td><input type="text"></td>
+        <td><input type="text"></td>
+        <td><input type="text"></td>
+        <td><input type="text"></td>
+        <td><input type="radio" name="${uniqueName}" value="OK"></td>
+        <td><input type="radio" name="${uniqueName}" value="NG"></td>
+        <td><input type="text"></td>
+        <td class="no-print">
+          <button type="button" class="btn-insert-row" onclick="insertRunoutRowBelow(this)">➕</button>
+          <button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button>
+        </td>`;
+      btn.closest('tr').parentNode.insertBefore(tr, btn.closest('tr').nextSibling);
     }
   </script>
 </body>
