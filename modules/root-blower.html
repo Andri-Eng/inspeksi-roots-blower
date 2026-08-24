@@ -26,7 +26,6 @@
     .tab-container { width: 100%; min-width: 700px; display: flex; gap: 6px; }
     .tab-btn { background-color: #334155; color: #cbd5e1; border: none; padding: 12px 15px; font-weight: bold; font-size: 13px; border-radius: 8px 8px 0 0; cursor: pointer; flex: 1; text-align: center; }
     .tab-btn.active { background-color: white; color: #007bff; }
-    .nav-btn-home { background-color: #dc3545; color: white; border: none; padding: 12px 15px; font-weight: bold; font-size: 13px; border-radius: 8px 8px 0 0; cursor: pointer; }
 
     .tab-content { display: none; }
     .tab-content.active { display: block; }
@@ -61,45 +60,6 @@
       body { background: white; padding: 0; }
       .sheet { box-shadow: none; border: none; width: 100%; page-break-after: always; }
       .tab-container, .btn-action, .modal-overlay, .btn-add-row, .btn-delete-row, .btn-insert-row, .no-print, .auth-card { display: none !important; }
-      
-      .sheet {
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
-      }
-
-      @media (max-width: 992px) {
-        .app-viewport { padding: 10px 5px; }
-        .sheet { padding: 12px; }
-        .tab-btn, .nav-btn-home { padding: 10px 8px; font-size: 12px; }
-      }
-
-      @media (max-width: 600px) {
-        body { padding: 5px; }
-        .auth-card { padding: 15px; margin-top: 10px; }
-        .auth-card h2 { font-size: 15px; }
-        .tab-container {
-          overflow-x: auto;
-          white-space: nowrap;
-          -webkit-overflow-scrolling: touch;
-          padding-bottom: 4px;
-        }
-        .tab-btn, .nav-btn-home {
-          flex: none;
-          padding: 8px 12px;
-          font-size: 11px;
-        }
-        .sheet div[style*="display: flex"] {
-          flex-direction: column !important;
-          gap: 8px !important;
-        }
-        .btn-action {
-          width: 100% !important;
-          padding: 10px !important;
-          font-size: 13px !important;
-        }
-        .flex-section { flex-direction: column; }
-        .flex-section > div { width: 100% !important; }
-      }
     }
   </style>
 </head>
@@ -596,6 +556,7 @@
       </div>
 
     </div>
+
   </div>
 
   <!-- MODAL PREVIEW MERGER DOKUMEN -->
@@ -675,6 +636,7 @@
         return;
       }
 
+      // 1. Cek Exact Match
       const exactMatch = masterMidDb.find(item => {
         const itemName = getItemFieldValue(item, 'name').toLowerCase();
         const itemMid = getItemFieldValue(item, 'mid').toLowerCase();
@@ -685,6 +647,7 @@
         midInput.value = getItemFieldValue(exactMatch, 'mid');
       }
 
+      // 2. Render Rekomendasi
       if (datalist) {
         datalist.innerHTML = '';
         const filtered = masterMidDb
@@ -738,11 +701,14 @@
 
       document.getElementById('pageInit').style.display = 'none';
       document.getElementById('mainSystem').style.display = 'block';
+      
+      saveFormState();
     }
 
     function backToDataOrder() {
       document.getElementById('mainSystem').style.display = 'none';
       document.getElementById('pageInit').style.display = 'block';
+      saveFormState();
     }
 
     function switchTab(tabName, btnElement) {
@@ -751,6 +717,7 @@
 
       document.getElementById('tab-' + tabName).classList.add('active');
       btnElement.classList.add('active');
+      saveFormState();
     }
 
     function openMergedReviewModal() {
@@ -873,11 +840,13 @@
     // 5. UTILITY BARIS DOKUMEN
     function deleteSparePartRow(btn) { 
       btn.closest('tr').remove(); 
-      reindexSparePartRows(); 
+      reindexSparePartRows();
+      saveFormState();
     }
     
     function deleteGeneralRow(btn) { 
       btn.closest('tr').remove(); 
+      saveFormState();
     }
 
     function reindexSparePartRows() {
@@ -907,6 +876,7 @@
         </td>`;
       btn.closest('tr').parentNode.insertBefore(tr, btn.closest('tr').nextSibling);
       reindexSparePartRows();
+      saveFormState();
     }
 
     function addSparePartRow() {
@@ -927,6 +897,7 @@
         </td>`;
       tbody.appendChild(tr);
       reindexSparePartRows();
+      saveFormState();
     }
 
     function insertGeneralRowBelow(btn) {
@@ -947,6 +918,7 @@
           <button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button>
         </td>`;
       btn.closest('tr').parentNode.insertBefore(tr, btn.closest('tr').nextSibling);
+      saveFormState();
     }
 
     function insertRunoutRowBelow(btn) {
@@ -968,7 +940,103 @@
           <button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button>
         </td>`;
       btn.closest('tr').parentNode.insertBefore(tr, btn.closest('tr').nextSibling);
+      saveFormState();
     }
+
+    // ==================== AUTO-SAVE & AUTO-RESTORE ENGINE ====================
+    const STORAGE_KEY = 'INSPEKSI_ROOT_BLOWER_STATE';
+
+    function saveFormState() {
+      const isStarted = document.getElementById('mainSystem') && document.getElementById('mainSystem').style.display === 'block';
+      
+      const activeBtn = document.querySelector('.tab-btn.active');
+      let activeTabName = 'clearance';
+      if (activeBtn) {
+        const match = activeBtn.getAttribute('onclick')?.match(/'([^']+)'/);
+        if (match) activeTabName = match[1];
+      }
+
+      const tbodies = [];
+      document.querySelectorAll('tbody').forEach((tb, idx) => {
+        tbodies.push({ idx: idx, html: tb.innerHTML });
+      });
+
+      const inputData = [];
+      document.querySelectorAll('input, select, textarea').forEach((el, idx) => {
+        inputData.push({
+          idx: idx,
+          type: el.type,
+          value: el.value,
+          checked: el.checked
+        });
+      });
+
+      const state = {
+        isStarted: isStarted,
+        activeTab: activeTabName,
+        tbodies: tbodies,
+        inputs: inputData
+      };
+
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    }
+
+    function restoreFormState() {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (!saved) return;
+
+      try {
+        const state = JSON.parse(saved);
+
+        if (state.tbodies && state.tbodies.length > 0) {
+          const currentTbodies = document.querySelectorAll('tbody');
+          state.tbodies.forEach(item => {
+            if (currentTbodies[item.idx]) {
+              currentTbodies[item.idx].innerHTML = item.html;
+            }
+          });
+        }
+
+        if (state.inputs && state.inputs.length > 0) {
+          const currentInputs = document.querySelectorAll('input, select, textarea');
+          state.inputs.forEach(item => {
+            const el = currentInputs[item.idx];
+            if (el) {
+              if (el.type === 'radio' || el.type === 'checkbox') {
+                el.checked = item.checked;
+              } else {
+                el.value = item.value;
+              }
+            }
+          });
+        }
+
+        if (state.isStarted) {
+          document.getElementById('pageInit').style.display = 'none';
+          document.getElementById('mainSystem').style.display = 'block';
+
+          const op = document.getElementById('initOperator')?.value || '';
+          const spv = document.getElementById('initSupervisor')?.value || '';
+          if (document.getElementById('lblOperator')) document.getElementById('lblOperator').textContent = op;
+          if (document.getElementById('lblSupervisor')) document.getElementById('lblSupervisor').textContent = spv;
+
+          if (state.activeTab) {
+            const targetBtn = Array.from(document.querySelectorAll('.tab-btn')).find(b => 
+              b.getAttribute('onclick')?.includes(state.activeTab)
+            );
+            if (targetBtn) {
+              switchTab(state.activeTab, targetBtn);
+            }
+          }
+        }
+      } catch (e) {
+        console.error("Gagal memulihkan state:", e);
+      }
+    }
+
+    document.addEventListener('input', saveFormState);
+    document.addEventListener('change', saveFormState);
+    window.addEventListener('DOMContentLoaded', restoreFormState);
   </script>
 </body>
 </html>
