@@ -53,7 +53,7 @@
     .modal-header { font-weight: bold; font-size: 16px; border-bottom: 2px solid #007bff; padding-bottom: 10px; margin-bottom: 15px; display: flex; justify-content: space-between; }
     .close-modal { cursor: pointer; font-size: 20px; }
 
-    /* Layout tombol radio bertingkat (Tombol di atas, Teks di bawah) */
+    /* Layout tombol radio bertingkat */
     .opt-group {
       display: flex;
       justify-content: center;
@@ -165,17 +165,17 @@
               </tr>
             </thead>
             <tbody id="sparePartTbody">
-              <tr><td class="row-num">1</td><td class="text-left"><input type="text" class="text-input-left" value="Bearing DE"></td><td><input type="text" list="masterMidList" class="part-code-input text-input-left" placeholder="Ketik kode/nama..." oninput="handleCodeSearch(this)"></td><td><input type="text" class="part-mid-input" placeholder="Auto / Manual..."></td><td><input type="number"></td><td><input type="radio" name="rwd_sp_1"></td><td><input type="radio" name="rwd_sp_1"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertSparePartRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteSparePartRow(this)">🗑️</button></td></tr>
-              <tr><td class="row-num">2</td><td class="text-left"><input type="text" class="text-input-left" value="Bearing NDE"></td><td><input type="text" list="masterMidList" class="part-code-input text-input-left" placeholder="Ketik kode/nama..." oninput="handleCodeSearch(this)"></td><td><input type="text" class="part-mid-input" placeholder="Auto / Manual..."></td><td><input type="number"></td><td><input type="radio" name="rwd_sp_2"></td><td><input type="radio" name="rwd_sp_2"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertSparePartRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteSparePartRow(this)">🗑️</button></td></tr>
-              <tr><td class="row-num">3</td><td class="text-left"><input type="text" class="text-input-left" value="Kawat Tembaga (Copper Wire)"></td><td><input type="text" list="masterMidList" class="part-code-input text-input-left" placeholder="Ketik kode/nama..." oninput="handleCodeSearch(this)"></td><td><input type="text" class="part-mid-input" placeholder="Auto / Manual..."></td><td><input type="number"></td><td><input type="radio" name="rwd_sp_3"></td><td><input type="radio" name="rwd_sp_3"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertSparePartRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteSparePartRow(this)">🗑️</button></td></tr>
-              <tr><td class="row-num">4</td><td class="text-left"><input type="text" class="text-input-left" value="Kertas Nomex / Insulasi"></td><td><input type="text" list="masterMidList" class="part-code-input text-input-left" placeholder="Ketik kode/nama..." oninput="handleCodeSearch(this)"></td><td><input type="text" class="part-mid-input" placeholder="Auto / Manual..."></td><td><input type="number"></td><td><input type="radio" name="rwd_sp_4"></td><td><input type="radio" name="rwd_sp_4"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertSparePartRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteSparePartRow(this)">🗑️</button></td></tr>
-              <tr><td class="row-num">5</td><td class="text-left"><input type="text" class="text-input-left" value="Varnish / Resin"></td><td><input type="text" list="masterMidList" class="part-code-input text-input-left" placeholder="Ketik kode/nama..." oninput="handleCodeSearch(this)"></td><td><input type="text" class="part-mid-input" placeholder="Auto / Manual..."></td><td><input type="number"></td><td><input type="radio" name="rwd_sp_5"></td><td><input type="radio" name="rwd_sp_5"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertSparePartRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteSparePartRow(this)">🗑️</button></td></tr>
-              <tr><td class="row-num">6</td><td class="text-left"><input type="text" class="text-input-left" value="Terminal Block / Board"></td><td><input type="text" list="masterMidList" class="part-code-input text-input-left" placeholder="Ketik kode/nama..." oninput="handleCodeSearch(this)"></td><td><input type="text" class="part-mid-input" placeholder="Auto / Manual..."></td><td><input type="number"></td><td><input type="radio" name="rwd_sp_6"></td><td><input type="radio" name="rwd_sp_6"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertSparePartRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteSparePartRow(this)">🗑️</button></td></tr>
-              <tr><td class="row-num">7</td><td class="text-left"><input type="text" class="text-input-left" value="Cooling Fan / Kipas"></td><td><input type="text" list="masterMidList" class="part-code-input text-input-left" placeholder="Ketik kode/nama..." oninput="handleCodeSearch(this)"></td><td><input type="text" class="part-mid-input" placeholder="Auto / Manual..."></td><td><input type="number"></td><td><input type="radio" name="rwd_sp_7"></td><td><input type="radio" name="rwd_sp_7"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertSparePartRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteSparePartRow(this)">🗑️</button></td></tr>
-              <tr><td class="row-num">8</td><td class="text-left"><input type="text" class="text-input-left" value="Oil Seal / V-Seal"></td><td><input type="text" list="masterMidList" class="part-code-input text-input-left" placeholder="Ketik kode/nama..." oninput="handleCodeSearch(this)"></td><td><input type="text" class="part-mid-input" placeholder="Auto / Manual..."></td><td><input type="number"></td><td><input type="radio" name="rwd_sp_8"></td><td><input type="radio" name="rwd_sp_8"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertSparePartRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteSparePartRow(this)">🗑️</button></td></tr>
-              <tr><td class="row-num">9</td><td class="text-left"><input type="text" class="text-input-left" placeholder="part tambahan..."></td><td><input type="text" list="masterMidList" class="part-code-input text-input-left" placeholder="Ketik kode/nama..." oninput="handleCodeSearch(this)"></td><td><input type="text" class="part-mid-input" placeholder="Auto / Manual..."></td><td><input type="number"></td><td><input type="radio" name="rwd_sp_9"></td><td><input type="radio" name="rwd_sp_9"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertSparePartRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteSparePartRow(this)">🗑️</button></td></tr>
-              <tr><td class="row-num">10</td><td class="text-left"><input type="text" class="text-input-left" placeholder="part tambahan..."></td><td><input type="text" list="masterMidList" class="part-code-input text-input-left" placeholder="Ketik kode/nama..." oninput="handleCodeSearch(this)"></td><td><input type="text" class="part-mid-input" placeholder="Auto / Manual..."></td><td><input type="number"></td><td><input type="radio" name="rwd_sp_10"></td><td><input type="radio" name="rwd_sp_10"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertSparePartRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteSparePartRow(this)">🗑️</button></td></tr>
-              <tr><td class="row-num">11</td><td class="text-left"><input type="text" class="text-input-left" placeholder="part tambahan..."></td><td><input type="text" list="masterMidList" class="part-code-input text-input-left" placeholder="Ketik kode/nama..." oninput="handleCodeSearch(this)"></td><td><input type="text" class="part-mid-input" placeholder="Auto / Manual..."></td><td><input type="number"></td><td><input type="radio" name="rwd_sp_11"></td><td><input type="radio" name="rwd_sp_11"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertSparePartRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteSparePartRow(this)">🗑️</button></td></tr>
+              <tr><td class="row-num">1</td><td class="text-left"><input type="text" class="text-input-left" value="Bearing DE"></td><td><input type="text" list="masterMidList" class="part-code-input text-input-left" placeholder="Ketik kode/nama..." oninput="handleCodeSearch(this)"></td><td><input type="text" class="part-mid-input" placeholder="Auto / Manual..."></td><td><input type="number"></td><td><input type="radio" name="rwd_sp_1" value="OK"></td><td><input type="radio" name="rwd_sp_1" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertSparePartRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteSparePartRow(this)">🗑️</button></td></tr>
+              <tr><td class="row-num">2</td><td class="text-left"><input type="text" class="text-input-left" value="Bearing NDE"></td><td><input type="text" list="masterMidList" class="part-code-input text-input-left" placeholder="Ketik kode/nama..." oninput="handleCodeSearch(this)"></td><td><input type="text" class="part-mid-input" placeholder="Auto / Manual..."></td><td><input type="number"></td><td><input type="radio" name="rwd_sp_2" value="OK"></td><td><input type="radio" name="rwd_sp_2" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertSparePartRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteSparePartRow(this)">🗑️</button></td></tr>
+              <tr><td class="row-num">3</td><td class="text-left"><input type="text" class="text-input-left" value="Kawat Tembaga (Copper Wire)"></td><td><input type="text" list="masterMidList" class="part-code-input text-input-left" placeholder="Ketik kode/nama..." oninput="handleCodeSearch(this)"></td><td><input type="text" class="part-mid-input" placeholder="Auto / Manual..."></td><td><input type="number"></td><td><input type="radio" name="rwd_sp_3" value="OK"></td><td><input type="radio" name="rwd_sp_3" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertSparePartRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteSparePartRow(this)">🗑️</button></td></tr>
+              <tr><td class="row-num">4</td><td class="text-left"><input type="text" class="text-input-left" value="Kertas Nomex / Insulasi"></td><td><input type="text" list="masterMidList" class="part-code-input text-input-left" placeholder="Ketik kode/nama..." oninput="handleCodeSearch(this)"></td><td><input type="text" class="part-mid-input" placeholder="Auto / Manual..."></td><td><input type="number"></td><td><input type="radio" name="rwd_sp_4" value="OK"></td><td><input type="radio" name="rwd_sp_4" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertSparePartRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteSparePartRow(this)">🗑️</button></td></tr>
+              <tr><td class="row-num">5</td><td class="text-left"><input type="text" class="text-input-left" value="Varnish / Resin"></td><td><input type="text" list="masterMidList" class="part-code-input text-input-left" placeholder="Ketik kode/nama..." oninput="handleCodeSearch(this)"></td><td><input type="text" class="part-mid-input" placeholder="Auto / Manual..."></td><td><input type="number"></td><td><input type="radio" name="rwd_sp_5" value="OK"></td><td><input type="radio" name="rwd_sp_5" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertSparePartRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteSparePartRow(this)">🗑️</button></td></tr>
+              <tr><td class="row-num">6</td><td class="text-left"><input type="text" class="text-input-left" value="Terminal Block / Board"></td><td><input type="text" list="masterMidList" class="part-code-input text-input-left" placeholder="Ketik kode/nama..." oninput="handleCodeSearch(this)"></td><td><input type="text" class="part-mid-input" placeholder="Auto / Manual..."></td><td><input type="number"></td><td><input type="radio" name="rwd_sp_6" value="OK"></td><td><input type="radio" name="rwd_sp_6" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertSparePartRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteSparePartRow(this)">🗑️</button></td></tr>
+              <tr><td class="row-num">7</td><td class="text-left"><input type="text" class="text-input-left" value="Cooling Fan / Kipas"></td><td><input type="text" list="masterMidList" class="part-code-input text-input-left" placeholder="Ketik kode/nama..." oninput="handleCodeSearch(this)"></td><td><input type="text" class="part-mid-input" placeholder="Auto / Manual..."></td><td><input type="number"></td><td><input type="radio" name="rwd_sp_7" value="OK"></td><td><input type="radio" name="rwd_sp_7" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertSparePartRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteSparePartRow(this)">🗑️</button></td></tr>
+              <tr><td class="row-num">8</td><td class="text-left"><input type="text" class="text-input-left" value="Oil Seal / V-Seal"></td><td><input type="text" list="masterMidList" class="part-code-input text-input-left" placeholder="Ketik kode/nama..." oninput="handleCodeSearch(this)"></td><td><input type="text" class="part-mid-input" placeholder="Auto / Manual..."></td><td><input type="number"></td><td><input type="radio" name="rwd_sp_8" value="OK"></td><td><input type="radio" name="rwd_sp_8" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertSparePartRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteSparePartRow(this)">🗑️</button></td></tr>
+              <tr><td class="row-num">9</td><td class="text-left"><input type="text" class="text-input-left" placeholder="part tambahan..."></td><td><input type="text" list="masterMidList" class="part-code-input text-input-left" placeholder="Ketik kode/nama..." oninput="handleCodeSearch(this)"></td><td><input type="text" class="part-mid-input" placeholder="Auto / Manual..."></td><td><input type="number"></td><td><input type="radio" name="rwd_sp_9" value="OK"></td><td><input type="radio" name="rwd_sp_9" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertSparePartRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteSparePartRow(this)">🗑️</button></td></tr>
+              <tr><td class="row-num">10</td><td class="text-left"><input type="text" class="text-input-left" placeholder="part tambahan..."></td><td><input type="text" list="masterMidList" class="part-code-input text-input-left" placeholder="Ketik kode/nama..." oninput="handleCodeSearch(this)"></td><td><input type="text" class="part-mid-input" placeholder="Auto / Manual..."></td><td><input type="number"></td><td><input type="radio" name="rwd_sp_10" value="OK"></td><td><input type="radio" name="rwd_sp_10" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertSparePartRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteSparePartRow(this)">🗑️</button></td></tr>
+              <tr><td class="row-num">11</td><td class="text-left"><input type="text" class="text-input-left" placeholder="part tambahan..."></td><td><input type="text" list="masterMidList" class="part-code-input text-input-left" placeholder="Ketik kode/nama..." oninput="handleCodeSearch(this)"></td><td><input type="text" class="part-mid-input" placeholder="Auto / Manual..."></td><td><input type="number"></td><td><input type="radio" name="rwd_sp_11" value="OK"></td><td><input type="radio" name="rwd_sp_11" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertSparePartRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteSparePartRow(this)">🗑️</button></td></tr>
             </tbody>
           </table>
 
@@ -319,8 +319,8 @@
               <tr>
                 <td style="width: 30%;" class="text-left"><b>BEARING FROM</b></td>
                 <td colspan="2" class="text-left">
-                  <label><input type="radio" name="bg_from"> IDS</label> &nbsp;&nbsp;&nbsp;&nbsp;
-                  <label><input type="radio" name="bg_from"> CUSTOMER</label>
+                  <label><input type="radio" name="bg_from" value="IDS"> IDS</label> &nbsp;&nbsp;&nbsp;&nbsp;
+                  <label><input type="radio" name="bg_from" value="CUSTOMER"> CUSTOMER</label>
                 </td>
               </tr>
               <tr>
@@ -363,12 +363,12 @@
               </tr>
               <tr>
                 <td class="text-left"><b>FAN COVER</b></td>
-                <td class="text-left"><label><input type="radio" name="fc_act"> REPLACE</label> &nbsp; <label><input type="radio" name="fc_act"> REPAIR</label></td>
+                <td class="text-left"><label><input type="radio" name="fc_act" value="REPLACE"> REPLACE</label> &nbsp; <label><input type="radio" name="fc_act" value="REPAIR"> REPAIR</label></td>
                 <td class="text-left">Dia: <input type="text" style="width: 50px; border-bottom: 1px solid #999;"> mm x Pjg: <input type="text" style="width: 50px; border-bottom: 1px solid #999;"> mm</td>
               </tr>
               <tr>
                 <td class="text-left"><b>IMPELLER / FAN</b></td>
-                <td class="text-left"><label><input type="radio" name="fan_act"> REPLACE</label> &nbsp; <label><input type="radio" name="fan_act"> REPAIR</label></td>
+                <td class="text-left"><label><input type="radio" name="fan_act" value="REPLACE"> REPLACE</label> &nbsp; <label><input type="radio" name="fan_act" value="REPAIR"> REPAIR</label></td>
                 <td class="text-left">Tipe: <label><input type="checkbox"> Klem</label> &nbsp; <label><input type="checkbox"> Snap Ring + Spie</label></td>
               </tr>
               <tr>
@@ -454,143 +454,143 @@
             <tbody>
               <tr>
                 <td class="text-left">Stator Frame Assy</td><td><input type="number"></td>
-                <td><input type="radio" name="pb_k_1"></td><td><input type="radio" name="pb_k_1"></td>
-                <td><input type="radio" name="pb_g_1"></td><td><input type="radio" name="pb_g_1"></td>
+                <td><input type="radio" name="pb_k_1" value="OK"></td><td><input type="radio" name="pb_k_1" value="NG"></td>
+                <td><input type="radio" name="pb_g_1" value="Y"></td><td><input type="radio" name="pb_g_1" value="N"></td>
                 <td><input type="text"></td>
                 <td class="text-left">Lock Ring</td><td><input type="number"></td>
-                <td><input type="radio" name="pb_kr_1"></td><td><input type="radio" name="pb_kr_1"></td>
-                <td><input type="radio" name="pb_gr_1"></td><td><input type="radio" name="pb_gr_1"></td>
+                <td><input type="radio" name="pb_kr_1" value="OK"></td><td><input type="radio" name="pb_kr_1" value="NG"></td>
+                <td><input type="radio" name="pb_gr_1" value="Y"></td><td><input type="radio" name="pb_gr_1" value="N"></td>
                 <td><input type="text"></td>
               </tr>
               <tr>
                 <td class="text-left">Bearing DE</td><td><input type="number"></td>
-                <td><input type="radio" name="pb_k_2"></td><td><input type="radio" name="pb_k_2"></td>
-                <td><input type="radio" name="pb_g_2"></td><td><input type="radio" name="pb_g_2"></td>
+                <td><input type="radio" name="pb_k_2" value="OK"></td><td><input type="radio" name="pb_k_2" value="NG"></td>
+                <td><input type="radio" name="pb_g_2" value="Y"></td><td><input type="radio" name="pb_g_2" value="N"></td>
                 <td><input type="text"></td>
                 <td class="text-left">Ring Gelombang</td><td><input type="number"></td>
-                <td><input type="radio" name="pb_kr_2"></td><td><input type="radio" name="pb_kr_2"></td>
-                <td><input type="radio" name="pb_gr_2"></td><td><input type="radio" name="pb_gr_2"></td>
+                <td><input type="radio" name="pb_kr_2" value="OK"></td><td><input type="radio" name="pb_kr_2" value="NG"></td>
+                <td><input type="radio" name="pb_gr_2" value="Y"></td><td><input type="radio" name="pb_gr_2" value="N"></td>
                 <td><input type="text"></td>
               </tr>
               <tr>
                 <td class="text-left">Bearing NDE</td><td><input type="number"></td>
-                <td><input type="radio" name="pb_k_3"></td><td><input type="radio" name="pb_k_3"></td>
-                <td><input type="radio" name="pb_g_3"></td><td><input type="radio" name="pb_g_3"></td>
+                <td><input type="radio" name="pb_k_3" value="OK"></td><td><input type="radio" name="pb_k_3" value="NG"></td>
+                <td><input type="radio" name="pb_g_3" value="Y"></td><td><input type="radio" name="pb_g_3" value="N"></td>
                 <td><input type="text"></td>
                 <td class="text-left">Nipple Grease</td><td><input type="number"></td>
-                <td><input type="radio" name="pb_kr_3"></td><td><input type="radio" name="pb_kr_3"></td>
-                <td><input type="radio" name="pb_gr_3"></td><td><input type="radio" name="pb_gr_3"></td>
+                <td><input type="radio" name="pb_kr_3" value="OK"></td><td><input type="radio" name="pb_kr_3" value="NG"></td>
+                <td><input type="radio" name="pb_gr_3" value="Y"></td><td><input type="radio" name="pb_gr_3" value="N"></td>
                 <td><input type="text"></td>
               </tr>
               <tr>
                 <td class="text-left">Labyrinth Cap In DE</td><td><input type="number"></td>
-                <td><input type="radio" name="pb_k_4"></td><td><input type="radio" name="pb_k_4"></td>
-                <td><input type="radio" name="pb_g_4"></td><td><input type="radio" name="pb_g_4"></td>
+                <td><input type="radio" name="pb_k_4" value="OK"></td><td><input type="radio" name="pb_k_4" value="NG"></td>
+                <td><input type="radio" name="pb_g_4" value="Y"></td><td><input type="radio" name="pb_g_4" value="N"></td>
                 <td><input type="text"></td>
                 <td class="text-left">Shaft Seal</td><td><input type="number"></td>
-                <td><input type="radio" name="pb_kr_4"></td><td><input type="radio" name="pb_kr_4"></td>
-                <td><input type="radio" name="pb_gr_4"></td><td><input type="radio" name="pb_gr_4"></td>
+                <td><input type="radio" name="pb_kr_4" value="OK"></td><td><input type="radio" name="pb_kr_4" value="NG"></td>
+                <td><input type="radio" name="pb_gr_4" value="Y"></td><td><input type="radio" name="pb_gr_4" value="N"></td>
                 <td><input type="text"></td>
               </tr>
               <tr>
                 <td class="text-left">Labyrinth Cap In NDE</td><td><input type="number"></td>
-                <td><input type="radio" name="pb_k_5"></td><td><input type="radio" name="pb_k_5"></td>
-                <td><input type="radio" name="pb_g_5"></td><td><input type="radio" name="pb_g_5"></td>
+                <td><input type="radio" name="pb_k_5" value="OK"></td><td><input type="radio" name="pb_k_5" value="NG"></td>
+                <td><input type="radio" name="pb_g_5" value="Y"></td><td><input type="radio" name="pb_g_5" value="N"></td>
                 <td><input type="text"></td>
                 <td class="text-left">V-Seal</td><td><input type="number"></td>
-                <td><input type="radio" name="pb_kr_5"></td><td><input type="radio" name="pb_kr_5"></td>
-                <td><input type="radio" name="pb_gr_5"></td><td><input type="radio" name="pb_gr_5"></td>
+                <td><input type="radio" name="pb_kr_5" value="OK"></td><td><input type="radio" name="pb_kr_5" value="NG"></td>
+                <td><input type="radio" name="pb_gr_5" value="Y"></td><td><input type="radio" name="pb_gr_5" value="N"></td>
                 <td><input type="text"></td>
               </tr>
               <tr>
                 <td class="text-left">Labyrinth Cap Out DE</td><td><input type="number"></td>
-                <td><input type="radio" name="pb_k_6"></td><td><input type="radio" name="pb_k_6"></td>
-                <td><input type="radio" name="pb_g_6"></td><td><input type="radio" name="pb_g_6"></td>
+                <td><input type="radio" name="pb_k_6" value="OK"></td><td><input type="radio" name="pb_k_6" value="NG"></td>
+                <td><input type="radio" name="pb_g_6" value="Y"></td><td><input type="radio" name="pb_g_6" value="N"></td>
                 <td><input type="text"></td>
                 <td class="text-left">O-Ring</td><td><input type="number"></td>
-                <td><input type="radio" name="pb_kr_6"></td><td><input type="radio" name="pb_kr_6"></td>
-                <td><input type="radio" name="pb_gr_6"></td><td><input type="radio" name="pb_gr_6"></td>
+                <td><input type="radio" name="pb_kr_6" value="OK"></td><td><input type="radio" name="pb_kr_6" value="NG"></td>
+                <td><input type="radio" name="pb_gr_6" value="Y"></td><td><input type="radio" name="pb_gr_6" value="N"></td>
                 <td><input type="text"></td>
               </tr>
               <tr>
                 <td class="text-left">Labyrinth Cap Out NDE</td><td><input type="number"></td>
-                <td><input type="radio" name="pb_k_7"></td><td><input type="radio" name="pb_k_7"></td>
-                <td><input type="radio" name="pb_g_7"></td><td><input type="radio" name="pb_g_7"></td>
+                <td><input type="radio" name="pb_k_7" value="OK"></td><td><input type="radio" name="pb_k_7" value="NG"></td>
+                <td><input type="radio" name="pb_g_7" value="Y"></td><td><input type="radio" name="pb_g_7" value="N"></td>
                 <td><input type="text"></td>
                 <td class="text-left">Commutator / Slipring</td><td><input type="number"></td>
-                <td><input type="radio" name="pb_kr_7"></td><td><input type="radio" name="pb_kr_7"></td>
-                <td><input type="radio" name="pb_gr_7"></td><td><input type="radio" name="pb_gr_7"></td>
+                <td><input type="radio" name="pb_kr_7" value="OK"></td><td><input type="radio" name="pb_kr_7" value="NG"></td>
+                <td><input type="radio" name="pb_gr_7" value="Y"></td><td><input type="radio" name="pb_gr_7" value="N"></td>
                 <td><input type="text"></td>
               </tr>
               <tr>
                 <td class="text-left">Snap Ring</td><td><input type="number"></td>
-                <td><input type="radio" name="pb_k_8"></td><td><input type="radio" name="pb_k_8"></td>
-                <td><input type="radio" name="pb_g_8"></td><td><input type="radio" name="pb_g_8"></td>
+                <td><input type="radio" name="pb_k_8" value="OK"></td><td><input type="radio" name="pb_k_8" value="NG"></td>
+                <td><input type="radio" name="pb_g_8" value="Y"></td><td><input type="radio" name="pb_g_8" value="N"></td>
                 <td><input type="text"></td>
                 <td class="text-left">Spie / Key</td><td><input type="number"></td>
-                <td><input type="radio" name="pb_kr_8"></td><td><input type="radio" name="pb_kr_8"></td>
-                <td><input type="radio" name="pb_gr_8"></td><td><input type="radio" name="pb_gr_8"></td>
+                <td><input type="radio" name="pb_kr_8" value="OK"></td><td><input type="radio" name="pb_kr_8" value="NG"></td>
+                <td><input type="radio" name="pb_gr_8" value="Y"></td><td><input type="radio" name="pb_gr_8" value="N"></td>
                 <td><input type="text"></td>
               </tr>
               <tr>
                 <td class="text-left">Carbon Brushes</td><td><input type="number"></td>
-                <td><input type="radio" name="pb_k_9"></td><td><input type="radio" name="pb_k_9"></td>
-                <td><input type="radio" name="pb_g_9"></td><td><input type="radio" name="pb_g_9"></td>
+                <td><input type="radio" name="pb_k_9" value="OK"></td><td><input type="radio" name="pb_k_9" value="NG"></td>
+                <td><input type="radio" name="pb_g_9" value="Y"></td><td><input type="radio" name="pb_g_9" value="N"></td>
                 <td><input type="text"></td>
                 <td class="text-left">Bolts + Nuts</td><td><input type="number"></td>
-                <td><input type="radio" name="pb_kr_9"></td><td><input type="radio" name="pb_kr_9"></td>
-                <td><input type="radio" name="pb_gr_9"></td><td><input type="radio" name="pb_gr_9"></td>
+                <td><input type="radio" name="pb_kr_9" value="OK"></td><td><input type="radio" name="pb_kr_9" value="NG"></td>
+                <td><input type="radio" name="pb_gr_9" value="Y"></td><td><input type="radio" name="pb_gr_9" value="N"></td>
                 <td><input type="text"></td>
               </tr>
               <tr>
                 <td class="text-left">Brush Holder</td><td><input type="number"></td>
-                <td><input type="radio" name="pb_k_10"></td><td><input type="radio" name="pb_k_10"></td>
-                <td><input type="radio" name="pb_g_10"></td><td><input type="radio" name="pb_g_10"></td>
+                <td><input type="radio" name="pb_k_10" value="OK"></td><td><input type="radio" name="pb_k_10" value="NG"></td>
+                <td><input type="radio" name="pb_g_10" value="Y"></td><td><input type="radio" name="pb_g_10" value="N"></td>
                 <td><input type="text"></td>
                 <td class="text-left">Air Duct</td><td><input type="number"></td>
-                <td><input type="radio" name="pb_kr_10"></td><td><input type="radio" name="pb_kr_10"></td>
-                <td><input type="radio" name="pb_gr_10"></td><td><input type="radio" name="pb_gr_10"></td>
+                <td><input type="radio" name="pb_kr_10" value="OK"></td><td><input type="radio" name="pb_kr_10" value="NG"></td>
+                <td><input type="radio" name="pb_gr_10" value="Y"></td><td><input type="radio" name="pb_gr_10" value="N"></td>
                 <td><input type="text"></td>
               </tr>
               <tr>
                 <td class="text-left">Pulley + Key</td><td><input type="number"></td>
-                <td><input type="radio" name="pb_k_11"></td><td><input type="radio" name="pb_k_11"></td>
-                <td><input type="radio" name="pb_g_11"></td><td><input type="radio" name="pb_g_11"></td>
+                <td><input type="radio" name="pb_k_11" value="OK"></td><td><input type="radio" name="pb_k_11" value="NG"></td>
+                <td><input type="radio" name="pb_g_11" value="Y"></td><td><input type="radio" name="pb_g_11" value="N"></td>
                 <td><input type="text"></td>
                 <td class="text-left">Exciter</td><td><input type="number"></td>
-                <td><input type="radio" name="pb_kr_11"></td><td><input type="radio" name="pb_kr_11"></td>
-                <td><input type="radio" name="pb_gr_11"></td><td><input type="radio" name="pb_gr_11"></td>
+                <td><input type="radio" name="pb_kr_11" value="OK"></td><td><input type="radio" name="pb_kr_11" value="NG"></td>
+                <td><input type="radio" name="pb_gr_11" value="Y"></td><td><input type="radio" name="pb_gr_11" value="N"></td>
                 <td><input type="text"></td>
               </tr>
               <!-- 3 BARIS TAMBAHAN MANUAL INPUT -->
               <tr>
                 <td class="text-left"><input type="text" class="text-input-left" placeholder="Part tambahan 1..."></td><td><input type="number"></td>
-                <td><input type="radio" name="pb_k_12"></td><td><input type="radio" name="pb_k_12"></td>
-                <td><input type="radio" name="pb_g_12"></td><td><input type="radio" name="pb_g_12"></td>
+                <td><input type="radio" name="pb_k_12" value="OK"></td><td><input type="radio" name="pb_k_12" value="NG"></td>
+                <td><input type="radio" name="pb_g_12" value="Y"></td><td><input type="radio" name="pb_g_12" value="N"></td>
                 <td><input type="text"></td>
                 <td class="text-left"><input type="text" class="text-input-left" placeholder="Part tambahan 2..."></td><td><input type="number"></td>
-                <td><input type="radio" name="pb_kr_12"></td><td><input type="radio" name="pb_kr_12"></td>
-                <td><input type="radio" name="pb_gr_12"></td><td><input type="radio" name="pb_gr_12"></td>
+                <td><input type="radio" name="pb_kr_12" value="OK"></td><td><input type="radio" name="pb_kr_12" value="NG"></td>
+                <td><input type="radio" name="pb_gr_12" value="Y"></td><td><input type="radio" name="pb_gr_12" value="N"></td>
                 <td><input type="text"></td>
               </tr>
               <tr>
                 <td class="text-left"><input type="text" class="text-input-left" placeholder="Part tambahan 3..."></td><td><input type="number"></td>
-                <td><input type="radio" name="pb_k_13"></td><td><input type="radio" name="pb_k_13"></td>
-                <td><input type="radio" name="pb_g_13"></td><td><input type="radio" name="pb_g_13"></td>
+                <td><input type="radio" name="pb_k_13" value="OK"></td><td><input type="radio" name="pb_k_13" value="NG"></td>
+                <td><input type="radio" name="pb_g_13" value="Y"></td><td><input type="radio" name="pb_g_13" value="N"></td>
                 <td><input type="text"></td>
                 <td class="text-left"><input type="text" class="text-input-left" placeholder="Part tambahan 4..."></td><td><input type="number"></td>
-                <td><input type="radio" name="pb_kr_13"></td><td><input type="radio" name="pb_kr_13"></td>
-                <td><input type="radio" name="pb_gr_13"></td><td><input type="radio" name="pb_gr_13"></td>
+                <td><input type="radio" name="pb_kr_13" value="OK"></td><td><input type="radio" name="pb_kr_13" value="NG"></td>
+                <td><input type="radio" name="pb_gr_13" value="Y"></td><td><input type="radio" name="pb_gr_13" value="N"></td>
                 <td><input type="text"></td>
               </tr>
               <tr>
                 <td class="text-left"><input type="text" class="text-input-left" placeholder="Part tambahan 5..."></td><td><input type="number"></td>
-                <td><input type="radio" name="pb_k_14"></td><td><input type="radio" name="pb_k_14"></td>
-                <td><input type="radio" name="pb_g_14"></td><td><input type="radio" name="pb_g_14"></td>
+                <td><input type="radio" name="pb_k_14" value="OK"></td><td><input type="radio" name="pb_k_14" value="NG"></td>
+                <td><input type="radio" name="pb_g_14" value="Y"></td><td><input type="radio" name="pb_g_14" value="N"></td>
                 <td><input type="text"></td>
                 <td class="text-left"><input type="text" class="text-input-left" placeholder="Part tambahan 6..."></td><td><input type="number"></td>
-                <td><input type="radio" name="pb_kr_14"></td><td><input type="radio" name="pb_kr_14"></td>
-                <td><input type="radio" name="pb_gr_14"></td><td><input type="radio" name="pb_gr_14"></td>
+                <td><input type="radio" name="pb_kr_14" value="OK"></td><td><input type="radio" name="pb_kr_14" value="NG"></td>
+                <td><input type="radio" name="pb_gr_14" value="Y"></td><td><input type="radio" name="pb_gr_14" value="N"></td>
                 <td><input type="text"></td>
               </tr>
             </tbody>
@@ -619,17 +619,17 @@
               <tr><td class="bg-gray">Panjang</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
               <tr>
                 <td class="bg-gray">Kondisi</td>
-                <td><div class="opt-group"><label class="opt-stack"><input type="radio" name="k_dim_A"><span>OK</span></label><label class="opt-stack"><input type="radio" name="k_dim_A"><span>NG</span></label></div></td>
-                <td><div class="opt-group"><label class="opt-stack"><input type="radio" name="k_dim_B"><span>OK</span></label><label class="opt-stack"><input type="radio" name="k_dim_B"><span>NG</span></label></div></td>
-                <td><div class="opt-group"><label class="opt-stack"><input type="radio" name="k_dim_C"><span>OK</span></label><label class="opt-stack"><input type="radio" name="k_dim_C"><span>NG</span></label></div></td>
-                <td><div class="opt-group"><label class="opt-stack"><input type="radio" name="k_dim_D"><span>OK</span></label><label class="opt-stack"><input type="radio" name="k_dim_D"><span>NG</span></label></div></td>
-                <td><div class="opt-group"><label class="opt-stack"><input type="radio" name="k_dim_e"><span>OK</span></label><label class="opt-stack"><input type="radio" name="k_dim_e"><span>NG</span></label></div></td>
-                <td><div class="opt-group"><label class="opt-stack"><input type="radio" name="k_dim_E"><span>OK</span></label><label class="opt-stack"><input type="radio" name="k_dim_E"><span>NG</span></label></div></td>
-                <td><div class="opt-group"><label class="opt-stack"><input type="radio" name="k_dim_F"><span>OK</span></label><label class="opt-stack"><input type="radio" name="k_dim_F"><span>NG</span></label></div></td>
-                <td><div class="opt-group"><label class="opt-stack"><input type="radio" name="k_dim_f"><span>OK</span></label><label class="opt-stack"><input type="radio" name="k_dim_f"><span>NG</span></label></div></td>
-                <td><div class="opt-group"><label class="opt-stack"><input type="radio" name="k_dim_G"><span>OK</span></label><label class="opt-stack"><input type="radio" name="k_dim_G"><span>NG</span></label></div></td>
-                <td><div class="opt-group"><label class="opt-stack"><input type="radio" name="k_dim_H"><span>OK</span></label><label class="opt-stack"><input type="radio" name="k_dim_H"><span>NG</span></label></div></td>
-                <td><div class="opt-group"><label class="opt-stack"><input type="radio" name="k_dim_I"><span>OK</span></label><label class="opt-stack"><input type="radio" name="k_dim_I"><span>NG</span></label></div></td>
+                <td><div class="opt-group"><label class="opt-stack"><input type="radio" name="k_dim_A" value="OK"><span>OK</span></label><label class="opt-stack"><input type="radio" name="k_dim_A" value="NG"><span>NG</span></label></div></td>
+                <td><div class="opt-group"><label class="opt-stack"><input type="radio" name="k_dim_B" value="OK"><span>OK</span></label><label class="opt-stack"><input type="radio" name="k_dim_B" value="NG"><span>NG</span></label></div></td>
+                <td><div class="opt-group"><label class="opt-stack"><input type="radio" name="k_dim_C" value="OK"><span>OK</span></label><label class="opt-stack"><input type="radio" name="k_dim_C" value="NG"><span>NG</span></label></div></td>
+                <td><div class="opt-group"><label class="opt-stack"><input type="radio" name="k_dim_D" value="OK"><span>OK</span></label><label class="opt-stack"><input type="radio" name="k_dim_D" value="NG"><span>NG</span></label></div></td>
+                <td><div class="opt-group"><label class="opt-stack"><input type="radio" name="k_dim_e" value="OK"><span>OK</span></label><label class="opt-stack"><input type="radio" name="k_dim_e" value="NG"><span>NG</span></label></div></td>
+                <td><div class="opt-group"><label class="opt-stack"><input type="radio" name="k_dim_E" value="OK"><span>OK</span></label><label class="opt-stack"><input type="radio" name="k_dim_E" value="NG"><span>NG</span></label></div></td>
+                <td><div class="opt-group"><label class="opt-stack"><input type="radio" name="k_dim_F" value="OK"><span>OK</span></label><label class="opt-stack"><input type="radio" name="k_dim_F" value="NG"><span>NG</span></label></div></td>
+                <td><div class="opt-group"><label class="opt-stack"><input type="radio" name="k_dim_f" value="OK"><span>OK</span></label><label class="opt-stack"><input type="radio" name="k_dim_f" value="NG"><span>NG</span></label></div></td>
+                <td><div class="opt-group"><label class="opt-stack"><input type="radio" name="k_dim_G" value="OK"><span>OK</span></label><label class="opt-stack"><input type="radio" name="k_dim_G" value="NG"><span>NG</span></label></div></td>
+                <td><div class="opt-group"><label class="opt-stack"><input type="radio" name="k_dim_H" value="OK"><span>OK</span></label><label class="opt-stack"><input type="radio" name="k_dim_H" value="NG"><span>NG</span></label></div></td>
+                <td><div class="opt-group"><label class="opt-stack"><input type="radio" name="k_dim_I" value="OK"><span>OK</span></label><label class="opt-stack"><input type="radio" name="k_dim_I" value="NG"><span>NG</span></label></div></td>
               </tr>
               <tr><td class="bg-gray">Standar</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
             </tbody>
@@ -649,17 +649,17 @@
               <tr><td class="bg-gray">90° - 270°</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
               <tr>
                 <td class="bg-gray">Kondisi</td>
-                <td><div class="opt-group"><label class="opt-stack"><input type="radio" name="k_ro_A"><span>OK</span></label><label class="opt-stack"><input type="radio" name="k_ro_A"><span>NG</span></label></div></td>
-                <td><div class="opt-group"><label class="opt-stack"><input type="radio" name="k_ro_B"><span>OK</span></label><label class="opt-stack"><input type="radio" name="k_ro_B"><span>NG</span></label></div></td>
-                <td><div class="opt-group"><label class="opt-stack"><input type="radio" name="k_ro_C"><span>OK</span></label><label class="opt-stack"><input type="radio" name="k_ro_C"><span>NG</span></label></div></td>
-                <td><div class="opt-group"><label class="opt-stack"><input type="radio" name="k_ro_D"><span>OK</span></label><label class="opt-stack"><input type="radio" name="k_ro_D"><span>NG</span></label></div></td>
-                <td><div class="opt-group"><label class="opt-stack"><input type="radio" name="k_ro_e"><span>OK</span></label><label class="opt-stack"><input type="radio" name="k_ro_e"><span>NG</span></label></div></td>
-                <td><div class="opt-group"><label class="opt-stack"><input type="radio" name="k_ro_E"><span>OK</span></label><label class="opt-stack"><input type="radio" name="k_ro_E"><span>NG</span></label></div></td>
-                <td><div class="opt-group"><label class="opt-stack"><input type="radio" name="k_ro_F"><span>OK</span></label><label class="opt-stack"><input type="radio" name="k_ro_F"><span>NG</span></label></div></td>
-                <td><div class="opt-group"><label class="opt-stack"><input type="radio" name="k_ro_f"><span>OK</span></label><label class="opt-stack"><input type="radio" name="k_ro_f"><span>NG</span></label></div></td>
-                <td><div class="opt-group"><label class="opt-stack"><input type="radio" name="k_ro_G"><span>OK</span></label><label class="opt-stack"><input type="radio" name="k_ro_G"><span>NG</span></label></div></td>
-                <td><div class="opt-group"><label class="opt-stack"><input type="radio" name="k_ro_H"><span>OK</span></label><label class="opt-stack"><input type="radio" name="k_ro_H"><span>NG</span></label></div></td>
-                <td><div class="opt-group"><label class="opt-stack"><input type="radio" name="k_ro_I"><span>OK</span></label><label class="opt-stack"><input type="radio" name="k_ro_I"><span>NG</span></label></div></td>
+                <td><div class="opt-group"><label class="opt-stack"><input type="radio" name="k_ro_A" value="OK"><span>OK</span></label><label class="opt-stack"><input type="radio" name="k_ro_A" value="NG"><span>NG</span></label></div></td>
+                <td><div class="opt-group"><label class="opt-stack"><input type="radio" name="k_ro_B" value="OK"><span>OK</span></label><label class="opt-stack"><input type="radio" name="k_ro_B" value="NG"><span>NG</span></label></div></td>
+                <td><div class="opt-group"><label class="opt-stack"><input type="radio" name="k_ro_C" value="OK"><span>OK</span></label><label class="opt-stack"><input type="radio" name="k_ro_C" value="NG"><span>NG</span></label></div></td>
+                <td><div class="opt-group"><label class="opt-stack"><input type="radio" name="k_ro_D" value="OK"><span>OK</span></label><label class="opt-stack"><input type="radio" name="k_ro_D" value="NG"><span>NG</span></label></div></td>
+                <td><div class="opt-group"><label class="opt-stack"><input type="radio" name="k_ro_e" value="OK"><span>OK</span></label><label class="opt-stack"><input type="radio" name="k_ro_e" value="NG"><span>NG</span></label></div></td>
+                <td><div class="opt-group"><label class="opt-stack"><input type="radio" name="k_ro_E" value="OK"><span>OK</span></label><label class="opt-stack"><input type="radio" name="k_ro_E" value="NG"><span>NG</span></label></div></td>
+                <td><div class="opt-group"><label class="opt-stack"><input type="radio" name="k_ro_F" value="OK"><span>OK</span></label><label class="opt-stack"><input type="radio" name="k_ro_F" value="NG"><span>NG</span></label></div></td>
+                <td><div class="opt-group"><label class="opt-stack"><input type="radio" name="k_ro_f" value="OK"><span>OK</span></label><label class="opt-stack"><input type="radio" name="k_ro_f" value="NG"><span>NG</span></label></div></td>
+                <td><div class="opt-group"><label class="opt-stack"><input type="radio" name="k_ro_G" value="OK"><span>OK</span></label><label class="opt-stack"><input type="radio" name="k_ro_G" value="NG"><span>NG</span></label></div></td>
+                <td><div class="opt-group"><label class="opt-stack"><input type="radio" name="k_ro_H" value="OK"><span>OK</span></label><label class="opt-stack"><input type="radio" name="k_ro_H" value="NG"><span>NG</span></label></div></td>
+                <td><div class="opt-group"><label class="opt-stack"><input type="radio" name="k_ro_I" value="OK"><span>OK</span></label><label class="opt-stack"><input type="radio" name="k_ro_I" value="NG"><span>NG</span></label></div></td>
               </tr>
               <tr><td class="bg-gray">Standar</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
             </tbody>
@@ -688,16 +688,16 @@
               <tr><td class="bg-gray">Panjang</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
               <tr>
                 <td class="bg-gray">Kondisi</td>
-                <td><div class="opt-group"><label class="opt-stack"><input type="radio" name="k_eb_A"><span>OK</span></label><label class="opt-stack"><input type="radio" name="k_eb_A"><span>NG</span></label></div></td>
-                <td><div class="opt-group"><label class="opt-stack"><input type="radio" name="k_eb_B"><span>OK</span></label><label class="opt-stack"><input type="radio" name="k_eb_B"><span>NG</span></label></div></td>
-                <td><div class="opt-group"><label class="opt-stack"><input type="radio" name="k_eb_C"><span>OK</span></label><label class="opt-stack"><input type="radio" name="k_eb_C"><span>NG</span></label></div></td>
-                <td><div class="opt-group"><label class="opt-stack"><input type="radio" name="k_eb_D"><span>OK</span></label><label class="opt-stack"><input type="radio" name="k_eb_D"><span>NG</span></label></div></td>
-                <td><div class="opt-group"><label class="opt-stack"><input type="radio" name="k_eb_cupInDE"><span>OK</span></label><label class="opt-stack"><input type="radio" name="k_eb_cupInDE"><span>NG</span></label></div></td>
-                <td><div class="opt-group"><label class="opt-stack"><input type="radio" name="k_eb_cupInNDE"><span>OK</span></label><label class="opt-stack"><input type="radio" name="k_eb_cupInNDE"><span>NG</span></label></div></td>
-                <td><div class="opt-group"><label class="opt-stack"><input type="radio" name="k_eb_cupOutDE"><span>OK</span></label><label class="opt-stack"><input type="radio" name="k_eb_cupOutDE"><span>NG</span></label></div></td>
-                <td><div class="opt-group"><label class="opt-stack"><input type="radio" name="k_eb_cupOutNDE"><span>OK</span></label><label class="opt-stack"><input type="radio" name="k_eb_cupOutNDE"><span>NG</span></label></div></td>
-                <td><div class="opt-group"><label class="opt-stack"><input type="radio" name="k_eb_pulley"><span>OK</span></label><label class="opt-stack"><input type="radio" name="k_eb_pulley"><span>NG</span></label></div></td>
-                <td><div class="opt-group"><label class="opt-stack"><input type="radio" name="k_eb_kipas"><span>OK</span></label><label class="opt-stack"><input type="radio" name="k_eb_kipas"><span>NG</span></label></div></td>
+                <td><div class="opt-group"><label class="opt-stack"><input type="radio" name="k_eb_A" value="OK"><span>OK</span></label><label class="opt-stack"><input type="radio" name="k_eb_A" value="NG"><span>NG</span></label></div></td>
+                <td><div class="opt-group"><label class="opt-stack"><input type="radio" name="k_eb_B" value="OK"><span>OK</span></label><label class="opt-stack"><input type="radio" name="k_eb_B" value="NG"><span>NG</span></label></div></td>
+                <td><div class="opt-group"><label class="opt-stack"><input type="radio" name="k_eb_C" value="OK"><span>OK</span></label><label class="opt-stack"><input type="radio" name="k_eb_C" value="NG"><span>NG</span></label></div></td>
+                <td><div class="opt-group"><label class="opt-stack"><input type="radio" name="k_eb_D" value="OK"><span>OK</span></label><label class="opt-stack"><input type="radio" name="k_eb_D" value="NG"><span>NG</span></label></div></td>
+                <td><div class="opt-group"><label class="opt-stack"><input type="radio" name="k_eb_cupInDE" value="OK"><span>OK</span></label><label class="opt-stack"><input type="radio" name="k_eb_cupInDE" value="NG"><span>NG</span></label></div></td>
+                <td><div class="opt-group"><label class="opt-stack"><input type="radio" name="k_eb_cupInNDE" value="OK"><span>OK</span></label><label class="opt-stack"><input type="radio" name="k_eb_cupInNDE" value="NG"><span>NG</span></label></div></td>
+                <td><div class="opt-group"><label class="opt-stack"><input type="radio" name="k_eb_cupOutDE" value="OK"><span>OK</span></label><label class="opt-stack"><input type="radio" name="k_eb_cupOutDE" value="NG"><span>NG</span></label></div></td>
+                <td><div class="opt-group"><label class="opt-stack"><input type="radio" name="k_eb_cupOutNDE" value="OK"><span>OK</span></label><label class="opt-stack"><input type="radio" name="k_eb_cupOutNDE" value="NG"><span>NG</span></label></div></td>
+                <td><div class="opt-group"><label class="opt-stack"><input type="radio" name="k_eb_pulley" value="OK"><span>OK</span></label><label class="opt-stack"><input type="radio" name="k_eb_pulley" value="NG"><span>NG</span></label></div></td>
+                <td><div class="opt-group"><label class="opt-stack"><input type="radio" name="k_eb_kipas" value="OK"><span>OK</span></label><label class="opt-stack"><input type="radio" name="k_eb_kipas" value="NG"><span>NG</span></label></div></td>
               </tr>
               <tr><td class="bg-gray">Standar</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
               <tr><td class="bg-gray">Keterangan</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
@@ -771,7 +771,7 @@
               <tr>
                 <td class="bg-gray">V - GND</td><td><input type="text"></td>
                 <td class="bg-gray">V - W</td><td><input type="text"></td>
-                <td class="bg-gray">Kondisi</td><td><label><input type="radio" name="w3_cond"> OK</label> <label><input type="radio" name="w3_cond"> NG</label></td>
+                <td class="bg-gray">Kondisi</td><td><label><input type="radio" name="w3_cond" value="OK"> OK</label> <label><input type="radio" name="w3_cond" value="NG"> NG</label></td>
                 <td class="bg-gray">S (A)</td><td><input type="text"></td>
                 <td class="bg-gray">S - T (V)</td><td><input type="text"></td>
               </tr>
@@ -860,9 +860,9 @@
               </tr>
               <tr>
                 <td class="bg-gray">TERMINAL BOX</td>
-                <td class="text-left"><label><input type="radio" name="tbox_act"> REPLACE</label> <label><input type="radio" name="tbox_act"> REPAIR</label> &nbsp; P x L: <input type="text" style="width: 80px; border-bottom: 1px solid #999;"> mm</td>
+                <td class="text-left"><label><input type="radio" name="tbox_act" value="REPLACE"> REPLACE</label> <label><input type="radio" name="tbox_act" value="REPAIR"> REPAIR</label> &nbsp; P x L: <input type="text" style="width: 80px; border-bottom: 1px solid #999;"> mm</td>
                 <td class="bg-gray">TERMINAL COVER</td>
-                <td colspan="3" class="text-left"><label><input type="radio" name="tcov_act"> REPLACE</label> <label><input type="radio" name="tcov_act"> REPAIR</label> &nbsp; P x L: <input type="text" style="width: 80px; border-bottom: 1px solid #999;"> mm</td>
+                <td colspan="3" class="text-left"><label><input type="radio" name="tcov_act" value="REPLACE"> REPLACE</label> <label><input type="radio" name="tcov_act" value="REPAIR"> REPAIR</label> &nbsp; P x L: <input type="text" style="width: 80px; border-bottom: 1px solid #999;"> mm</td>
               </tr>
               <tr>
                 <td class="bg-gray">KABEL POWER</td><td><input type="text" placeholder="Kondisi isolasi / kabel..."></td>
@@ -1078,82 +1078,79 @@
       document.getElementById('reviewModal').style.display = 'none';
     }
 
-function generatePDF() {
-  const container = document.getElementById('previewSheetContainer');
-  if (!container) {
-    alert('Area preview tidak ditemukan!');
-    return;
-  }
+    function generatePDF() {
+      const container = document.getElementById('previewSheetContainer');
+      if (!container) {
+        alert('Area preview tidak ditemukan!');
+        return;
+      }
 
-  const content = container.innerHTML;
+      const content = container.innerHTML;
+      const printWindow = window.open('', '_blank', 'width=950,height=800');
 
-  // Membuka jendela cetak terisolasi agar 4 sheet terpisah rapi menjadi 4 halaman PDF
-  const printWindow = window.open('', '_blank', 'width=950,height=800');
+      if (!printWindow) {
+        alert('Pop-up diblokir oleh browser. Harap izinkan pop-up untuk situs ini.');
+        return;
+      }
 
-  if (!printWindow) {
-    alert('Pop-up diblokir oleh browser. Harap izinkan pop-up untuk situs ini.');
-    return;
-  }
+      printWindow.document.open();
+      printWindow.document.write(`
+        <!DOCTYPE html>
+        <html lang="id">
+        <head>
+          <meta charset="UTF-8">
+          <title>Dokumen Inspeksi & Analisa Rewinding Motor</title>
+          <style>
+            * { box-sizing: border-box; font-family: 'Segoe UI', Arial, sans-serif; }
+            body { margin: 0; padding: 0; background: #fff; }
 
-  printWindow.document.open();
-  printWindow.document.write(`
-    <!DOCTYPE html>
-    <html lang="id">
-    <head>
-      <meta charset="UTF-8">
-      <title>Dokumen Inspeksi & Analisa Rewinding Motor</title>
-      <style>
-        * { box-sizing: border-box; font-family: 'Segoe UI', Arial, sans-serif; }
-        body { margin: 0; padding: 0; background: #fff; }
+            @page {
+              size: A4 portrait;
+              margin: 8mm;
+            }
 
-        @page {
-          size: A4 portrait;
-          margin: 8mm;
-        }
+            .sheet {
+              width: 100%;
+              box-sizing: border-box;
+              margin: 0;
+              padding: 0;
+              display: block !important;
+              page-break-after: always !important;
+              break-after: page !important;
+            }
 
-        /* Memaksa setiap sheet menjadi 1 halaman A4 terpisah */
-        .sheet {
-          width: 100%;
-          box-sizing: border-box;
-          margin: 0;
-          padding: 0;
-          display: block !important;
-          page-break-after: always !important;
-          break-after: page !important;
-        }
+            .sheet:last-child {
+              page-break-after: auto !important;
+              break-after: auto !important;
+            }
 
-        .sheet:last-child {
-          page-break-after: auto !important;
-          break-after: auto !important;
-        }
+            table { width: 100%; border-collapse: collapse; margin-bottom: 8px; font-size: 10px; }
+            td, th { border: 1px solid #000; padding: 3px 4px; text-align: center; }
+            .title-header { font-weight: bold; font-size: 13px; background-color: #f2f2f2; }
+            .text-left { text-align: left !important; }
+            .text-input-left { text-align: left !important; padding-left: 4px; }
+            .bg-gray { background-color: #f2f2f2 !important; font-weight: bold; }
+            .bg-sub { background-color: #e2e8f0 !important; font-weight: bold; text-align: left; }
 
-        table { width: 100%; border-collapse: collapse; margin-bottom: 8px; font-size: 10px; }
-        td, th { border: 1px solid #000; padding: 3px 4px; text-align: center; }
-        .title-header { font-weight: bold; font-size: 13px; background-color: #f2f2f2; }
-        .text-left { text-align: left !important; }
-        .text-input-left { text-align: left !important; padding-left: 4px; }
-        .bg-gray { background-color: #f2f2f2 !important; font-weight: bold; }
-        .bg-sub { background-color: #e2e8f0 !important; font-weight: bold; text-align: left; }
-
-        img { max-width: 100%; max-height: 200px; object-fit: contain; display: block; margin: 0 auto; }
-        .no-print, button { display: none !important; }
-      </style>
-    </head>
-    <body>
-      ${content}
-      <script>
-        window.onload = function() {
-          setTimeout(function() {
-            window.print();
-            window.onafterprint = function() { window.close(); };
-          }, 350);
-        };
-      <\/script>
-    </body>
-    </html>
-  `);
-  printWindow.document.close();
-}
+            img { max-width: 100%; max-height: 200px; object-fit: contain; display: block; margin: 0 auto; }
+            .no-print, button { display: none !important; }
+          </style>
+        </head>
+        <body>
+          ${content}
+          <script>
+            window.onload = function() {
+              setTimeout(function() {
+                window.print();
+                window.onafterprint = function() { window.close(); };
+              }, 350);
+            };
+          <\/script>
+        </body>
+        </html>
+      `);
+      printWindow.document.close();
+    }
 
     // 5. MANAJEMEN BARIS SPARE PART
     function deleteSparePartRow(btn) {
@@ -1179,8 +1176,8 @@ function generatePDF() {
         <td><input type="text" list="masterMidList" class="part-code-input text-input-left" placeholder="Ketik kode/nama..." oninput="handleCodeSearch(this)"></td>
         <td><input type="text" class="part-mid-input" placeholder="Auto / Manual..."></td>
         <td><input type="number"></td>
-        <td><input type="radio"></td>
-        <td><input type="radio"></td>
+        <td><input type="radio" name="rwd_sp_new" value="OK"></td>
+        <td><input type="radio" name="rwd_sp_new" value="NG"></td>
         <td><input type="text"></td>
         <td class="no-print">
           <button type="button" class="btn-insert-row" onclick="insertSparePartRowBelow(this)">➕</button>
@@ -1199,8 +1196,8 @@ function generatePDF() {
         <td><input type="text" list="masterMidList" class="part-code-input text-input-left" placeholder="Ketik kode/nama..." oninput="handleCodeSearch(this)"></td>
         <td><input type="text" class="part-mid-input" placeholder="Auto / Manual..."></td>
         <td><input type="number"></td>
-        <td><input type="radio"></td>
-        <td><input type="radio"></td>
+        <td><input type="radio" name="rwd_sp_new" value="OK"></td>
+        <td><input type="radio" name="rwd_sp_new" value="NG"></td>
         <td><input type="text"></td>
         <td class="no-print">
           <button type="button" class="btn-insert-row" onclick="insertSparePartRowBelow(this)">➕</button>
