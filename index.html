@@ -6,13 +6,24 @@
   <title>Sistem Inspeksi Assembly & Industrial Repair - PT Intidaya Dinamika Sejati</title>
   <link rel="stylesheet" href="css/shared.css">
   <style>
-    /* STYLING BACKGROUND HERO DENGAN GAMBAR EXPLODED VIEW */
+    /* CANVAS BACKGROUND */
+    #heroCanvasBg {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 998;
+      background: linear-gradient(135deg, #0b0f19 0%, #111827 100%);
+      pointer-events: none;
+    }
+
+    /* STYLING BACKGROUND HERO DENGAN GRADIENT RADIUS TRANSPARAN */
     .hero-wrapper {
       position: fixed;
       top: 0; left: 0;
       width: 100vw; 
       height: 100vh;
-      background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('root-blower-exploded.jpg') center/cover no-repeat !important;
+      background: radial-gradient(circle at center, rgba(15, 23, 42, 0.2) 0%, rgba(11, 15, 25, 0.75) 100%) !important;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -184,6 +195,8 @@
   </style>
 </head>
 <body>
+  <!-- DYNAMIC BACKGROUND CANVAS -->
+  <canvas id="heroCanvasBg"></canvas>
 
   <!-- ==================== HALAMAN HERO LANDING PAGE ==================== -->
   <div id="pageHero" class="hero-wrapper">
@@ -393,6 +406,171 @@
       
       console.log('✅ Kembali ke Hero Page');
     }
+
+    // ==================== BACKGROUND ANIMATION CANVAS ====================
+    (function() {
+      const canvas = document.getElementById('heroCanvasBg');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      const pageHero = document.getElementById('pageHero');
+
+      let width = canvas.width = window.innerWidth;
+      let height = canvas.height = window.innerHeight;
+
+      window.addEventListener('resize', () => {
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
+      });
+
+      // Sine Wave Settings
+      const waves = [
+        {
+          frequency: 0.005,
+          amplitude: 50,
+          speed: 0.015,
+          phase: 0,
+          color: 'rgba(6, 182, 212, 0.2)' // Cyan
+        },
+        {
+          frequency: 0.003,
+          amplitude: 70,
+          speed: 0.008,
+          phase: Math.PI / 3,
+          color: 'rgba(99, 102, 241, 0.12)' // Indigo
+        },
+        {
+          frequency: 0.007,
+          amplitude: 30,
+          speed: 0.02,
+          phase: Math.PI / 1.5,
+          color: 'rgba(14, 165, 233, 0.08)' // Sky Blue
+        }
+      ];
+
+      // Gear Settings
+      let gear1Angle = 0;
+      let gear2Angle = 0;
+
+      function drawGear(cx, cy, spikes, outerRadius, innerRadius, holeRadius, angle, color) {
+        ctx.save();
+        ctx.translate(cx, cy);
+        ctx.rotate(angle);
+        
+        ctx.beginPath();
+        const pi = Math.PI;
+        const segment = pi / spikes;
+        
+        // Draw the outer teeth
+        for (let i = 0; i < spikes * 2; i++) {
+          const alpha = i * segment;
+          const r = (i % 2 === 0) ? outerRadius : innerRadius;
+          const x = Math.cos(alpha) * r;
+          const y = Math.sin(alpha) * r;
+          if (i === 0) {
+            ctx.moveTo(x, y);
+          } else {
+            ctx.lineTo(x, y);
+          }
+        }
+        ctx.closePath();
+        ctx.strokeStyle = color;
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+
+        // Inner circle
+        ctx.beginPath();
+        ctx.arc(0, 0, innerRadius - 15, 0, 2 * pi);
+        ctx.stroke();
+
+        // Structural Spokes
+        ctx.beginPath();
+        for (let i = 0; i < 4; i++) {
+          const spokeAngle = (i * pi) / 2;
+          ctx.moveTo(0, 0);
+          ctx.lineTo(Math.cos(spokeAngle) * (innerRadius - 15), Math.sin(spokeAngle) * (innerRadius - 15));
+        }
+        ctx.stroke();
+
+        // Center hub circle
+        ctx.beginPath();
+        ctx.arc(0, 0, holeRadius, 0, 2 * pi);
+        ctx.fillStyle = '#0b0f19'; // Matches the dark bg gradient start
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.restore();
+      }
+
+      function drawWaves() {
+        waves.forEach(wave => {
+          ctx.beginPath();
+          ctx.lineWidth = 2;
+          ctx.strokeStyle = wave.color;
+
+          // Draw a wave across the horizontal span
+          const centerY = height * 0.55; // Slightly lower than center
+          for (let x = 0; x < width; x += 5) {
+            const y = centerY + Math.sin(x * wave.frequency + wave.phase) * wave.amplitude;
+            if (x === 0) {
+              ctx.moveTo(x, y);
+            } else {
+              ctx.lineTo(x, y);
+            }
+          }
+          ctx.stroke();
+          wave.phase += wave.speed;
+        });
+      }
+
+      function animate() {
+        requestAnimationFrame(animate);
+        
+        // Performance optimization: stop rendering if hero page is hidden
+        if (pageHero.style.display === 'none') {
+          return;
+        }
+
+        // Draw background gradient to clear screen
+        const grad = ctx.createLinearGradient(0, 0, width, height);
+        grad.addColorStop(0, '#0b0f19');
+        grad.addColorStop(1, '#111827');
+        ctx.fillStyle = grad;
+        ctx.fillRect(0, 0, width, height);
+
+        // Render Sine Waves
+        drawWaves();
+
+        // Render Gears (placed bottom right area)
+        const cx1 = width * 0.85;
+        const cy1 = height * 0.7;
+        const spikes1 = 16;
+        const outerRadius1 = 140;
+        const innerRadius1 = 120;
+
+        const spikes2 = 10;
+        const outerRadius2 = 87;
+        const innerRadius2 = 67;
+
+        // Distance between gear centers to mesh perfectly
+        const distance = 207;
+        const gear2AngleRad = 145 * Math.PI / 180;
+        const cx2 = cx1 + Math.cos(gear2AngleRad) * distance;
+        const cy2 = cy1 + Math.sin(gear2AngleRad) * distance;
+
+        // Speed settings
+        gear1Angle += 0.004;
+        // Opposite direction and ratio based speed to mesh teeth
+        gear2Angle = -gear1Angle * (spikes1 / spikes2) + (1.1); // minor offset to align teeth
+
+        // Draw gear 1 (Large)
+        drawGear(cx1, cy1, spikes1, outerRadius1, innerRadius1, 28, gear1Angle, 'rgba(56, 189, 248, 0.15)'); // Cyan outline
+
+        // Draw gear 2 (Medium)
+        drawGear(cx2, cy2, spikes2, outerRadius2, innerRadius2, 18, gear2Angle, 'rgba(99, 102, 241, 0.15)'); // Indigo outline
+      }
+
+      animate();
+    })();
 
     // Initialize on page load (mendukung pertahanan halaman setelah refresh)
     window.addEventListener('load', function() {
