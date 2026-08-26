@@ -13,17 +13,17 @@
       width: 100vw;
       height: 100vh;
       z-index: 998;
-      background: linear-gradient(135deg, #0b0f19 0%, #111827 100%);
+      background: #060101;
       pointer-events: none;
     }
 
-    /* STYLING BACKGROUND HERO DENGAN GRADIENT RADIUS TRANSPARAN */
+    /* STYLING BACKGROUND HERO DENGAN GRADIENT RADIUS TRANSPARAN MERAH-HITAM */
     .hero-wrapper {
       position: fixed;
       top: 0; left: 0;
       width: 100vw; 
       height: 100vh;
-      background: radial-gradient(circle at center, rgba(15, 23, 42, 0.2) 0%, rgba(11, 15, 25, 0.75) 100%) !important;
+      background: radial-gradient(circle at center, rgba(6, 1, 1, 0.1) 0%, rgba(6, 1, 1, 0.8) 100%) !important;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -407,7 +407,7 @@
       console.log('✅ Kembali ke Hero Page');
     }
 
-    // ==================== BACKGROUND ANIMATION CANVAS ====================
+    // ==================== BACKGROUND ANIMATION CANVAS (ECG HEARTBEAT RED GLOW) ====================
     (function() {
       const canvas = document.getElementById('heroCanvasBg');
       if (!canvas) return;
@@ -422,151 +422,145 @@
         height = canvas.height = window.innerHeight;
       });
 
-      // Sine Wave Settings
-      const waves = [
-        {
-          frequency: 0.005,
-          amplitude: 50,
-          speed: 0.015,
-          phase: 0,
-          color: 'rgba(6, 182, 212, 0.2)' // Cyan
-        },
-        {
-          frequency: 0.003,
-          amplitude: 70,
-          speed: 0.008,
-          phase: Math.PI / 3,
-          color: 'rgba(99, 102, 241, 0.12)' // Indigo
-        },
-        {
-          frequency: 0.007,
-          amplitude: 30,
-          speed: 0.02,
-          phase: Math.PI / 1.5,
-          color: 'rgba(14, 165, 233, 0.08)' // Sky Blue
+      // ECG Waveform definition
+      function getECGValue(p) {
+        // Return baseline offset ratio (between -0.8 and 2.2)
+        // P wave (small bump)
+        if (p >= 0.12 && p < 0.22) {
+          const progress = (p - 0.12) / 0.10;
+          return Math.sin(progress * Math.PI) * 0.18;
         }
-      ];
+        // Q wave (initial dip)
+        if (p >= 0.22 && p < 0.25) {
+          const progress = (p - 0.22) / 0.03;
+          return -Math.sin(progress * Math.PI) * 0.3;
+        }
+        // R wave (huge sharp spike)
+        if (p >= 0.25 && p < 0.30) {
+          const progress = (p - 0.25) / 0.05;
+          if (progress < 0.35) {
+            // steep rise
+            return (progress / 0.35) * 2.2;
+          } else {
+            // steep fall past baseline to S peak
+            return 2.2 - ((progress - 0.35) / 0.65) * 3.1;
+          }
+        }
+        // S wave recovery (returning to baseline)
+        if (p >= 0.30 && p < 0.34) {
+          const progress = (p - 0.30) / 0.04;
+          return -0.9 + progress * 0.9;
+        }
+        // T wave (wider bump)
+        if (p >= 0.38 && p < 0.54) {
+          const progress = (p - 0.38) / 0.16;
+          return Math.sin(progress * Math.PI) * 0.5;
+        }
+        return 0; // flat baseline
+      }
 
-      // Gear Settings
-      let gear1Angle = 0;
-      let gear2Angle = 0;
+      // ECG line points history
+      const dx = 2.5; // step size in pixels between points
+      const maxPoints = Math.ceil(width / dx) + 5;
+      const points = [];
+      
+      // Initialize points with baseline 0
+      for (let i = 0; i < maxPoints; i++) {
+        points.push(0);
+      }
 
-      function drawGear(cx, cy, spikes, outerRadius, innerRadius, holeRadius, angle, color) {
-        ctx.save();
-        ctx.translate(cx, cy);
-        ctx.rotate(angle);
+      let t = 0;
+      const period = 140; // frames per beat (~2.3 seconds)
+      const maxAmplitude = 120; // max height of spike in pixels
+
+      function animate() {
+        requestAnimationFrame(animate);
         
+        // Stop rendering if hero page is hidden to save performance
+        if (pageHero.style.display === 'none') {
+          return;
+        }
+
+        // Draw background: very dark red-tinted black
+        ctx.fillStyle = '#060101';
+        ctx.fillRect(0, 0, width, height);
+
+        // --- DRAW GRID (oscilloscope/medical monitor graph paper style) ---
+        // Minor grid (every 10px, thin line, very faint red)
+        ctx.strokeStyle = 'rgba(239, 68, 68, 0.025)';
+        ctx.lineWidth = 0.5;
         ctx.beginPath();
-        const pi = Math.PI;
-        const segment = pi / spikes;
+        for (let x = 0; x < width; x += 10) {
+          ctx.moveTo(x, 0); ctx.lineTo(x, height);
+        }
+        for (let y = 0; y < height; y += 10) {
+          ctx.moveTo(0, y); ctx.lineTo(width, y);
+        }
+        ctx.stroke();
+
+        // Major grid (every 50px, thicker line, faint red)
+        ctx.strokeStyle = 'rgba(239, 68, 68, 0.07)';
+        ctx.lineWidth = 1.2;
+        ctx.beginPath();
+        for (let x = 0; x < width; x += 50) {
+          ctx.moveTo(x, 0); ctx.lineTo(x, height);
+        }
+        for (let y = 0; y < height; y += 50) {
+          ctx.moveTo(0, y); ctx.lineTo(width, y);
+        }
+        ctx.stroke();
+
+        // --- UPDATE ECG DATA ---
+        t++;
+        const phase = (t % period) / period;
+        // Compute base ECG value and add tiny analog noise for authenticity
+        const noise = (Math.random() - 0.5) * 1.5;
+        const ecgVal = getECGValue(phase) * maxAmplitude + noise;
         
-        // Draw the outer teeth
-        for (let i = 0; i < spikes * 2; i++) {
-          const alpha = i * segment;
-          const r = (i % 2 === 0) ? outerRadius : innerRadius;
-          const x = Math.cos(alpha) * r;
-          const y = Math.sin(alpha) * r;
+        // Shift history and append new point
+        points.shift();
+        points.push(ecgVal);
+
+        // --- DRAW GLOWING ECG WAVEFORM ---
+        const centerY = height * 0.55;
+
+        // Pass 1: Draw Thick Neon Blur Path
+        ctx.save();
+        ctx.beginPath();
+        for (let i = 0; i < points.length; i++) {
+          const x = i * dx;
+          const y = centerY - points[i];
           if (i === 0) {
             ctx.moveTo(x, y);
           } else {
             ctx.lineTo(x, y);
           }
         }
-        ctx.closePath();
-        ctx.strokeStyle = color;
-        ctx.lineWidth = 1.5;
+        ctx.strokeStyle = 'rgba(239, 68, 68, 0.4)';
+        ctx.lineWidth = 6;
+        ctx.shadowColor = 'rgba(239, 68, 68, 0.95)';
+        ctx.shadowBlur = 18;
         ctx.stroke();
-
-        // Inner circle
-        ctx.beginPath();
-        ctx.arc(0, 0, innerRadius - 15, 0, 2 * pi);
-        ctx.stroke();
-
-        // Structural Spokes
-        ctx.beginPath();
-        for (let i = 0; i < 4; i++) {
-          const spokeAngle = (i * pi) / 2;
-          ctx.moveTo(0, 0);
-          ctx.lineTo(Math.cos(spokeAngle) * (innerRadius - 15), Math.sin(spokeAngle) * (innerRadius - 15));
-        }
-        ctx.stroke();
-
-        // Center hub circle
-        ctx.beginPath();
-        ctx.arc(0, 0, holeRadius, 0, 2 * pi);
-        ctx.fillStyle = '#0b0f19'; // Matches the dark bg gradient start
-        ctx.fill();
-        ctx.stroke();
-
         ctx.restore();
-      }
 
-      function drawWaves() {
-        waves.forEach(wave => {
-          ctx.beginPath();
-          ctx.lineWidth = 2;
-          ctx.strokeStyle = wave.color;
-
-          // Draw a wave across the horizontal span
-          const centerY = height * 0.55; // Slightly lower than center
-          for (let x = 0; x < width; x += 5) {
-            const y = centerY + Math.sin(x * wave.frequency + wave.phase) * wave.amplitude;
-            if (x === 0) {
-              ctx.moveTo(x, y);
-            } else {
-              ctx.lineTo(x, y);
-            }
+        // Pass 2: Draw Bright White-Red Inner Core Path (makes it look like it's glowing intensely)
+        ctx.save();
+        ctx.beginPath();
+        for (let i = 0; i < points.length; i++) {
+          const x = i * dx;
+          const y = centerY - points[i];
+          if (i === 0) {
+            ctx.moveTo(x, y);
+          } else {
+            ctx.lineTo(x, y);
           }
-          ctx.stroke();
-          wave.phase += wave.speed;
-        });
-      }
-
-      function animate() {
-        requestAnimationFrame(animate);
-        
-        // Performance optimization: stop rendering if hero page is hidden
-        if (pageHero.style.display === 'none') {
-          return;
         }
-
-        // Draw background gradient to clear screen
-        const grad = ctx.createLinearGradient(0, 0, width, height);
-        grad.addColorStop(0, '#0b0f19');
-        grad.addColorStop(1, '#111827');
-        ctx.fillStyle = grad;
-        ctx.fillRect(0, 0, width, height);
-
-        // Render Sine Waves
-        drawWaves();
-
-        // Render Gears (placed bottom right area)
-        const cx1 = width * 0.85;
-        const cy1 = height * 0.7;
-        const spikes1 = 16;
-        const outerRadius1 = 140;
-        const innerRadius1 = 120;
-
-        const spikes2 = 10;
-        const outerRadius2 = 87;
-        const innerRadius2 = 67;
-
-        // Distance between gear centers to mesh perfectly
-        const distance = 207;
-        const gear2AngleRad = 145 * Math.PI / 180;
-        const cx2 = cx1 + Math.cos(gear2AngleRad) * distance;
-        const cy2 = cy1 + Math.sin(gear2AngleRad) * distance;
-
-        // Speed settings
-        gear1Angle += 0.004;
-        // Opposite direction and ratio based speed to mesh teeth
-        gear2Angle = -gear1Angle * (spikes1 / spikes2) + (1.1); // minor offset to align teeth
-
-        // Draw gear 1 (Large)
-        drawGear(cx1, cy1, spikes1, outerRadius1, innerRadius1, 28, gear1Angle, 'rgba(56, 189, 248, 0.15)'); // Cyan outline
-
-        // Draw gear 2 (Medium)
-        drawGear(cx2, cy2, spikes2, outerRadius2, innerRadius2, 18, gear2Angle, 'rgba(99, 102, 241, 0.15)'); // Indigo outline
+        ctx.strokeStyle = '#ffa3a3'; // Light pinkish-white core
+        ctx.lineWidth = 2.2;
+        ctx.shadowColor = '#ef4444';
+        ctx.shadowBlur = 4;
+        ctx.stroke();
+        ctx.restore();
       }
 
       animate();
