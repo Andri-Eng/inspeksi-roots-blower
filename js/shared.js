@@ -268,9 +268,6 @@ function upgradeActionButtonsToDropdown(moduleName, container) {
       dropdownWrapper.style.flex = '2';
       dropdownWrapper.style.position = 'relative';
       
-      // We read the original label to customize the "Preview Document" item inside
-      const originalLabel = btn.textContent.trim().replace('🔍 ', '');
-      
       dropdownWrapper.innerHTML = `
         <button type="button" class="btn-action dropdown-toggle" style="background-color: #007bff; width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 15px;" onclick="toggleFileDropdown(this, event)">
           📁 Menu File <span style="font-size: 10px;">▼</span>
@@ -279,8 +276,7 @@ function upgradeActionButtonsToDropdown(moduleName, container) {
           <button type="button" class="dropdown-item" onclick="triggerImportJSON(event, '${moduleName}')">📂 Open File (JSON)</button>
           <button type="button" class="dropdown-item" onclick="triggerExportJSON(event, '${moduleName}')">💾 Save (JSON)</button>
           <button type="button" class="dropdown-item" onclick="triggerExportExcel(event, '${moduleName}')">📊 Export to Excel</button>
-          <button type="button" class="dropdown-item" onclick="triggerPrintPDF(event)">🖨️ Print to PDF</button>
-          <button type="button" class="dropdown-item" onclick="openMergedReviewModal(); event.preventDefault();">🔍 ${originalLabel}</button>
+          <button type="button" class="dropdown-item" onclick="openMergedReviewModal(); event.preventDefault();">📄 Export to PDF</button>
         </div>
       `;
       

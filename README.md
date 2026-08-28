@@ -181,7 +181,7 @@ Setiap modul mengikuti template standar:
 ### 3. Isi Data Inspeksi
 - Isi form "DATA ORDER & PERSONEL"
 - Navigasi antar tabs untuk setiap section
-- Klik "🔍 Preview Document" untuk lihat hasil
+- Klik "📄 Export to PDF" untuk lihat hasil
 
 ### 4. Print/Save
 - Klik "🖨️ Print to PDF" dari preview modal
