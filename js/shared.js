@@ -378,7 +378,7 @@ function triggerImportJSON(event, moduleName) {
 }
 
 // Export form data to JSON file
-function triggerExportJSON(event, moduleName) {
+async function triggerExportJSON(event, moduleName) {
   event.preventDefault();
   event.stopPropagation();
   
@@ -417,7 +417,36 @@ function triggerExportJSON(event, moduleName) {
   if (typesnVal) fileName += `_${typesnVal}`;
   fileName += `_${dateStr}.json`;
 
-  const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+  const jsonString = JSON.stringify(payload, null, 2);
+
+  // Coba gunakan File System Access API agar muncul Save File Dialog pemilihan lokasi
+  if ('showSaveFilePicker' in window) {
+    try {
+      const handle = await window.showSaveFilePicker({
+        suggestedName: fileName,
+        types: [{
+          description: 'JSON Files',
+          accept: {
+            'application/json': ['.json']
+          }
+        }]
+      });
+      const writable = await handle.createWritable();
+      await writable.write(jsonString);
+      await writable.close();
+      showAlert('Draft berhasil disimpan!', 'success');
+      return;
+    } catch (err) {
+      if (err.name === 'AbortError') {
+        console.log('User membatalkan dialog penyimpanan.');
+        return;
+      }
+      console.error('Error dengan showSaveFilePicker, menggunakan fallback:', err);
+    }
+  }
+
+  // Fallback ke unduhan otomatis biasa jika browser tidak mendukung showSaveFilePicker
+  const blob = new Blob([jsonString], { type: 'application/json' });
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
