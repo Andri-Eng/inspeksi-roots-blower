@@ -43,6 +43,7 @@
     .status-ok { background-color: #c6efce; color: #006100; font-weight: bold; }
 
     input, select { width: 100%; border: none; outline: none; background: transparent; font-size: 11px; text-align: center; }
+    input[type="checkbox"], input[type="radio"] { width: auto; cursor: pointer; }
     .flex-section { display: flex; gap: 10px; margin-bottom: 15px; flex-wrap: wrap; }
     .flex-col { flex: 1; min-width: 250px; }
     .diagram-img { max-height: 110px; width: auto; display: block; margin: 0 auto; }
@@ -298,7 +299,7 @@
               <tr><th class="bg-yellow"><input type="text" class="std-input" placeholder="0.03-0.08"></th><th>1</th><th>2</th><th>3</th><th>OK</th><th>NG</th></tr>
             </thead>
             <tbody>
-              <tr><td>-</td><td>-</td><td><input type="number" step="0.01"></td><td><input type="number" step="0.01"></td><td><input type="number" step="0.01"></td><td class="status-ok">OK</td><td>-</td></tr>
+              <tr><td>-</td><td>-</td><td><input type="number" step="0.01"></td><td><input type="number" step="0.01"></td><td><input type="number" step="0.01"></td><td><input type="radio" name="rb_backlash" value="OK"></td><td><input type="radio" name="rb_backlash" value="NG"></td></tr>
             </tbody>
           </table>
 
