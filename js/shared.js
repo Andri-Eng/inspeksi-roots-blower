@@ -109,6 +109,9 @@ async function loadModule(moduleName) {
     // Initialize auto-save & restore data
     initAutoSave(moduleName, container);
 
+    // Upgrade preview buttons to File Dropdown Menu
+    upgradeActionButtonsToDropdown(moduleName, container);
+
     console.log(`✅ Module ${moduleName} loaded successfully`);
     return true;
   } catch (error) {
@@ -245,6 +248,309 @@ function exportCanvasAsImage(canvasId) {
 
 // Print/Export Page
 function printPage() {
+  window.print();
+}
+
+// Upgrade Action Buttons to File Dropdown Menu
+function upgradeActionButtonsToDropdown(moduleName, container) {
+  if (!container) return;
+  
+  // Find all action buttons
+  const buttons = container.querySelectorAll('button.btn-action');
+  buttons.forEach(btn => {
+    const onClickAttr = btn.getAttribute('onclick') || '';
+    if (onClickAttr.includes('openMergedReviewModal')) {
+      const parent = btn.parentNode;
+      if (!parent) return;
+      
+      const dropdownWrapper = document.createElement('div');
+      dropdownWrapper.className = 'dropdown no-print';
+      dropdownWrapper.style.flex = '2';
+      dropdownWrapper.style.position = 'relative';
+      
+      // We read the original label to customize the "Preview Document" item inside
+      const originalLabel = btn.textContent.trim().replace('🔍 ', '');
+      
+      dropdownWrapper.innerHTML = `
+        <button type="button" class="btn-action dropdown-toggle" style="background-color: #007bff; width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 15px;" onclick="toggleFileDropdown(this, event)">
+          📁 Menu File <span style="font-size: 10px;">▼</span>
+        </button>
+        <div class="dropdown-menu">
+          <button type="button" class="dropdown-item" onclick="triggerImportJSON(event, '${moduleName}')">📂 Open File (JSON)</button>
+          <button type="button" class="dropdown-item" onclick="triggerExportJSON(event, '${moduleName}')">💾 Save (JSON)</button>
+          <button type="button" class="dropdown-item" onclick="triggerExportExcel(event, '${moduleName}')">📊 Export to Excel</button>
+          <button type="button" class="dropdown-item" onclick="triggerPrintPDF(event)">🖨️ Print to PDF</button>
+          <button type="button" class="dropdown-item" onclick="openMergedReviewModal(); event.preventDefault();">🔍 ${originalLabel}</button>
+        </div>
+      `;
+      
+      // Let's remove the inline margin-top from the button inside dropdown-toggle if there's any conflict, 
+      // but wrapping it fits perfectly.
+      btn.style.marginTop = '0';
+      parent.replaceChild(dropdownWrapper, btn);
+    }
+  });
+}
+
+// Toggle Dropdown Menu Visibility
+function toggleFileDropdown(btn, event) {
+  event.stopPropagation();
+  const dropdownMenu = btn.nextElementSibling;
+  if (!dropdownMenu) return;
+  
+  // Close all other dropdowns
+  document.querySelectorAll('.dropdown-menu').forEach(menu => {
+    if (menu !== dropdownMenu) {
+      menu.classList.remove('show');
+    }
+  });
+  
+  dropdownMenu.classList.toggle('show');
+}
+
+// Global click handler to dismiss open dropdowns when clicking outside
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.dropdown')) {
+    document.querySelectorAll('.dropdown-menu').forEach(menu => {
+      menu.classList.remove('show');
+    });
+  }
+});
+
+// Import JSON file data to form
+function triggerImportJSON(event, moduleName) {
+  event.preventDefault();
+  event.stopPropagation();
+  
+  const menu = event.target.closest('.dropdown-menu');
+  if (menu) menu.classList.remove('show');
+  
+  const input = document.createElement('input');
+  input.type = 'file';
+  input.accept = '.json';
+  
+  input.onchange = function(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+    
+    const reader = new FileReader();
+    reader.onload = function(evt) {
+      try {
+        const payload = JSON.parse(evt.target.result);
+        
+        // Validation check
+        if (payload.moduleName && payload.moduleName !== moduleName) {
+          if (!confirm(`File ini tampaknya ditujukan untuk modul "${payload.moduleName}". Apakah Anda yakin ingin memuatnya ke modul "${moduleName}"?`)) {
+            return;
+          }
+        }
+        
+        const data = payload.data || payload;
+        if (!Array.isArray(data)) {
+          throw new Error("Format data tidak valid.");
+        }
+        
+        const container = document.getElementById('moduleContainer');
+        if (!container) return;
+        
+        const elements = container.querySelectorAll('input, select, textarea');
+        data.forEach(item => {
+          const el = elements[item.index];
+          if (el) {
+            if (el.type === 'radio' || el.type === 'checkbox') {
+              el.checked = item.checked;
+            } else {
+              el.value = item.value;
+            }
+            // Trigger input/change events to update UI dynamically
+            el.dispatchEvent(new Event('input', { bubbles: true }));
+            el.dispatchEvent(new Event('change', { bubbles: true }));
+          }
+        });
+        
+        // Immediately save data to local draft
+        saveFormData(moduleName, container);
+        showAlert('Data berhasil diimpor dari file JSON!', 'success');
+      } catch (err) {
+        console.error('Error parsing JSON:', err);
+        showAlert('Gagal mengimpor file JSON. Pastikan format file benar.', 'error');
+      }
+    };
+    reader.readAsText(file);
+  };
+  input.click();
+}
+
+// Export form data to JSON file
+function triggerExportJSON(event, moduleName) {
+  event.preventDefault();
+  event.stopPropagation();
+  
+  const menu = event.target.closest('.dropdown-menu');
+  if (menu) menu.classList.remove('show');
+
+  const container = document.getElementById('moduleContainer');
+  if (!container) return;
+
+  const data = [];
+  container.querySelectorAll('input, select, textarea').forEach((el, index) => {
+    if (el.type === 'radio' || el.type === 'checkbox') {
+      data.push({ index, checked: el.checked, type: el.type, value: el.value });
+    } else {
+      data.push({ index, value: el.value, type: el.type });
+    }
+  });
+
+  const payload = {
+    moduleName: moduleName,
+    timestamp: new Date().toISOString(),
+    data: data
+  };
+
+  // Get details for dynamic filename
+  let customerVal = '';
+  let typesnVal = '';
+  const customerEl = container.querySelector('.sync-customer') || container.querySelector('[class*="customer"]');
+  const typesnEl = container.querySelector('.sync-typesn') || container.querySelector('[class*="type"]') || container.querySelector('[class*="sn"]');
+  if (customerEl) customerVal = customerEl.value.trim().replace(/[^a-zA-Z0-9]/g, '_');
+  if (typesnEl) typesnVal = typesnEl.value.trim().replace(/[^a-zA-Z0-9]/g, '_');
+
+  const dateStr = new Date().toISOString().slice(0, 10);
+  let fileName = `INSPEKSI_${moduleName.toUpperCase().replace(/\s+/g, '_')}`;
+  if (customerVal) fileName += `_${customerVal}`;
+  if (typesnVal) fileName += `_${typesnVal}`;
+  fileName += `_${dateStr}.json`;
+
+  const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = fileName;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  
+  showAlert('Draft berhasil diekspor ke JSON!', 'success');
+}
+
+// Trigger Excel Export
+function triggerExportExcel(event, moduleName) {
+  event.preventDefault();
+  event.stopPropagation();
+  
+  const menu = event.target.closest('.dropdown-menu');
+  if (menu) menu.classList.remove('show');
+
+  showAlert('Sedang memproses ekspor ke Excel...', 'info');
+
+  if (typeof XLSX === 'undefined') {
+    const script = document.createElement('script');
+    script.src = 'https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js';
+    document.head.appendChild(script);
+    script.onload = () => {
+      exportToExcelWorksheets(moduleName);
+    };
+    script.onerror = () => {
+      showAlert('Gagal memuat library Excel. Periksa koneksi internet.', 'error');
+    };
+  } else {
+    exportToExcelWorksheets(moduleName);
+  }
+}
+
+// Export all tabs into an Excel Workbook with multiple sheets
+function exportToExcelWorksheets(moduleName) {
+  try {
+    const wb = XLSX.utils.book_new();
+    const tabs = document.querySelectorAll('.tab-content');
+    
+    if (tabs.length === 0) {
+      showAlert('Tidak ada data tab untuk diekspor.', 'error');
+      return;
+    }
+
+    tabs.forEach(tab => {
+      const tabId = tab.id;
+      const tabNameKey = tabId.replace('tab-', '');
+      const btn = document.querySelector(`.tab-btn[onclick*="'${tabNameKey}'"]`) || 
+                  document.querySelector(`.tab-btn[onclick*="switchTab('${tabNameKey}'"]`) ||
+                  document.querySelector(`.tab-btn[onclick*="${tabNameKey}"]`);
+      let sheetName = btn ? btn.textContent.trim() : tabNameKey.toUpperCase();
+      sheetName = sheetName.replace(/[\\\/?\*:\[\]]/g, '').substring(0, 30);
+      if (!sheetName) sheetName = tabId;
+
+      // Find all tables in this tab
+      const tables = tab.querySelectorAll('table');
+      if (tables.length === 0) return;
+
+      const tempContainer = document.createElement('div');
+      
+      tables.forEach((table, index) => {
+        const clone = table.cloneNode(true);
+        
+        // Replace inputs with values
+        clone.querySelectorAll('input, select, textarea').forEach(el => {
+          let val = '';
+          if (el.type === 'checkbox' || el.type === 'radio') {
+            val = el.checked ? '✓' : '';
+          } else {
+            val = el.value || '';
+          }
+          const span = document.createElement('span');
+          span.textContent = val;
+          el.parentNode.replaceChild(span, el);
+        });
+
+        // Clean up buttons and no-print elements in the cloned table
+        clone.querySelectorAll('.no-print, button, .btn-insert-row, .btn-delete-row').forEach(el => el.remove());
+        
+        tempContainer.appendChild(clone);
+        
+        // Add spacing rows between tables
+        if (index < tables.length - 1) {
+          const spaceTable = document.createElement('table');
+          spaceTable.innerHTML = '<tr><td style="border:none;">&nbsp;</td></tr>';
+          tempContainer.appendChild(spaceTable);
+        }
+      });
+
+      // Convert compiled tables to worksheet
+      const ws = XLSX.utils.table_to_sheet(tempContainer);
+      XLSX.utils.book_append_sheet(wb, ws, sheetName);
+    });
+
+    // Make filename dynamic
+    const container = document.getElementById('moduleContainer') || document.body;
+    let customerVal = '';
+    let typesnVal = '';
+    const customerEl = container.querySelector('.sync-customer') || container.querySelector('[class*="customer"]');
+    const typesnEl = container.querySelector('.sync-typesn') || container.querySelector('[class*="type"]') || container.querySelector('[class*="sn"]');
+    if (customerEl) customerVal = customerEl.value.trim().replace(/[^a-zA-Z0-9]/g, '_');
+    if (typesnEl) typesnVal = typesnEl.value.trim().replace(/[^a-zA-Z0-9]/g, '_');
+
+    const dateStr = new Date().toISOString().slice(0, 10);
+    let fileName = `INSPEKSI_${moduleName.toUpperCase().replace(/\s+/g, '_')}`;
+    if (customerVal) fileName += `_${customerVal}`;
+    if (typesnVal) fileName += `_${typesnVal}`;
+    fileName += `_${dateStr}.xlsx`;
+
+    XLSX.writeFile(wb, fileName);
+    showAlert('Data berhasil diekspor ke Excel!', 'success');
+  } catch (err) {
+    console.error('Error exporting to Excel:', err);
+    showAlert('Gagal mengekspor data ke Excel.', 'error');
+  }
+}
+
+// Print to PDF
+function triggerPrintPDF(event) {
+  event.preventDefault();
+  event.stopPropagation();
+  
+  const menu = event.target.closest('.dropdown-menu');
+  if (menu) menu.classList.remove('show');
+  
   window.print();
 }
 
