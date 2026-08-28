@@ -485,7 +485,7 @@ function triggerExportExcel(event, moduleName) {
 }
 
 // Export all tabs into an Excel Workbook with multiple sheets
-function exportToExcelWorksheets(moduleName) {
+async function exportToExcelWorksheets(moduleName) {
   try {
     const wb = XLSX.utils.book_new();
     const tabs = document.querySelectorAll('.tab-content');
@@ -560,6 +560,37 @@ function exportToExcelWorksheets(moduleName) {
     if (typesnVal) fileName += `_${typesnVal}`;
     fileName += `_${dateStr}.xlsx`;
 
+    // Generate Array Buffer / Blob data from workbook
+    const wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
+    const fileData = new Blob([wbout], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+
+    // Coba gunakan File System Access API agar muncul Save File Dialog pemilihan lokasi
+    if ('showSaveFilePicker' in window) {
+      try {
+        const handle = await window.showSaveFilePicker({
+          suggestedName: fileName,
+          types: [{
+            description: 'Excel Files',
+            accept: {
+              'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': ['.xlsx']
+            }
+          }]
+        });
+        const writable = await handle.createWritable();
+        await writable.write(fileData);
+        await writable.close();
+        showAlert('Data berhasil diekspor ke Excel!', 'success');
+        return;
+      } catch (err) {
+        if (err.name === 'AbortError') {
+          console.log('User membatalkan dialog penyimpanan Excel.');
+          return;
+        }
+        console.error('Error dengan showSaveFilePicker untuk Excel, menggunakan fallback:', err);
+      }
+    }
+
+    // Fallback jika tidak didukung showSaveFilePicker
     XLSX.writeFile(wb, fileName);
     showAlert('Data berhasil diekspor ke Excel!', 'success');
   } catch (err) {
