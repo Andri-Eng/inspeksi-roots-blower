@@ -746,3 +746,484 @@ document.addEventListener('click', function(e) {
     }
   }
 });
+
+// ==================== UNIVERSAL TOUCH-FRIENDLY ARROW ANNOTATOR ENGINE (MOBILE 5.5" OPTIMIZED) ====================
+const universalAnnotatorState = {
+  rotor: { code: 65, isAdd: false, selectedMarker: null, stemLen: 30 },
+  housing: { code: 65, isAdd: false, selectedMarker: null, stemLen: 30 },
+  runout: { code: 65, isAdd: false, selectedMarker: null, stemLen: 30 }
+};
+
+// Aliases for backward compatibility
+const annotatorState = universalAnnotatorState;
+
+function loadAnnotatorImage(event, imgId, placeholderId, statusId) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    const preview = document.getElementById(imgId);
+    if (preview) {
+      preview.src = e.target.result;
+      preview.style.display = 'block';
+    }
+    const placeholder = document.getElementById(placeholderId);
+    if (placeholder) placeholder.style.display = 'none';
+
+    const status = document.getElementById(statusId);
+    if (status) status.innerText = "Foto siap! Klik 'Tambah Panah' untuk mulai menandai.";
+
+    // Trigger auto-save of state if container exists
+    const container = document.getElementById('moduleContainer') || document.body;
+    const activeModule = localStorage.getItem('activeModule') || 'GENERAL';
+    if (typeof saveFormData === 'function') saveFormData(activeModule, container);
+  };
+  reader.readAsDataURL(file);
+}
+
+function updateAnnotatorButtonState(type) {
+  const state = universalAnnotatorState[type] || (universalAnnotatorState[type] = { code: 65, isAdd: false, selectedMarker: null, stemLen: 30 });
+  const typeCap = type.charAt(0).toUpperCase() + type.slice(1);
+  const btn = document.getElementById('btnModePanah' + typeCap) || document.querySelector(`[onclick*="toggleAddMarkerMode('${type}')"]`);
+  const area = document.getElementById(type + 'AnnotationArea');
+  const status = document.getElementById('statusMode' + typeCap);
+
+  if (state.isAdd) {
+    if (btn) {
+      btn.classList.add('active-mode');
+      btn.innerHTML = '🎯 Ketuk pada Foto';
+    }
+    if (area) {
+      area.classList.add('adding-mode');
+      area.style.cursor = 'crosshair';
+    }
+    if (status) status.innerText = `Ketuk 1 titik foto untuk menaruh panah (${String.fromCharCode(state.code)}).`;
+  } else {
+    if (btn) {
+      btn.classList.remove('active-mode');
+      btn.innerHTML = '➕ Tambah Panah';
+    }
+    if (area) {
+      area.classList.remove('adding-mode');
+      area.style.cursor = 'default';
+    }
+    if (status) status.innerText = `Siap. Panah berikutnya: (${String.fromCharCode(state.code)}). Ketuk panah di foto untuk mengedit.`;
+  }
+}
+
+function toggleAddMarkerMode(type) {
+  const state = universalAnnotatorState[type] || (universalAnnotatorState[type] = { code: 65, isAdd: false, selectedMarker: null, stemLen: 30 });
+  const previewImg = document.getElementById(type + 'PreviewImg');
+  if (!previewImg || !previewImg.src || previewImg.style.display === 'none') {
+    alert('Silakan ambil foto atau unggah foto komponen terlebih dahulu.');
+    return;
+  }
+  state.isAdd = !state.isAdd;
+  if (state.isAdd) {
+    deselectAnnotatorMarker(type);
+  }
+  updateAnnotatorButtonState(type);
+}
+
+function setupAnnotatorAreaListener(type) {
+  const area = document.getElementById(type + 'AnnotationArea');
+  if (!area) return;
+
+  // Build the Mobile Control Panel if not present
+  ensureControlPanelExists(type, area);
+
+  // Click / Tap listener on the container to place arrow
+  area.addEventListener('pointerdown', function(e) {
+    const state = universalAnnotatorState[type];
+    if (!state || !state.isAdd) return;
+    if (e.target.closest('.rotor-marker')) return;
+
+    e.preventDefault();
+    const rect = area.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    const label = String.fromCharCode(state.code);
+    const newMarker = createUniversalMarker(area, x, y, label, type);
+
+    state.code++;
+    state.isAdd = false;
+    updateAnnotatorButtonState(type);
+
+    // Auto-select the newly created marker for immediate mobile adjustments
+    selectAnnotatorMarker(newMarker, type);
+  });
+}
+
+// Build interactive control panel for 5.5" mobile edit
+function ensureControlPanelExists(type, area) {
+  const wrapper = area.closest('.rotor-annotator-wrapper') || area.parentNode;
+  if (!wrapper) return;
+
+  let panel = wrapper.querySelector(`.annotator-control-panel[data-type="${type}"]`);
+  if (!panel) {
+    panel = document.createElement('div');
+    panel.className = 'annotator-control-panel no-print';
+    panel.setAttribute('data-type', type);
+    panel.id = `${type}ControlPanel`;
+
+    panel.innerHTML = `
+      <div class="control-panel-row">
+        <div class="control-label-badge">
+          <span>📍 Panah:</span>
+          <span class="badge-circle" id="${type}CtrlLabel">A</span>
+          <button type="button" class="btn-ctrl-item" onclick="editSelectedMarkerLabel('${type}')" title="Ubah Huruf/Teks Label" style="padding: 4px 8px; font-size: 11px; background: #3b82f6; color: #fff;">✏️ Edit</button>
+        </div>
+
+        <div style="display: flex; gap: 6px; align-items: center;">
+          <span style="font-size: 12px; color: #94a3b8;">Arah:</span>
+          <div class="btn-control-group">
+            <button type="button" class="btn-ctrl-item" onclick="setSelectedMarkerDirection('${type}', 'up')" title="Panah Ke Atas">⬆️</button>
+            <button type="button" class="btn-ctrl-item" onclick="setSelectedMarkerDirection('${type}', 'right')" title="Panah Ke Kanan">➡️</button>
+            <button type="button" class="btn-ctrl-item active" onclick="setSelectedMarkerDirection('${type}', 'down')" title="Panah Ke Bawah">⬇️</button>
+            <button type="button" class="btn-ctrl-item" onclick="setSelectedMarkerDirection('${type}', 'left')" title="Panah Ke Kiri">⬅️</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="control-panel-row">
+        <div style="display: flex; gap: 6px; align-items: center;">
+          <span style="font-size: 12px; color: #94a3b8;">Panjang:</span>
+          <div class="btn-control-group">
+            <button type="button" class="btn-ctrl-item" onclick="adjustSelectedMarkerStem('${type}', -6)" title="Perpendek Panah">➖</button>
+            <span id="${type}StemLenIndicator" style="font-size: 11px; padding: 4px 6px; font-weight: bold; color: #38bdf8;">30px</span>
+            <button type="button" class="btn-ctrl-item" onclick="adjustSelectedMarkerStem('${type}', 6)" title="Perpanjang Panah">➕</button>
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 6px; align-items: center;">
+          <span style="font-size: 12px; color: #94a3b8;">Geser:</span>
+          <div class="dpad-container">
+            <div></div>
+            <button type="button" class="dpad-btn" onclick="nudgeSelectedMarker('${type}', 0, -5)" title="Geser Atas">▲</button>
+            <div></div>
+            <button type="button" class="dpad-btn" onclick="nudgeSelectedMarker('${type}', -5, 0)" title="Geser Kiri">◀</button>
+            <div class="dpad-center">●</div>
+            <button type="button" class="dpad-btn" onclick="nudgeSelectedMarker('${type}', 5, 0)" title="Geser Kanan">▶</button>
+            <div></div>
+            <button type="button" class="dpad-btn" onclick="nudgeSelectedMarker('${type}', 0, 5)" title="Geser Bawah">▼</button>
+            <div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="control-panel-row">
+        <button type="button" class="btn-ctrl-item" onclick="deleteSelectedMarker('${type}')" style="background: #dc2626; color: #fff; padding: 6px 12px; font-size: 12px;">
+          🗑️ Hapus Panah Ini
+        </button>
+        <button type="button" class="btn-ctrl-item" onclick="deselectAnnotatorMarker('${type}')" style="background: #16a34a; color: #fff; padding: 6px 16px; font-size: 12px;">
+          ✔️ Selesai Edit
+        </button>
+      </div>
+    `;
+
+    wrapper.appendChild(panel);
+  }
+}
+
+// Create marker with both touch & mouse pointer drag capabilities
+function createUniversalMarker(containerArea, x, y, label, type) {
+  const marker = document.createElement('div');
+  marker.className = 'rotor-marker dir-down';
+  marker.setAttribute('data-dir', 'down');
+  marker.setAttribute('data-stem-len', '30');
+  marker.style.left = `${Math.round(x)}px`;
+  marker.style.top = `${Math.round(y)}px`;
+
+  marker.innerHTML = `
+    <div class="rotor-badge" title="Ketuk untuk edit / Tahan & geser">${label}</div>
+    <div class="rotor-stem" style="height: 30px;"></div>
+    <div class="rotor-arrow" title="Tarik ujung panah untuk memutar arah"></div>
+  `;
+
+  const badge = marker.querySelector('.rotor-badge');
+  const stem = marker.querySelector('.rotor-stem');
+  const arrow = marker.querySelector('.rotor-arrow');
+
+  // Unified Pointer & Touch Dragging for BADGE
+  badge.addEventListener('pointerdown', function(e) {
+    e.stopPropagation();
+    e.preventDefault();
+
+    selectAnnotatorMarker(marker, type);
+
+    const rect = containerArea.getBoundingClientRect();
+    let startX = e.clientX;
+    let startY = e.clientY;
+    let initialLeft = parseFloat(marker.style.left) || 0;
+    let initialTop = parseFloat(marker.style.top) || 0;
+
+    badge.setPointerCapture(e.pointerId);
+
+    function onPointerMove(moveEvent) {
+      const dx = moveEvent.clientX - startX;
+      const dy = moveEvent.clientY - startY;
+
+      let newLeft = Math.max(10, Math.min(rect.width - 10, initialLeft + dx));
+      let newTop = Math.max(10, Math.min(rect.height - 10, initialTop + dy));
+
+      marker.style.left = `${Math.round(newLeft)}px`;
+      marker.style.top = `${Math.round(newTop)}px`;
+    }
+
+    function onPointerUp(upEvent) {
+      badge.releasePointerCapture(upEvent.pointerId);
+      badge.removeEventListener('pointermove', onPointerMove);
+      badge.removeEventListener('pointerup', onPointerUp);
+      badge.removeEventListener('pointercancel', onPointerUp);
+    }
+
+    badge.addEventListener('pointermove', onPointerMove);
+    badge.addEventListener('pointerup', onPointerUp);
+    badge.addEventListener('pointercancel', onPointerUp);
+  });
+
+  // Unified Pointer & Touch Dragging for ARROW ROTATION & LENGTH
+  arrow.addEventListener('pointerdown', function(e) {
+    e.stopPropagation();
+    e.preventDefault();
+
+    selectAnnotatorMarker(marker, type);
+    arrow.setPointerCapture(e.pointerId);
+
+    function onArrowPointerMove(moveEvent) {
+      const badgeRect = badge.getBoundingClientRect();
+      const badgeCenterX = badgeRect.left + badgeRect.width / 2;
+      const badgeCenterY = badgeRect.top + badgeRect.height / 2;
+
+      const dx = moveEvent.clientX - badgeCenterX;
+      const dy = moveEvent.clientY - badgeCenterY;
+
+      const angle = Math.atan2(dy, dx) * (180 / Math.PI);
+      let dir = 'down';
+      let stemLen = 30;
+
+      if (angle >= -45 && angle <= 45) {
+        dir = 'right';
+        stemLen = Math.max(12, Math.min(150, Math.abs(dx) - 18));
+      } else if (angle > 45 && angle <= 135) {
+        dir = 'down';
+        stemLen = Math.max(12, Math.min(150, Math.abs(dy) - 18));
+      } else if (angle < -45 && angle >= -135) {
+        dir = 'up';
+        stemLen = Math.max(12, Math.min(150, Math.abs(dy) - 18));
+      } else {
+        dir = 'left';
+        stemLen = Math.max(12, Math.min(150, Math.abs(dx) - 18));
+      }
+
+      setMarkerDirectionAndLength(marker, dir, Math.round(stemLen), type);
+    }
+
+    function onArrowPointerUp(upEvent) {
+      arrow.releasePointerCapture(upEvent.pointerId);
+      arrow.removeEventListener('pointermove', onArrowPointerMove);
+      arrow.removeEventListener('pointerup', onArrowPointerUp);
+      arrow.removeEventListener('pointercancel', onArrowPointerUp);
+    }
+
+    arrow.addEventListener('pointermove', onArrowPointerMove);
+    arrow.addEventListener('pointerup', onArrowPointerUp);
+    arrow.addEventListener('pointercancel', onArrowPointerUp);
+  });
+
+  containerArea.appendChild(marker);
+  return marker;
+}
+
+// Select a marker and show its toolbar
+function selectAnnotatorMarker(marker, type) {
+  const state = universalAnnotatorState[type] || (universalAnnotatorState[type] = { code: 65, isAdd: false, selectedMarker: null, stemLen: 30 });
+  const area = document.getElementById(type + 'AnnotationArea');
+  if (!area) return;
+
+  // Clear other selections
+  area.querySelectorAll('.rotor-marker').forEach(m => m.classList.remove('selected'));
+
+  marker.classList.add('selected');
+  state.selectedMarker = marker;
+
+  // Show control panel
+  const panel = document.getElementById(`${type}ControlPanel`);
+  if (panel) {
+    panel.classList.add('show');
+    const badge = marker.querySelector('.rotor-badge');
+    const labelEl = document.getElementById(`${type}CtrlLabel`);
+    if (labelEl && badge) labelEl.innerText = badge.innerText;
+
+    const dir = marker.getAttribute('data-dir') || 'down';
+    const stemLen = parseInt(marker.getAttribute('data-stem-len')) || 30;
+
+    updateControlPanelButtons(type, dir, stemLen);
+  }
+}
+
+// Deselect marker and hide toolbar
+function deselectAnnotatorMarker(type) {
+  const state = universalAnnotatorState[type];
+  if (state) state.selectedMarker = null;
+
+  const area = document.getElementById(type + 'AnnotationArea');
+  if (area) {
+    area.querySelectorAll('.rotor-marker').forEach(m => m.classList.remove('selected'));
+  }
+
+  const panel = document.getElementById(`${type}ControlPanel`);
+  if (panel) {
+    panel.classList.remove('show');
+  }
+}
+
+function updateControlPanelButtons(type, dir, stemLen) {
+  const panel = document.getElementById(`${type}ControlPanel`);
+  if (!panel) return;
+
+  panel.querySelectorAll('.btn-control-group button').forEach(btn => {
+    btn.classList.remove('active');
+    const onclickStr = btn.getAttribute('onclick') || '';
+    if (onclickStr.includes(`'${dir}'`)) {
+      btn.classList.add('active');
+    }
+  });
+
+  const indicator = document.getElementById(`${type}StemLenIndicator`);
+  if (indicator) indicator.innerText = `${stemLen}px`;
+}
+
+function setSelectedMarkerDirection(type, dir) {
+  const state = universalAnnotatorState[type];
+  if (!state || !state.selectedMarker) return;
+  const stemLen = parseInt(state.selectedMarker.getAttribute('data-stem-len')) || 30;
+  setMarkerDirectionAndLength(state.selectedMarker, dir, stemLen, type);
+}
+
+function setMarkerDirectionAndLength(marker, dir, stemLen, type) {
+  marker.className = `rotor-marker dir-${dir} selected`;
+  marker.setAttribute('data-dir', dir);
+  marker.setAttribute('data-stem-len', stemLen);
+
+  const stem = marker.querySelector('.rotor-stem');
+  if (stem) {
+    if (dir === 'down' || dir === 'up') {
+      stem.style.width = '2.5px';
+      stem.style.height = `${stemLen}px`;
+    } else {
+      stem.style.height = '2.5px';
+      stem.style.width = `${stemLen}px`;
+    }
+  }
+
+  if (type) {
+    updateControlPanelButtons(type, dir, stemLen);
+  }
+}
+
+function adjustSelectedMarkerStem(type, delta) {
+  const state = universalAnnotatorState[type];
+  if (!state || !state.selectedMarker) return;
+
+  let stemLen = parseInt(state.selectedMarker.getAttribute('data-stem-len')) || 30;
+  stemLen = Math.max(12, Math.min(160, stemLen + delta));
+  const dir = state.selectedMarker.getAttribute('data-dir') || 'down';
+
+  setMarkerDirectionAndLength(state.selectedMarker, dir, stemLen, type);
+}
+
+function nudgeSelectedMarker(type, dx, dy) {
+  const state = universalAnnotatorState[type];
+  if (!state || !state.selectedMarker) return;
+
+  const marker = state.selectedMarker;
+  const area = document.getElementById(type + 'AnnotationArea');
+  const rect = area ? area.getBoundingClientRect() : { width: 800, height: 600 };
+
+  let left = parseFloat(marker.style.left) || 0;
+  let top = parseFloat(marker.style.top) || 0;
+
+  left = Math.max(5, Math.min(rect.width - 5, left + dx));
+  top = Math.max(5, Math.min(rect.height - 5, top + dy));
+
+  marker.style.left = `${Math.round(left)}px`;
+  marker.style.top = `${Math.round(top)}px`;
+}
+
+function editSelectedMarkerLabel(type) {
+  const state = universalAnnotatorState[type];
+  if (!state || !state.selectedMarker) return;
+
+  const badge = state.selectedMarker.querySelector('.rotor-badge');
+  const currentLabel = badge ? badge.innerText : '';
+  const newLabel = prompt('Masukkan teks label panah (misal: A, B, C, atau nama part):', currentLabel);
+
+  if (newLabel !== null && newLabel.trim() !== '') {
+    const cleanLabel = newLabel.trim().toUpperCase();
+    if (badge) badge.innerText = cleanLabel;
+    const labelEl = document.getElementById(`${type}CtrlLabel`);
+    if (labelEl) labelEl.innerText = cleanLabel;
+  }
+}
+
+function deleteSelectedMarker(type) {
+  const state = universalAnnotatorState[type];
+  if (!state || !state.selectedMarker) return;
+
+  state.selectedMarker.remove();
+  state.selectedMarker = null;
+  deselectAnnotatorMarker(type);
+
+  const status = document.getElementById('statusMode' + type.charAt(0).toUpperCase() + type.slice(1));
+  if (status) status.innerText = 'Panah berhasil dihapus.';
+}
+
+function undoLastMarker(areaId, type) {
+  const area = document.getElementById(areaId);
+  if (!area) return;
+  const markers = area.querySelectorAll('.rotor-marker');
+  if (markers.length > 0) {
+    markers[markers.length - 1].remove();
+    const state = universalAnnotatorState[type];
+    if (state) {
+      state.code = Math.max(65, state.code - 1);
+      state.selectedMarker = null;
+      deselectAnnotatorMarker(type);
+      const status = document.getElementById('statusMode' + type.charAt(0).toUpperCase() + type.slice(1));
+      if (status) status.innerText = `Label terakhir dihapus. Siap untuk (${String.fromCharCode(state.code)})`;
+    }
+  }
+}
+
+function resetAnnotatorCanvas(areaId, imgId, placeholderId, inputId, btnId, statusId, type) {
+  const area = document.getElementById(areaId);
+  if (area) area.querySelectorAll('.rotor-marker').forEach(m => m.remove());
+  const preview = document.getElementById(imgId);
+  if (preview) {
+    preview.src = '';
+    preview.style.display = 'none';
+  }
+  const placeholder = document.getElementById(placeholderId);
+  if (placeholder) placeholder.style.display = 'block';
+  const input = document.getElementById(inputId);
+  if (input) input.value = '';
+
+  const state = universalAnnotatorState[type];
+  if (state) {
+    state.code = 65;
+    state.isAdd = false;
+    state.selectedMarker = null;
+  }
+  deselectAnnotatorMarker(type);
+
+  const btn = document.getElementById(btnId);
+  if (btn) {
+    btn.classList.remove('active-mode');
+    btn.innerText = '➕ Tambah Panah';
+  }
+  const status = document.getElementById(statusId);
+  if (status) status.innerText = 'Area berhasil di-reset.';
+}
+

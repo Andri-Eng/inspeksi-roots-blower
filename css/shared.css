@@ -653,6 +653,402 @@ input[type="number"] {
   }
 }
 
+/* ==================== UNIVERSAL PHOTO & ARROW ANNOTATOR (MOBILE 5.5" TOUCH OPTIMIZED) ==================== */
+.rotor-annotator-wrapper {
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  padding: 12px;
+  margin: 12px 0;
+  background: #f8fafc;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+}
+
+.annotator-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.annotator-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 14px;
+  font-size: 13px;
+  font-weight: 700;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  min-height: 38px;
+  touch-action: manipulation;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.annotator-btn:active {
+  transform: scale(0.96);
+}
+
+.annotator-btn-upload { background: #1e3a8a; color: #ffffff; }
+.annotator-btn-upload:hover { background: #172554; }
+
+.annotator-btn-add { background: #0284c7; color: #ffffff; }
+.annotator-btn-add.active-mode {
+  background: #16a34a !important;
+  box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.35);
+  animation: pulseAddBtn 1.5s infinite;
+}
+
+@keyframes pulseAddBtn {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.03); }
+  100% { transform: scale(1); }
+}
+
+.annotator-btn-undo { background: #eab308; color: #1e293b; }
+.annotator-btn-undo:hover { background: #ca8a04; }
+
+.annotator-btn-reset { background: #dc2626; color: #ffffff; }
+.annotator-btn-reset:hover { background: #b91c1c; }
+
+.annotator-btn-fullscreen { background: #4f46e5; color: #ffffff; }
+.annotator-btn-fullscreen:hover { background: #4338ca; }
+
+.annotator-status-text {
+  font-size: 12px;
+  color: #475569;
+  font-weight: 500;
+  margin-left: auto;
+  padding: 4px 8px;
+  background: #ffffff;
+  border-radius: 4px;
+  border: 1px solid #e2e8f0;
+}
+
+.rotor-annotation-area {
+  position: relative;
+  width: 100%;
+  min-height: 280px;
+  border: 2px dashed #94a3b8;
+  border-radius: 8px;
+  background: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  user-select: none;
+  touch-action: none;
+}
+
+.rotor-annotation-area.adding-mode {
+  border-color: #16a34a;
+  background: #f0fdf4;
+  cursor: crosshair !important;
+}
+
+.rotor-annotation-area.adding-mode::before {
+  content: '🎯 Ketuk foto di posisi yang ingin ditunjuk panah';
+  position: absolute;
+  top: 10px;
+  background: rgba(22, 163, 74, 0.92);
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 6px 16px;
+  border-radius: 20px;
+  z-index: 50;
+  pointer-events: none;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  animation: fadeIn 0.3s ease;
+}
+
+.annotator-preview-img {
+  display: none;
+  max-width: 100%;
+  max-height: 480px;
+  object-fit: contain;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* ==================== MARKER ARROW & BADGE (TOUCH HITBOX) ==================== */
+.rotor-marker {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 20;
+  user-select: none;
+  touch-action: none;
+  cursor: move;
+}
+
+.rotor-marker.selected {
+  z-index: 40;
+}
+
+.rotor-marker.selected .rotor-badge {
+  box-shadow: 0 0 0 3px #3b82f6, 0 0 12px rgba(59, 130, 246, 0.8) !important;
+  border-color: #2563eb !important;
+  background-color: #eff6ff !important;
+}
+
+.rotor-marker.dir-down  { flex-direction: column; transform: translate(-50%, 0); }
+.rotor-marker.dir-up    { flex-direction: column-reverse; transform: translate(-50%, -100%); }
+.rotor-marker.dir-right { flex-direction: row; transform: translate(0, -50%); }
+.rotor-marker.dir-left  { flex-direction: row-reverse; transform: translate(-100%, -50%); }
+
+.rotor-badge {
+  background-color: #ffffff;
+  color: #000000;
+  border: 2px solid #dc2626;
+  font-weight: 800;
+  font-size: 13px;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+  position: relative;
+  flex-shrink: 0;
+  touch-action: none;
+}
+
+/* Expanded touch hitbox for mobile fingers */
+.rotor-badge::after {
+  content: '';
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  right: -10px;
+  bottom: -10px;
+  border-radius: 50%;
+}
+
+.dir-down .rotor-stem, .dir-up .rotor-stem {
+  width: 2.5px;
+  height: 30px;
+  background-color: #dc2626;
+  flex-shrink: 0;
+}
+
+.dir-right .rotor-stem, .dir-left .rotor-stem {
+  height: 2.5px;
+  width: 30px;
+  background-color: #dc2626;
+  flex-shrink: 0;
+}
+
+.rotor-arrow {
+  flex-shrink: 0;
+  position: relative;
+  touch-action: none;
+}
+
+/* Expanded touch hitbox for arrow head */
+.rotor-arrow::after {
+  content: '';
+  position: absolute;
+  top: -12px;
+  left: -12px;
+  right: -12px;
+  bottom: -12px;
+}
+
+.dir-down .rotor-arrow  { width: 0; height: 0; border-left: 6px solid transparent; border-right: 6px solid transparent; border-top: 11px solid #dc2626; }
+.dir-up .rotor-arrow    { width: 0; height: 0; border-left: 6px solid transparent; border-right: 6px solid transparent; border-bottom: 11px solid #dc2626; }
+.dir-right .rotor-arrow { width: 0; height: 0; border-top: 6px solid transparent; border-bottom: 6px solid transparent; border-left: 11px solid #dc2626; }
+.dir-left .rotor-arrow  { width: 0; height: 0; border-top: 6px solid transparent; border-bottom: 6px solid transparent; border-right: 11px solid #dc2626; }
+
+/* ==================== INTERACTIVE MOBILE EDIT CONTROL PANEL ==================== */
+.annotator-control-panel {
+  display: none;
+  background: #1e293b;
+  color: #ffffff;
+  border-radius: 10px;
+  padding: 10px 14px;
+  margin-top: 10px;
+  box-shadow: 0 10px 25px -5px rgba(0,0,0,0.3);
+  border: 1px solid #334155;
+  animation: slideUpControl 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.annotator-control-panel.show {
+  display: block;
+}
+
+@keyframes slideUpControl {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.control-panel-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.control-panel-row:last-child {
+  margin-bottom: 0;
+  padding-top: 6px;
+  border-top: 1px solid rgba(255,255,255,0.1);
+}
+
+.control-label-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #334155;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.control-label-badge span.badge-circle {
+  background: #dc2626;
+  color: #fff;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+}
+
+.btn-control-group {
+  display: inline-flex;
+  background: #0f172a;
+  border-radius: 8px;
+  padding: 3px;
+  gap: 3px;
+  border: 1px solid #334155;
+}
+
+.btn-ctrl-item {
+  background: transparent;
+  border: none;
+  color: #cbd5e1;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 34px;
+  min-height: 34px;
+  touch-action: manipulation;
+  transition: all 0.15s ease;
+}
+
+.btn-ctrl-item:active, .btn-ctrl-item.active {
+  background: #2563eb;
+  color: #ffffff;
+}
+
+.btn-ctrl-item:hover:not(.active) {
+  background: #1e293b;
+  color: #ffffff;
+}
+
+.dpad-container {
+  display: grid;
+  grid-template-columns: repeat(3, 32px);
+  grid-template-rows: repeat(3, 32px);
+  gap: 2px;
+  align-items: center;
+  justify-content: center;
+}
+
+.dpad-btn {
+  background: #334155;
+  color: #ffffff;
+  border: 1px solid #475569;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  cursor: pointer;
+  touch-action: manipulation;
+  user-select: none;
+}
+
+.dpad-btn:active {
+  background: #3b82f6;
+}
+
+.dpad-center {
+  background: #0f172a;
+  color: #64748b;
+  font-size: 10px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ==================== FULLSCREEN ANNOTATOR MODAL (FOR 5.5" PHONES) ==================== */
+.fullscreen-annotator-modal {
+  display: none;
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  width: 100vw;
+  height: 100vh;
+  background: #0f172a;
+  z-index: 3000;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+.fullscreen-annotator-modal.open {
+  display: flex;
+}
+
+.fullscreen-header {
+  background: #1e293b;
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #334155;
+  color: #ffffff;
+}
+
+.fullscreen-header h3 {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.fullscreen-canvas-body {
+  flex: 1;
+  position: relative;
+  overflow: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  background: #090d16;
+}
+
+.fullscreen-footer {
+  background: #1e293b;
+  padding: 10px 14px;
+  border-top: 1px solid #334155;
+}
+
 /* ==================== PRINT ==================== */
 @media print {
   body {
@@ -668,6 +1064,18 @@ input[type="number"] {
     page-break-after: always;
   }
 
+  .rotor-annotator-wrapper {
+    border: 1px solid #000;
+    padding: 8px;
+    margin: 8px 0;
+    background: #fff;
+    box-shadow: none;
+  }
+
+  .annotator-toolbar,
+  .annotator-control-panel,
+  .fullscreen-annotator-modal,
+  .rotor-annotation-area::before,
   .tab-container,
   .btn-action,
   .btn-add-row,
@@ -679,4 +1087,22 @@ input[type="number"] {
   .modal-overlay {
     display: none !important;
   }
+
+  .rotor-annotation-area {
+    border: none !important;
+    background: #fff !important;
+    min-height: auto !important;
+  }
+
+  .rotor-marker {
+    cursor: default !important;
+  }
+
+  .rotor-badge {
+    box-shadow: none !important;
+    border-color: #dc2626 !important;
+    background: #fff !important;
+    color: #000 !important;
+  }
 }
+
