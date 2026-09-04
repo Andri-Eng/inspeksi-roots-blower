@@ -619,8 +619,10 @@
       document.querySelectorAll('.sync-customer').forEach(el => el.value = customer);
       document.querySelectorAll('.sync-noso').forEach(el => el.value = noso);
 
-      document.getElementById('lblOperator').textContent = operator;
-      document.getElementById('lblSupervisor').textContent = supervisor;
+      const opEl = document.getElementById('lblOperator');
+      if (opEl) opEl.textContent = operator;
+      const supEl = document.getElementById('lblSupervisor');
+      if (supEl) supEl.textContent = supervisor;
 
       document.getElementById('pageInit').style.display = 'none';
       document.getElementById('mainSystem').style.display = 'block';
@@ -872,6 +874,8 @@
           <button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button>
         </td>`;
       btn.closest('tr').parentNode.insertBefore(tr, btn.closest('tr').nextSibling);
+    }
+
     // ==================== ENGINE ANOTASI & PANAH DINAMIS UNIVERSAL (TOUCH & MOBILE 5.5" OPTIMIZED) ====================
     if (typeof setupAnnotatorAreaListener === 'function') {
       setupAnnotatorAreaListener('rotor');
