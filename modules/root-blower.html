@@ -857,14 +857,14 @@
         </head>
         <body>
           ${content}
-          <script>
+          \x3Cscript>
             window.onload = function() {
               setTimeout(function() {
                 window.print();
                 window.onafterprint = function() { window.close(); };
               }, 350);
             };
-          <\/script>
+          \x3C/script>
         </body>
         </html>
       `);
