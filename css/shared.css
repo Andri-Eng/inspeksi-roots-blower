@@ -1062,7 +1062,7 @@ input[type="number"] {
     padding: 0 !important;
     width: 100% !important;
     height: auto !important;
-    min-height: 100% !important;
+    min-height: 0 !important;
     display: block !important;
     overflow: visible !important;
   }
@@ -1091,61 +1091,9 @@ input[type="number"] {
     display: none !important;
   }
 
-  /* Mode Cetak Terisolasi: Sembunyikan SEMUA elemen di body KECUALI #appPrintDocument */
-  body.is-printing-document > *:not(#appPrintDocument) {
-    display: none !important;
-  }
-
-  body.is-printing-document {
-    display: block !important;
-    position: static !important;
-    background: #ffffff !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    width: 100% !important;
-    height: auto !important;
-    min-height: 0 !important;
-    overflow: visible !important;
-  }
-
-  #appPrintDocument {
-    display: block !important;
-    position: static !important;
-    width: 100% !important;
-    height: auto !important;
-    min-height: 0 !important;
-    overflow: visible !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    background: #ffffff !important;
-  }
-
-  #appPrintDocument .sheet {
-    display: block !important;
-    position: relative !important;
-    box-shadow: none !important;
-    border: none !important;
-    width: 100% !important;
-    min-width: 0 !important;
-    margin: 0 0 0 0 !important;
-    padding: 0 !important;
-    height: auto !important;
-    min-height: 0 !important;
-    overflow: visible !important;
-    page-break-before: auto !important;
-    page-break-after: always !important;
-    break-after: page !important;
-    page-break-inside: avoid !important;
-    break-inside: avoid !important;
-  }
-
-  #appPrintDocument .sheet:last-child {
-    page-break-after: auto !important;
-    break-after: auto !important;
-  }
-
-  /* Mode Cetak Fallback / Langsung dari Modal Preview */
-  .modal-overlay {
+  /* Tampilkan modal-overlay, modal-content, dan previewSheetContainer sebagai flow dokumen biasa tanpa batas tinggi */
+  .modal-overlay,
+  #reviewModal {
     display: block !important;
     position: static !important;
     background: transparent !important;
@@ -1153,6 +1101,8 @@ input[type="number"] {
     margin: 0 !important;
     width: 100% !important;
     height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
     overflow: visible !important;
     box-shadow: none !important;
     z-index: auto !important;
@@ -1165,6 +1115,7 @@ input[type="number"] {
     max-width: 100% !important;
     height: auto !important;
     min-height: 0 !important;
+    max-height: none !important;
     padding: 0 !important;
     margin: 0 !important;
     border: none !important;
@@ -1176,10 +1127,14 @@ input[type="number"] {
 
   #previewSheetContainer {
     display: block !important;
+    position: static !important;
     width: 100% !important;
     height: auto !important;
     min-height: 0 !important;
+    max-height: none !important;
     overflow: visible !important;
+    overflow-x: visible !important;
+    overflow-y: visible !important;
     padding: 0 !important;
     margin: 0 !important;
     background: transparent !important;
@@ -1192,8 +1147,11 @@ input[type="number"] {
     border: none !important;
     width: 100% !important;
     min-width: 0 !important;
-    margin: 0 0 15px 0 !important;
+    margin: 0 !important;
     padding: 0 !important;
+    height: auto !important;
+    min-height: 0 !important;
+    overflow: visible !important;
     page-break-before: auto !important;
     page-break-after: always !important;
     break-after: page !important;

@@ -1515,35 +1515,29 @@ function executeDocumentPrint(content, docTitle) {
   const originalTitle = document.title;
   document.title = docTitle;
 
-  // 1. Buat atau ambil container cetak murni langsung di bawah <body> (lepas dari batasan flex/modal)
-  let printDiv = document.getElementById('appPrintDocument');
-  if (!printDiv) {
-    printDiv = document.createElement('div');
-    printDiv.id = 'appPrintDocument';
-    document.body.appendChild(printDiv);
+  const container = document.getElementById('previewSheetContainer');
+  if (container) {
+    if (content && container.innerHTML !== content) {
+      container.innerHTML = content;
+    }
+    // Netralkan inline style scroll/flex agar print engine browser dapat membagi halaman secara alami
+    container.style.overflow = 'visible';
+    container.style.overflowY = 'visible';
+    container.style.flex = 'none';
   }
 
-  // Masukkan konten seluruh lembar sheet
-  printDiv.innerHTML = content;
-
-  // 2. Aktifkan kelas cetak khusus pada body
-  document.body.classList.add('is-printing-document');
-
-  // 3. Jeda 350ms agar browser selesai me-render dan menata posisi gambar
+  // Beri jeda 300ms agar browser selesai menata DOM dan merender gambar
   setTimeout(() => {
     window.print();
-
-    // Kembalikan status setelah dialog cetak selesai / ditutup
-    const cleanup = () => {
-      document.body.classList.remove('is-printing-document');
-      if (printDiv) printDiv.innerHTML = '';
+    setTimeout(() => {
       document.title = originalTitle;
-      window.removeEventListener('afterprint', cleanup);
-    };
-
-    window.addEventListener('afterprint', cleanup, { once: true });
-    setTimeout(cleanup, 2500);
-  }, 350);
+      if (container) {
+        container.style.overflow = 'auto';
+        container.style.overflowY = 'auto';
+        container.style.flex = '1';
+      }
+    }, 1200);
+  }, 300);
 }
 
 
