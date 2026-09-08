@@ -532,6 +532,7 @@
   </div>
 
   <!-- ==================== LOGIKA JAVASCRIPT ==================== -->
+  <script src="../js/shared.js"></script>
   <script>
     // 1. MASTER MID AUTOCOMPLETE SYSTEM
     let masterMidDb = [];
@@ -677,6 +678,11 @@
         container.appendChild(clonedSheet);
       });
 
+      // RENDER & FLATTEN GAMBAR ANOTASI KE GAMBAR STATIS AGAR 100% TERKUNCI & PDF RINGAN
+      if (typeof prepareAnnotatedImagesForReview === 'function') {
+        prepareAnnotatedImagesForReview(container);
+      }
+
       document.getElementById('reviewModal').style.display = 'flex';
     }
 
@@ -685,7 +691,17 @@
     }
 
     function generatePDF() {
-      const content = document.getElementById('previewSheetContainer').innerHTML;
+      const container = document.getElementById('previewSheetContainer');
+      if (!container) {
+        alert('Area preview tidak ditemukan!');
+        return;
+      }
+
+      if (typeof prepareAnnotatedImagesForReview === 'function') {
+        prepareAnnotatedImagesForReview(container);
+      }
+
+      const content = container.innerHTML;
       const printWindow = window.open('', '_blank', 'width=900,height=800');
       
       if (!printWindow) {

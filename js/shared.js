@@ -122,7 +122,8 @@ async function loadModule(moduleName) {
 }
 
 // Canvas Annotation Management
-const canvasAnnotations = {};
+var canvasAnnotations = window.canvasAnnotations || {};
+window.canvasAnnotations = canvasAnnotations;
 
 function initCanvasAnnotations(canvasId) {
   if (!canvasAnnotations[canvasId]) {
@@ -748,35 +749,68 @@ document.addEventListener('click', function(e) {
 });
 
 // ==================== UNIVERSAL TOUCH-FRIENDLY ARROW ANNOTATOR ENGINE (MOBILE 5.5" OPTIMIZED) ====================
-const universalAnnotatorState = {
-  rotor: { code: 65, isAdd: false, selectedMarker: null, stemLen: 30 },
-  housing: { code: 65, isAdd: false, selectedMarker: null, stemLen: 30 },
-  runout: { code: 65, isAdd: false, selectedMarker: null, stemLen: 30 }
-};
-
-// Aliases for backward compatibility
-const annotatorState = universalAnnotatorState;
+if (!window.universalAnnotatorState) {
+  window.universalAnnotatorState = {
+    rotor: { code: 65, isAdd: false, selectedMarker: null, stemLen: 30 },
+    housing: { code: 65, isAdd: false, selectedMarker: null, stemLen: 30 },
+    runout: { code: 65, isAdd: false, selectedMarker: null, stemLen: 30 }
+  };
+}
+var universalAnnotatorState = window.universalAnnotatorState;
+var annotatorState = universalAnnotatorState;
 
 function loadAnnotatorImage(event, imgId, placeholderId, statusId) {
   const file = event.target.files[0];
   if (!file) return;
+
+  const status = document.getElementById(statusId);
+  if (status) status.innerText = "⏳ Memproses & mengompresi foto...";
+
   const reader = new FileReader();
   reader.onload = function(e) {
-    const preview = document.getElementById(imgId);
-    if (preview) {
-      preview.src = e.target.result;
-      preview.style.display = 'block';
-    }
-    const placeholder = document.getElementById(placeholderId);
-    if (placeholder) placeholder.style.display = 'none';
+    const img = new Image();
+    img.onload = function() {
+      // Optimasi Dokumen: Sisi terpanjang foto maksimal 1280px (sangat tajam untuk PDF A4)
+      const maxDim = 1280;
+      let width = img.width;
+      let height = img.height;
 
-    const status = document.getElementById(statusId);
-    if (status) status.innerText = "Foto siap! Klik 'Tambah Panah' untuk mulai menandai.";
+      if (width > maxDim || height > maxDim) {
+        if (width > height) {
+          height = Math.round((height * maxDim) / width);
+          width = maxDim;
+        } else {
+          width = Math.round((width * maxDim) / height);
+          height = maxDim;
+        }
+      }
 
-    // Trigger auto-save of state if container exists
-    const container = document.getElementById('moduleContainer') || document.body;
-    const activeModule = localStorage.getItem('activeModule') || 'GENERAL';
-    if (typeof saveFormData === 'function') saveFormData(activeModule, container);
+      // Render ke Canvas untuk kompresi otomatis
+      const canvas = document.createElement('canvas');
+      canvas.width = width;
+      canvas.height = height;
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(img, 0, 0, width, height);
+
+      // Kompres ke JPEG kualitas 0.82 (ukuran terpangkas drastis ~90%, PDF menjadi sangat ringan)
+      const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.82);
+
+      const preview = document.getElementById(imgId);
+      if (preview) {
+        preview.src = compressedDataUrl;
+        preview.style.display = 'block';
+      }
+      const placeholder = document.getElementById(placeholderId);
+      if (placeholder) placeholder.style.display = 'none';
+
+      if (status) status.innerText = "Foto siap! Klik 'Tambah Panah' untuk mulai menandai.";
+
+      // Trigger auto-save
+      const container = document.getElementById('moduleContainer') || document.body;
+      const activeModule = localStorage.getItem('activeModule') || 'GENERAL';
+      if (typeof saveFormData === 'function') saveFormData(activeModule, container);
+    };
+    img.src = e.target.result;
   };
   reader.readAsDataURL(file);
 }
@@ -837,6 +871,12 @@ function setupAnnotatorAreaListener(type) {
     const state = universalAnnotatorState[type];
     if (!state || !state.isAdd) return;
     if (e.target.closest('.rotor-marker')) return;
+
+    const previewImg = document.getElementById(type + 'PreviewImg');
+    if (!previewImg || !previewImg.src || previewImg.style.display === 'none') {
+      alert('Silakan unggah foto terlebih dahulu.');
+      return;
+    }
 
     e.preventDefault();
     const rect = area.getBoundingClientRect();
@@ -926,6 +966,23 @@ function ensureControlPanelExists(type, area) {
   }
 }
 
+// Helper to keep marker's percentage position relative to the image
+function updateMarkerPct(marker, type) {
+  const previewImg = document.getElementById(type + 'PreviewImg');
+  if (!previewImg || previewImg.offsetWidth === 0) return;
+  const markerRect = marker.getBoundingClientRect();
+  const imgRect = previewImg.getBoundingClientRect();
+
+  const relX = (markerRect.left + markerRect.width / 2) - imgRect.left;
+  const relY = markerRect.top - imgRect.top;
+
+  const pctX = (relX / imgRect.width) * 100;
+  const pctY = (relY / imgRect.height) * 100;
+
+  marker.setAttribute('data-pct-x', pctX.toFixed(3));
+  marker.setAttribute('data-pct-y', pctY.toFixed(3));
+}
+
 // Create marker with both touch & mouse pointer drag capabilities
 function createUniversalMarker(containerArea, x, y, label, type) {
   const marker = document.createElement('div');
@@ -969,6 +1026,7 @@ function createUniversalMarker(containerArea, x, y, label, type) {
 
       marker.style.left = `${Math.round(newLeft)}px`;
       marker.style.top = `${Math.round(newTop)}px`;
+      updateMarkerPct(marker, type);
     }
 
     function onPointerUp(upEvent) {
@@ -976,6 +1034,7 @@ function createUniversalMarker(containerArea, x, y, label, type) {
       badge.removeEventListener('pointermove', onPointerMove);
       badge.removeEventListener('pointerup', onPointerUp);
       badge.removeEventListener('pointercancel', onPointerUp);
+      updateMarkerPct(marker, type);
     }
 
     badge.addEventListener('pointermove', onPointerMove);
@@ -1033,6 +1092,8 @@ function createUniversalMarker(containerArea, x, y, label, type) {
   });
 
   containerArea.appendChild(marker);
+  // Simpan persentase awal
+  setTimeout(() => updateMarkerPct(marker, type), 50);
   return marker;
 }
 
@@ -1150,6 +1211,7 @@ function nudgeSelectedMarker(type, dx, dy) {
 
   marker.style.left = `${Math.round(left)}px`;
   marker.style.top = `${Math.round(top)}px`;
+  updateMarkerPct(marker, type);
 }
 
 function editSelectedMarkerLabel(type) {
@@ -1226,4 +1288,177 @@ function resetAnnotatorCanvas(areaId, imgId, placeholderId, inputId, btnId, stat
   const status = document.getElementById(statusId);
   if (status) status.innerText = 'Area berhasil di-reset.';
 }
+
+// ==================== FLATTEN ANNOTATED IMAGE TO STATIC CANVAS (PDF PRINT PERFECT & LIGHTWEIGHT) ====================
+function generateFlattenedAnnotatedImage(type, srcArea, srcImg) {
+  const canvas = document.createElement('canvas');
+  canvas.width = srcImg.naturalWidth || srcImg.width || 1200;
+  canvas.height = srcImg.naturalHeight || srcImg.height || 900;
+  const ctx = canvas.getContext('2d');
+
+  // Draw base photo
+  ctx.drawImage(srcImg, 0, 0, canvas.width, canvas.height);
+
+  const markers = srcArea.querySelectorAll('.rotor-marker');
+  const imgRect = srcImg.getBoundingClientRect();
+  const displayWidth = Math.max(1, imgRect.width || srcImg.offsetWidth || 400);
+  const displayHeight = Math.max(1, imgRect.height || srcImg.offsetHeight || 300);
+  const scale = canvas.width / displayWidth;
+
+  markers.forEach(marker => {
+    let pctX = parseFloat(marker.getAttribute('data-pct-x'));
+    let pctY = parseFloat(marker.getAttribute('data-pct-y'));
+
+    // Fallback if percentage attribute is not yet set
+    if (isNaN(pctX) || isNaN(pctY)) {
+      const markerRect = marker.getBoundingClientRect();
+      const relX = (markerRect.left + markerRect.width / 2) - imgRect.left;
+      const relY = markerRect.top - imgRect.top;
+      pctX = (relX / displayWidth) * 100;
+      pctY = (relY / displayHeight) * 100;
+    }
+
+    const dir = marker.getAttribute('data-dir') || 'down';
+    const stemLen = parseFloat(marker.getAttribute('data-stem-len')) || 30;
+    const badgeEl = marker.querySelector('.rotor-badge');
+    const label = badgeEl ? badgeEl.innerText.trim().toUpperCase() : 'A';
+
+    const anchorX = (pctX / 100) * canvas.width;
+    const anchorY = (pctY / 100) * canvas.height;
+
+    const badgeR = Math.max(12, 11 * scale);
+    const stemLenScaled = stemLen * scale;
+    const arrowLen = Math.max(10, 9 * scale);
+    const arrowWidth = Math.max(10, 10 * scale);
+
+    let badgeCenterX = anchorX;
+    let badgeCenterY = anchorY;
+    let stemStartX = anchorX, stemStartY = anchorY;
+    let stemEndX = anchorX, stemEndY = anchorY;
+    let tipX = anchorX, tipY = anchorY;
+    let c1X = anchorX, c1Y = anchorY;
+    let c2X = anchorX, c2Y = anchorY;
+
+    if (dir === 'down') {
+      badgeCenterX = anchorX;
+      badgeCenterY = anchorY + badgeR;
+      stemStartX = anchorX;
+      stemStartY = anchorY + 2 * badgeR;
+      stemEndX = anchorX;
+      stemEndY = stemStartY + stemLenScaled;
+      tipX = anchorX;
+      tipY = stemEndY + arrowLen;
+      c1X = anchorX - arrowWidth / 2;
+      c1Y = stemEndY;
+      c2X = anchorX + arrowWidth / 2;
+      c2Y = stemEndY;
+    } else if (dir === 'up') {
+      badgeCenterX = anchorX;
+      badgeCenterY = anchorY - badgeR;
+      stemStartX = anchorX;
+      stemStartY = anchorY - 2 * badgeR;
+      stemEndX = anchorX;
+      stemEndY = stemStartY - stemLenScaled;
+      tipX = anchorX;
+      tipY = stemEndY - arrowLen;
+      c1X = anchorX - arrowWidth / 2;
+      c1Y = stemEndY;
+      c2X = anchorX + arrowWidth / 2;
+      c2Y = stemEndY;
+    } else if (dir === 'right') {
+      badgeCenterX = anchorX + badgeR;
+      badgeCenterY = anchorY;
+      stemStartX = anchorX + 2 * badgeR;
+      stemStartY = anchorY;
+      stemEndX = stemStartX + stemLenScaled;
+      stemEndY = anchorY;
+      tipX = stemEndX + arrowLen;
+      tipY = anchorY;
+      c1X = stemEndX;
+      c1Y = anchorY - arrowWidth / 2;
+      c2X = stemEndX;
+      c2Y = arrowWidth / 2 + anchorY;
+    } else if (dir === 'left') {
+      badgeCenterX = anchorX - badgeR;
+      badgeCenterY = anchorY;
+      stemStartX = anchorX - 2 * badgeR;
+      stemStartY = anchorY;
+      stemEndX = stemStartX - stemLenScaled;
+      stemEndY = anchorY;
+      tipX = stemEndX - arrowLen;
+      tipY = anchorY;
+      c1X = stemEndX;
+      c1Y = anchorY - arrowWidth / 2;
+      c2X = stemEndX;
+      c2Y = arrowWidth / 2 + anchorY;
+    }
+
+    // 1. Draw Stem
+    ctx.beginPath();
+    ctx.moveTo(stemStartX, stemStartY);
+    ctx.lineTo(stemEndX, stemEndY);
+    ctx.strokeStyle = '#dc2626';
+    ctx.lineWidth = Math.max(2.5, 2.5 * scale);
+    ctx.stroke();
+
+    // 2. Draw Sharp Arrowhead
+    ctx.beginPath();
+    ctx.moveTo(tipX, tipY);
+    ctx.lineTo(c1X, c1Y);
+    ctx.lineTo(c2X, c2Y);
+    ctx.closePath();
+    ctx.fillStyle = '#dc2626';
+    ctx.fill();
+
+    // 3. Draw Badge Circle
+    ctx.beginPath();
+    ctx.arc(badgeCenterX, badgeCenterY, badgeR, 0, Math.PI * 2);
+    ctx.fillStyle = '#ffffff';
+    ctx.fill();
+    ctx.lineWidth = Math.max(2, 2.2 * scale);
+    ctx.strokeStyle = '#dc2626';
+    ctx.stroke();
+
+    // 4. Draw Label Text
+    ctx.fillStyle = '#000000';
+    ctx.font = `bold ${Math.round(13 * scale)}px 'Segoe UI', Arial, sans-serif`;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(label, badgeCenterX, badgeCenterY);
+  });
+
+  return canvas.toDataURL('image/jpeg', 0.82);
+}
+
+// Prepare all sheets inside container for Review Modal & PDF Printing
+function prepareAnnotatedImagesForReview(targetContainer) {
+  if (!targetContainer) return;
+
+  const types = ['rotor', 'housing', 'runout'];
+
+  types.forEach(type => {
+    const srcArea = document.getElementById(type + 'AnnotationArea');
+    const srcImg = document.getElementById(type + 'PreviewImg');
+
+    const hasImage = srcArea && srcImg && srcImg.src && srcImg.style.display !== 'none' && srcImg.src.length > 50;
+
+    const clonedWrappers = targetContainer.querySelectorAll('.rotor-annotator-wrapper');
+    clonedWrappers.forEach(wrap => {
+      const areaInWrap = wrap.querySelector(`#${type}AnnotationArea`);
+      if (areaInWrap) {
+        if (hasImage) {
+          const flattenedUrl = generateFlattenedAnnotatedImage(type, srcArea, srcImg);
+          wrap.outerHTML = `
+            <div style="border: 1px solid #000; padding: 6px; margin: 8px 0; text-align: center; background: #fff;">
+              <img src="${flattenedUrl}" style="max-width: 100%; max-height: 380px; object-fit: contain; display: inline-block; border-radius: 4px;" alt="Foto ${type.toUpperCase()}">
+            </div>
+          `;
+        } else {
+          wrap.innerHTML = `<div style="padding: 10px; text-align: center; color: #64748b; font-style: italic; font-size: 11px; border: 1px dashed #cbd5e1;">(Tidak ada foto ${type.toUpperCase()} yang diunggah)</div>`;
+        }
+      }
+    });
+  });
+}
+
 
