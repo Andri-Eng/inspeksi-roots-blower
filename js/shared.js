@@ -966,21 +966,59 @@ function ensureControlPanelExists(type, area) {
   }
 }
 
-// Helper to keep marker's percentage position relative to the image
-function updateMarkerPct(marker, type) {
+// Record exact physical percentages of badge center and arrow tip relative to the image
+function recordMarkerExactPercentages(marker, type) {
   const previewImg = document.getElementById(type + 'PreviewImg');
   if (!previewImg || previewImg.offsetWidth === 0) return;
-  const markerRect = marker.getBoundingClientRect();
+
+  const badge = marker.querySelector('.rotor-badge');
+  const arrow = marker.querySelector('.rotor-arrow');
+  if (!badge || !arrow) return;
+
   const imgRect = previewImg.getBoundingClientRect();
+  const badgeRect = badge.getBoundingClientRect();
+  const arrowRect = arrow.getBoundingClientRect();
 
-  const relX = (markerRect.left + markerRect.width / 2) - imgRect.left;
-  const relY = markerRect.top - imgRect.top;
+  if (imgRect.width === 0 || imgRect.height === 0) return;
 
-  const pctX = (relX / imgRect.width) * 100;
-  const pctY = (relY / imgRect.height) * 100;
+  // 1. Badge Center relative to image
+  const badgeCenterX = (badgeRect.left + badgeRect.width / 2) - imgRect.left;
+  const badgeCenterY = (badgeRect.top + badgeRect.height / 2) - imgRect.top;
 
-  marker.setAttribute('data-pct-x', pctX.toFixed(3));
-  marker.setAttribute('data-pct-y', pctY.toFixed(3));
+  const badgePctX = (badgeCenterX / imgRect.width) * 100;
+  const badgePctY = (badgeCenterY / imgRect.height) * 100;
+
+  // 2. Arrow Tip relative to image
+  const dir = marker.getAttribute('data-dir') || 'down';
+  let tipX = 0;
+  let tipY = 0;
+
+  if (dir === 'down') {
+    tipX = (arrowRect.left + arrowRect.width / 2) - imgRect.left;
+    tipY = arrowRect.bottom - imgRect.top;
+  } else if (dir === 'up') {
+    tipX = (arrowRect.left + arrowRect.width / 2) - imgRect.left;
+    tipY = arrowRect.top - imgRect.top;
+  } else if (dir === 'right') {
+    tipX = arrowRect.right - imgRect.left;
+    tipY = (arrowRect.top + arrowRect.height / 2) - imgRect.top;
+  } else if (dir === 'left') {
+    tipX = arrowRect.left - imgRect.left;
+    tipY = (arrowRect.top + arrowRect.height / 2) - imgRect.top;
+  }
+
+  const tipPctX = (tipX / imgRect.width) * 100;
+  const tipPctY = (tipY / imgRect.height) * 100;
+
+  marker.setAttribute('data-badge-pct-x', badgePctX.toFixed(3));
+  marker.setAttribute('data-badge-pct-y', badgePctY.toFixed(3));
+  marker.setAttribute('data-tip-pct-x', tipPctX.toFixed(3));
+  marker.setAttribute('data-tip-pct-y', tipPctY.toFixed(3));
+}
+
+// Backward compatibility helper
+function updateMarkerPct(marker, type) {
+  recordMarkerExactPercentages(marker, type);
 }
 
 // Create marker with both touch & mouse pointer drag capabilities
@@ -1026,7 +1064,7 @@ function createUniversalMarker(containerArea, x, y, label, type) {
 
       marker.style.left = `${Math.round(newLeft)}px`;
       marker.style.top = `${Math.round(newTop)}px`;
-      updateMarkerPct(marker, type);
+      recordMarkerExactPercentages(marker, type);
     }
 
     function onPointerUp(upEvent) {
@@ -1034,7 +1072,7 @@ function createUniversalMarker(containerArea, x, y, label, type) {
       badge.removeEventListener('pointermove', onPointerMove);
       badge.removeEventListener('pointerup', onPointerUp);
       badge.removeEventListener('pointercancel', onPointerUp);
-      updateMarkerPct(marker, type);
+      recordMarkerExactPercentages(marker, type);
     }
 
     badge.addEventListener('pointermove', onPointerMove);
@@ -1084,6 +1122,7 @@ function createUniversalMarker(containerArea, x, y, label, type) {
       arrow.removeEventListener('pointermove', onArrowPointerMove);
       arrow.removeEventListener('pointerup', onArrowPointerUp);
       arrow.removeEventListener('pointercancel', onArrowPointerUp);
+      recordMarkerExactPercentages(marker, type);
     }
 
     arrow.addEventListener('pointermove', onArrowPointerMove);
@@ -1093,7 +1132,7 @@ function createUniversalMarker(containerArea, x, y, label, type) {
 
   containerArea.appendChild(marker);
   // Simpan persentase awal
-  setTimeout(() => updateMarkerPct(marker, type), 50);
+  setTimeout(() => recordMarkerExactPercentages(marker, type), 50);
   return marker;
 }
 
@@ -1182,6 +1221,8 @@ function setMarkerDirectionAndLength(marker, dir, stemLen, type) {
   if (type) {
     updateControlPanelButtons(type, dir, stemLen);
   }
+
+  recordMarkerExactPercentages(marker, type);
 }
 
 function adjustSelectedMarkerStem(type, delta) {
@@ -1211,7 +1252,7 @@ function nudgeSelectedMarker(type, dx, dy) {
 
   marker.style.left = `${Math.round(left)}px`;
   marker.style.top = `${Math.round(top)}px`;
-  updateMarkerPct(marker, type);
+  recordMarkerExactPercentages(marker, type);
 }
 
 function editSelectedMarkerLabel(type) {
@@ -1302,98 +1343,84 @@ function generateFlattenedAnnotatedImage(type, srcArea, srcImg) {
   const markers = srcArea.querySelectorAll('.rotor-marker');
   const imgRect = srcImg.getBoundingClientRect();
   const displayWidth = Math.max(1, imgRect.width || srcImg.offsetWidth || 400);
-  const displayHeight = Math.max(1, imgRect.height || srcImg.offsetHeight || 300);
   const scale = canvas.width / displayWidth;
 
   markers.forEach(marker => {
-    let pctX = parseFloat(marker.getAttribute('data-pct-x'));
-    let pctY = parseFloat(marker.getAttribute('data-pct-y'));
-
-    // Fallback if percentage attribute is not yet set
-    if (isNaN(pctX) || isNaN(pctY)) {
-      const markerRect = marker.getBoundingClientRect();
-      const relX = (markerRect.left + markerRect.width / 2) - imgRect.left;
-      const relY = markerRect.top - imgRect.top;
-      pctX = (relX / displayWidth) * 100;
-      pctY = (relY / displayHeight) * 100;
+    // Pastikan persentase fisik terekam
+    if (!marker.getAttribute('data-badge-pct-x') || !marker.getAttribute('data-tip-pct-x')) {
+      recordMarkerExactPercentages(marker, type);
     }
 
+    const badgePctX = parseFloat(marker.getAttribute('data-badge-pct-x'));
+    const badgePctY = parseFloat(marker.getAttribute('data-badge-pct-y'));
+    const tipPctX = parseFloat(marker.getAttribute('data-tip-pct-x'));
+    const tipPctY = parseFloat(marker.getAttribute('data-tip-pct-y'));
+
+    if (isNaN(badgePctX) || isNaN(badgePctY) || isNaN(tipPctX) || isNaN(tipPctY)) {
+      return;
+    }
+
+    // Koordinat persis di Canvas
+    const badgeCenterX = (badgePctX / 100) * canvas.width;
+    const badgeCenterY = (badgePctY / 100) * canvas.height;
+    const tipX = (tipPctX / 100) * canvas.width;
+    const tipY = (tipPctY / 100) * canvas.height;
+
     const dir = marker.getAttribute('data-dir') || 'down';
-    const stemLen = parseFloat(marker.getAttribute('data-stem-len')) || 30;
     const badgeEl = marker.querySelector('.rotor-badge');
     const label = badgeEl ? badgeEl.innerText.trim().toUpperCase() : 'A';
 
-    const anchorX = (pctX / 100) * canvas.width;
-    const anchorY = (pctY / 100) * canvas.height;
-
     const badgeR = Math.max(12, 11 * scale);
-    const stemLenScaled = stemLen * scale;
     const arrowLen = Math.max(10, 9 * scale);
-    const arrowWidth = Math.max(10, 10 * scale);
+    const arrowHalfWidth = Math.max(5.5, 5 * scale);
 
-    let badgeCenterX = anchorX;
-    let badgeCenterY = anchorY;
-    let stemStartX = anchorX, stemStartY = anchorY;
-    let stemEndX = anchorX, stemEndY = anchorY;
-    let tipX = anchorX, tipY = anchorY;
-    let c1X = anchorX, c1Y = anchorY;
-    let c2X = anchorX, c2Y = anchorY;
+    // Titik awal batang (dari tepi luar badge) dan titik akhir batang (di pangkal segitiga panah)
+    let stemStartX = badgeCenterX;
+    let stemStartY = badgeCenterY;
+    let stemEndX = tipX;
+    let stemEndY = tipY;
+    let c1X = tipX, c1Y = tipY;
+    let c2X = tipX, c2Y = tipY;
 
     if (dir === 'down') {
-      badgeCenterX = anchorX;
-      badgeCenterY = anchorY + badgeR;
-      stemStartX = anchorX;
-      stemStartY = anchorY + 2 * badgeR;
-      stemEndX = anchorX;
-      stemEndY = stemStartY + stemLenScaled;
-      tipX = anchorX;
-      tipY = stemEndY + arrowLen;
-      c1X = anchorX - arrowWidth / 2;
+      stemStartX = badgeCenterX;
+      stemStartY = badgeCenterY + badgeR;
+      stemEndX = tipX;
+      stemEndY = tipY - arrowLen;
+      c1X = tipX - arrowHalfWidth;
       c1Y = stemEndY;
-      c2X = anchorX + arrowWidth / 2;
+      c2X = tipX + arrowHalfWidth;
       c2Y = stemEndY;
     } else if (dir === 'up') {
-      badgeCenterX = anchorX;
-      badgeCenterY = anchorY - badgeR;
-      stemStartX = anchorX;
-      stemStartY = anchorY - 2 * badgeR;
-      stemEndX = anchorX;
-      stemEndY = stemStartY - stemLenScaled;
-      tipX = anchorX;
-      tipY = stemEndY - arrowLen;
-      c1X = anchorX - arrowWidth / 2;
+      stemStartX = badgeCenterX;
+      stemStartY = badgeCenterY - badgeR;
+      stemEndX = tipX;
+      stemEndY = tipY + arrowLen;
+      c1X = tipX - arrowHalfWidth;
       c1Y = stemEndY;
-      c2X = anchorX + arrowWidth / 2;
+      c2X = tipX + arrowHalfWidth;
       c2Y = stemEndY;
     } else if (dir === 'right') {
-      badgeCenterX = anchorX + badgeR;
-      badgeCenterY = anchorY;
-      stemStartX = anchorX + 2 * badgeR;
-      stemStartY = anchorY;
-      stemEndX = stemStartX + stemLenScaled;
-      stemEndY = anchorY;
-      tipX = stemEndX + arrowLen;
-      tipY = anchorY;
+      stemStartX = badgeCenterX + badgeR;
+      stemStartY = badgeCenterY;
+      stemEndX = tipX - arrowLen;
+      stemEndY = tipY;
       c1X = stemEndX;
-      c1Y = anchorY - arrowWidth / 2;
+      c1Y = tipY - arrowHalfWidth;
       c2X = stemEndX;
-      c2Y = arrowWidth / 2 + anchorY;
+      c2Y = tipY + arrowHalfWidth;
     } else if (dir === 'left') {
-      badgeCenterX = anchorX - badgeR;
-      badgeCenterY = anchorY;
-      stemStartX = anchorX - 2 * badgeR;
-      stemStartY = anchorY;
-      stemEndX = stemStartX - stemLenScaled;
-      stemEndY = anchorY;
-      tipX = stemEndX - arrowLen;
-      tipY = anchorY;
+      stemStartX = badgeCenterX - badgeR;
+      stemStartY = badgeCenterY;
+      stemEndX = tipX + arrowLen;
+      stemEndY = tipY;
       c1X = stemEndX;
-      c1Y = anchorY - arrowWidth / 2;
+      c1Y = tipY - arrowHalfWidth;
       c2X = stemEndX;
-      c2Y = arrowWidth / 2 + anchorY;
+      c2Y = tipY + arrowHalfWidth;
     }
 
-    // 1. Draw Stem
+    // 1. Gambar Stem Merah
     ctx.beginPath();
     ctx.moveTo(stemStartX, stemStartY);
     ctx.lineTo(stemEndX, stemEndY);
@@ -1401,7 +1428,7 @@ function generateFlattenedAnnotatedImage(type, srcArea, srcImg) {
     ctx.lineWidth = Math.max(2.5, 2.5 * scale);
     ctx.stroke();
 
-    // 2. Draw Sharp Arrowhead
+    // 2. Gambar Arrowhead Merah Segitiga Tajam Menunjuk Tepat ke tipX, tipY
     ctx.beginPath();
     ctx.moveTo(tipX, tipY);
     ctx.lineTo(c1X, c1Y);
@@ -1410,7 +1437,7 @@ function generateFlattenedAnnotatedImage(type, srcArea, srcImg) {
     ctx.fillStyle = '#dc2626';
     ctx.fill();
 
-    // 3. Draw Badge Circle
+    // 3. Gambar Lingkaran Badge Putih dengan Border Merah
     ctx.beginPath();
     ctx.arc(badgeCenterX, badgeCenterY, badgeR, 0, Math.PI * 2);
     ctx.fillStyle = '#ffffff';
@@ -1419,7 +1446,7 @@ function generateFlattenedAnnotatedImage(type, srcArea, srcImg) {
     ctx.strokeStyle = '#dc2626';
     ctx.stroke();
 
-    // 4. Draw Label Text
+    // 4. Gambar Teks Label Hitam Bold di Tengah Badge
     ctx.fillStyle = '#000000';
     ctx.font = `bold ${Math.round(13 * scale)}px 'Segoe UI', Arial, sans-serif`;
     ctx.textAlign = 'center';
@@ -1447,6 +1474,10 @@ function prepareAnnotatedImagesForReview(targetContainer) {
       const areaInWrap = wrap.querySelector(`#${type}AnnotationArea`);
       if (areaInWrap) {
         if (hasImage) {
+          // Rekam persentase semua marker sebelum di-flatten
+          const markers = srcArea.querySelectorAll('.rotor-marker');
+          markers.forEach(m => recordMarkerExactPercentages(m, type));
+
           const flattenedUrl = generateFlattenedAnnotatedImage(type, srcArea, srcImg);
           wrap.outerHTML = `
             <div style="border: 1px solid #000; padding: 6px; margin: 8px 0; text-align: center; background: #fff;">
@@ -1460,5 +1491,37 @@ function prepareAnnotatedImagesForReview(targetContainer) {
     });
   });
 }
+
+// ==================== UNIVERSAL ROBUST PRINT EXECUTION (MOBILE & DESKTOP COMPATIBLE) ====================
+function executeDocumentPrint(content, docTitle) {
+  docTitle = docTitle || 'Dokumen Inspeksi';
+  const originalTitle = document.title;
+  document.title = docTitle;
+
+  const container = document.getElementById('previewSheetContainer');
+  if (container) {
+    if (content && container.innerHTML !== content) {
+      container.innerHTML = content;
+    }
+  } else {
+    let printArea = document.getElementById('appGlobalPrintArea');
+    if (!printArea) {
+      printArea = document.createElement('div');
+      printArea.id = 'appGlobalPrintArea';
+      printArea.className = 'modal-overlay';
+      document.body.appendChild(printArea);
+    }
+    printArea.innerHTML = `<div class="modal-content"><div id="previewSheetContainer">${content}</div></div>`;
+  }
+
+  // Beri jeda 300ms agar browser selesai me-render layout dan decode gambar
+  setTimeout(() => {
+    window.print();
+    setTimeout(() => {
+      document.title = originalTitle;
+    }, 1500);
+  }, 300);
+}
+
 
 

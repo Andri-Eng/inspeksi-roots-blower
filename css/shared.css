@@ -1049,43 +1049,140 @@ input[type="number"] {
   border-top: 1px solid #334155;
 }
 
-/* ==================== PRINT ==================== */
+/* ==================== UNIVERSAL ROBUST PRINT ENGINE ==================== */
+@page {
+  size: A4 portrait;
+  margin: 8mm;
+}
+
 @media print {
-  body {
-    background: white;
-    padding: 0;
+  html, body {
+    background: #ffffff !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+    height: auto !important;
+    min-height: 100% !important;
+    display: block !important;
+    overflow: visible !important;
   }
 
-  .sheet {
-    box-shadow: none;
-    border: none;
-    width: 100%;
-    margin-bottom: 0;
-    page-break-after: always;
-  }
-
-  .rotor-annotator-wrapper {
-    border: 1px solid #000;
-    padding: 8px;
-    margin: 8px 0;
-    background: #fff;
-    box-shadow: none;
-  }
-
-  .annotator-toolbar,
-  .annotator-control-panel,
-  .fullscreen-annotator-modal,
-  .rotor-annotation-area::before,
+  /* Sembunyikan elemen navigasi dan antarmuka web saat mencetak */
+  .app-viewport,
+  .auth-card,
+  .hero-wrapper,
   .tab-container,
+  .tab-btn,
+  .nav-btn-home,
   .btn-action,
   .btn-add-row,
   .btn-delete-row,
   .btn-insert-row,
   .no-print,
-  .auth-card,
-  .hero-wrapper,
-  .modal-overlay {
+  .modal-header,
+  .close-modal,
+  .fullscreen-annotator-modal,
+  .annotator-toolbar,
+  .annotator-control-panel,
+  .rotor-annotation-area::before,
+  .rotor-annotator-wrapper button,
+  .rotor-annotator-wrapper label,
+  .rotor-annotator-wrapper span[id^="statusMode"] {
     display: none !important;
+  }
+
+  /* Tampilkan modal-overlay dan modal-content sebagai halaman dokumen cetak bersih */
+  .modal-overlay {
+    display: block !important;
+    position: static !important;
+    background: transparent !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    width: 100% !important;
+    height: auto !important;
+    overflow: visible !important;
+    box-shadow: none !important;
+    z-index: auto !important;
+  }
+
+  .modal-content {
+    display: block !important;
+    position: static !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: none !important;
+    box-shadow: none !important;
+    background: transparent !important;
+    overflow: visible !important;
+  }
+
+  #previewSheetContainer {
+    display: block !important;
+    width: 100% !important;
+    height: auto !important;
+    overflow: visible !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    background: transparent !important;
+  }
+
+  .sheet {
+    display: block !important;
+    box-shadow: none !important;
+    border: none !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    margin: 0 0 15px 0 !important;
+    padding: 0 !important;
+    page-break-after: always !important;
+    break-after: page !important;
+  }
+
+  .sheet:last-child {
+    page-break-after: auto !important;
+    break-after: auto !important;
+  }
+
+  table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+    margin-bottom: 8px !important;
+    font-size: 10px !important;
+  }
+
+  td, th {
+    border: 1px solid #000 !important;
+    padding: 3px 5px !important;
+    text-align: center !important;
+  }
+
+  .title-header { font-weight: bold; font-size: 12px; background-color: #f2f2f2 !important; }
+  .text-left { text-align: left !important; }
+  .text-input-left { text-align: left !important; padding-left: 4px; }
+  .bg-gray { background-color: #f2f2f2 !important; font-weight: bold; }
+  .bg-green { background-color: #92D050 !important; font-weight: bold; }
+  .bg-yellow { background-color: #FFFF00 !important; font-weight: bold; }
+
+  tr {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+
+  img {
+    max-width: 100% !important;
+    max-height: 380px !important;
+    object-fit: contain !important;
+  }
+
+  .rotor-annotator-wrapper {
+    border: 1px solid #000 !important;
+    padding: 6px !important;
+    margin: 6px 0 !important;
+    background: #fff !important;
+    box-shadow: none !important;
   }
 
   .rotor-annotation-area {

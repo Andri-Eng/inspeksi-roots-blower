@@ -77,7 +77,7 @@
     @media print {
       body { background: white; padding: 0; }
       .sheet { box-shadow: none; border: none; width: 100%; page-break-after: always; }
-      .tab-container, .btn-action, .modal-overlay, .btn-add-row, .btn-delete-row, .btn-insert-row, .no-print, .auth-card { display: none !important; }
+      .tab-container, .btn-action, .btn-add-row, .btn-delete-row, .btn-insert-row, .no-print, .auth-card { display: none !important; }
     }
   </style>
 </head>
@@ -1071,6 +1071,11 @@
         container.appendChild(clonedSheet);
       });
 
+      // RENDER & FLATTEN GAMBAR ANOTASI KE GAMBAR STATIS AGAR 100% TERKUNCI & PDF RINGAN
+      if (typeof prepareAnnotatedImagesForReview === 'function') {
+        prepareAnnotatedImagesForReview(container);
+      }
+
       document.getElementById('reviewModal').style.display = 'flex';
     }
 
@@ -1085,71 +1090,16 @@
         return;
       }
 
-      const content = container.innerHTML;
-      const printWindow = window.open('', '_blank', 'width=950,height=800');
-
-      if (!printWindow) {
-        alert('Pop-up diblokir oleh browser. Harap izinkan pop-up untuk situs ini.');
-        return;
+      if (typeof prepareAnnotatedImagesForReview === 'function') {
+        prepareAnnotatedImagesForReview(container);
       }
 
-      printWindow.document.open();
-      printWindow.document.write(`
-        <!DOCTYPE html>
-        <html lang="id">
-        <head>
-          <meta charset="UTF-8">
-          <title>Dokumen Inspeksi & Analisa Rewinding Motor</title>
-          <style>
-            * { box-sizing: border-box; font-family: 'Segoe UI', Arial, sans-serif; }
-            body { margin: 0; padding: 0; background: #fff; }
-
-            @page {
-              size: A4 portrait;
-              margin: 8mm;
-            }
-
-            .sheet {
-              width: 100%;
-              box-sizing: border-box;
-              margin: 0;
-              padding: 0;
-              display: block !important;
-              page-break-after: always !important;
-              break-after: page !important;
-            }
-
-            .sheet:last-child {
-              page-break-after: auto !important;
-              break-after: auto !important;
-            }
-
-            table { width: 100%; border-collapse: collapse; margin-bottom: 8px; font-size: 10px; }
-            td, th { border: 1px solid #000; padding: 3px 4px; text-align: center; }
-            .title-header { font-weight: bold; font-size: 13px; background-color: #f2f2f2; }
-            .text-left { text-align: left !important; }
-            .text-input-left { text-align: left !important; padding-left: 4px; }
-            .bg-gray { background-color: #f2f2f2 !important; font-weight: bold; }
-            .bg-sub { background-color: #e2e8f0 !important; font-weight: bold; text-align: left; }
-
-            img { max-width: 100%; max-height: 200px; object-fit: contain; display: block; margin: 0 auto; }
-            .no-print, button { display: none !important; }
-          </style>
-        </head>
-        <body>
-          ${content}
-          \x3Cscript>
-            window.onload = function() {
-              setTimeout(function() {
-                window.print();
-                window.onafterprint = function() { window.close(); };
-              }, 350);
-            };
-          \x3C/script>
-        </body>
-        </html>
-      `);
-      printWindow.document.close();
+      const content = container.innerHTML;
+      if (typeof executeDocumentPrint === 'function') {
+        executeDocumentPrint(content, 'Dokumen Inspeksi & Analisa Rewinding Motor');
+      } else {
+        window.print();
+      }
     }
 
     // 5. MANAJEMEN BARIS SPARE PART
