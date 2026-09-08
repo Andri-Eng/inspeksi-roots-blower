@@ -1067,10 +1067,29 @@ input[type="number"] {
     overflow: visible !important;
   }
 
-  /* Sembunyikan elemen navigasi dan antarmuka web saat mencetak */
+  /* === KUNCI UTAMA: Bebaskan #moduleContainer dari position:fixed ===
+     Tanpa ini, browser memperlakukan seluruh konten sebagai 1 blok viewport
+     dan TIDAK BISA memecah ke beberapa halaman (pagination). */
+  #moduleContainer {
+    position: static !important;
+    display: block !important;
+    width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    overflow: visible !important;
+    z-index: auto !important;
+    background: transparent !important;
+  }
+
+  /* Sembunyikan semua elemen antarmuka navigasi, hero, canvas, login, dll */
+  #heroCanvasBg,
+  #pageHero,
+  .hero-wrapper,
+  #pageCategoryMenu,
+  #pageLoginModal,
   .app-viewport,
   .auth-card,
-  .hero-wrapper,
   .tab-container,
   .tab-btn,
   .nav-btn-home,
@@ -1087,7 +1106,8 @@ input[type="number"] {
   .rotor-annotation-area::before,
   .rotor-annotator-wrapper button,
   .rotor-annotator-wrapper label,
-  .rotor-annotator-wrapper span[id^="statusMode"] {
+  .rotor-annotator-wrapper span[id^="statusMode"],
+  .dropdown {
     display: none !important;
   }
 
@@ -1097,6 +1117,8 @@ input[type="number"] {
     display: block !important;
     position: static !important;
     background: transparent !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
     padding: 0 !important;
     margin: 0 !important;
     width: 100% !important;
@@ -1139,6 +1161,15 @@ input[type="number"] {
     margin: 0 !important;
     background: transparent !important;
     flex: none !important;
+  }
+
+  /* Main system container di dalam modul juga perlu dibebaskan */
+  .main-system {
+    display: block !important;
+    position: static !important;
+    width: 100% !important;
+    height: auto !important;
+    overflow: visible !important;
   }
 
   .sheet {

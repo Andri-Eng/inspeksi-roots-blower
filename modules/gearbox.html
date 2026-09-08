@@ -110,7 +110,21 @@
         overflow: visible !important;
       }
 
+      /* KUNCI UTAMA: Bebaskan moduleContainer dari position:fixed */
+      #moduleContainer {
+        position: static !important;
+        display: block !important;
+        width: 100% !important;
+        height: auto !important;
+        min-height: 0 !important;
+        max-height: none !important;
+        overflow: visible !important;
+        z-index: auto !important;
+        background: transparent !important;
+      }
+
       .app-viewport,
+      .auth-card,
       .tab-container,
       .btn-action,
       .btn-add-row,
@@ -118,8 +132,17 @@
       .btn-insert-row,
       .no-print,
       .close-modal,
-      .modal-header {
+      .modal-header,
+      .dropdown {
         display: none !important;
+      }
+
+      .main-system {
+        display: block !important;
+        position: static !important;
+        width: 100% !important;
+        height: auto !important;
+        overflow: visible !important;
       }
 
       .modal-overlay,
@@ -134,6 +157,7 @@
         padding: 0 !important;
         margin: 0 !important;
         overflow: visible !important;
+        z-index: auto !important;
       }
 
       .modal-content {

@@ -1516,6 +1516,8 @@ function executeDocumentPrint(content, docTitle) {
   document.title = docTitle;
 
   const container = document.getElementById('previewSheetContainer');
+  const moduleContainer = document.getElementById('moduleContainer');
+
   if (container) {
     if (content && container.innerHTML !== content) {
       container.innerHTML = content;
@@ -1526,19 +1528,47 @@ function executeDocumentPrint(content, docTitle) {
     container.style.flex = 'none';
   }
 
+  // KUNCI UTAMA: Bebaskan #moduleContainer dari position:fixed
+  // agar browser print engine dapat memecah konten ke beberapa halaman
+  if (moduleContainer) {
+    moduleContainer.style.position = 'static';
+    moduleContainer.style.height = 'auto';
+    moduleContainer.style.overflow = 'visible';
+    moduleContainer.style.zIndex = 'auto';
+  }
+
+  // Sembunyikan hero page & canvas background saat print
+  const heroCanvas = document.getElementById('heroCanvasBg');
+  const heroPage = document.getElementById('pageHero');
+  if (heroCanvas) heroCanvas.style.display = 'none';
+  if (heroPage) heroPage.style.display = 'none';
+
   // Beri jeda 300ms agar browser selesai menata DOM dan merender gambar
   setTimeout(() => {
     window.print();
     setTimeout(() => {
       document.title = originalTitle;
+
+      // Kembalikan previewSheetContainer ke mode scroll
       if (container) {
         container.style.overflow = 'auto';
         container.style.overflowY = 'auto';
         container.style.flex = '1';
       }
+
+      // Kembalikan #moduleContainer ke mode fixed overlay
+      if (moduleContainer) {
+        moduleContainer.style.position = 'fixed';
+        moduleContainer.style.height = '100%';
+        moduleContainer.style.overflow = '';
+        moduleContainer.style.overflowY = 'auto';
+        moduleContainer.style.zIndex = '2000';
+      }
+
+      // Kembalikan hero canvas & page
+      if (heroCanvas) heroCanvas.style.display = '';
+      if (heroPage) heroPage.style.display = '';
     }, 1200);
   }, 300);
 }
-
-
 
