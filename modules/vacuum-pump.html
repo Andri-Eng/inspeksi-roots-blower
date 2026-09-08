@@ -51,6 +51,9 @@
     .close-modal { cursor: pointer; font-size: 20px; }
 
     @media print {
+      body.is-printing-document > *:not(#appPrintDocument) {
+        display: none !important;
+      }
       body { background: white; padding: 0; }
       .sheet { box-shadow: none; border: none; width: 100%; page-break-after: always; }
       .tab-container, .btn-action, .btn-add-row, .btn-delete-row, .btn-insert-row, .no-print, .auth-card { display: none !important; }

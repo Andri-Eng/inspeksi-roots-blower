@@ -99,6 +99,10 @@
     }
 
     @media print {
+      body.is-printing-document > *:not(#appPrintDocument) {
+        display: none !important;
+      }
+
       html, body {
         background: #ffffff !important;
         margin: 0 !important;

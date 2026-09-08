@@ -981,9 +981,16 @@ function recordMarkerExactPercentages(marker, type) {
 
   if (imgRect.width === 0 || imgRect.height === 0) return;
 
-  // 1. Badge Center relative to image
-  const badgeCenterX = (badgeRect.left + badgeRect.width / 2) - imgRect.left;
-  const badgeCenterY = (badgeRect.top + badgeRect.height / 2) - imgRect.top;
+  const halfBadgeW = (badgeRect.width || 24) / 2;
+  const halfBadgeH = (badgeRect.height || 24) / 2;
+
+  // 1. Badge Center relative to image - CLAMP agar tidak pernah keluar batas foto!
+  let badgeCenterX = (badgeRect.left + halfBadgeW) - imgRect.left;
+  let badgeCenterY = (badgeRect.top + halfBadgeH) - imgRect.top;
+
+  // Batasi lingkaran badge (radius ~12px) agar selalu berada di dalam area foto
+  badgeCenterX = Math.max(halfBadgeW + 2, Math.min(imgRect.width - halfBadgeW - 2, badgeCenterX));
+  badgeCenterY = Math.max(halfBadgeH + 2, Math.min(imgRect.height - halfBadgeH - 2, badgeCenterY));
 
   const badgePctX = (badgeCenterX / imgRect.width) * 100;
   const badgePctY = (badgeCenterY / imgRect.height) * 100;
@@ -1006,6 +1013,10 @@ function recordMarkerExactPercentages(marker, type) {
     tipX = arrowRect.left - imgRect.left;
     tipY = (arrowRect.top + arrowRect.height / 2) - imgRect.top;
   }
+
+  // Clamp tip agar selalu berada dalam area foto
+  tipX = Math.max(2, Math.min(imgRect.width - 2, tipX));
+  tipY = Math.max(2, Math.min(imgRect.height - 2, tipY));
 
   const tipPctX = (tipX / imgRect.width) * 100;
   const tipPctY = (tipY / imgRect.height) * 100;
@@ -1361,18 +1372,24 @@ function generateFlattenedAnnotatedImage(type, srcArea, srcImg) {
     }
 
     // Koordinat persis di Canvas
-    const badgeCenterX = (badgePctX / 100) * canvas.width;
-    const badgeCenterY = (badgePctY / 100) * canvas.height;
-    const tipX = (tipPctX / 100) * canvas.width;
-    const tipY = (tipPctY / 100) * canvas.height;
+    const badgeR = Math.max(12, 11 * scale);
+    const arrowLen = Math.max(10, 9 * scale);
+    const arrowHalfWidth = Math.max(5.5, 5 * scale);
+
+    // KUNCI PENTING: Clamp agar badgeCenterX/Y dan tipX/Y 100% berada di dalam kanvas
+    let badgeCenterX = (badgePctX / 100) * canvas.width;
+    let badgeCenterY = (badgePctY / 100) * canvas.height;
+    let tipX = (tipPctX / 100) * canvas.width;
+    let tipY = (tipPctY / 100) * canvas.height;
+
+    badgeCenterX = Math.max(badgeR + 4, Math.min(canvas.width - badgeR - 4, badgeCenterX));
+    badgeCenterY = Math.max(badgeR + 4, Math.min(canvas.height - badgeR - 4, badgeCenterY));
+    tipX = Math.max(4, Math.min(canvas.width - 4, tipX));
+    tipY = Math.max(4, Math.min(canvas.height - 4, tipY));
 
     const dir = marker.getAttribute('data-dir') || 'down';
     const badgeEl = marker.querySelector('.rotor-badge');
     const label = badgeEl ? badgeEl.innerText.trim().toUpperCase() : 'A';
-
-    const badgeR = Math.max(12, 11 * scale);
-    const arrowLen = Math.max(10, 9 * scale);
-    const arrowHalfWidth = Math.max(5.5, 5 * scale);
 
     // Titik awal batang (dari tepi luar badge) dan titik akhir batang (di pangkal segitiga panah)
     let stemStartX = badgeCenterX;
@@ -1386,7 +1403,7 @@ function generateFlattenedAnnotatedImage(type, srcArea, srcImg) {
       stemStartX = badgeCenterX;
       stemStartY = badgeCenterY + badgeR;
       stemEndX = tipX;
-      stemEndY = tipY - arrowLen;
+      stemEndY = Math.max(stemStartY, tipY - arrowLen);
       c1X = tipX - arrowHalfWidth;
       c1Y = stemEndY;
       c2X = tipX + arrowHalfWidth;
@@ -1395,7 +1412,7 @@ function generateFlattenedAnnotatedImage(type, srcArea, srcImg) {
       stemStartX = badgeCenterX;
       stemStartY = badgeCenterY - badgeR;
       stemEndX = tipX;
-      stemEndY = tipY + arrowLen;
+      stemEndY = Math.min(stemStartY, tipY + arrowLen);
       c1X = tipX - arrowHalfWidth;
       c1Y = stemEndY;
       c2X = tipX + arrowHalfWidth;
@@ -1403,7 +1420,7 @@ function generateFlattenedAnnotatedImage(type, srcArea, srcImg) {
     } else if (dir === 'right') {
       stemStartX = badgeCenterX + badgeR;
       stemStartY = badgeCenterY;
-      stemEndX = tipX - arrowLen;
+      stemEndX = Math.max(stemStartX, tipX - arrowLen);
       stemEndY = tipY;
       c1X = stemEndX;
       c1Y = tipY - arrowHalfWidth;
@@ -1412,7 +1429,7 @@ function generateFlattenedAnnotatedImage(type, srcArea, srcImg) {
     } else if (dir === 'left') {
       stemStartX = badgeCenterX - badgeR;
       stemStartY = badgeCenterY;
-      stemEndX = tipX + arrowLen;
+      stemEndX = Math.min(stemStartX, tipX + arrowLen);
       stemEndY = tipY;
       c1X = stemEndX;
       c1Y = tipY - arrowHalfWidth;
@@ -1498,29 +1515,35 @@ function executeDocumentPrint(content, docTitle) {
   const originalTitle = document.title;
   document.title = docTitle;
 
-  const container = document.getElementById('previewSheetContainer');
-  if (container) {
-    if (content && container.innerHTML !== content) {
-      container.innerHTML = content;
-    }
-  } else {
-    let printArea = document.getElementById('appGlobalPrintArea');
-    if (!printArea) {
-      printArea = document.createElement('div');
-      printArea.id = 'appGlobalPrintArea';
-      printArea.className = 'modal-overlay';
-      document.body.appendChild(printArea);
-    }
-    printArea.innerHTML = `<div class="modal-content"><div id="previewSheetContainer">${content}</div></div>`;
+  // 1. Buat atau ambil container cetak murni langsung di bawah <body> (lepas dari batasan flex/modal)
+  let printDiv = document.getElementById('appPrintDocument');
+  if (!printDiv) {
+    printDiv = document.createElement('div');
+    printDiv.id = 'appPrintDocument';
+    document.body.appendChild(printDiv);
   }
 
-  // Beri jeda 300ms agar browser selesai me-render layout dan decode gambar
+  // Masukkan konten seluruh lembar sheet
+  printDiv.innerHTML = content;
+
+  // 2. Aktifkan kelas cetak khusus pada body
+  document.body.classList.add('is-printing-document');
+
+  // 3. Jeda 350ms agar browser selesai me-render dan menata posisi gambar
   setTimeout(() => {
     window.print();
-    setTimeout(() => {
+
+    // Kembalikan status setelah dialog cetak selesai / ditutup
+    const cleanup = () => {
+      document.body.classList.remove('is-printing-document');
+      if (printDiv) printDiv.innerHTML = '';
       document.title = originalTitle;
-    }, 1500);
-  }, 300);
+      window.removeEventListener('afterprint', cleanup);
+    };
+
+    window.addEventListener('afterprint', cleanup, { once: true });
+    setTimeout(cleanup, 2500);
+  }, 350);
 }
 
 

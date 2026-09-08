@@ -1091,7 +1091,60 @@ input[type="number"] {
     display: none !important;
   }
 
-  /* Tampilkan modal-overlay dan modal-content sebagai halaman dokumen cetak bersih */
+  /* Mode Cetak Terisolasi: Sembunyikan SEMUA elemen di body KECUALI #appPrintDocument */
+  body.is-printing-document > *:not(#appPrintDocument) {
+    display: none !important;
+  }
+
+  body.is-printing-document {
+    display: block !important;
+    position: static !important;
+    background: #ffffff !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+    overflow: visible !important;
+  }
+
+  #appPrintDocument {
+    display: block !important;
+    position: static !important;
+    width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+    overflow: visible !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #ffffff !important;
+  }
+
+  #appPrintDocument .sheet {
+    display: block !important;
+    position: relative !important;
+    box-shadow: none !important;
+    border: none !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    margin: 0 0 0 0 !important;
+    padding: 0 !important;
+    height: auto !important;
+    min-height: 0 !important;
+    overflow: visible !important;
+    page-break-before: auto !important;
+    page-break-after: always !important;
+    break-after: page !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+
+  #appPrintDocument .sheet:last-child {
+    page-break-after: auto !important;
+    break-after: auto !important;
+  }
+
+  /* Mode Cetak Fallback / Langsung dari Modal Preview */
   .modal-overlay {
     display: block !important;
     position: static !important;
@@ -1111,22 +1164,26 @@ input[type="number"] {
     width: 100% !important;
     max-width: 100% !important;
     height: auto !important;
+    min-height: 0 !important;
     padding: 0 !important;
     margin: 0 !important;
     border: none !important;
     box-shadow: none !important;
     background: transparent !important;
     overflow: visible !important;
+    flex: none !important;
   }
 
   #previewSheetContainer {
     display: block !important;
     width: 100% !important;
     height: auto !important;
+    min-height: 0 !important;
     overflow: visible !important;
     padding: 0 !important;
     margin: 0 !important;
     background: transparent !important;
+    flex: none !important;
   }
 
   .sheet {
@@ -1137,8 +1194,11 @@ input[type="number"] {
     min-width: 0 !important;
     margin: 0 0 15px 0 !important;
     padding: 0 !important;
+    page-break-before: auto !important;
     page-break-after: always !important;
     break-after: page !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
   }
 
   .sheet:last-child {
