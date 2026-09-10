@@ -364,6 +364,34 @@ function triggerImportJSON(event, moduleName) {
             el.dispatchEvent(new Event('change', { bubbles: true }));
           }
         });
+
+        // Restore system visibility if present
+        if (payload.isMainSystemActive) {
+          const pageInit = container.querySelector('#pageInit');
+          const mainSystem = container.querySelector('#mainSystem');
+          if (pageInit) pageInit.style.display = 'none';
+          if (mainSystem) mainSystem.style.display = 'block';
+        }
+
+        // Restore active tab if present
+        if (payload.activeTabId) {
+          const tabKey = payload.activeTabId.replace('tab-', '');
+          const tabBtn = container.querySelector(`.tab-btn[onclick*="'${tabKey}'"]`) ||
+                         container.querySelector(`.tab-btn[onclick*="switchTab('${tabKey}'"]`) ||
+                         container.querySelector(`.tab-btn[onclick*="${tabKey}"]`);
+          if (tabBtn) {
+            container.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+            container.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            const targetTab = container.querySelector('#' + payload.activeTabId);
+            if (targetTab) targetTab.classList.add('active');
+            tabBtn.classList.add('active');
+          }
+        }
+
+        // Restore photos & markers if present
+        if (payload.annotatorData && typeof restoreAnnotatorData === 'function') {
+          restoreAnnotatorData(payload.annotatorData);
+        }
         
         // Immediately save data to local draft
         saveFormData(moduleName, container);
@@ -398,10 +426,16 @@ async function triggerExportJSON(event, moduleName) {
     }
   });
 
+  const activeTabContent = container.querySelector('.tab-content.active');
+  const mainSystem = container.querySelector('#mainSystem');
+
   const payload = {
     moduleName: moduleName,
     timestamp: new Date().toISOString(),
-    data: data
+    data: data,
+    activeTabId: activeTabContent ? activeTabContent.id : null,
+    isMainSystemActive: mainSystem && (mainSystem.style.display === 'block' || window.getComputedStyle(mainSystem).display === 'block'),
+    annotatorData: typeof collectAnnotatorData === 'function' ? collectAnnotatorData() : {}
   };
 
   // Get details for dynamic filename
@@ -657,7 +691,223 @@ if (document.readyState === 'loading') {
   initializeAppOnLoad();
 }
 
-// ==================== AUTO SAVE & RESTORE FOR FORMS ====================
+// ==================== INDEXEDDB STORAGE FOR PERSISTENT DRAFTS & IMAGES ====================
+const IDB_CONFIG = {
+  dbName: 'CeklistInspectionDB',
+  version: 1,
+  storeName: 'draftStore'
+};
+
+function openIndexedDB() {
+  return new Promise((resolve) => {
+    if (!window.indexedDB) {
+      resolve(null);
+      return;
+    }
+    const request = indexedDB.open(IDB_CONFIG.dbName, IDB_CONFIG.version);
+    request.onupgradeneeded = function(e) {
+      const db = e.target.result;
+      if (!db.objectStoreNames.contains(IDB_CONFIG.storeName)) {
+        db.createObjectStore(IDB_CONFIG.storeName);
+      }
+    };
+    request.onsuccess = function(e) {
+      resolve(e.target.result);
+    };
+    request.onerror = function(e) {
+      console.warn('IndexedDB open error:', e);
+      resolve(null);
+    };
+  });
+}
+
+async function idbSet(key, value) {
+  try {
+    const db = await openIndexedDB();
+    if (!db) {
+      try {
+        localStorage.setItem(key, JSON.stringify(value));
+      } catch (e) {
+        console.warn('LocalStorage fallback failed:', e);
+      }
+      return;
+    }
+    return new Promise((resolve) => {
+      const tx = db.transaction(IDB_CONFIG.storeName, 'readwrite');
+      const store = tx.objectStore(IDB_CONFIG.storeName);
+      store.put(value, key);
+      tx.oncomplete = () => resolve(true);
+      tx.onerror = () => resolve(false);
+    });
+  } catch (err) {
+    console.warn('idbSet error:', err);
+  }
+}
+
+async function idbGet(key) {
+  try {
+    const db = await openIndexedDB();
+    if (!db) {
+      const local = localStorage.getItem(key);
+      return local ? JSON.parse(local) : null;
+    }
+    return new Promise((resolve) => {
+      const tx = db.transaction(IDB_CONFIG.storeName, 'readonly');
+      const store = tx.objectStore(IDB_CONFIG.storeName);
+      const req = store.get(key);
+      req.onsuccess = () => {
+        if (req.result !== undefined) {
+          resolve(req.result);
+        } else {
+          const local = localStorage.getItem(key);
+          resolve(local ? JSON.parse(local) : null);
+        }
+      };
+      req.onerror = () => {
+        const local = localStorage.getItem(key);
+        resolve(local ? JSON.parse(local) : null);
+      };
+    });
+  } catch (err) {
+    console.warn('idbGet error:', err);
+    return null;
+  }
+}
+
+async function idbRemove(key) {
+  try {
+    localStorage.removeItem(key);
+    const db = await openIndexedDB();
+    if (!db) return;
+    return new Promise((resolve) => {
+      const tx = db.transaction(IDB_CONFIG.storeName, 'readwrite');
+      const store = tx.objectStore(IDB_CONFIG.storeName);
+      store.delete(key);
+      tx.oncomplete = () => resolve(true);
+      tx.onerror = () => resolve(false);
+    });
+  } catch (err) {
+    console.warn('idbRemove error:', err);
+  }
+}
+
+// ==================== ANNOTATOR DATA SERIALIZATION & RESTORATION ====================
+function collectAnnotatorData() {
+  const annotatorData = {};
+  const types = ['rotor', 'housing', 'runout'];
+
+  types.forEach(type => {
+    const previewImg = document.getElementById(type + 'PreviewImg');
+    const area = document.getElementById(type + 'AnnotationArea');
+    const hasImage = previewImg && previewImg.src && previewImg.style.display !== 'none' && previewImg.src.length > 50;
+
+    if (hasImage) {
+      const markers = [];
+      if (area) {
+        area.querySelectorAll('.rotor-marker').forEach(marker => {
+          const badge = marker.querySelector('.rotor-badge');
+          // Pastikan persentase terupdate
+          if (typeof recordMarkerExactPercentages === 'function') {
+            recordMarkerExactPercentages(marker, type);
+          }
+          markers.push({
+            label: badge ? badge.innerText.trim() : 'A',
+            dir: marker.getAttribute('data-dir') || 'down',
+            stemLen: parseInt(marker.getAttribute('data-stem-len')) || 30,
+            left: marker.style.left,
+            top: marker.style.top,
+            badgePctX: marker.getAttribute('data-badge-pct-x') || '',
+            badgePctY: marker.getAttribute('data-badge-pct-y') || '',
+            tipPctX: marker.getAttribute('data-tip-pct-x') || '',
+            tipPctY: marker.getAttribute('data-tip-pct-y') || ''
+          });
+        });
+      }
+
+      const state = (window.universalAnnotatorState && window.universalAnnotatorState[type]) ? window.universalAnnotatorState[type] : null;
+      annotatorData[type] = {
+        imgSrc: previewImg.src,
+        markers: markers,
+        code: state ? state.code : (65 + markers.length)
+      };
+    }
+  });
+
+  return annotatorData;
+}
+
+function restoreAnnotatorData(annotatorData) {
+  if (!annotatorData) return;
+  const types = ['rotor', 'housing', 'runout'];
+
+  types.forEach(type => {
+    const item = annotatorData[type];
+    if (!item || !item.imgSrc) return;
+
+    const previewImg = document.getElementById(type + 'PreviewImg');
+    const placeholder = document.getElementById('placeholderText' + type.charAt(0).toUpperCase() + type.slice(1));
+    const area = document.getElementById(type + 'AnnotationArea');
+    const status = document.getElementById('statusMode' + type.charAt(0).toUpperCase() + type.slice(1));
+
+    if (!previewImg || !area) return;
+
+    // Pastikan listener dan panel kontrol siap
+    if (typeof ensureControlPanelExists === 'function') {
+      ensureControlPanelExists(type, area);
+    }
+
+    // Tampilkan foto kembali
+    previewImg.src = item.imgSrc;
+    previewImg.style.display = 'block';
+    if (placeholder) placeholder.style.display = 'none';
+
+    // Bersihkan marker lama untuk mencegah duplikasi
+    area.querySelectorAll('.rotor-marker').forEach(m => m.remove());
+
+    // Kembalikan counter huruf
+    if (!window.universalAnnotatorState) window.universalAnnotatorState = {};
+    const state = window.universalAnnotatorState[type] || (window.universalAnnotatorState[type] = { code: 65, isAdd: false, selectedMarker: null, stemLen: 30 });
+    state.code = item.code || (65 + (item.markers ? item.markers.length : 0));
+    state.isAdd = false;
+    state.selectedMarker = null;
+
+    // Re-create semua panah marker persis di koordinatnya
+    if (Array.isArray(item.markers)) {
+      item.markers.forEach(m => {
+        const x = parseFloat(m.left) || 50;
+        const y = parseFloat(m.top) || 50;
+        if (typeof createUniversalMarker === 'function') {
+          const marker = createUniversalMarker(area, x, y, m.label || 'A', type);
+
+          if (typeof setMarkerDirectionAndLength === 'function') {
+            setMarkerDirectionAndLength(marker, m.dir || 'down', parseInt(m.stemLen) || 30, type);
+          }
+
+          if (m.badgePctX) marker.setAttribute('data-badge-pct-x', m.badgePctX);
+          if (m.badgePctY) marker.setAttribute('data-badge-pct-y', m.badgePctY);
+          if (m.tipPctX) marker.setAttribute('data-tip-pct-x', m.tipPctX);
+          if (m.tipPctY) marker.setAttribute('data-tip-pct-y', m.tipPctY);
+        }
+      });
+      if (typeof deselectAnnotatorMarker === 'function') {
+        deselectAnnotatorMarker(type);
+      }
+    }
+
+    if (typeof updateAnnotatorButtonState === 'function') {
+      updateAnnotatorButtonState(type);
+    }
+  });
+}
+
+// Auto-save debounce khusus untuk perubahan annotator & foto
+const triggerAutoSaveAnnotator = debounce(() => {
+  const container = document.getElementById('moduleContainer') || document.body;
+  const activeModule = localStorage.getItem('activeModule') || 'GENERAL';
+  saveFormData(activeModule, container);
+}, 300);
+
+// ==================== AUTO SAVE & RESTORE FOR FORMS & ASSETS ====================
 function initAutoSave(moduleName, container) {
   if (!container) return;
   
@@ -667,14 +917,19 @@ function initAutoSave(moduleName, container) {
   // 2. Set up event listener for auto-save on any input changes
   container.addEventListener('input', debounce(() => {
     saveFormData(moduleName, container);
-  }, 500));
+  }, 400));
   
   container.addEventListener('change', () => {
     saveFormData(moduleName, container);
   });
 }
 
-function saveFormData(moduleName, container) {
+async function saveFormData(moduleName, container) {
+  if (!container) {
+    container = document.getElementById('moduleContainer') || document.body;
+  }
+
+  // 1. Inputs
   const data = [];
   container.querySelectorAll('input, select, textarea').forEach((el, index) => {
     if (el.type === 'radio' || el.type === 'checkbox') {
@@ -683,39 +938,118 @@ function saveFormData(moduleName, container) {
       data.push({ index, value: el.value, type: el.type });
     }
   });
-  localStorage.setItem(`draft_${moduleName}`, JSON.stringify(data));
-  console.log(`💾 Auto-saved draft for ${moduleName}`);
+
+  // 2. Active tab & system state
+  const activeTabContent = container.querySelector('.tab-content.active');
+  const activeTabId = activeTabContent ? activeTabContent.id : null;
+  const pageInit = container.querySelector('#pageInit');
+  const mainSystem = container.querySelector('#mainSystem');
+  const isMainSystemActive = mainSystem && (mainSystem.style.display === 'block' || window.getComputedStyle(mainSystem).display === 'block');
+
+  // 3. Annotator photos & markers
+  const annotatorData = collectAnnotatorData();
+
+  const fullPayload = {
+    moduleName,
+    timestamp: Date.now(),
+    inputs: data,
+    activeTabId,
+    isMainSystemActive,
+    annotatorData
+  };
+
+  // 4. Save to IndexedDB (Bebas limit kuota)
+  await idbSet(`draft_${moduleName}`, fullPayload);
+
+  // 5. Fallback ringkas ke localStorage (tanpa base64 gambar jika kuota terbatas)
+  try {
+    const compactPayload = {
+      moduleName,
+      timestamp: Date.now(),
+      inputs: data,
+      activeTabId,
+      isMainSystemActive
+    };
+    localStorage.setItem(`draft_${moduleName}`, JSON.stringify(compactPayload));
+  } catch (e) {
+    console.warn('LocalStorage quota limit reached for fallback:', e);
+  }
+
+  console.log(`💾 Auto-saved complete draft (with photos & markers) for ${moduleName}`);
 }
 
-function restoreAutoSave(moduleName, container) {
-  const stored = localStorage.getItem(`draft_${moduleName}`);
-  if (!stored) return;
+async function restoreAutoSave(moduleName, container) {
+  if (!container) {
+    container = document.getElementById('moduleContainer') || document.body;
+  }
+
+  let draft = await idbGet(`draft_${moduleName}`);
+  if (!draft) {
+    const stored = localStorage.getItem(`draft_${moduleName}`);
+    if (stored) {
+      try { draft = JSON.parse(stored); } catch(e) {}
+    }
+  }
+
+  if (!draft) return;
   
   try {
-    const data = JSON.parse(stored);
-    const elements = container.querySelectorAll('input, select, textarea');
-    data.forEach(item => {
-      const el = elements[item.index];
-      if (el) {
-        if (el.type === 'radio' || el.type === 'checkbox') {
-          el.checked = item.checked;
-        } else {
-          el.value = item.value;
+    // 1. Restore input fields
+    const inputs = Array.isArray(draft) ? draft : draft.inputs;
+    if (Array.isArray(inputs)) {
+      const elements = container.querySelectorAll('input, select, textarea');
+      inputs.forEach(item => {
+        const el = elements[item.index];
+        if (el) {
+          if (el.type === 'radio' || el.type === 'checkbox') {
+            el.checked = item.checked;
+          } else {
+            el.value = item.value;
+          }
+          el.dispatchEvent(new Event('input', { bubbles: true }));
+          el.dispatchEvent(new Event('change', { bubbles: true }));
         }
-        // Trigger event input/change to run any local event listeners in modules
-        el.dispatchEvent(new Event('input', { bubbles: true }));
-        el.dispatchEvent(new Event('change', { bubbles: true }));
+      });
+    }
+
+    // 2. Restore mainSystem visibility
+    if (draft.isMainSystemActive) {
+      const pageInit = container.querySelector('#pageInit');
+      const mainSystem = container.querySelector('#mainSystem');
+      if (pageInit) pageInit.style.display = 'none';
+      if (mainSystem) mainSystem.style.display = 'block';
+    }
+
+    // 3. Restore active tab
+    if (draft.activeTabId) {
+      const tabKey = draft.activeTabId.replace('tab-', '');
+      const tabBtn = container.querySelector(`.tab-btn[onclick*="'${tabKey}'"]`) ||
+                     container.querySelector(`.tab-btn[onclick*="switchTab('${tabKey}'"]`) ||
+                     container.querySelector(`.tab-btn[onclick*="${tabKey}"]`);
+      if (tabBtn) {
+        container.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+        container.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        const targetTab = container.querySelector('#' + draft.activeTabId);
+        if (targetTab) targetTab.classList.add('active');
+        tabBtn.classList.add('active');
       }
-    });
-    console.log(`🔌 Restored draft for ${moduleName}`);
+    }
+
+    // 4. Restore Annotator Images & Markers
+    if (draft.annotatorData) {
+      restoreAnnotatorData(draft.annotatorData);
+    }
+
+    console.log(`🔌 Restored complete draft (with photos & markers) for ${moduleName}`);
   } catch (e) {
     console.error(`Failed to restore draft for ${moduleName}:`, e);
   }
 }
 
-function clearModuleDraft(moduleName) {
+async function clearModuleDraft(moduleName) {
   localStorage.removeItem(`draft_${moduleName}`);
-  console.log(`🗑️ Cleared draft for ${moduleName}`);
+  await idbRemove(`draft_${moduleName}`);
+  console.log(`🗑️ Cleared complete draft for ${moduleName}`);
 }
 
 // Simple debounce helper
@@ -727,8 +1061,38 @@ function debounce(func, wait) {
   };
 }
 
-// Listen to any page-leaving actions that mean a reset or explicit navigation back to home
+// ==================== ACCIDENTAL REFRESH & NAVIGATION PREVENTION ====================
+window.addEventListener('beforeunload', function(e) {
+  const activeModule = localStorage.getItem('activeModule');
+  if (activeModule) {
+    const container = document.getElementById('moduleContainer');
+    if (container && container.style.display !== 'none' && container.innerHTML.trim() !== '') {
+      e.preventDefault();
+      e.returnValue = '';
+      return '';
+    }
+  }
+});
+
+// Listener untuk aksi klik tombol navigasi tab atau submit order
 document.addEventListener('click', function(e) {
+  // Tab button click
+  const tabBtn = e.target.closest('.tab-btn');
+  if (tabBtn) {
+    setTimeout(() => {
+      triggerAutoSaveAnnotator();
+    }, 150);
+  }
+
+  // Submit init order
+  const submitBtn = e.target.closest('.btn-submit');
+  if (submitBtn) {
+    setTimeout(() => {
+      triggerAutoSaveAnnotator();
+    }, 150);
+  }
+
+  // Kembali ke Home
   const btn = e.target.closest('button, a');
   if (btn) {
     const text = btn.textContent || '';
@@ -740,8 +1104,7 @@ document.addEventListener('click', function(e) {
     ) {
       const activeModule = localStorage.getItem('activeModule');
       if (activeModule) {
-        // Option: clear module draft when going back to home so it starts clean next time
-        localStorage.removeItem(`draft_${activeModule}`);
+        clearModuleDraft(activeModule);
       }
       localStorage.removeItem('activeModule');
     }
@@ -892,6 +1255,7 @@ function setupAnnotatorAreaListener(type) {
 
     // Auto-select the newly created marker for immediate mobile adjustments
     selectAnnotatorMarker(newMarker, type);
+    triggerAutoSaveAnnotator();
   });
 }
 
@@ -1084,6 +1448,7 @@ function createUniversalMarker(containerArea, x, y, label, type) {
       badge.removeEventListener('pointerup', onPointerUp);
       badge.removeEventListener('pointercancel', onPointerUp);
       recordMarkerExactPercentages(marker, type);
+      triggerAutoSaveAnnotator();
     }
 
     badge.addEventListener('pointermove', onPointerMove);
@@ -1134,6 +1499,7 @@ function createUniversalMarker(containerArea, x, y, label, type) {
       arrow.removeEventListener('pointerup', onArrowPointerUp);
       arrow.removeEventListener('pointercancel', onArrowPointerUp);
       recordMarkerExactPercentages(marker, type);
+      triggerAutoSaveAnnotator();
     }
 
     arrow.addEventListener('pointermove', onArrowPointerMove);
@@ -1211,6 +1577,7 @@ function setSelectedMarkerDirection(type, dir) {
   if (!state || !state.selectedMarker) return;
   const stemLen = parseInt(state.selectedMarker.getAttribute('data-stem-len')) || 30;
   setMarkerDirectionAndLength(state.selectedMarker, dir, stemLen, type);
+  triggerAutoSaveAnnotator();
 }
 
 function setMarkerDirectionAndLength(marker, dir, stemLen, type) {
@@ -1245,6 +1612,7 @@ function adjustSelectedMarkerStem(type, delta) {
   const dir = state.selectedMarker.getAttribute('data-dir') || 'down';
 
   setMarkerDirectionAndLength(state.selectedMarker, dir, stemLen, type);
+  triggerAutoSaveAnnotator();
 }
 
 function nudgeSelectedMarker(type, dx, dy) {
@@ -1264,6 +1632,7 @@ function nudgeSelectedMarker(type, dx, dy) {
   marker.style.left = `${Math.round(left)}px`;
   marker.style.top = `${Math.round(top)}px`;
   recordMarkerExactPercentages(marker, type);
+  triggerAutoSaveAnnotator();
 }
 
 function editSelectedMarkerLabel(type) {
@@ -1279,6 +1648,7 @@ function editSelectedMarkerLabel(type) {
     if (badge) badge.innerText = cleanLabel;
     const labelEl = document.getElementById(`${type}CtrlLabel`);
     if (labelEl) labelEl.innerText = cleanLabel;
+    triggerAutoSaveAnnotator();
   }
 }
 
@@ -1292,6 +1662,7 @@ function deleteSelectedMarker(type) {
 
   const status = document.getElementById('statusMode' + type.charAt(0).toUpperCase() + type.slice(1));
   if (status) status.innerText = 'Panah berhasil dihapus.';
+  triggerAutoSaveAnnotator();
 }
 
 function undoLastMarker(areaId, type) {
@@ -1307,6 +1678,7 @@ function undoLastMarker(areaId, type) {
       deselectAnnotatorMarker(type);
       const status = document.getElementById('statusMode' + type.charAt(0).toUpperCase() + type.slice(1));
       if (status) status.innerText = `Label terakhir dihapus. Siap untuk (${String.fromCharCode(state.code)})`;
+      triggerAutoSaveAnnotator();
     }
   }
 }
@@ -1339,6 +1711,7 @@ function resetAnnotatorCanvas(areaId, imgId, placeholderId, inputId, btnId, stat
   }
   const status = document.getElementById(statusId);
   if (status) status.innerText = 'Area berhasil di-reset.';
+  triggerAutoSaveAnnotator();
 }
 
 // ==================== FLATTEN ANNOTATED IMAGE TO STATIC CANVAS (PDF PRINT PERFECT & LIGHTWEIGHT) ====================
