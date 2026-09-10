@@ -702,7 +702,7 @@
             <span>MULAI INSPEKSI (LOGIN)</span>
             <span style="font-size: 16px;">➔</span>
           </button>
-          <button type="button" class="btn-secondary-outline" onclick="openCategoryMenu()">
+          <button type="button" class="btn-secondary-outline" onclick="openLoginModal('CATEGORY_MENU')">
             <span>📋 PILIH KATEGORI LANGSUNG</span>
           </button>
         </div>
@@ -915,19 +915,18 @@
 
     function selectCategoryFromCard(categoryName) {
       console.log('🎯 Card diklik:', categoryName);
-      const session = getSession();
-      if (session) {
-        selectCategory(categoryName);
-      } else {
-        openLoginModal(categoryName);
-      }
+      // Di landing page, SEMUA kartu modul SELALU mewajibkan login terlebih dahulu
+      openLoginModal(categoryName);
     }
 
     function openLoginModal(targetCategory) {
       const subtitle = document.getElementById('loginSubtitle');
-      if (targetCategory && typeof targetCategory === 'string') {
+      if (targetCategory && typeof targetCategory === 'string' && targetCategory !== 'CATEGORY_MENU') {
         pendingCategory = targetCategory;
         if (subtitle) subtitle.textContent = `Masuk untuk melanjutkan ke modul: ${targetCategory}`;
+      } else if (targetCategory === 'CATEGORY_MENU') {
+        pendingCategory = 'CATEGORY_MENU';
+        if (subtitle) subtitle.textContent = 'Masuk untuk memilih kategori inspeksi';
       } else {
         pendingCategory = null;
         if (subtitle) subtitle.textContent = 'Masuk untuk memulai inspeksi & validasi data';
@@ -975,12 +974,13 @@
 
         setTimeout(() => {
           closeLoginModal();
-          if (pendingCategory) {
+          if (pendingCategory && pendingCategory !== 'CATEGORY_MENU') {
             const target = pendingCategory;
             pendingCategory = null;
             selectCategory(target);
           } else {
-            openCategoryMenu();
+            pendingCategory = null;
+            document.getElementById('pageCategoryMenu').style.display = 'flex';
           }
         }, 800);
       } else {
@@ -995,7 +995,7 @@
     function openCategoryMenu() { 
       const session = getSession();
       if (!session) {
-        openLoginModal();
+        openLoginModal('CATEGORY_MENU');
         return;
       }
       document.getElementById('pageCategoryMenu').style.display = 'flex'; 
@@ -1006,6 +1006,12 @@
     }
 
     function selectCategory(categoryName) {
+      const session = getSession();
+      if (!session) {
+        openLoginModal(categoryName);
+        return;
+      }
+
       const moduleConfig = INSPECTION_MODULES[categoryName];
       
       if (!moduleConfig) {
@@ -1231,6 +1237,10 @@
         selectCategory(activeModule);
       } else {
         // SELALU mulai dari Landing Page awal jika tidak sedang aktif di modul
+        // Bersihkan sisa sesi lama agar setiap klik tombol di landing page WAJIB login baru
+        clearSession();
+        localStorage.removeItem('activeModule');
+
         if (moduleContainer) {
           moduleContainer.innerHTML = '';
         }
@@ -1239,7 +1249,7 @@
         document.getElementById('pageLoginModal').style.display = 'none';
         document.getElementById('pageCategoryMenu').style.display = 'none';
         
-        console.log('🏠 Landing Page Awal Ditampilkan Penuh');
+        console.log('🏠 Landing Page Awal Ditampilkan Penuh (Sesi Di-reset)');
       }
     });
   </script>
