@@ -22,7 +22,11 @@ Ceklist/
 │   ├── rotary-valve.html      # ROTARY VALVE inspection
 │   └── shaft-repair.html      # SHAFT INDUSTRIAL REPAIR (mapped to "OTHER")
 │
-└── [Image & Logo files]       # dimensi-rotor.png, logo-intidaya.jpg, etc.
+├── img/                        # Aset gambar & diagram teknis terorganisir
+│   ├── common/                # Logo perusahaan, logo ISO, & background hero
+│   ├── blower/                # Diagram clearance & dimensi root blower
+│   ├── vacuum/                # Diagram & dimensi vacuum pump
+│   └── rewinding/             # Drawing shaft & sideplate motor rewinding
 ```
 
 ## 🔐 Sistem Autentikasi

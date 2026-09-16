@@ -192,6 +192,7 @@
     .highlight-cyan {
       background: linear-gradient(135deg, #38bdf8 0%, #60a5fa 50%, #818cf8 100%);
       -webkit-background-clip: text;
+      background-clip: text;
       -webkit-text-fill-color: transparent;
     }
 
@@ -660,7 +661,7 @@
     <header class="hero-navbar-modern">
       <div class="nav-brand-group">
         <div class="nav-logo-box">
-          <img src="logo-intidaya.jpg" alt="Logo Intidaya">
+          <img src="img/common/logo-intidaya.jpg" alt="Logo Intidaya">
         </div>
         <div>
           <h2 class="nav-brand-title">PT INTIDAYA DINAMIKA SEJATI</h2>
@@ -674,7 +675,7 @@
           <span>SISTEM ONLINE</span>
         </div>
         <div id="navbarClock" class="navbar-clock-text">--:--:--</div>
-        <img src="logo-iso.jpg" class="nav-iso-img" alt="ISO Certified">
+        <img src="img/common/logo-iso.jpg" class="nav-iso-img" alt="ISO Certified">
       </div>
     </header>
 
@@ -844,7 +845,7 @@
       <div class="input-wrapper-dynamic">
         <input type="password" id="loginPass" class="input-field-dynamic" placeholder="Password akses..." onkeydown="if(event.key==='Enter') processLogin()">
         <span class="input-icon-prefix">🔑</span>
-        <button type="button" class="toggle-pwd-btn" onclick="togglePasswordVisibility()">👁️</button>
+        <button type="button" class="toggle-pwd-btn" onclick="togglePasswordVisibility(this)">👁️</button>
       </div>
 
       <!-- Action Buttons -->
@@ -885,15 +886,16 @@
     console.log('Current Session:', getSession());
 
     // ==================== TOGGLE PASSWORD VISIBILITY (BARU) ====================
-    function togglePasswordVisibility() {
+    function togglePasswordVisibility(btn) {
       const pwdInput = document.getElementById('loginPass');
-      const btn = event.currentTarget;
+      if (!pwdInput) return;
+      if (!btn) btn = document.querySelector('.toggle-pwd-btn');
       if (pwdInput.type === 'password') {
         pwdInput.type = 'text';
-        btn.textContent = '🙈';
+        if (btn) btn.textContent = '🙈';
       } else {
         pwdInput.type = 'password';
-        btn.textContent = '👁️';
+        if (btn) btn.textContent = '👁️';
       }
     }
     
@@ -973,16 +975,18 @@
         console.log('📝 Session tersimpan:', getSession());
 
         setTimeout(() => {
-          closeLoginModal();
-          if (pendingCategory && pendingCategory !== 'CATEGORY_MENU') {
-            const target = pendingCategory;
-            pendingCategory = null;
+          const target = pendingCategory;
+          pendingCategory = null;
+          document.getElementById('pageLoginModal').style.display = 'none';
+
+          if (target && target !== 'CATEGORY_MENU') {
+            console.log('🚀 Direct routing ke modul:', target);
             selectCategory(target);
           } else {
-            pendingCategory = null;
+            console.log('📋 Buka menu pilihan kategori');
             document.getElementById('pageCategoryMenu').style.display = 'flex';
           }
-        }, 800);
+        }, 500);
       } else {
         console.log('❌ Login GAGAL: Invalid credentials');
         document.getElementById('loginAlert').style.display = 'block';

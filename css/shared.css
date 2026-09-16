@@ -45,7 +45,7 @@ body {
   top: 0; left: 0;
   width: 100vw;
   height: 100vh;
-  background: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)), url('root-blower-exploded.jpg') center/cover no-repeat;
+  background: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)), url('../img/common/root-blower-exploded.jpg') center/cover no-repeat;
   display: flex !important;
   flex-direction: column;
   justify-content: space-between;
