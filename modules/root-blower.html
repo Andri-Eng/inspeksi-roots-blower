@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
   <meta charset="UTF-8">
@@ -113,8 +113,16 @@
     <div id="pageInit" class="auth-card">
       <h2>DATA ORDER & PERSONEL - ROOT BLOWER</h2>
       <div id="initAlert" style="display:none; color:red; margin-bottom:10px; font-weight:bold;">Isikan semua baris dengan benar!</div>
-      <div class="form-group"><label>Brand Blower *</label><input type="text" id="initBrand" class="form-control" placeholder="ANLET / AERZEN / ROBUSCHI"></div>
-      <div class="form-group"><label>Type / Model *</label><input type="text" id="initType" class="form-control" placeholder="GM 10 S / 5BE150H"></div>
+      <div class="form-group">
+        <label>Brand Blower *</label>
+        <input type="text" id="initBrand" list="brandBlowerList" class="form-control" placeholder="Pilih atau ketik Brand (Aerzen / Robuschi / Pedrogil / ...)" oninput="onBrandBlowerChange(this.value)" autocomplete="off">
+        <datalist id="brandBlowerList"></datalist>
+      </div>
+      <div class="form-group">
+        <label>Type / Model *</label>
+        <input type="text" id="initType" list="typeBlowerList" class="form-control" placeholder="Pilih atau ketik Type / Model..." oninput="onTypeBlowerChange(this.value)" autocomplete="off">
+        <datalist id="typeBlowerList"></datalist>
+      </div>
       <div class="form-group"><label>Serial Number (SN) *</label><input type="text" id="initSN" class="form-control" placeholder="SN 12674"></div>
       <div class="form-group"><label>Nama Customer *</label><input type="text" id="initCustomer" class="form-control" placeholder="PT. Ajinomoto Indonesia"></div>
       <div class="form-group"><label>No. SO / SOA / SOW *</label><input type="text" id="initNoSO" class="form-control" placeholder="SOA-JKT-02-26-07-0006"></div>
@@ -151,7 +159,7 @@
           <table class="form-table">
             <tr>
               <td style="width: 12%;" class="text-left">BRAND</td>
-              <td style="width: 38%;"><input type="text" class="sync-brand"></td>
+              <td style="width: 38%;"><input type="text" class="sync-brand" list="brandBlowerList" oninput="onTabBrandChange(this.value)" autocomplete="off"></td>
               <td style="width: 18%;" class="text-left">INCOMING / FINAL</td>
               <td style="width: 32%;">
                 <select id="stage">
@@ -162,7 +170,7 @@
             </tr>
             <tr>
               <td class="text-left">TYPE</td>
-              <td class="bg-green"><input type="text" class="sync-type type-input"></td>
+              <td class="bg-green"><input type="text" class="sync-type type-input" list="typeBlowerList" oninput="onTabTypeChange(this.value)" autocomplete="off"></td>
               <td class="text-left">KATEGORI WORKSHOP</td>
               <td>
                 <select id="category">
@@ -197,8 +205,8 @@
                   <tr><th>Sealing Kit Komponen</th><th>Standar</th><th>Posisi 1</th><th>Posisi 2</th><th>Posisi 3</th><th>Posisi 4</th></tr>
                 </thead>
                 <tbody>
-                  <tr><td class="text-left">Gap Ring Piston to ID Bore Sealing Chamber</td><td class="bg-yellow"><input type="text" class="std-input" placeholder="0.18-0.25"></td><td><input type="number" step="0.01"></td><td><input type="number" step="0.01"></td><td><input type="number" step="0.01"></td><td><input type="number" step="0.01"></td></tr>
-                  <tr><td class="text-left">Gap Ring Piston to Sealing Spacer Groove Ring</td><td class="bg-yellow"><input type="text" class="std-input" placeholder="0.10-0.12"></td><td><input type="number" step="0.01"></td><td><input type="number" step="0.01"></td><td><input type="number" step="0.01"></td><td><input type="number" step="0.01"></td></tr>
+                  <tr><td class="text-left">Gap Ring Piston to ID Bore Sealing Chamber</td><td class="bg-yellow"><input type="text" class="std-input" data-key="gap_piston_bore" placeholder="0.18-0.25"></td><td><input type="number" step="0.01"></td><td><input type="number" step="0.01"></td><td><input type="number" step="0.01"></td><td><input type="number" step="0.01"></td></tr>
+                  <tr><td class="text-left">Gap Ring Piston to Sealing Spacer Groove Ring</td><td class="bg-yellow"><input type="text" class="std-input" data-key="gap_piston_spacer" placeholder="0.10-0.12"></td><td><input type="number" step="0.01"></td><td><input type="number" step="0.01"></td><td><input type="number" step="0.01"></td><td><input type="number" step="0.01"></td></tr>
                 </tbody>
               </table>
             </div>
@@ -210,9 +218,9 @@
               <table class="form-table">
                 <thead><tr><th colspan="3">DR</th></tr><tr><th>Lobe</th><th>Standar</th><th>Aktual</th></tr></thead>
                 <tbody>
-                  <tr><td>1</td><td class="bg-yellow"><input type="text" class="std-input" placeholder="0.04-0.06"></td><td><input type="number" step="0.01"></td></tr>
-                  <tr><td>2</td><td class="bg-yellow"><input type="text" class="std-input" placeholder="0.04-0.06"></td><td><input type="number" step="0.01"></td></tr>
-                  <tr><td>3</td><td class="bg-yellow"><input type="text" class="std-input" placeholder="0.04-0.06"></td><td><input type="number" step="0.01"></td></tr>
+                  <tr><td>1</td><td class="bg-yellow"><input type="text" class="std-input" data-key="rotor_housing_dr_1" placeholder="0.04-0.06"></td><td><input type="number" step="0.01"></td></tr>
+                  <tr><td>2</td><td class="bg-yellow"><input type="text" class="std-input" data-key="rotor_housing_dr_2" placeholder="0.04-0.06"></td><td><input type="number" step="0.01"></td></tr>
+                  <tr><td>3</td><td class="bg-yellow"><input type="text" class="std-input" data-key="rotor_housing_dr_3" placeholder="0.04-0.06"></td><td><input type="number" step="0.01"></td></tr>
                 </tbody>
               </table>
             </div>
@@ -221,9 +229,9 @@
               <table class="form-table">
                 <thead><tr><th colspan="3">DN</th></tr><tr><th>Lobe</th><th>Standar</th><th>Aktual</th></tr></thead>
                 <tbody>
-                  <tr><td>1</td><td class="bg-yellow"><input type="text" class="std-input" placeholder="0.04-0.06"></td><td><input type="number" step="0.01"></td></tr>
-                  <tr><td>2</td><td class="bg-yellow"><input type="text" class="std-input" placeholder="0.04-0.06"></td><td><input type="number" step="0.01"></td></tr>
-                  <tr><td>3</td><td class="bg-yellow"><input type="text" class="std-input" placeholder="0.04-0.06"></td><td><input type="number" step="0.01"></td></tr>
+                  <tr><td>1</td><td class="bg-yellow"><input type="text" class="std-input" data-key="rotor_housing_dn_1" placeholder="0.04-0.06"></td><td><input type="number" step="0.01"></td></tr>
+                  <tr><td>2</td><td class="bg-yellow"><input type="text" class="std-input" data-key="rotor_housing_dn_2" placeholder="0.04-0.06"></td><td><input type="number" step="0.01"></td></tr>
+                  <tr><td>3</td><td class="bg-yellow"><input type="text" class="std-input" data-key="rotor_housing_dn_3" placeholder="0.04-0.06"></td><td><input type="number" step="0.01"></td></tr>
                 </tbody>
               </table>
             </div>
@@ -235,9 +243,9 @@
               <table class="form-table">
                 <thead><tr><th colspan="3">DR diatas</th></tr><tr><th>Lobe</th><th>Standar</th><th>Aktual</th></tr></thead>
                 <tbody>
-                  <tr><td>1</td><td class="bg-yellow"><input type="text" class="std-input" placeholder="0.12-0.18"></td><td><input type="number" step="0.01"></td></tr>
-                  <tr><td>2</td><td class="bg-yellow"><input type="text" class="std-input" placeholder="0.12-0.18"></td><td><input type="number" step="0.01"></td></tr>
-                  <tr><td>3</td><td class="bg-yellow"><input type="text" class="std-input" placeholder="0.12-0.18"></td><td><input type="number" step="0.01"></td></tr>
+                  <tr><td>1</td><td class="bg-yellow"><input type="text" class="std-input" data-key="rotor_rotor_dr_1" placeholder="0.12-0.18"></td><td><input type="number" step="0.01"></td></tr>
+                  <tr><td>2</td><td class="bg-yellow"><input type="text" class="std-input" data-key="rotor_rotor_dr_2" placeholder="0.12-0.18"></td><td><input type="number" step="0.01"></td></tr>
+                  <tr><td>3</td><td class="bg-yellow"><input type="text" class="std-input" data-key="rotor_rotor_dr_3" placeholder="0.12-0.18"></td><td><input type="number" step="0.01"></td></tr>
                 </tbody>
               </table>
             </div>
@@ -246,9 +254,9 @@
               <table class="form-table">
                 <thead><tr><th colspan="3">DN diatas</th></tr><tr><th>Lobe</th><th>Standar</th><th>Aktual</th></tr></thead>
                 <tbody>
-                  <tr><td>1</td><td class="bg-yellow"><input type="text" class="std-input" placeholder="0.14-0.20"></td><td><input type="number" step="0.01"></td></tr>
-                  <tr><td>2</td><td class="bg-yellow"><input type="text" class="std-input" placeholder="0.14-0.20"></td><td><input type="number" step="0.01"></td></tr>
-                  <tr><td>3</td><td class="bg-yellow"><input type="text" class="std-input" placeholder="0.14-0.20"></td><td><input type="number" step="0.01"></td></tr>
+                  <tr><td>1</td><td class="bg-yellow"><input type="text" class="std-input" data-key="rotor_rotor_dn_1" placeholder="0.14-0.20"></td><td><input type="number" step="0.01"></td></tr>
+                  <tr><td>2</td><td class="bg-yellow"><input type="text" class="std-input" data-key="rotor_rotor_dn_2" placeholder="0.14-0.20"></td><td><input type="number" step="0.01"></td></tr>
+                  <tr><td>3</td><td class="bg-yellow"><input type="text" class="std-input" data-key="rotor_rotor_dn_3" placeholder="0.14-0.20"></td><td><input type="number" step="0.01"></td></tr>
                 </tbody>
               </table>
             </div>
@@ -260,17 +268,17 @@
               <table class="form-table">
                 <thead><tr><th colspan="3">DEDR</th></tr><tr><th>Lobe</th><th>Standar</th><th>Aktual</th></tr></thead>
                 <tbody>
-                  <tr><td>1</td><td class="bg-yellow"><input type="text" class="std-input" placeholder="0.10-0.17"></td><td><input type="number" step="0.01"></td></tr>
-                  <tr><td>2</td><td class="bg-yellow"><input type="text" class="std-input" placeholder="0.10-0.17"></td><td><input type="number" step="0.01"></td></tr>
-                  <tr><td>3</td><td class="bg-yellow"><input type="text" class="std-input" placeholder="0.10-0.17"></td><td><input type="number" step="0.01"></td></tr>
+                  <tr><td>1</td><td class="bg-yellow"><input type="text" class="std-input" data-key="rotor_sideplate_dr_1" placeholder="0.10-0.17"></td><td><input type="number" step="0.01"></td></tr>
+                  <tr><td>2</td><td class="bg-yellow"><input type="text" class="std-input" data-key="rotor_sideplate_dr_2" placeholder="0.10-0.17"></td><td><input type="number" step="0.01"></td></tr>
+                  <tr><td>3</td><td class="bg-yellow"><input type="text" class="std-input" data-key="rotor_sideplate_dr_3" placeholder="0.10-0.17"></td><td><input type="number" step="0.01"></td></tr>
                 </tbody>
               </table>
               <table class="form-table" style="margin-top: 10px;">
                 <thead><tr><th colspan="3">DEDN</th></tr><tr><th>Lobe</th><th>Standar</th><th>Aktual</th></tr></thead>
                 <tbody>
-                  <tr><td>1</td><td class="bg-yellow"><input type="text" class="std-input" placeholder="0.10-0.17"></td><td><input type="number" step="0.01"></td></tr>
-                  <tr><td>2</td><td class="bg-yellow"><input type="text" class="std-input" placeholder="0.10-0.17"></td><td><input type="number" step="0.01"></td></tr>
-                  <tr><td>3</td><td class="bg-yellow"><input type="text" class="std-input" placeholder="0.10-0.17"></td><td><input type="number" step="0.01"></td></tr>
+                  <tr><td>1</td><td class="bg-yellow"><input type="text" class="std-input" data-key="rotor_sideplate_dn_1" placeholder="0.10-0.17"></td><td><input type="number" step="0.01"></td></tr>
+                  <tr><td>2</td><td class="bg-yellow"><input type="text" class="std-input" data-key="rotor_sideplate_dn_2" placeholder="0.10-0.17"></td><td><input type="number" step="0.01"></td></tr>
+                  <tr><td>3</td><td class="bg-yellow"><input type="text" class="std-input" data-key="rotor_sideplate_dn_3" placeholder="0.10-0.17"></td><td><input type="number" step="0.01"></td></tr>
                 </tbody>
               </table>
             </div>
@@ -279,17 +287,17 @@
               <table class="form-table">
                 <thead><tr><th colspan="3">NDEDR</th></tr><tr><th>Lobe</th><th>Standar</th><th>Aktual</th></tr></thead>
                 <tbody>
-                  <tr><td>1</td><td class="bg-yellow"><input type="text" class="std-input" placeholder="0.05-0.11"></td><td><input type="number" step="0.01"></td></tr>
-                  <tr><td>2</td><td class="bg-yellow"><input type="text" class="std-input" placeholder="0.05-0.11"></td><td><input type="number" step="0.01"></td></tr>
-                  <tr><td>3</td><td class="bg-yellow"><input type="text" class="std-input" placeholder="0.05-0.11"></td><td><input type="number" step="0.01"></td></tr>
+                  <tr><td>1</td><td class="bg-yellow"><input type="text" class="std-input" data-key="rotor_sideplate_ds_1" placeholder="0.05-0.11"></td><td><input type="number" step="0.01"></td></tr>
+                  <tr><td>2</td><td class="bg-yellow"><input type="text" class="std-input" data-key="rotor_sideplate_ds_2" placeholder="0.05-0.11"></td><td><input type="number" step="0.01"></td></tr>
+                  <tr><td>3</td><td class="bg-yellow"><input type="text" class="std-input" data-key="rotor_sideplate_ds_3" placeholder="0.05-0.11"></td><td><input type="number" step="0.01"></td></tr>
                 </tbody>
               </table>
               <table class="form-table" style="margin-top: 10px;">
                 <thead><tr><th colspan="3">NDEDN</th></tr><tr><th>Lobe</th><th>Standar</th><th>Aktual</th></tr></thead>
                 <tbody>
-                  <tr><td>1</td><td class="bg-yellow"><input type="text" class="std-input" placeholder="0.05-0.11"></td><td><input type="number" step="0.01"></td></tr>
-                  <tr><td>2</td><td class="bg-yellow"><input type="text" class="std-input" placeholder="0.05-0.11"></td><td><input type="number" step="0.01"></td></tr>
-                  <tr><td>3</td><td class="bg-yellow"><input type="text" class="std-input" placeholder="0.05-0.11"></td><td><input type="number" step="0.01"></td></tr>
+                  <tr><td>1</td><td class="bg-yellow"><input type="text" class="std-input" data-key="rotor_sideplate_nds_1" placeholder="0.05-0.11"></td><td><input type="number" step="0.01"></td></tr>
+                  <tr><td>2</td><td class="bg-yellow"><input type="text" class="std-input" data-key="rotor_sideplate_nds_2" placeholder="0.05-0.11"></td><td><input type="number" step="0.01"></td></tr>
+                  <tr><td>3</td><td class="bg-yellow"><input type="text" class="std-input" data-key="rotor_sideplate_nds_3" placeholder="0.05-0.11"></td><td><input type="number" step="0.01"></td></tr>
                 </tbody>
               </table>
             </div>
@@ -298,7 +306,7 @@
           <table class="form-table">
             <thead>
               <tr><th rowspan="2" style="width: 25%;">Backlash gear</th><th style="width: 25%;">Standard</th><th colspan="3" style="width: 30%;">Lobe</th><th colspan="2" style="width: 20%;">Hasil</th></tr>
-              <tr><th class="bg-yellow"><input type="text" class="std-input" placeholder="0.03-0.08"></th><th>1</th><th>2</th><th>3</th><th>OK</th><th>NG</th></tr>
+              <tr><th class="bg-yellow"><input type="text" class="std-input" data-key="backlash_gear" placeholder="0.03-0.08"></th><th>1</th><th>2</th><th>3</th><th>OK</th><th>NG</th></tr>
             </thead>
             <tbody>
               <tr><td>-</td><td>-</td><td><input type="number" step="0.01"></td><td><input type="number" step="0.01"></td><td><input type="number" step="0.01"></td><td><input type="radio" name="rb_backlash" value="OK"></td><td><input type="radio" name="rb_backlash" value="NG"></td></tr>
@@ -424,36 +432,36 @@
             </thead>
             <tbody>
               <tr class="bg-gray"><td colspan="10" class="text-left" style="font-weight: bold;">Rotor DR (Driver)</td></tr>
-              <tr><td>A</td><td class="text-left"><input type="text" value="Pulley"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="rot_DR_A" value="OK"></td><td><input type="radio" name="rot_DR_A" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
-              <tr><td>B</td><td class="text-left"><input type="text" value="Shaft sleeve"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="rot_DR_B" value="OK"></td><td><input type="radio" name="rot_DR_B" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
-              <tr><td>C</td><td class="text-left"><input type="text" value="Bearing DEDR"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="rot_DR_C" value="OK"></td><td><input type="radio" name="rot_DR_C" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
-              <tr><td>D</td><td class="text-left"><input type="text" value="Sealing Spacer DEDR"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="rot_DR_D" value="OK"></td><td><input type="radio" name="rot_DR_D" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
-              <tr><td>E</td><td class="text-left"><input type="text" value="Panjang Lobe DR"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="rot_DR_E" value="OK"></td><td><input type="radio" name="rot_DR_E" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
-              <tr><td>F</td><td class="text-left"><input type="text" value="Sealing Spacer NDEDR"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="rot_DR_F" value="OK"></td><td><input type="radio" name="rot_DR_F" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
-              <tr><td>G</td><td class="text-left"><input type="text" value="Bearing NDEDR"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="rot_DR_G" value="OK"></td><td><input type="radio" name="rot_DR_G" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
-              <tr><td>H</td><td class="text-left"><input type="text" value="Locknut"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="rot_DR_H" value="OK"></td><td><input type="radio" name="rot_DR_H" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
-              <tr><td>I</td><td class="text-left"><input type="text" value="Gear DR"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="rot_DR_I" value="OK"></td><td><input type="radio" name="rot_DR_I" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
-              <tr><td>J</td><td class="text-left"><input type="text" value="Locknut Gear DR"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="rot_DR_J" value="OK"></td><td><input type="radio" name="rot_DR_J" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
-              <tr><td>K</td><td class="text-left"><input type="text" value="Puncak Lobe DR-1"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="rot_DR_K" value="OK"></td><td><input type="radio" name="rot_DR_K" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
-              <tr><td>L</td><td class="text-left"><input type="text" value="Puncak Lobe DR-2"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="rot_DR_L" value="OK"></td><td><input type="radio" name="rot_DR_L" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
-              <tr><td>M</td><td class="text-left"><input type="text" value="Puncak Lobe DR-3"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="rot_DR_M" value="OK"></td><td><input type="radio" name="rot_DR_M" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
-              <tr><td>N</td><td class="text-left"><input type="text" value="Lebar Spie"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="rot_DR_N" value="OK"></td><td><input type="radio" name="rot_DR_N" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
-              <tr><td>O</td><td class="text-left"><input type="text" value="Tinggi Spie"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="rot_DR_O" value="OK"></td><td><input type="radio" name="rot_DR_O" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
-              <tr><td>P</td><td class="text-left"><input type="text" value="Panjang Spie"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="rot_DR_P" value="OK"></td><td><input type="radio" name="rot_DR_P" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
+              <tr><td>A</td><td class="text-left"><input type="text" value="Pulley"></td><td><input type="text" data-shaft-area="A"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="rot_DR_A" value="OK"></td><td><input type="radio" name="rot_DR_A" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
+              <tr><td>B</td><td class="text-left"><input type="text" value="Shaft sleeve"></td><td><input type="text" data-shaft-area="B"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="rot_DR_B" value="OK"></td><td><input type="radio" name="rot_DR_B" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
+              <tr><td>C</td><td class="text-left"><input type="text" value="Bearing DEDR"></td><td><input type="text" data-shaft-area="C"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="rot_DR_C" value="OK"></td><td><input type="radio" name="rot_DR_C" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
+              <tr><td>D</td><td class="text-left"><input type="text" value="Sealing Spacer DEDR"></td><td><input type="text" data-shaft-area="D"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="rot_DR_D" value="OK"></td><td><input type="radio" name="rot_DR_D" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
+              <tr><td>E</td><td class="text-left"><input type="text" value="Panjang Lobe DR"></td><td><input type="text" data-shaft-area="E"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="rot_DR_E" value="OK"></td><td><input type="radio" name="rot_DR_E" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
+              <tr><td>F</td><td class="text-left"><input type="text" value="Sealing Spacer NDEDR"></td><td><input type="text" data-shaft-area="F"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="rot_DR_F" value="OK"></td><td><input type="radio" name="rot_DR_F" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
+              <tr><td>G</td><td class="text-left"><input type="text" value="Bearing NDEDR"></td><td><input type="text" data-shaft-area="G"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="rot_DR_G" value="OK"></td><td><input type="radio" name="rot_DR_G" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
+              <tr><td>H</td><td class="text-left"><input type="text" value="Locknut"></td><td><input type="text" data-shaft-area="H"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="rot_DR_H" value="OK"></td><td><input type="radio" name="rot_DR_H" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
+              <tr><td>I</td><td class="text-left"><input type="text" value="Gear DR"></td><td><input type="text" data-shaft-area="I"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="rot_DR_I" value="OK"></td><td><input type="radio" name="rot_DR_I" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
+              <tr><td>J</td><td class="text-left"><input type="text" value="Locknut Gear DR"></td><td><input type="text" data-shaft-area="J"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="rot_DR_J" value="OK"></td><td><input type="radio" name="rot_DR_J" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
+              <tr><td>K</td><td class="text-left"><input type="text" value="Puncak Lobe DR-1"></td><td><input type="text" data-shaft-area="K"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="rot_DR_K" value="OK"></td><td><input type="radio" name="rot_DR_K" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
+              <tr><td>L</td><td class="text-left"><input type="text" value="Puncak Lobe DR-2"></td><td><input type="text" data-shaft-area="L"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="rot_DR_L" value="OK"></td><td><input type="radio" name="rot_DR_L" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
+              <tr><td>M</td><td class="text-left"><input type="text" value="Puncak Lobe DR-3"></td><td><input type="text" data-shaft-area="M"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="rot_DR_M" value="OK"></td><td><input type="radio" name="rot_DR_M" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
+              <tr><td>N</td><td class="text-left"><input type="text" value="Lebar Spie"></td><td><input type="text" data-shaft-area="N"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="rot_DR_N" value="OK"></td><td><input type="radio" name="rot_DR_N" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
+              <tr><td>O</td><td class="text-left"><input type="text" value="Tinggi Spie"></td><td><input type="text" data-shaft-area="O"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="rot_DR_O" value="OK"></td><td><input type="radio" name="rot_DR_O" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
+              <tr><td>P</td><td class="text-left"><input type="text" value="Panjang Spie"></td><td><input type="text" data-shaft-area="P"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="rot_DR_P" value="OK"></td><td><input type="radio" name="rot_DR_P" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
               
               <tr class="bg-gray"><td colspan="10" class="text-left" style="font-weight: bold;">Rotor DN (Driven)</td></tr>
-              <tr><td>Q</td><td class="text-left"><input type="text" value="Locknut DEDN"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="rot_DN_Q" value="OK"></td><td><input type="radio" name="rot_DN_Q" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
-              <tr><td>R</td><td class="text-left"><input type="text" value="Bearing DEDN"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="rot_DN_R" value="OK"></td><td><input type="radio" name="rot_DN_R" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
-              <tr><td>S</td><td class="text-left"><input type="text" value="Sealing Spacer DEDN"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="rot_DN_S" value="OK"></td><td><input type="radio" name="rot_DN_S" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
-              <tr><td>T</td><td class="text-left"><input type="text" value="Panjang Lobe DN"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="rot_DN_T" value="OK"></td><td><input type="radio" name="rot_DN_T" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
-              <tr><td>U</td><td class="text-left"><input type="text" value="Sealing Spacer NDEDN"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="rot_DN_U" value="OK"></td><td><input type="radio" name="rot_DN_U" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
-              <tr><td>V</td><td class="text-left"><input type="text" value="Bearing NDEDN"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="rot_DN_V" value="OK"></td><td><input type="radio" name="rot_DN_V" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
-              <tr><td>W</td><td class="text-left"><input type="text" value="Locknut"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="rot_DN_W" value="OK"></td><td><input type="radio" name="rot_DN_W" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
-              <tr><td>X</td><td class="text-left"><input type="text" value="Gear DN"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="rot_DN_X" value="OK"></td><td><input type="radio" name="rot_DN_X" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
-              <tr><td>Y</td><td class="text-left"><input type="text" value="Locknut Gear DN"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="rot_DN_Y" value="OK"></td><td><input type="radio" name="rot_DN_Y" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
-              <tr><td>Z</td><td class="text-left"><input type="text" value="Puncak Lobe DN-1"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="rot_DN_Z" value="OK"></td><td><input type="radio" name="rot_DN_Z" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
-              <tr><td>A1</td><td class="text-left"><input type="text" value="Puncak Lobe DN-2"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="rot_DN_A1" value="OK"></td><td><input type="radio" name="rot_DN_A1" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
-              <tr><td>B1</td><td class="text-left"><input type="text" value="Puncak Lobe DN-3"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="rot_DN_B1" value="OK"></td><td><input type="radio" name="rot_DN_B1" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
+              <tr><td>Q</td><td class="text-left"><input type="text" value="Locknut DEDN"></td><td><input type="text" data-shaft-area="Q"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="rot_DN_Q" value="OK"></td><td><input type="radio" name="rot_DN_Q" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
+              <tr><td>R</td><td class="text-left"><input type="text" value="Bearing DEDN"></td><td><input type="text" data-shaft-area="R"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="rot_DN_R" value="OK"></td><td><input type="radio" name="rot_DN_R" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
+              <tr><td>S</td><td class="text-left"><input type="text" value="Sealing Spacer DEDN"></td><td><input type="text" data-shaft-area="S"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="rot_DN_S" value="OK"></td><td><input type="radio" name="rot_DN_S" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
+              <tr><td>T</td><td class="text-left"><input type="text" value="Panjang Lobe DN"></td><td><input type="text" data-shaft-area="T"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="rot_DN_T" value="OK"></td><td><input type="radio" name="rot_DN_T" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
+              <tr><td>U</td><td class="text-left"><input type="text" value="Sealing Spacer NDEDN"></td><td><input type="text" data-shaft-area="U"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="rot_DN_U" value="OK"></td><td><input type="radio" name="rot_DN_U" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
+              <tr><td>V</td><td class="text-left"><input type="text" value="Bearing NDEDN"></td><td><input type="text" data-shaft-area="V"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="rot_DN_V" value="OK"></td><td><input type="radio" name="rot_DN_V" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
+              <tr><td>W</td><td class="text-left"><input type="text" value="Locknut"></td><td><input type="text" data-shaft-area="W"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="rot_DN_W" value="OK"></td><td><input type="radio" name="rot_DN_W" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
+              <tr><td>X</td><td class="text-left"><input type="text" value="Gear DN"></td><td><input type="text" data-shaft-area="X"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="rot_DN_X" value="OK"></td><td><input type="radio" name="rot_DN_X" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
+              <tr><td>Y</td><td class="text-left"><input type="text" value="Locknut Gear DN"></td><td><input type="text" data-shaft-area="Y"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="rot_DN_Y" value="OK"></td><td><input type="radio" name="rot_DN_Y" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
+              <tr><td>Z</td><td class="text-left"><input type="text" value="Puncak Lobe DN-1"></td><td><input type="text" data-shaft-area="Z"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="rot_DN_Z" value="OK"></td><td><input type="radio" name="rot_DN_Z" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
+              <tr><td>A1</td><td class="text-left"><input type="text" value="Puncak Lobe DN-2"></td><td><input type="text" data-shaft-area="A1"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="rot_DN_A1" value="OK"></td><td><input type="radio" name="rot_DN_A1" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
+              <tr><td>B1</td><td class="text-left"><input type="text" value="Puncak Lobe DN-3"></td><td><input type="text" data-shaft-area="B1"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="rot_DN_B1" value="OK"></td><td><input type="radio" name="rot_DN_B1" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
               <tr><td>Extra</td><td class="text-left"><input type="text" placeholder="Nama part tambahan..."></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="rot_DN_Extra" value="OK"></td><td><input type="radio" name="rot_DN_Extra" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
             </tbody>
           </table>
@@ -497,18 +505,18 @@
             </thead>
             <tbody>
               <tr class="bg-gray"><td colspan="10" class="text-left" style="font-weight: bold;">Sideplate DE</td></tr>
-              <tr><td>A</td><td class="text-left"><input type="text" value="Sealing chamber DE-DR"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="sp_A" value="OK"></td><td><input type="radio" name="sp_A" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
-              <tr><td>B</td><td class="text-left"><input type="text" value="Sealing chamber DE-DN"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="sp_B" value="OK"></td><td><input type="radio" name="sp_B" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
-              <tr><td>C</td><td class="text-left"><input type="text" value="Hosing Bearing DE-DR"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="sp_C" value="OK"></td><td><input type="radio" name="sp_C" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
-              <tr><td>D</td><td class="text-left"><input type="text" value="Hosing Bearing DE-DN"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="sp_D" value="OK"></td><td><input type="radio" name="sp_D" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
-              <tr><td>E</td><td class="text-left"><input type="text" value="Surface Side Plate DE"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="sp_E" value="OK"></td><td><input type="radio" name="sp_E" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
+              <tr><td>A</td><td class="text-left"><input type="text" value="Sealing chamber DE-DR"></td><td><input type="text" data-housing-area="A"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="sp_A" value="OK"></td><td><input type="radio" name="sp_A" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
+              <tr><td>B</td><td class="text-left"><input type="text" value="Sealing chamber DE-DN"></td><td><input type="text" data-housing-area="B"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="sp_B" value="OK"></td><td><input type="radio" name="sp_B" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
+              <tr><td>C</td><td class="text-left"><input type="text" value="Hosing Bearing DE-DR"></td><td><input type="text" data-housing-area="C"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="sp_C" value="OK"></td><td><input type="radio" name="sp_C" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
+              <tr><td>D</td><td class="text-left"><input type="text" value="Hosing Bearing DE-DN"></td><td><input type="text" data-housing-area="D"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="sp_D" value="OK"></td><td><input type="radio" name="sp_D" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
+              <tr><td>E</td><td class="text-left"><input type="text" value="Surface Side Plate DE"></td><td><input type="text" data-housing-area="E"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="sp_E" value="OK"></td><td><input type="radio" name="sp_E" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
               
               <tr class="bg-gray"><td colspan="10" class="text-left" style="font-weight: bold;">Sideplate NDE</td></tr>
-              <tr><td>F</td><td class="text-left"><input type="text" value="Sealing Chamber NDE-DR"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="sp_F" value="OK"></td><td><input type="radio" name="sp_F" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
-              <tr><td>G</td><td class="text-left"><input type="text" value="Sealing chamber NDE-DN"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="sp_G" value="OK"></td><td><input type="radio" name="sp_G" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
-              <tr><td>H</td><td class="text-left"><input type="text" value="Hosing Bearing NDE-DR"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="sp_H" value="OK"></td><td><input type="radio" name="sp_H" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
-              <tr><td>I</td><td class="text-left"><input type="text" value="Hosing Bearing NDE-DN"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="sp_I" value="OK"></td><td><input type="radio" name="sp_I" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
-              <tr><td>J</td><td class="text-left"><input type="text" value="Surface Side Plade NDE"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="sp_J" value="OK"></td><td><input type="radio" name="sp_J" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
+              <tr><td>F</td><td class="text-left"><input type="text" value="Sealing Chamber NDE-DR"></td><td><input type="text" data-housing-area="F"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="sp_F" value="OK"></td><td><input type="radio" name="sp_F" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
+              <tr><td>G</td><td class="text-left"><input type="text" value="Sealing chamber NDE-DN"></td><td><input type="text" data-housing-area="G"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="sp_G" value="OK"></td><td><input type="radio" name="sp_G" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
+              <tr><td>H</td><td class="text-left"><input type="text" value="Hosing Bearing NDE-DR"></td><td><input type="text" data-housing-area="H"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="sp_H" value="OK"></td><td><input type="radio" name="sp_H" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
+              <tr><td>I</td><td class="text-left"><input type="text" value="Hosing Bearing NDE-DN"></td><td><input type="text" data-housing-area="I"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="sp_I" value="OK"></td><td><input type="radio" name="sp_I" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
+              <tr><td>J</td><td class="text-left"><input type="text" value="Surface Side Plade NDE"></td><td><input type="text" data-housing-area="J"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="sp_J" value="OK"></td><td><input type="radio" name="sp_J" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
               <tr><td>K</td><td class="text-left"><input type="text" placeholder="Nama part tambahan..."></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="sp_K" value="OK"></td><td><input type="radio" name="sp_K" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
               <tr><td>L</td><td class="text-left"><input type="text" placeholder="Nama part tambahan..."></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="radio" name="sp_L" value="OK"></td><td><input type="radio" name="sp_L" value="NG"></td><td><input type="text"></td><td class="no-print"><button type="button" class="btn-insert-row" onclick="insertGeneralRowBelow(this)">➕</button><button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button></td></tr>
             </tbody>
@@ -619,6 +627,203 @@
   </div>
 
   <script>
+    // ==================== MASTER DATA BLOWER (MODULAR JSON) ====================
+    let blowerModelsDb = {};
+    let blowerClearanceDb = {};
+    let blowerSparepartsDb = {};
+    let blowerShaftDimDb = {};
+    let blowerHousingDimDb = {};
+
+    function getBlowerDataUrl(filename) {
+      return window.location.pathname.includes('/modules/') ? `../data/blower/${filename}` : `data/blower/${filename}`;
+    }
+
+    async function loadBlowerMasterDatasets() {
+      try {
+        const fetchFile = async (fn) => {
+          try {
+            let res = await fetch(getBlowerDataUrl(fn));
+            if (!res.ok) res = await fetch(`data/blower/${fn}`);
+            if (res.ok) return await res.json();
+          } catch(e) {
+            console.warn(`Failed to fetch ${fn}:`, e);
+          }
+          return null;
+        };
+
+        const [models, clearance, spareparts, shaft, housing] = await Promise.all([
+          fetchFile('models.json'),
+          fetchFile('clearance.json'),
+          fetchFile('spareparts.json'),
+          fetchFile('shaft_dimensi.json'),
+          fetchFile('housing_dimensi.json')
+        ]);
+
+        if (models) {
+          blowerModelsDb = models;
+          populateBrandBlowerDatalist();
+          console.log('✅ Blower Models DB dimuat:', Object.keys(blowerModelsDb).length, 'merk.');
+        }
+        if (clearance) blowerClearanceDb = clearance;
+        if (spareparts) blowerSparepartsDb = spareparts;
+        if (shaft) blowerShaftDimDb = shaft;
+        if (housing) blowerHousingDimDb = housing;
+
+        // Auto-refresh jika input sudah terisi (misal setelah refresh / auto-restore)
+        const brandInput = document.getElementById('initBrand');
+        if (brandInput && brandInput.value) {
+          onBrandBlowerChange(brandInput.value);
+        }
+      } catch (err) {
+        console.warn('⚠️ Gagal memuat sebagian master dataset blower:', err);
+      }
+    }
+
+    function populateBrandBlowerDatalist() {
+      const datalist = document.getElementById('brandBlowerList');
+      if (!datalist) return;
+      datalist.innerHTML = '';
+      Object.keys(blowerModelsDb).forEach(brand => {
+        const opt = document.createElement('option');
+        opt.value = brand;
+        datalist.appendChild(opt);
+      });
+    }
+
+    function onBrandBlowerChange(brandName) {
+      const trimmed = (brandName || '').trim();
+      const typeDatalist = document.getElementById('typeBlowerList');
+      if (!typeDatalist) return;
+      typeDatalist.innerHTML = '';
+
+      if (!trimmed) return;
+
+      const brandKey = Object.keys(blowerModelsDb).find(k => k.toLowerCase() === trimmed.toLowerCase());
+      if (brandKey && Array.isArray(blowerModelsDb[brandKey])) {
+        blowerModelsDb[brandKey].forEach(model => {
+          const opt = document.createElement('option');
+          opt.value = model;
+          typeDatalist.appendChild(opt);
+        });
+      }
+    }
+
+    function onTypeBlowerChange(typeName) {
+      const model = (typeName || '').trim();
+      if (!model) return;
+
+      // 1. Auto-fill Standar Clearance di Tab 1
+      if (blowerClearanceDb && blowerClearanceDb[model]) {
+        const specs = blowerClearanceDb[model];
+        document.querySelectorAll('#tab-clearance input[data-key]').forEach(input => {
+          const key = input.getAttribute('data-key');
+          if (specs[key] !== undefined) {
+            input.value = specs[key];
+            input.style.backgroundColor = '#dcfce7';
+            setTimeout(() => { input.style.backgroundColor = ''; }, 2000);
+          }
+        });
+        console.log(`🎯 Standar clearance untuk ${model} otomatis terisi!`);
+      }
+
+      // 2. Auto-fill Standar Dimensi Shaft di Tab 3
+      if (blowerShaftDimDb && blowerShaftDimDb[model]) {
+        const specs = blowerShaftDimDb[model];
+        document.querySelectorAll('#tab-dimensi-rotor input[data-shaft-area]').forEach(input => {
+          const area = input.getAttribute('data-shaft-area');
+          if (specs[area] !== undefined) {
+            input.value = specs[area];
+            input.style.backgroundColor = '#dcfce7';
+            setTimeout(() => { input.style.backgroundColor = ''; }, 2000);
+          }
+        });
+      }
+
+      // 3. Auto-fill Standar Dimensi Housing di Tab 4
+      if (blowerHousingDimDb && blowerHousingDimDb[model]) {
+        const specs = blowerHousingDimDb[model];
+        document.querySelectorAll('#tab-dimensi-sideplate input[data-housing-area]').forEach(input => {
+          const area = input.getAttribute('data-housing-area');
+          if (specs[area] !== undefined) {
+            input.value = specs[area];
+            input.style.backgroundColor = '#dcfce7';
+            setTimeout(() => { input.style.backgroundColor = ''; }, 2000);
+          }
+        });
+      }
+
+      // 4. Update Rekomendasi Sparepart jika tersedia
+      checkAndSuggestSpareParts(model);
+    }
+
+    function onTabBrandChange(brandName) {
+      document.querySelectorAll('.sync-brand').forEach(el => {
+        if (el !== document.activeElement) el.value = brandName;
+      });
+      const initBrand = document.getElementById('initBrand');
+      if (initBrand && initBrand !== document.activeElement) initBrand.value = brandName;
+      onBrandBlowerChange(brandName);
+    }
+
+    function onTabTypeChange(typeName) {
+      document.querySelectorAll('.sync-type').forEach(el => {
+        if (el !== document.activeElement) el.value = typeName;
+      });
+      const initType = document.getElementById('initType');
+      if (initType && initType !== document.activeElement) initType.value = typeName;
+      onTypeBlowerChange(typeName);
+    }
+
+    function checkAndSuggestSpareParts(model) {
+      if (!blowerSparepartsDb || !blowerSparepartsDb[model]) return;
+      const parts = blowerSparepartsDb[model];
+      if (!Array.isArray(parts) || parts.length === 0) return;
+
+      const tbody = document.getElementById('sparePartTbody');
+      if (!tbody) return;
+
+      const rows = tbody.querySelectorAll('tr');
+      parts.forEach(part => {
+        let matched = false;
+        rows.forEach(row => {
+          const nameInput = row.querySelector('.text-left input');
+          const codeInput = row.querySelector('.part-code-input');
+          const midInput = row.querySelector('.part-mid-input');
+          const qtyInput = row.querySelector('input[type="number"]');
+
+          if (nameInput && nameInput.value && nameInput.value.toLowerCase().includes(part.nama.toLowerCase())) {
+            if (codeInput && !codeInput.value && part.kode) codeInput.value = part.kode;
+            if (midInput && !midInput.value && part.mid) midInput.value = part.mid;
+            if (qtyInput && !qtyInput.value && part.qty) qtyInput.value = part.qty;
+            matched = true;
+          }
+        });
+
+        if (!matched) {
+          const newTr = document.createElement('tr');
+          const newIndex = tbody.querySelectorAll('tr').length + 1;
+          newTr.innerHTML = `
+            <td class="row-num">${newIndex}</td>
+            <td class="text-left"><input type="text" class="text-input-left" value="${part.nama}"></td>
+            <td><input type="text" list="masterMidList" class="part-code-input text-input-left" value="${part.kode || ''}" oninput="handleCodeSearch(this)"></td>
+            <td><input type="text" class="part-mid-input" value="${part.mid || ''}"></td>
+            <td><input type="number" value="${part.qty || 1}"></td>
+            <td><input type="radio" name="cond_${newIndex}" value="OK"></td>
+            <td><input type="radio" name="cond_${newIndex}" value="NG"></td>
+            <td><input type="text" value="${part.keterangan || ''}"></td>
+            <td class="no-print">
+              <button type="button" class="btn-insert-row" onclick="insertSparePartRowBelow(this)">➕</button>
+              <button type="button" class="btn-delete-row" onclick="deleteSparePartRow(this)">🗑️</button>
+            </td>
+          `;
+          tbody.appendChild(newTr);
+        }
+      });
+      reindexSparePartRows();
+    }
+
+    loadBlowerMasterDatasets();
+
     // ==================== UNIVERSAL MASTER MID AUTOCOMPLETE ====================
     let masterMidDb = [];
 
@@ -740,6 +945,8 @@
       if (opEl) opEl.textContent = operator;
       const supEl = document.getElementById('lblSupervisor');
       if (supEl) supEl.textContent = supervisor;
+
+      onTypeBlowerChange(type);
 
       document.getElementById('pageInit').style.display = 'none';
       document.getElementById('mainSystem').style.display = 'block';

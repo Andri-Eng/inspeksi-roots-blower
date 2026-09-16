@@ -1,0 +1,18 @@
+{
+  "5BE150H": [
+    { "nama": "Bearing Drive DE", "kode": "NU 2212", "mid": "BRG-NU2212", "qty": 1, "keterangan": "Drive End" },
+    { "nama": "Bearing Drive NDE", "kode": "6312 C3", "mid": "BRG-6312C3", "qty": 1, "keterangan": "Non-Drive End" },
+    { "nama": "Bearing Driven DE", "kode": "NU 2212", "mid": "BRG-NU2212", "qty": 1, "keterangan": "Drive End" },
+    { "nama": "Bearing Driven NDE", "kode": "6312 C3", "mid": "BRG-6312C3", "qty": 1, "keterangan": "Non-Drive End" },
+    { "nama": "Oil Seal Drive DE", "kode": "60 x 80 x 10 Viton", "mid": "OS-608010V", "qty": 2, "keterangan": "Double Lip" },
+    { "nama": "Oil Seal NDE", "kode": "60 x 80 x 10 Viton", "mid": "OS-608010V", "qty": 2, "keterangan": "Double Lip" },
+    { "nama": "Piston Ring Gas/Oil", "kode": "PR-5BE150", "mid": "PR-5BE150", "qty": 4, "keterangan": "Sealing kit" },
+    { "nama": "Gasket Casing / Flange", "kode": "Gasket Asbestos-free", "mid": "GSK-5BE150", "qty": 2, "keterangan": "Packing flange" }
+  ],
+  "GM 10 S": [
+    { "nama": "Bearing Drive Shaft", "kode": "NJ 209", "mid": "BRG-NJ209", "qty": 2, "keterangan": "Aerzen Standard" },
+    { "nama": "Bearing Driven Shaft", "kode": "6209 C3", "mid": "BRG-6209C3", "qty": 2, "keterangan": "Aerzen Standard" },
+    { "nama": "Oil Seal", "kode": "45 x 65 x 10 Viton", "mid": "OS-456510V", "qty": 4, "keterangan": "High temp" },
+    { "nama": "Piston Ring Labyrinth", "kode": "PR-GM10S", "mid": "PR-GM10S", "qty": 4, "keterangan": "Sealing chamber" }
+  ]
+}
