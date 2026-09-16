@@ -278,6 +278,8 @@ function upgradeActionButtonsToDropdown(moduleName, container) {
           <button type="button" class="dropdown-item" onclick="triggerExportJSON(event, '${moduleName}')">💾 Save (JSON)</button>
           <button type="button" class="dropdown-item" onclick="triggerExportExcel(event, '${moduleName}')">📊 Export to Excel</button>
           <button type="button" class="dropdown-item" onclick="openMergedReviewModal(); event.preventDefault();">📄 Export to PDF</button>
+          <hr style="margin: 4px 0; border: none; border-top: 1px solid #e2e8f0;">
+          <button type="button" class="dropdown-item" style="color: #dc2626;" onclick="clearModuleDraft('${moduleName}')">🗑️ Reset / Hapus Draft</button>
         </div>
       `;
       
@@ -313,6 +315,23 @@ document.addEventListener('click', function(e) {
     });
   }
 });
+
+// Clear Draft for a specific module
+async function clearModuleDraft(moduleName) {
+  if (!confirm(`Apakah Anda yakin ingin mereset/menghapus draft tersimpan untuk modul ${moduleName}? Seluruh data form akan dikosongkan.`)) return;
+  try {
+    await idbRemove(`draft_${moduleName}`);
+  } catch (e) {}
+  localStorage.removeItem(`draft_${moduleName}`);
+  showAlert(`Draft ${moduleName} berhasil dibersihkan!`, 'info');
+  const active = localStorage.getItem('activeModule') || moduleName;
+  if (typeof loadModule === 'function') {
+    loadModule(active);
+  } else {
+    window.location.reload();
+  }
+}
+window.clearModuleDraft = clearModuleDraft;
 
 // Import JSON file data to form
 function triggerImportJSON(event, moduleName) {
@@ -1001,6 +1020,13 @@ async function restoreAutoSave(moduleName, container) {
       inputs.forEach(item => {
         const el = elements[item.index];
         if (el) {
+          // Lindungi elemen sync header agar tidak tertimpa pergeseran index
+          if (el.classList.contains('sync-brand') || el.classList.contains('sync-typesn') || 
+              el.classList.contains('sync-type') || el.classList.contains('sync-sn') ||
+              el.classList.contains('sync-customer') || el.classList.contains('sync-noso') ||
+              el.classList.contains('sync-date')) {
+            return;
+          }
           if (el.type === 'radio' || el.type === 'checkbox') {
             el.checked = item.checked;
           } else {
@@ -1010,6 +1036,11 @@ async function restoreAutoSave(moduleName, container) {
           el.dispatchEvent(new Event('change', { bubbles: true }));
         }
       });
+
+      // Sinkronkan seluruh header antar-tab secara utuh
+      if (typeof window.syncAllHeaders === 'function') {
+        window.syncAllHeaders();
+      }
     }
 
     // 2. Restore mainSystem visibility

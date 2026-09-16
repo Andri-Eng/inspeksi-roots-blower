@@ -131,6 +131,7 @@
       <div class="form-group"><label>Nama Supervisor *</label><input type="text" id="initSupervisor" class="form-control" placeholder="Nama supervisor..."></div>
       <button type="button" class="btn-submit" onclick="processInitData()">MULAI INSPEKSI 🚀</button>
       <button type="button" class="btn-back-home" onclick="window.location.href='../index.html'">🏠 Kembali ke Menu Utama</button>
+      <button type="button" class="btn-reset-draft" style="margin-top: 10px; background: none; border: 1px dashed #ef4444; color: #ef4444; width: 100%; padding: 8px; border-radius: 4px; font-size: 12px; cursor: pointer; font-weight: bold;" onclick="clearRootBlowerDraft()">🗑️ Bersihkan Draft / Reset Form Ini</button>
     </div>
 
     <!-- ==================== SISTEM UTAMA 5 TAB ==================== -->
@@ -182,15 +183,15 @@
             </tr>
             <tr>
               <td class="text-left">SN</td>
-              <td><input type="text" class="sync-sn"></td>
+              <td><input type="text" class="sync-sn" oninput="onTabSNChange(this.value)"></td>
               <td class="text-left">CUSTOMER</td>
-              <td><input type="text" class="sync-customer"></td>
+              <td><input type="text" class="sync-customer" oninput="onTabCustomerChange(this.value)"></td>
             </tr>
             <tr>
               <td class="text-left">NO. SO</td>
-              <td><input type="text" class="sync-noso"></td>
+              <td><input type="text" class="sync-noso" oninput="onTabNoSOChange(this.value)"></td>
               <td class="text-left">TANGGAL</td>
-              <td><input type="date" class="sync-date"></td>
+              <td><input type="date" class="sync-date" oninput="onTabDateChange(this.value)"></td>
             </tr>
           </table>
 
@@ -345,10 +346,10 @@
           </table>
 
           <table class="form-table">
-            <tr><td style="width: 20%;" class="text-left"><b>BRAND</b></td><td style="width: 80%;"><input type="text" class="sync-brand"></td></tr>
-            <tr><td class="text-left"><b>TYPE/SN</b></td><td><input type="text" class="sync-typesn"></td></tr>
-            <tr><td class="text-left"><b>CUSTOMER</b></td><td><input type="text" class="sync-customer"></td></tr>
-            <tr><td class="text-left"><b>NO. SO</b></td><td><input type="text" class="sync-noso"></td></tr>
+            <tr><td style="width: 20%;" class="text-left"><b>BRAND</b></td><td style="width: 80%;"><input type="text" class="sync-brand" readonly style="background-color: #f8fafc;"></td></tr>
+            <tr><td class="text-left"><b>TYPE/SN</b></td><td><input type="text" class="sync-typesn" readonly style="background-color: #f8fafc;"></td></tr>
+            <tr><td class="text-left"><b>CUSTOMER</b></td><td><input type="text" class="sync-customer" readonly style="background-color: #f8fafc;"></td></tr>
+            <tr><td class="text-left"><b>NO. SO</b></td><td><input type="text" class="sync-noso" readonly style="background-color: #f8fafc;"></td></tr>
           </table>
 
           <datalist id="masterMidList"></datalist>
@@ -413,10 +414,10 @@
           </table>
 
           <table class="form-table">
-            <tr><td style="width: 20%;" class="text-left"><b>BRAND</b></td><td style="width: 80%;"><input type="text" class="sync-brand"></td></tr>
-            <tr><td class="text-left"><b>TYPE/SN</b></td><td><input type="text" class="sync-typesn"></td></tr>
-            <tr><td class="text-left"><b>CUSTOMER</b></td><td><input type="text" class="sync-customer"></td></tr>
-            <tr><td class="text-left"><b>NO. SO</b></td><td><input type="text" class="sync-noso"></td></tr>
+            <tr><td style="width: 20%;" class="text-left"><b>BRAND</b></td><td style="width: 80%;"><input type="text" class="sync-brand" readonly style="background-color: #f8fafc;"></td></tr>
+            <tr><td class="text-left"><b>TYPE/SN</b></td><td><input type="text" class="sync-typesn" readonly style="background-color: #f8fafc;"></td></tr>
+            <tr><td class="text-left"><b>CUSTOMER</b></td><td><input type="text" class="sync-customer" readonly style="background-color: #f8fafc;"></td></tr>
+            <tr><td class="text-left"><b>NO. SO</b></td><td><input type="text" class="sync-noso" readonly style="background-color: #f8fafc;"></td></tr>
           </table>
 
           <div style="text-align: center; margin: 10px 0;">
@@ -486,10 +487,10 @@
           </table>
 
           <table class="form-table">
-            <tr><td style="width: 20%;" class="text-left"><b>BRAND</b></td><td style="width: 80%;"><input type="text" class="sync-brand"></td></tr>
-            <tr><td class="text-left"><b>TYPE/SN</b></td><td><input type="text" class="sync-typesn"></td></tr>
-            <tr><td class="text-left"><b>CUSTOMER</b></td><td><input type="text" class="sync-customer"></td></tr>
-            <tr><td class="text-left"><b>NO. SO</b></td><td><input type="text" class="sync-noso"></td></tr>
+            <tr><td style="width: 20%;" class="text-left"><b>BRAND</b></td><td style="width: 80%;"><input type="text" class="sync-brand" readonly style="background-color: #f8fafc;"></td></tr>
+            <tr><td class="text-left"><b>TYPE/SN</b></td><td><input type="text" class="sync-typesn" readonly style="background-color: #f8fafc;"></td></tr>
+            <tr><td class="text-left"><b>CUSTOMER</b></td><td><input type="text" class="sync-customer" readonly style="background-color: #f8fafc;"></td></tr>
+            <tr><td class="text-left"><b>NO. SO</b></td><td><input type="text" class="sync-noso" readonly style="background-color: #f8fafc;"></td></tr>
           </table>
 
           <div style="text-align: center; margin: 10px 0;">
@@ -542,10 +543,10 @@
           </table>
 
           <table class="form-table">
-            <tr><td style="width: 20%;" class="text-left"><b>BRAND</b></td><td style="width: 80%;"><input type="text" class="sync-brand"></td></tr>
-            <tr><td class="text-left"><b>TYPE/SN</b></td><td><input type="text" class="sync-typesn"></td></tr>
-            <tr><td class="text-left"><b>CUSTOMER</b></td><td><input type="text" class="sync-customer"></td></tr>
-            <tr><td class="text-left"><b>NO. SO</b></td><td><input type="text" class="sync-noso"></td></tr>
+            <tr><td style="width: 20%;" class="text-left"><b>BRAND</b></td><td style="width: 80%;"><input type="text" class="sync-brand" readonly style="background-color: #f8fafc;"></td></tr>
+            <tr><td class="text-left"><b>TYPE/SN</b></td><td><input type="text" class="sync-typesn" readonly style="background-color: #f8fafc;"></td></tr>
+            <tr><td class="text-left"><b>CUSTOMER</b></td><td><input type="text" class="sync-customer" readonly style="background-color: #f8fafc;"></td></tr>
+            <tr><td class="text-left"><b>NO. SO</b></td><td><input type="text" class="sync-noso" readonly style="background-color: #f8fafc;"></td></tr>
           </table>
 
           <div style="text-align: center; margin: 10px 0;">
@@ -726,53 +727,90 @@
         console.log(`🎯 Standar clearance untuk ${model} otomatis terisi!`);
       }
 
-      // 2. Auto-fill Standar Dimensi Shaft di Tab 3
-      if (blowerShaftDimDb && blowerShaftDimDb[model]) {
-        const specs = blowerShaftDimDb[model];
-        document.querySelectorAll('#tab-dimensi-rotor input[data-shaft-area]').forEach(input => {
-          const area = input.getAttribute('data-shaft-area');
-          if (specs[area] !== undefined) {
-            input.value = specs[area];
-            input.style.backgroundColor = '#dcfce7';
-            setTimeout(() => { input.style.backgroundColor = ''; }, 2000);
-          }
-        });
-      }
+      // 2. Standar Dimensi Shaft & Housing (Tab 3, 4, 5 dikosongkan dahulu sesuai permintaan, akan dikembangkan bertahap)
+      /*
+      if (blowerShaftDimDb && blowerShaftDimDb[model]) { ... }
+      if (blowerHousingDimDb && blowerHousingDimDb[model]) { ... }
+      */
 
-      // 3. Auto-fill Standar Dimensi Housing di Tab 4
-      if (blowerHousingDimDb && blowerHousingDimDb[model]) {
-        const specs = blowerHousingDimDb[model];
-        document.querySelectorAll('#tab-dimensi-sideplate input[data-housing-area]').forEach(input => {
-          const area = input.getAttribute('data-housing-area');
-          if (specs[area] !== undefined) {
-            input.value = specs[area];
-            input.style.backgroundColor = '#dcfce7';
-            setTimeout(() => { input.style.backgroundColor = ''; }, 2000);
-          }
-        });
-      }
-
-      // 4. Update Rekomendasi Sparepart jika tersedia
+      // 3. Update Rekomendasi Sparepart jika tersedia
       checkAndSuggestSpareParts(model);
     }
 
+    // ==================== UNIVERSAL ROBUST HEADER SYNCHRONIZER ====================
+    function syncAllHeaders(source = {}) {
+      const getVal = (id, cls, override) => {
+        if (override !== undefined) return override;
+        const elId = document.getElementById(id);
+        if (elId && elId.value) return elId.value;
+        const elCls = document.querySelector(cls);
+        return elCls ? elCls.value : '';
+      };
+
+      const brand = getVal('initBrand', '.sync-brand', source.brand);
+      const type = getVal('initType', '.sync-type', source.type);
+      const sn = getVal('initSN', '.sync-sn', source.sn);
+      const customer = getVal('initCustomer', '.sync-customer', source.customer);
+      const noso = getVal('initNoSO', '.sync-noso', source.noso);
+      const date = getVal('initDate', '.sync-date', source.date);
+
+      const typesn = (type && sn) ? `${type} / ${sn}` : (type || sn || '');
+
+      document.querySelectorAll('.sync-brand').forEach(el => { if (el !== document.activeElement) el.value = brand; });
+      document.querySelectorAll('.sync-type').forEach(el => { if (el !== document.activeElement) el.value = type; });
+      document.querySelectorAll('.sync-sn').forEach(el => { if (el !== document.activeElement) el.value = sn; });
+      document.querySelectorAll('.sync-typesn').forEach(el => { el.value = typesn; });
+      document.querySelectorAll('.sync-customer').forEach(el => { if (el !== document.activeElement) el.value = customer; });
+      document.querySelectorAll('.sync-noso').forEach(el => { if (el !== document.activeElement) el.value = noso; });
+      document.querySelectorAll('.sync-date').forEach(el => { if (el !== document.activeElement) el.value = date; });
+
+      // Sinkronkan kembali ke form init jika tidak sedang diedit di sana
+      const ib = document.getElementById('initBrand'); if (ib && ib !== document.activeElement) ib.value = brand;
+      const it = document.getElementById('initType'); if (it && it !== document.activeElement) it.value = type;
+      const is = document.getElementById('initSN'); if (is && is !== document.activeElement) is.value = sn;
+      const ic = document.getElementById('initCustomer'); if (ic && ic !== document.activeElement) ic.value = customer;
+      const ino = document.getElementById('initNoSO'); if (ino && ino !== document.activeElement) ino.value = noso;
+      const idt = document.getElementById('initDate'); if (idt && idt !== document.activeElement) idt.value = date;
+    }
+    window.syncAllHeaders = syncAllHeaders;
+
     function onTabBrandChange(brandName) {
-      document.querySelectorAll('.sync-brand').forEach(el => {
-        if (el !== document.activeElement) el.value = brandName;
-      });
-      const initBrand = document.getElementById('initBrand');
-      if (initBrand && initBrand !== document.activeElement) initBrand.value = brandName;
+      syncAllHeaders({ brand: brandName });
       onBrandBlowerChange(brandName);
     }
 
     function onTabTypeChange(typeName) {
-      document.querySelectorAll('.sync-type').forEach(el => {
-        if (el !== document.activeElement) el.value = typeName;
-      });
-      const initType = document.getElementById('initType');
-      if (initType && initType !== document.activeElement) initType.value = typeName;
+      syncAllHeaders({ type: typeName });
       onTypeBlowerChange(typeName);
     }
+
+    function onTabSNChange(snVal) {
+      syncAllHeaders({ sn: snVal });
+    }
+
+    function onTabCustomerChange(custVal) {
+      syncAllHeaders({ customer: custVal });
+    }
+
+    function onTabNoSOChange(nosoVal) {
+      syncAllHeaders({ noso: nosoVal });
+    }
+
+    function onTabDateChange(dateVal) {
+      syncAllHeaders({ date: dateVal });
+    }
+
+    async function clearRootBlowerDraft() {
+      if (confirm('Apakah Anda ingin membersihkan draft cache Root Blower dan mengosongkan form?')) {
+        try {
+          if (typeof idbRemove === 'function') await idbRemove('draft_ROOT BLOWER');
+        } catch(e) {}
+        localStorage.removeItem('draft_ROOT BLOWER');
+        alert('Draft berhasil dibersihkan. Halaman akan dimuat ulang.');
+        window.location.reload();
+      }
+    }
+    window.clearRootBlowerDraft = clearRootBlowerDraft;
 
     function checkAndSuggestSpareParts(model) {
       if (!blowerSparepartsDb || !blowerSparepartsDb[model]) return;
@@ -933,13 +971,7 @@
 
       document.getElementById('initAlert').style.display = 'none';
 
-      document.querySelectorAll('.sync-brand').forEach(el => el.value = brand);
-      document.querySelectorAll('.sync-type').forEach(el => el.value = type);
-      document.querySelectorAll('.sync-sn').forEach(el => el.value = sn);
-      document.querySelectorAll('.sync-customer').forEach(el => el.value = customer);
-      document.querySelectorAll('.sync-typesn').forEach(el => el.value = type + ' / ' + sn);
-      document.querySelectorAll('.sync-noso').forEach(el => el.value = noso);
-      document.querySelectorAll('.sync-date').forEach(el => el.value = date);
+      syncAllHeaders({ brand, type, sn, customer, noso, date });
 
       const opEl = document.getElementById('lblOperator');
       if (opEl) opEl.textContent = operator;
