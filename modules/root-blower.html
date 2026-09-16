@@ -640,6 +640,714 @@
       </div>
 
     </div>
+
+    <!-- ==================== SISTEM UTAMA ASSEMBLY (3 TAB KOSONGAN) ==================== -->
+    <div id="assemblySystem" class="main-system">
+
+      <!-- MENU TAB NAVIGASI ASSEMBLY -->
+      <div class="tab-container">
+        <button class="nav-btn-home" onclick="backToDataOrder()" title="Kembali ke Form Data Order">📋 Data Order</button>
+        <button class="tab-btn active" onclick="switchAssemblyTab('clearance', this)">📐 Clearance Final</button>
+        <button class="tab-btn" onclick="switchAssemblyTab('sparepart', this)">📦 SPK & Spare Part</button>
+        <button class="tab-btn" onclick="switchAssemblyTab('trial', this)">⚡ Trial / Running Test</button>
+      </div>
+
+      <!-- ==================== TAB 1: CLEARANCE ASSEMBLY (Attc.01/IK-BLW-01-2021) ==================== -->
+      <div id="tab-assembly-clearance" class="tab-content active">
+        <div class="sheet">
+          <table class="header-table">
+            <tr>
+              <td style="width: 120px; padding: 5px;"><img src="img/common/logo-intidaya.jpg" alt="Logo Intidaya" style="max-width: 100px; max-height: 50px; object-fit: contain;"></td>
+              <td class="title-header">PENGECEKAN CLEARANCE ROOTS BLOWER</td>
+              <td style="width: 120px; padding: 5px;"><img src="img/common/logo-iso.jpg" alt="Logo ISO" style="max-width: 100px; max-height: 50px; object-fit: contain;"></td>
+            </tr>
+          </table>
+
+          <table class="form-table">
+            <tr>
+              <td style="width: 12%;" class="text-left">BRAND</td>
+              <td style="width: 38%;"><input type="text" class="sync-brand" list="brandBlowerList" oninput="onTabBrandChange(this.value)" autocomplete="off"></td>
+              <td style="width: 18%;" class="text-left">TAHAP INSPEKSI</td>
+              <td style="width: 32%; text-align: left; padding-left: 8px;">
+                <label style="margin-right: 8px;"><input type="checkbox" name="as_chk_stage" value="Incoming"> Incoming</label>
+                <label style="margin-right: 8px;"><input type="checkbox" name="as_chk_stage" value="Final" checked> Final</label>
+                <label style="margin-right: 8px;"><input type="checkbox" name="as_chk_stage" value="OEM"> OEM</label>
+                <label style="margin-right: 8px;"><input type="checkbox" name="as_chk_stage" value="Fabrikasi"> Fabrikasi</label>
+                <label><input type="checkbox" name="as_chk_stage" value="Rekondisi"> Rekondisi</label>
+              </td>
+            </tr>
+            <tr>
+              <td class="text-left">TYPE / SN</td>
+              <td class="bg-green"><input type="text" class="sync-typesn" readonly></td>
+              <td class="text-left">CUSTOMER</td>
+              <td><input type="text" class="sync-customer" oninput="onTabCustomerChange(this.value)"></td>
+            </tr>
+            <tr>
+              <td class="text-left">NO. SO</td>
+              <td><input type="text" class="sync-noso" oninput="onTabNoSOChange(this.value)"></td>
+              <td class="text-left">TANGGAL</td>
+              <td><input type="date" class="sync-date" oninput="onTabDateChange(this.value)"></td>
+            </tr>
+          </table>
+
+          <div class="flex-section" style="align-items: flex-start;">
+            <div style="font-size: 10px; border: 1px solid #000; padding: 6px; width: 38%; min-width: 220px; line-height: 1.4;">
+              <b>Note:</b><br>
+              1. Diukur menggunakan satuan mm<br>
+              2. Clearance unit diukur menggunakan feeler gauge<br>
+              3. Pada kolom baik/tidak coret yang tidak perlu<br>
+              4. Backlash gear diukur menggunakan dial gauge
+            </div>
+            <div style="width: 60%; min-width: 280px;">
+              <table class="form-table" style="margin-bottom: 0;">
+                <thead>
+                  <tr><th colspan="6" style="background:#f8fafc;">Note: Hanya di isi pada proses perakitan</th></tr>
+                  <tr><th>Sealing Kit Komponen</th><th>Clearance</th><th>Posisi 1</th><th>Posisi 2</th><th>Posisi 3</th><th>Posisi 4</th></tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="text-left">Gap Ring Piston to ID Bore Sealing Chamber</td>
+                    <td class="bg-yellow"><input type="text" class="std-input" data-key="gap_piston_bore" placeholder="0,20-0,25"></td>
+                    <td><input type="number" step="0.01"></td><td><input type="number" step="0.01"></td><td><input type="number" step="0.01"></td><td><input type="number" step="0.01"></td>
+                  </tr>
+                  <tr>
+                    <td class="text-left">Gap Ring Piston to Sealing Spacer Groove Ring</td>
+                    <td class="bg-yellow"><input type="text" class="std-input" data-key="gap_piston_spacer" placeholder="0,10-0,12"></td>
+                    <td><input type="number" step="0.01"></td><td><input type="number" step="0.01"></td><td><input type="number" step="0.01"></td><td><input type="number" step="0.01"></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <h4 style="margin: 12px 0 6px; text-align: center;">Rotor to Housing</h4>
+          <div class="flex-section" style="align-items: center;">
+            <div class="flex-col">
+              <table class="form-table">
+                <thead><tr><th colspan="4">Inlet DR</th></tr><tr><th>Lobe</th><th>Standar (In)</th><th>Aktual</th><th>Hasil</th></tr></thead>
+                <tbody>
+                  <tr><td>1</td><td class="bg-yellow"><input type="text" class="std-input" data-key="rotor_housing_dr_1" placeholder="0.12-0.14"></td><td><input type="number" step="0.01"></td><td><input type="radio" name="as_rh_in_dr_1" value="OK"> OK <input type="radio" name="as_rh_in_dr_1" value="NG"> NG</td></tr>
+                  <tr><td>2</td><td class="bg-yellow"><input type="text" class="std-input" data-key="rotor_housing_dr_2" placeholder="0.12-0.14"></td><td><input type="number" step="0.01"></td><td><input type="radio" name="as_rh_in_dr_2" value="OK"> OK <input type="radio" name="as_rh_in_dr_2" value="NG"> NG</td></tr>
+                  <tr><td>3</td><td class="bg-yellow"><input type="text" class="std-input" data-key="rotor_housing_dr_3" placeholder="0.12-0.14"></td><td><input type="number" step="0.01"></td><td><input type="radio" name="as_rh_in_dr_3" value="OK"> OK <input type="radio" name="as_rh_in_dr_3" value="NG"> NG</td></tr>
+                </tbody>
+              </table>
+              <table class="form-table" style="margin-top: 8px;">
+                <thead><tr><th colspan="4">Inlet DN</th></tr><tr><th>Lobe</th><th>Standar (In)</th><th>Aktual</th><th>Hasil</th></tr></thead>
+                <tbody>
+                  <tr><td>1</td><td class="bg-yellow"><input type="text" class="std-input" data-key="rotor_housing_dn_1" placeholder="0.12-0.14"></td><td><input type="number" step="0.01"></td><td><input type="radio" name="as_rh_in_dn_1" value="OK"> OK <input type="radio" name="as_rh_in_dn_1" value="NG"> NG</td></tr>
+                  <tr><td>2</td><td class="bg-yellow"><input type="text" class="std-input" data-key="rotor_housing_dn_2" placeholder="0.12-0.14"></td><td><input type="number" step="0.01"></td><td><input type="radio" name="as_rh_in_dn_2" value="OK"> OK <input type="radio" name="as_rh_in_dn_2" value="NG"> NG</td></tr>
+                  <tr><td>3</td><td class="bg-yellow"><input type="text" class="std-input" data-key="rotor_housing_dn_3" placeholder="0.12-0.14"></td><td><input type="number" step="0.01"></td><td><input type="radio" name="as_rh_in_dn_3" value="OK"> OK <input type="radio" name="as_rh_in_dn_3" value="NG"> NG</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div style="width: 200px; text-align: center;"><img src="img/blower/rotor-to-hosing.png" class="diagram-img" style="max-height: 110px;"></div>
+            <div class="flex-col">
+              <table class="form-table">
+                <thead><tr><th colspan="4">Outlet DR</th></tr><tr><th>Lobe</th><th>Standar (Out)</th><th>Aktual</th><th>Hasil</th></tr></thead>
+                <tbody>
+                  <tr><td>1</td><td class="bg-yellow"><input type="text" class="std-input" placeholder="0.08-0.10"></td><td><input type="number" step="0.01"></td><td><input type="radio" name="as_rh_out_dr_1" value="OK"> OK <input type="radio" name="as_rh_out_dr_1" value="NG"> NG</td></tr>
+                  <tr><td>2</td><td class="bg-yellow"><input type="text" class="std-input" placeholder="0.08-0.10"></td><td><input type="number" step="0.01"></td><td><input type="radio" name="as_rh_out_dr_2" value="OK"> OK <input type="radio" name="as_rh_out_dr_2" value="NG"> NG</td></tr>
+                  <tr><td>3</td><td class="bg-yellow"><input type="text" class="std-input" placeholder="0.08-0.10"></td><td><input type="number" step="0.01"></td><td><input type="radio" name="as_rh_out_dr_3" value="OK"> OK <input type="radio" name="as_rh_out_dr_3" value="NG"> NG</td></tr>
+                </tbody>
+              </table>
+              <table class="form-table" style="margin-top: 8px;">
+                <thead><tr><th colspan="4">Outlet DN</th></tr><tr><th>Lobe</th><th>Standar (Out)</th><th>Aktual</th><th>Hasil</th></tr></thead>
+                <tbody>
+                  <tr><td>1</td><td class="bg-yellow"><input type="text" class="std-input" placeholder="0.08-0.10"></td><td><input type="number" step="0.01"></td><td><input type="radio" name="as_rh_out_dn_1" value="OK"> OK <input type="radio" name="as_rh_out_dn_1" value="NG"> NG</td></tr>
+                  <tr><td>2</td><td class="bg-yellow"><input type="text" class="std-input" placeholder="0.08-0.10"></td><td><input type="number" step="0.01"></td><td><input type="radio" name="as_rh_out_dn_2" value="OK"> OK <input type="radio" name="as_rh_out_dn_2" value="NG"> NG</td></tr>
+                  <tr><td>3</td><td class="bg-yellow"><input type="text" class="std-input" placeholder="0.08-0.10"></td><td><input type="number" step="0.01"></td><td><input type="radio" name="as_rh_out_dn_3" value="OK"> OK <input type="radio" name="as_rh_out_dn_3" value="NG"> NG</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <h4 style="margin: 15px 0 6px; text-align: center;">Rotor to Rotor</h4>
+          <div class="flex-section" style="align-items: center;">
+            <div class="flex-col">
+              <table class="form-table">
+                <thead><tr><th colspan="4">DR diatas</th></tr><tr><th>Lobe</th><th>Standar</th><th>Aktual</th><th>Hasil</th></tr></thead>
+                <tbody>
+                  <tr><td>1</td><td class="bg-yellow"><input type="text" class="std-input" data-key="rotor_rotor_dr_1" placeholder="0.12-0.14"></td><td><input type="number" step="0.01"></td><td><input type="radio" name="as_rr_dr_1" value="OK"> OK <input type="radio" name="as_rr_dr_1" value="NG"> NG</td></tr>
+                  <tr><td>2</td><td class="bg-yellow"><input type="text" class="std-input" data-key="rotor_rotor_dr_2" placeholder="0.12-0.14"></td><td><input type="number" step="0.01"></td><td><input type="radio" name="as_rr_dr_2" value="OK"> OK <input type="radio" name="as_rr_dr_2" value="NG"> NG</td></tr>
+                  <tr><td>3</td><td class="bg-yellow"><input type="text" class="std-input" data-key="rotor_rotor_dr_3" placeholder="0.12-0.14"></td><td><input type="number" step="0.01"></td><td><input type="radio" name="as_rr_dr_3" value="OK"> OK <input type="radio" name="as_rr_dr_3" value="NG"> NG</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div style="width: 200px; text-align: center;"><img src="img/blower/rotor-to-rotor.png" class="diagram-img" style="max-height: 110px;"></div>
+            <div class="flex-col">
+              <table class="form-table">
+                <thead><tr><th colspan="4">DN diatas</th></tr><tr><th>Lobe</th><th>Standar</th><th>Aktual</th><th>Hasil</th></tr></thead>
+                <tbody>
+                  <tr><td>1</td><td class="bg-yellow"><input type="text" class="std-input" data-key="rotor_rotor_dn_1" placeholder="0.12-0.14"></td><td><input type="number" step="0.01"></td><td><input type="radio" name="as_rr_dn_1" value="OK"> OK <input type="radio" name="as_rr_dn_1" value="NG"> NG</td></tr>
+                  <tr><td>2</td><td class="bg-yellow"><input type="text" class="std-input" data-key="rotor_rotor_dn_2" placeholder="0.12-0.14"></td><td><input type="number" step="0.01"></td><td><input type="radio" name="as_rr_dn_2" value="OK"> OK <input type="radio" name="as_rr_dn_2" value="NG"> NG</td></tr>
+                  <tr><td>3</td><td class="bg-yellow"><input type="text" class="std-input" data-key="rotor_rotor_dn_3" placeholder="0.12-0.14"></td><td><input type="number" step="0.01"></td><td><input type="radio" name="as_rr_dn_3" value="OK"> OK <input type="radio" name="as_rr_dn_3" value="NG"> NG</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <h4 style="margin: 15px 0 6px; text-align: center;">Rotor to Sideplate</h4>
+          <div class="flex-section" style="align-items: center;">
+            <div class="flex-col">
+              <table class="form-table">
+                <thead><tr><th colspan="4">DEDR</th></tr><tr><th>Lobe</th><th>Standar</th><th>Aktual</th><th>Hasil</th></tr></thead>
+                <tbody>
+                  <tr><td>1</td><td class="bg-yellow"><input type="text" class="std-input" data-key="rotor_sideplate_dr_1" placeholder="0.18-0.22"></td><td><input type="number" step="0.01"></td><td><input type="radio" name="as_rs_dedr_1" value="OK"> OK <input type="radio" name="as_rs_dedr_1" value="NG"> NG</td></tr>
+                  <tr><td>2</td><td class="bg-yellow"><input type="text" class="std-input" data-key="rotor_sideplate_dr_2" placeholder="0.18-0.22"></td><td><input type="number" step="0.01"></td><td><input type="radio" name="as_rs_dedr_2" value="OK"> OK <input type="radio" name="as_rs_dedr_2" value="NG"> NG</td></tr>
+                  <tr><td>3</td><td class="bg-yellow"><input type="text" class="std-input" data-key="rotor_sideplate_dr_3" placeholder="0.18-0.22"></td><td><input type="number" step="0.01"></td><td><input type="radio" name="as_rs_dedr_3" value="OK"> OK <input type="radio" name="as_rs_dedr_3" value="NG"> NG</td></tr>
+                </tbody>
+              </table>
+              <table class="form-table" style="margin-top: 8px;">
+                <thead><tr><th colspan="4">DEDN</th></tr><tr><th>Lobe</th><th>Standar</th><th>Aktual</th><th>Hasil</th></tr></thead>
+                <tbody>
+                  <tr><td>1</td><td class="bg-yellow"><input type="text" class="std-input" data-key="rotor_sideplate_dn_1" placeholder="0.18-0.22"></td><td><input type="number" step="0.01"></td><td><input type="radio" name="as_rs_dedn_1" value="OK"> OK <input type="radio" name="as_rs_dedn_1" value="NG"> NG</td></tr>
+                  <tr><td>2</td><td class="bg-yellow"><input type="text" class="std-input" data-key="rotor_sideplate_dn_2" placeholder="0.18-0.22"></td><td><input type="number" step="0.01"></td><td><input type="radio" name="as_rs_dedn_2" value="OK"> OK <input type="radio" name="as_rs_dedn_2" value="NG"> NG</td></tr>
+                  <tr><td>3</td><td class="bg-yellow"><input type="text" class="std-input" data-key="rotor_sideplate_dn_3" placeholder="0.18-0.22"></td><td><input type="number" step="0.01"></td><td><input type="radio" name="as_rs_dedn_3" value="OK"> OK <input type="radio" name="as_rs_dedn_3" value="NG"> NG</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div style="width: 200px; text-align: center;"><img src="img/blower/rotor-to-sideplate.png" class="diagram-img" style="max-height: 110px;"></div>
+            <div class="flex-col">
+              <table class="form-table">
+                <thead><tr><th colspan="4">NDEDR</th></tr><tr><th>Lobe</th><th>Standar</th><th>Aktual</th><th>Hasil</th></tr></thead>
+                <tbody>
+                  <tr><td>1</td><td class="bg-yellow"><input type="text" class="std-input" data-key="rotor_sideplate_ds_1" placeholder="0.12-0.14"></td><td><input type="number" step="0.01"></td><td><input type="radio" name="as_rs_ndedr_1" value="OK"> OK <input type="radio" name="as_rs_ndedr_1" value="NG"> NG</td></tr>
+                  <tr><td>2</td><td class="bg-yellow"><input type="text" class="std-input" data-key="rotor_sideplate_ds_2" placeholder="0.12-0.14"></td><td><input type="number" step="0.01"></td><td><input type="radio" name="as_rs_ndedr_2" value="OK"> OK <input type="radio" name="as_rs_ndedr_2" value="NG"> NG</td></tr>
+                  <tr><td>3</td><td class="bg-yellow"><input type="text" class="std-input" data-key="rotor_sideplate_ds_3" placeholder="0.12-0.14"></td><td><input type="number" step="0.01"></td><td><input type="radio" name="as_rs_ndedr_3" value="OK"> OK <input type="radio" name="as_rs_ndedr_3" value="NG"> NG</td></tr>
+                </tbody>
+              </table>
+              <table class="form-table" style="margin-top: 8px;">
+                <thead><tr><th colspan="4">NDEDN</th></tr><tr><th>Lobe</th><th>Standar</th><th>Aktual</th><th>Hasil</th></tr></thead>
+                <tbody>
+                  <tr><td>1</td><td class="bg-yellow"><input type="text" class="std-input" data-key="rotor_sideplate_nds_1" placeholder="0.12-0.14"></td><td><input type="number" step="0.01"></td><td><input type="radio" name="as_rs_ndedn_1" value="OK"> OK <input type="radio" name="as_rs_ndedn_1" value="NG"> NG</td></tr>
+                  <tr><td>2</td><td class="bg-yellow"><input type="text" class="std-input" data-key="rotor_sideplate_nds_2" placeholder="0.12-0.14"></td><td><input type="number" step="0.01"></td><td><input type="radio" name="as_rs_ndedn_2" value="OK"> OK <input type="radio" name="as_rs_ndedn_2" value="NG"> NG</td></tr>
+                  <tr><td>3</td><td class="bg-yellow"><input type="text" class="std-input" data-key="rotor_sideplate_nds_3" placeholder="0.12-0.14"></td><td><input type="number" step="0.01"></td><td><input type="radio" name="as_rs_ndedn_3" value="OK"> OK <input type="radio" name="as_rs_ndedn_3" value="NG"> NG</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div style="font-size: 11px; margin-bottom: 4px; font-weight: bold; color: #334155;">Note : Buka cover DE & NDE menggunakan kunci/impact wrench</div>
+          <table class="form-table">
+            <thead>
+              <tr><th rowspan="2" style="width: 25%;">Backlash gear</th><th style="width: 25%;">Standard</th><th colspan="3" style="width: 30%;">Lobe</th><th colspan="2" style="width: 20%;">Hasil</th></tr>
+              <tr><th class="bg-yellow"><input type="text" class="std-input" data-key="backlash_gear" placeholder="0,04-0,05"></th><th>1</th><th>2</th><th>3</th><th>OK</th><th>NG</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>-</td><td>-</td><td><input type="number" step="0.01"></td><td><input type="number" step="0.01"></td><td><input type="number" step="0.01"></td><td><input type="radio" name="as_rb_backlash" value="OK"></td><td><input type="radio" name="as_rb_backlash" value="NG"></td></tr>
+            </tbody>
+          </table>
+
+          <div style="font-size: 11px; margin: 10px 0 4px; font-weight: bold; color: #334155;">Note : Hanya di isi pada proses perakitan</div>
+          <table class="form-table">
+            <thead>
+              <tr><th>Torsi baut</th><th>Sideplate DE</th><th>Sideplate NDE</th><th>Cover DE</th><th>Cover NDE</th></tr>
+            </thead>
+            <tbody>
+              <tr><td class="text-left">Thread</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
+              <tr><td class="text-left">Standart</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
+              <tr><td class="text-left">Aktual</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
+            </tbody>
+          </table>
+
+          <table class="form-table" style="margin-top: 8px;">
+            <tr>
+              <td style="width: 30%; font-weight: bold; background: #f8fafc;" class="text-left">Loctite curing time (24 jam)</td>
+              <td style="width: 35%;">Start : <input type="text" style="width: 70%; display: inline-block;" placeholder="Jam / Tanggal..."></td>
+              <td style="width: 35%;">End : <input type="text" style="width: 70%; display: inline-block;" placeholder="Jam / Tanggal..."></td>
+            </tr>
+          </table>
+
+          <div class="flex-section" style="margin-top: 15px;">
+            <div style="border: 1px solid #000; padding: 10px; flex: 1;">
+              <div style="font-weight: bold; border-bottom: 1px solid #000; padding-bottom: 4px; margin-bottom: 8px;">Diinspeksi oleh :</div>
+              <div style="text-align: left; font-size: 11px; line-height: 1.8;">
+                Nama : <input type="text" style="width: 70%; border-bottom: 1px dotted #999; text-align: left;" placeholder="Nama inspector..."><br>
+                Jabatan : <input type="text" style="width: 70%; border-bottom: 1px dotted #999; text-align: left;" value="QC Inspector"><br>
+                Tanggal : <input type="date" style="width: 70%; border-bottom: 1px dotted #999; text-align: left;">
+              </div>
+            </div>
+            <div style="border: 1px solid #000; padding: 10px; flex: 1;">
+              <div style="font-weight: bold; border-bottom: 1px solid #000; padding-bottom: 4px; margin-bottom: 8px;">Disetujui oleh :</div>
+              <div style="text-align: left; font-size: 11px; line-height: 1.8;">
+                Nama : <input type="text" style="width: 70%; border-bottom: 1px dotted #999; text-align: left;" placeholder="Nama supervisor..."><br>
+                Jabatan : <input type="text" style="width: 70%; border-bottom: 1px dotted #999; text-align: left;" value="QC Supervisor"><br>
+                Tanggal : <input type="date" style="width: 70%; border-bottom: 1px dotted #999; text-align: left;">
+              </div>
+            </div>
+            <div style="border: 1px solid #000; padding: 10px; flex: 1;">
+              <div style="font-weight: bold; border-bottom: 1px solid #000; padding-bottom: 4px; margin-bottom: 8px;">Note :</div>
+              <textarea style="width: 100%; height: 65px; border: none; outline: none; font-size: 11px; resize: none;" placeholder="Catatan tambahan..."></textarea>
+            </div>
+          </div>
+          <div style="font-size: 9px; text-align: left; margin-top: 4px; color: #64748b;">Attc.01/IK-BLW-01-2021</div>
+
+          <div style="display: flex; gap: 10px; margin-top: 15px;" class="no-print">
+            <button type="button" class="btn-action" style="background-color: #eab308; color:#713f12; flex: 1;" onclick="backToDataOrder()">✏️ Edit Data Order</button>
+            <button type="button" class="btn-action" style="background-color: #64748b; flex: 1;" onclick="window.location.href='../index.html'">🏠 Kembali ke Home</button>
+            <button type="button" class="btn-action" style="background-color: #007bff; flex: 2;" onclick="openMergedReviewModal()">🔍 Export to PDF</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ==================== TAB 2: SPK & SPARE PART (Attc.03 SOP-ENG-02-2023) ==================== -->
+      <div id="tab-assembly-sparepart" class="tab-content">
+        <div class="sheet">
+          <table class="header-table">
+            <tr>
+              <td style="width: 120px; padding: 5px;"><img src="img/common/logo-intidaya.jpg" alt="Logo Intidaya" style="max-width: 100px; max-height: 50px; object-fit: contain;"></td>
+              <td class="title-header">SURAT PERINTAH KERJA - DIVISI BLOWER</td>
+              <td style="width: 120px; padding: 5px;"><img src="img/common/logo-iso.jpg" alt="Logo ISO" style="max-width: 100px; max-height: 50px; object-fit: contain;"></td>
+            </tr>
+          </table>
+
+          <table class="form-table">
+            <tr>
+              <td style="width: 12%;" class="text-left">Company</td>
+              <td style="width: 38%;"><input type="text" class="sync-customer" oninput="onTabCustomerChange(this.value)"></td>
+              <td style="width: 15%;" class="text-left">No SPK</td>
+              <td style="width: 35%;"><input type="text" placeholder="SPK-BLW/IDS/..."></td>
+            </tr>
+            <tr>
+              <td class="text-left">Merk</td>
+              <td><input type="text" class="sync-brand" list="brandBlowerList" oninput="onTabBrandChange(this.value)"></td>
+              <td class="text-left">Tanggal</td>
+              <td><input type="date" class="sync-date" oninput="onTabDateChange(this.value)"></td>
+            </tr>
+            <tr>
+              <td class="text-left">Type / SN</td>
+              <td class="bg-green"><input type="text" class="sync-typesn" readonly></td>
+              <td class="text-left">No. PO</td>
+              <td><input type="text" placeholder="No. Purchase Order..."></td>
+            </tr>
+            <tr>
+              <td class="text-left">No. SO</td>
+              <td><input type="text" class="sync-noso" oninput="onTabNoSOChange(this.value)"></td>
+              <td class="text-left">Divisi</td>
+              <td><input type="text" value="Divisi Blower" readonly></td>
+            </tr>
+          </table>
+
+          <h4 style="margin: 12px 0 6px; text-align: center;">Daftar Permintaan & Aktual Pemakaian Material</h4>
+          <table class="form-table">
+            <thead>
+              <tr>
+                <th rowspan="2" style="width: 35px;">No</th>
+                <th rowspan="2" style="width: 25%;">Nama Material</th>
+                <th rowspan="2" style="width: 12%;">MID</th>
+                <th rowspan="2" style="width: 65px;">Qty</th>
+                <th rowspan="2" style="width: 14%;">Divisi Penerima</th>
+                <th colspan="2" style="width: 32%;">Aktual Pemakaian</th>
+                <th rowspan="2" class="no-print" style="width: 60px;">Aksi</th>
+              </tr>
+              <tr>
+                <th>Nama Material</th>
+                <th style="width: 65px;">QTY</th>
+              </tr>
+            </thead>
+            <tbody id="assemblySparePartTbody">
+              <tr>
+                <td class="as-row-num">1</td>
+                <td class="text-left"><input type="text" class="text-input-left" placeholder="Nama sparepart/material..."></td>
+                <td><input type="text" list="masterMidList" class="part-code-input text-input-left" placeholder="Cari MID/nama..." oninput="handleAssemblyCodeSearch(this)"></td>
+                <td><input type="number" value="1"></td>
+                <td><input type="text" value="Divisi Blower"></td>
+                <td class="text-left"><input type="text" class="text-input-left" placeholder="Material terpasang..."></td>
+                <td><input type="number" value="1"></td>
+                <td class="no-print">
+                  <button type="button" class="btn-insert-row" onclick="insertAssemblySparePartRowBelow(this)">➕</button>
+                  <button type="button" class="btn-delete-row" onclick="deleteAssemblySparePartRow(this)">🗑️</button>
+                </td>
+              </tr>
+              <tr>
+                <td class="as-row-num">2</td>
+                <td class="text-left"><input type="text" class="text-input-left" placeholder="Nama sparepart/material..."></td>
+                <td><input type="text" list="masterMidList" class="part-code-input text-input-left" placeholder="Cari MID/nama..." oninput="handleAssemblyCodeSearch(this)"></td>
+                <td><input type="number" value="1"></td>
+                <td><input type="text" value="Divisi Blower"></td>
+                <td class="text-left"><input type="text" class="text-input-left" placeholder="Material terpasang..."></td>
+                <td><input type="number" value="1"></td>
+                <td class="no-print">
+                  <button type="button" class="btn-insert-row" onclick="insertAssemblySparePartRowBelow(this)">➕</button>
+                  <button type="button" class="btn-delete-row" onclick="deleteAssemblySparePartRow(this)">🗑️</button>
+                </td>
+              </tr>
+              <tr>
+                <td class="as-row-num">3</td>
+                <td class="text-left"><input type="text" class="text-input-left" placeholder="Nama sparepart/material..."></td>
+                <td><input type="text" list="masterMidList" class="part-code-input text-input-left" placeholder="Cari MID/nama..." oninput="handleAssemblyCodeSearch(this)"></td>
+                <td><input type="number" value="1"></td>
+                <td><input type="text" value="Divisi Blower"></td>
+                <td class="text-left"><input type="text" class="text-input-left" placeholder="Material terpasang..."></td>
+                <td><input type="number" value="1"></td>
+                <td class="no-print">
+                  <button type="button" class="btn-insert-row" onclick="insertAssemblySparePartRowBelow(this)">➕</button>
+                  <button type="button" class="btn-delete-row" onclick="deleteAssemblySparePartRow(this)">🗑️</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <button type="button" class="btn-add-row no-print" onclick="addAssemblySparePartRow()">➕ Tambah Baris Material</button>
+
+          <h4 style="margin: 18px 0 6px; text-align: center;">Scope Pekerjaan & Durasi</h4>
+          <table class="form-table">
+            <thead>
+              <tr>
+                <th rowspan="2" style="width: 35px;">No</th>
+                <th rowspan="2" style="width: 25%;">Scope</th>
+                <th colspan="2">Start</th>
+                <th colspan="2">Finish</th>
+                <th rowspan="2" style="width: 10%;">Ket.</th>
+                <th rowspan="2" style="width: 60px;">ELP</th>
+                <th rowspan="2" style="width: 12%;">Divisi</th>
+                <th rowspan="2" style="width: 12%;">Operator</th>
+                <th rowspan="2" style="width: 80px;">TTD Kasi</th>
+              </tr>
+              <tr>
+                <th>Jam</th><th>Tanggal</th><th>Jam</th><th>Tanggal</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1</td>
+                <td class="text-left" style="font-weight: bold;">Jasa service & setting</td>
+                <td><input type="time"></td><td><input type="date"></td>
+                <td><input type="time"></td><td><input type="date"></td>
+                <td><input type="text"></td>
+                <td>24 Jam</td>
+                <td>Divisi blower</td>
+                <td><input type="text"></td>
+                <td><input type="text"></td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td class="text-left" style="font-weight: bold;">Trial (loading, trial, unloading)</td>
+                <td><input type="time"></td><td><input type="date"></td>
+                <td><input type="time"></td><td><input type="date"></td>
+                <td><input type="text"></td>
+                <td>6 Jam</td>
+                <td>Quality control</td>
+                <td><input type="text"></td>
+                <td><input type="text"></td>
+              </tr>
+              <tr>
+                <td>3</td>
+                <td class="text-left" style="font-weight: bold;">Pengecekan dimensi, visual, & fungsi</td>
+                <td><input type="time"></td><td><input type="date"></td>
+                <td><input type="time"></td><td><input type="date"></td>
+                <td><input type="text"></td>
+                <td>0.5 Jam</td>
+                <td>Quality control</td>
+                <td><input type="text"></td>
+                <td><input type="text"></td>
+              </tr>
+            </tbody>
+          </table>
+          <div style="font-size: 10.5px; color: #b91c1c; margin-top: 4px; font-weight: bold; text-align: left;">
+            Note : jika proses perakitan & setting terhenti, proses terhitung stop, jabarkan kendala dan catat kembali start nya.
+          </div>
+
+          <h4 style="margin: 14px 0 6px; text-align: center;">Catatan Kendala</h4>
+          <table class="form-table">
+            <thead>
+              <tr><th style="width: 35px;">No</th><th>Keterangan Kendala</th><th style="width: 180px;">Operator</th><th style="width: 120px;">TTD Kasi</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>1</td><td><input type="text" class="text-input-left" placeholder="Tuliskan kendala jika ada..."></td><td><input type="text"></td><td><input type="text"></td></tr>
+              <tr><td>2</td><td><input type="text" class="text-input-left" placeholder="Tuliskan kendala jika ada..."></td><td><input type="text"></td><td><input type="text"></td></tr>
+            </tbody>
+          </table>
+
+          <table class="form-table" style="margin-top: 15px;">
+            <thead>
+              <tr>
+                <th style="width: 25%;">Pemberi Tugas,</th>
+                <th style="width: 25%;">Menyetujui,</th>
+                <th style="width: 25%;">Mengetahui,</th>
+                <th style="width: 25%;">Deverifikasi,</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="height: 60px;">
+                <td></td><td></td><td></td><td></td>
+              </tr>
+              <tr style="font-weight: bold;">
+                <td>Sigit Widarto<br><span style="font-size: 10px; font-weight: normal;">Factory Engineering Service Supervisor</span></td>
+                <td>Andri Arif Cahyono<br><span style="font-size: 10px; font-weight: normal;">Factory Engineering Manager</span></td>
+                <td>Afdan Sakuro<br><span style="font-size: 10px; font-weight: normal;">Kasi. Blower</span></td>
+                <td>QC Inspector<br><span style="font-size: 10px; font-weight: normal;">Quality Control</span></td>
+              </tr>
+            </tbody>
+          </table>
+          <div style="font-size: 9px; text-align: left; margin-top: 4px; color: #64748b;">Attc.03 SOP-ENG-02-2023</div>
+
+          <div style="display: flex; gap: 10px; margin-top: 15px;" class="no-print">
+            <button type="button" class="btn-action" style="background-color: #eab308; color:#713f12; flex: 1;" onclick="backToDataOrder()">✏️ Edit Data Order</button>
+            <button type="button" class="btn-action" style="background-color: #64748b; flex: 1;" onclick="window.location.href='../index.html'">🏠 Kembali ke Home</button>
+            <button type="button" class="btn-action" style="background-color: #007bff; flex: 2;" onclick="openMergedReviewModal()">🔍 Export to PDF</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ==================== TAB 3: TRIAL / RUNNING TEST (Attc.01/IK-QC-02-2023 Rev 1) ==================== -->
+      <div id="tab-assembly-trial" class="tab-content">
+        <div class="sheet">
+          <table class="header-table">
+            <tr>
+              <td style="width: 120px; padding: 5px;"><img src="img/common/logo-intidaya.jpg" alt="Logo Intidaya" style="max-width: 100px; max-height: 50px; object-fit: contain;"></td>
+              <td class="title-header">FINAL REPORT<br>RUNNING TEST BLOWER</td>
+              <td style="width: 120px; padding: 5px;"><img src="img/common/logo-iso.jpg" alt="Logo ISO" style="max-width: 100px; max-height: 50px; object-fit: contain;"></td>
+            </tr>
+          </table>
+
+          <table class="form-table">
+            <tr>
+              <td style="width: 14%;" class="text-left">TYPE / SN</td>
+              <td style="width: 36%;" class="bg-green"><input type="text" class="sync-typesn" readonly></td>
+              <td style="width: 14%;" class="text-left">OVERALL</td>
+              <td style="width: 36%;">
+                <select style="font-weight: bold;">
+                  <option value="OK">OK</option>
+                  <option value="NG">NG</option>
+                </select>
+              </td>
+            </tr>
+            <tr>
+              <td class="text-left">CUSTOMER</td>
+              <td><input type="text" class="sync-customer" oninput="onTabCustomerChange(this.value)"></td>
+              <td class="text-left">RUNNING TEST</td>
+              <td style="text-align: left; padding-left: 8px;">
+                <label style="margin-right: 6px;"><input type="checkbox"> Incoming</label>
+                <label style="margin-right: 6px;"><input type="checkbox" checked> Final</label>
+                <label style="margin-right: 6px;"><input type="checkbox"> OEM</label>
+                <label style="margin-right: 6px;"><input type="checkbox"> Rekondisi</label>
+                <label><input type="checkbox"> Fabrikasi</label>
+              </td>
+            </tr>
+            <tr>
+              <td class="text-left">NO. SO / PO</td>
+              <td><input type="text" class="sync-noso" oninput="onTabNoSOChange(this.value)"></td>
+              <td class="text-left">ID BITRIX</td>
+              <td><input type="text" placeholder="https://crm.intidayads.com/..."></td>
+            </tr>
+          </table>
+
+          <h4 style="margin: 12px 0 6px; text-align: center;">Unit Specification</h4>
+          <div class="flex-section" style="align-items: stretch;">
+            <div class="flex-col">
+              <table class="form-table">
+                <thead><tr><th colspan="4" style="background:#f1f5f9;">Blower Specification</th></tr></thead>
+                <tbody>
+                  <tr><td class="text-left">Pressure</td><td><input type="number"></td><td>mbar</td><td><label><input type="checkbox"> Water circ.</label></td></tr>
+                  <tr><td class="text-left">Vacuum</td><td><input type="number"></td><td>mbar</td><td><label><input type="checkbox"> Oil circ.</label></td></tr>
+                  <tr><td class="text-left">Speed blower</td><td><input type="number"></td><td>rpm</td><td><label><input type="checkbox"> Booster</label></td></tr>
+                  <tr><td class="text-left">Flow rate</td><td><input type="number" step="0.1"></td><td>m³/min</td><td><label><input type="checkbox"> Silent box</label></td></tr>
+                  <tr><td class="text-left">Power</td><td><input type="number" step="0.1"></td><td>kW</td><td>-</td></tr>
+                  <tr><td class="text-left">Type blower</td><td colspan="3"><input type="text" class="text-input-left" placeholder="Tipe blower..."></td></tr>
+                  <tr><td class="text-left">Tipe Oli</td><td colspan="3"><input type="text" class="text-input-left" value="SYNTHETIC 220"></td></tr>
+                </tbody>
+              </table>
+
+              <table class="form-table" style="margin-top: 8px;">
+                <thead><tr><th colspan="4" style="background:#f1f5f9;">Motor & Drives Specification</th></tr></thead>
+                <tbody>
+                  <tr><td class="text-left">Speed motor</td><td><input type="number"></td><td>rpm</td><td><label><input type="checkbox"> Inverter</label></td></tr>
+                  <tr><td class="text-left">Arus</td><td><input type="number" step="0.1"></td><td>Ampere</td><td><label><input type="checkbox"> DOL</label></td></tr>
+                  <tr><td class="text-left">Frequency</td><td><input type="number"></td><td>Hz</td><td><label><input type="checkbox"> Direct</label></td></tr>
+                  <tr><td class="text-left">Power Motor</td><td><input type="number" step="0.1"></td><td>kW</td><td><label><input type="checkbox"> Indirect</label></td></tr>
+                  <tr><td class="text-left">Ø Pulley Blower / Motor</td><td><input type="number"> mm</td><td colspan="2"><input type="number"> mm</td></tr>
+                  <tr><td class="text-left">V-belt Type & Dim.</td><td colspan="3"><input type="text" class="text-input-left" placeholder="Contoh: SPC 3000 / 4 Jalur"></td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="flex-col">
+              <table class="form-table">
+                <thead>
+                  <tr><th colspan="6" style="background:#f1f5f9;">Kode Bearing</th></tr>
+                  <tr><th colspan="2">Motor</th><th colspan="4">Blower</th></tr>
+                  <tr><th>DE</th><th>NDE</th><th>DE DR</th><th>DE DN</th><th>NDE DR</th><th>NDE DN</th></tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><input type="text" placeholder="NU 2208"></td>
+                    <td><input type="text" placeholder="6207"></td>
+                    <td><input type="text" placeholder="3207"></td>
+                    <td><input type="text" placeholder="3207"></td>
+                    <td><input type="text" placeholder="NJ 2208"></td>
+                    <td><input type="text" placeholder="NJ 2208"></td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <table class="form-table" style="margin-top: 8px;">
+                <thead><tr><th colspan="5" style="background:#f1f5f9;">Motor Drive Inspection</th></tr></thead>
+                <tbody>
+                  <tr>
+                    <td class="text-left">Resistance (Ω)<br><small>Unbalance R &le; 5%</small></td>
+                    <td>U1 - U2<br><input type="number" step="0.01"></td>
+                    <td>V1 - V2<br><input type="number" step="0.01"></td>
+                    <td>W1 - W2<br><input type="number" step="0.01"></td>
+                    <td>Result<br><select><option>OK</option><option>NG</option></select></td>
+                  </tr>
+                  <tr>
+                    <td class="text-left" rowspan="2">Insulation (Ω)<br><small>&ge; 1 GΩ (1000 MΩ)</small></td>
+                    <td>U - GND<br><input type="text" placeholder="> 1 GΩ"></td>
+                    <td>V - GND<br><input type="text" placeholder="> 1 GΩ"></td>
+                    <td>W - GND<br><input type="text" placeholder="> 1 GΩ"></td>
+                    <td rowspan="2">Result<br><select><option>OK</option><option>NG</option></select></td>
+                  </tr>
+                  <tr>
+                    <td>U - V<br><input type="text" placeholder="> 1 GΩ"></td>
+                    <td>V - W<br><input type="text" placeholder="> 1 GΩ"></td>
+                    <td>W - U<br><input type="text" placeholder="> 1 GΩ"></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <h4 style="margin: 14px 0 6px; text-align: center;">Running Test Performance</h4>
+          <table class="form-table">
+            <thead>
+              <tr>
+                <th style="width: 35px;">NO</th>
+                <th style="width: 35%;">Parameter Running Test</th>
+                <th>Test 1</th>
+                <th>Test 2</th>
+                <th>Test 3</th>
+                <th style="width: 80px;">Result</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>1</td><td class="text-left">Durasi (Menit)</td><td><input type="number"></td><td><input type="number"></td><td><input type="number"></td><td><select><option>OK</option><option>NG</option></select></td></tr>
+              <tr><td>2</td><td class="text-left">Speed blower (Rpm)</td><td><input type="number"></td><td><input type="number"></td><td><input type="number"></td><td><select><option>OK</option><option>NG</option></select></td></tr>
+              <tr><td>3</td><td class="text-left">Speed motor (Rpm)</td><td><input type="number"></td><td><input type="number"></td><td><input type="number"></td><td><select><option>OK</option><option>NG</option></select></td></tr>
+              <tr><td>4</td><td class="text-left">Pressure (mbar)</td><td><input type="number"></td><td><input type="number"></td><td><input type="number"></td><td><select><option>OK</option><option>NG</option></select></td></tr>
+              <tr><td>5</td><td class="text-left">Vacuum (mbar)</td><td><input type="number"></td><td><input type="number"></td><td><input type="number"></td><td><select><option>OK</option><option>NG</option></select></td></tr>
+              <tr><td>6</td><td class="text-left">Ampere (A)</td><td><input type="number" step="0.1"></td><td><input type="number" step="0.1"></td><td><input type="number" step="0.1"></td><td><select><option>OK</option><option>NG</option></select></td></tr>
+              <tr><td>7</td><td class="text-left">Noise (dB)</td><td><input type="number" step="0.1"></td><td><input type="number" step="0.1"></td><td><input type="number" step="0.1"></td><td><select><option>OK</option><option>NG</option></select></td></tr>
+              <tr><td>8</td><td class="text-left">Flow rate (M³/min)</td><td><input type="number" step="0.1"></td><td><input type="number" step="0.1"></td><td><input type="number" step="0.1"></td><td><select><option>OK</option><option>NG</option></select></td></tr>
+
+              <!-- VIBRASI -->
+              <tr>
+                <td rowspan="6">9</td>
+                <td class="text-left" style="font-weight: bold; background: #f8fafc;">Vibrasi Blower DE DR (V / H / A) [mm/s]</td>
+                <td><input type="text" placeholder="V / H / A"></td><td><input type="text" placeholder="V / H / A"></td><td><input type="text" placeholder="V / H / A"></td><td><select><option>OK</option><option>NG</option></select></td>
+              </tr>
+              <tr>
+                <td class="text-left" style="font-weight: bold; background: #f8fafc;">Vibrasi Blower NDE DR (V / H / A) [mm/s]</td>
+                <td><input type="text" placeholder="V / H / A"></td><td><input type="text" placeholder="V / H / A"></td><td><input type="text" placeholder="V / H / A"></td><td><select><option>OK</option><option>NG</option></select></td>
+              </tr>
+              <tr>
+                <td class="text-left" style="font-weight: bold; background: #f8fafc;">Vibrasi Blower DE DN (V / H / A) [mm/s]</td>
+                <td><input type="text" placeholder="V / H / A"></td><td><input type="text" placeholder="V / H / A"></td><td><input type="text" placeholder="V / H / A"></td><td><select><option>OK</option><option>NG</option></select></td>
+              </tr>
+              <tr>
+                <td class="text-left" style="font-weight: bold; background: #f8fafc;">Vibrasi Blower NDE DN (V / H / A) [mm/s]</td>
+                <td><input type="text" placeholder="V / H / A"></td><td><input type="text" placeholder="V / H / A"></td><td><input type="text" placeholder="V / H / A"></td><td><select><option>OK</option><option>NG</option></select></td>
+              </tr>
+              <tr>
+                <td class="text-left" style="font-weight: bold; background: #f8fafc;">Vibrasi Motor DE (V / H / A) [mm/s]</td>
+                <td><input type="text" placeholder="V / H / A"></td><td><input type="text" placeholder="V / H / A"></td><td><input type="text" placeholder="V / H / A"></td><td><select><option>OK</option><option>NG</option></select></td>
+              </tr>
+              <tr>
+                <td class="text-left" style="font-weight: bold; background: #f8fafc;">Vibrasi Motor NDE (V / H / A) [mm/s]</td>
+                <td><input type="text" placeholder="V / H / A"></td><td><input type="text" placeholder="V / H / A"></td><td><input type="text" placeholder="V / H / A"></td><td><select><option>OK</option><option>NG</option></select></td>
+              </tr>
+
+              <!-- TEMPERATUR -->
+              <tr>
+                <td rowspan="3">10</td>
+                <td class="text-left" style="font-weight: bold; background: #f8fafc;">Temperature Blower DR (DE / Housing / NDE) [°C]</td>
+                <td><input type="text" placeholder="DE / Casing / NDE"></td><td><input type="text" placeholder="DE / Casing / NDE"></td><td><input type="text" placeholder="DE / Casing / NDE"></td><td><select><option>OK</option><option>NG</option></select></td>
+              </tr>
+              <tr>
+                <td class="text-left" style="font-weight: bold; background: #f8fafc;">Temperature Blower DN (DE / Housing / NDE) [°C]</td>
+                <td><input type="text" placeholder="DE / Casing / NDE"></td><td><input type="text" placeholder="DE / Casing / NDE"></td><td><input type="text" placeholder="DE / Casing / NDE"></td><td><select><option>OK</option><option>NG</option></select></td>
+              </tr>
+              <tr>
+                <td class="text-left" style="font-weight: bold; background: #f8fafc;">Temperature Motor (DE / Housing / NDE) [°C]</td>
+                <td><input type="text" placeholder="DE / Casing / NDE"></td><td><input type="text" placeholder="DE / Casing / NDE"></td><td><input type="text" placeholder="DE / Casing / NDE"></td><td><select><option>OK</option><option>NG</option></select></td>
+              </tr>
+
+              <!-- ANOMALI -->
+              <tr>
+                <td>11</td>
+                <td class="text-left" style="font-weight: bold; background: #f8fafc;">Kondisi Kebocoran & Kelainan</td>
+                <td colspan="3" style="text-align: left; padding: 6px;">
+                  <label style="margin-right: 10px;"><input type="checkbox"> Tidak ada kebocoran oli</label>
+                  <label style="margin-right: 10px;"><input type="checkbox"> Tidak ada kebocoran udara</label>
+                  <label style="margin-right: 10px;"><input type="checkbox"> Tidak ada kebocoran coolant</label>
+                  <label><input type="checkbox"> Tidak ada suara kasar</label>
+                </td>
+                <td><select><option>OK</option><option>NG</option></select></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h4 style="margin: 14px 0 6px; text-align: center;">Checklist Before and After Trial</h4>
+          <table class="form-table">
+            <thead>
+              <tr>
+                <th style="width: 35px;">NO</th>
+                <th>Item Pengecekan</th>
+                <th style="width: 90px;">Before (OK/NG)</th>
+                <th style="width: 90px;">After (OK/NG)</th>
+                <th style="width: 35%;">Keterangan</th>
+                <th style="width: 80px;">Result</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>1</td><td class="text-left">Clearance standart</td><td><select><option>OK</option><option>NG</option></select></td><td><select><option>OK</option><option>NG</option></select></td><td><input type="text" class="text-input-left"></td><td><select><option>OK</option><option>NG</option></select></td></tr>
+              <tr><td>2</td><td class="text-left">Shaft seal kondisi baik</td><td><select><option>OK</option><option>NG</option></select></td><td><select><option>OK</option><option>NG</option></select></td><td><input type="text" class="text-input-left"></td><td><select><option>OK</option><option>NG</option></select></td></tr>
+              <tr><td>3</td><td class="text-left">Tidak ada baut longgar</td><td><select><option>OK</option><option>NG</option></select></td><td><select><option>OK</option><option>NG</option></select></td><td><input type="text" class="text-input-left"></td><td><select><option>OK</option><option>NG</option></select></td></tr>
+              <tr><td>4</td><td class="text-left">Putaran rotor normal</td><td><select><option>OK</option><option>NG</option></select></td><td><select><option>OK</option><option>NG</option></select></td><td><input type="text" class="text-input-left"></td><td><select><option>OK</option><option>NG</option></select></td></tr>
+              <tr><td>5</td><td class="text-left">Kesesuaian oli</td><td><select><option>OK</option><option>NG</option></select></td><td><select><option>OK</option><option>NG</option></select></td><td><input type="text" class="text-input-left"></td><td><select><option>OK</option><option>NG</option></select></td></tr>
+              <tr><td>6</td><td class="text-left">Level oli 3/4 sight glass</td><td><select><option>OK</option><option>NG</option></select></td><td><select><option>OK</option><option>NG</option></select></td><td><input type="text" class="text-input-left"></td><td><select><option>OK</option><option>NG</option></select></td></tr>
+              <tr><td>7</td><td class="text-left">Sight glass bersih</td><td><select><option>OK</option><option>NG</option></select></td><td><select><option>OK</option><option>NG</option></select></td><td><input type="text" class="text-input-left"></td><td><select><option>OK</option><option>NG</option></select></td></tr>
+              <tr><td>8</td><td class="text-left">Tidak ada kebocoran</td><td><select><option>OK</option><option>NG</option></select></td><td><select><option>OK</option><option>NG</option></select></td><td><input type="text" class="text-input-left"></td><td><select><option>OK</option><option>NG</option></select></td></tr>
+              <tr><td>9</td><td class="text-left">Unit kondisi bersih</td><td><select><option>OK</option><option>NG</option></select></td><td><select><option>OK</option><option>NG</option></select></td><td><input type="text" class="text-input-left"></td><td><select><option>OK</option><option>NG</option></select></td></tr>
+              <tr><td>10</td><td class="text-left">Scope rekondisi</td><td><select><option>OK</option><option>NG</option></select></td><td><select><option>OK</option><option>NG</option></select></td><td><input type="text" class="text-input-left" value="Sesuai dengan SO"></td><td><select><option>OK</option><option>NG</option></select></td></tr>
+              <tr><td>11</td><td class="text-left">List material</td><td><select><option>OK</option><option>NG</option></select></td><td><select><option>OK</option><option>NG</option></select></td><td><input type="text" class="text-input-left" value="Sesuai dengan WO/MRT-Dev"></td><td><select><option>OK</option><option>NG</option></select></td></tr>
+            </tbody>
+          </table>
+
+          <div style="margin-top: 10px; border: 1px solid #000; padding: 6px;">
+            <div style="font-weight: bold; font-size: 11px; margin-bottom: 4px;">Catatan tambahan :</div>
+            <textarea style="width: 100%; height: 50px; border: none; outline: none; font-size: 11px; resize: none;" placeholder="Tuliskan catatan tambahan hasil running test di sini..."></textarea>
+          </div>
+
+          <table class="form-table" style="margin-top: 12px;">
+            <thead>
+              <tr>
+                <th style="width: 33.3%;">Dibuat oleh</th>
+                <th style="width: 33.3%;">Disetujui oleh</th>
+                <th style="width: 33.3%;">Diketahui oleh</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="height: 60px;">
+                <td></td><td></td><td></td>
+              </tr>
+              <tr style="font-weight: bold;">
+                <td>Ferdiansyah Wicaksono<br><span style="font-size: 10px; font-weight: normal;">Factory QC Inspector</span></td>
+                <td>Achmad 'Ima Duddin<br><span style="font-size: 10px; font-weight: normal;">Factory QC Supervisor</span></td>
+                <td>Rufiyanto<br><span style="font-size: 10px; font-weight: normal;">Factory QA Manager</span></td>
+              </tr>
+            </tbody>
+          </table>
+          <div style="font-size: 9px; text-align: left; margin-top: 4px; color: #64748b;">Attc.01/IK-QC-02-2023 Rev 1</div>
+
+          <div style="display: flex; gap: 10px; margin-top: 15px;" class="no-print">
+            <button type="button" class="btn-action" style="background-color: #eab308; color:#713f12; flex: 1;" onclick="backToDataOrder()">✏️ Edit Data Order</button>
+            <button type="button" class="btn-action" style="background-color: #64748b; flex: 1;" onclick="window.location.href='../index.html'">🏠 Kembali ke Home</button>
+            <button type="button" class="btn-action" style="background-color: #007bff; flex: 2;" onclick="openMergedReviewModal()">🔍 Export to PDF</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
   </div>
 
   <!-- MODAL PREVIEW MERGER DOKUMEN -->
@@ -748,7 +1456,7 @@
       // 1. Auto-fill Standar Clearance di Tab 1
       if (blowerClearanceDb && blowerClearanceDb[model]) {
         const specs = blowerClearanceDb[model];
-        document.querySelectorAll('#tab-clearance input[data-key]').forEach(input => {
+        document.querySelectorAll('#tab-clearance input[data-key], #tab-assembly-clearance input[data-key]').forEach(input => {
           const key = input.getAttribute('data-key');
           if (specs[key] !== undefined) {
             input.value = specs[key];
@@ -756,7 +1464,7 @@
             setTimeout(() => { input.style.backgroundColor = ''; }, 2000);
           }
         });
-        console.log(`🎯 Standar clearance untuk ${model} otomatis terisi!`);
+        console.log(`🎯 Standar clearance (Incoming & Assembly) untuk ${model} otomatis terisi!`);
       }
 
       // 2. Standar Dimensi Shaft & Housing (Tab 3, 4, 5 dikosongkan dahulu sesuai permintaan, akan dikembangkan bertahap)
@@ -1013,11 +1721,6 @@
     window.selectInspectionMode = selectInspectionMode;
 
     function processInitData() {
-      if (currentBlowerMode === 'assembly') {
-        alert('ℹ️ Modul Assembly Inspection saat ini sedang dalam tahap persiapan/pengembangan.\n\nUntuk saat ini, silakan gunakan modul Incoming Inspection. Modul Assembly akan segera aktif.');
-        return;
-      }
-
       const brand = document.getElementById('initBrand').value.trim();
       const type = document.getElementById('initType').value.trim();
       const sn = document.getElementById('initSN').value.trim();
@@ -1036,10 +1739,6 @@
 
       syncAllHeaders({ brand, type, sn, customer, noso, date });
 
-      // Pastikan stage di sheet clearance otomatis terset 'Incoming'
-      const stageSelect = document.getElementById('stage');
-      if (stageSelect) stageSelect.value = 'Incoming';
-
       const opEl = document.getElementById('lblOperator');
       if (opEl) opEl.textContent = operator;
       const supEl = document.getElementById('lblSupervisor');
@@ -1048,24 +1747,55 @@
       onTypeBlowerChange(type);
 
       document.getElementById('pageInit').style.display = 'none';
-      document.getElementById('mainSystem').style.display = 'block';
+
+      if (currentBlowerMode === 'assembly') {
+        document.getElementById('mainSystem').style.display = 'none';
+        const asSys = document.getElementById('assemblySystem');
+        if (asSys) asSys.style.display = 'block';
+        const firstAsTab = document.querySelector('#assemblySystem .tab-btn');
+        if (firstAsTab) switchAssemblyTab('clearance', firstAsTab);
+      } else {
+        const asSys = document.getElementById('assemblySystem');
+        if (asSys) asSys.style.display = 'none';
+        document.getElementById('mainSystem').style.display = 'block';
+        const stageSelect = document.getElementById('stage');
+        if (stageSelect) stageSelect.value = 'Incoming';
+        const firstMainTab = document.querySelector('#mainSystem .tab-btn');
+        if (firstMainTab) switchTab('clearance', firstMainTab);
+      }
     }
 
     function backToDataOrder() {
       document.getElementById('mainSystem').style.display = 'none';
+      const asSys = document.getElementById('assemblySystem');
+      if (asSys) asSys.style.display = 'none';
       document.getElementById('pageInit').style.display = 'block';
     }
 
     function switchTab(tabName, btnElement) {
-      document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
-      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+      document.querySelectorAll('#mainSystem .tab-content').forEach(tab => tab.classList.remove('active'));
+      document.querySelectorAll('#mainSystem .tab-btn').forEach(btn => btn.classList.remove('active'));
 
-      document.getElementById('tab-' + tabName).classList.add('active');
-      btnElement.classList.add('active');
+      const target = document.getElementById('tab-' + tabName);
+      if (target) target.classList.add('active');
+      if (btnElement) btnElement.classList.add('active');
     }
+    window.switchTab = switchTab;
+
+    function switchAssemblyTab(tabName, btnElement) {
+      document.querySelectorAll('#assemblySystem .tab-content').forEach(tab => tab.classList.remove('active'));
+      document.querySelectorAll('#assemblySystem .tab-btn').forEach(btn => btn.classList.remove('active'));
+
+      const target = document.getElementById('tab-assembly-' + tabName);
+      if (target) target.classList.add('active');
+      if (btnElement) btnElement.classList.add('active');
+    }
+    window.switchAssemblyTab = switchAssemblyTab;
 
     function openMergedReviewModal() {
-      const tabIds = ['tab-clearance', 'tab-sparepart', 'tab-dimensi-rotor', 'tab-dimensi-sideplate', 'tab-runout'];
+      const tabIds = (currentBlowerMode === 'assembly')
+        ? ['tab-assembly-clearance', 'tab-assembly-sparepart', 'tab-assembly-trial']
+        : ['tab-clearance', 'tab-sparepart', 'tab-dimensi-rotor', 'tab-dimensi-sideplate', 'tab-runout'];
       const container = document.getElementById('previewSheetContainer');
       container.innerHTML = '';
 
@@ -1226,8 +1956,72 @@
           <button type="button" class="btn-insert-row" onclick="insertRunoutRowBelow(this)">➕</button>
           <button type="button" class="btn-delete-row" onclick="deleteGeneralRow(this)">🗑️</button>
         </td>`;
-      btn.closest('tr').parentNode.insertBefore(tr, btn.closest('tr').nextSibling);
     }
+
+    // ==================== ASSEMBLY SPARE PART DYNAMIC ROW HANDLERS ====================
+    function reindexAssemblySparePartRows() {
+      const rows = document.querySelectorAll('#assemblySparePartTbody tr');
+      rows.forEach((row, index) => {
+        const numCell = row.querySelector('.as-row-num');
+        if (numCell) numCell.textContent = index + 1;
+      });
+    }
+    window.reindexAssemblySparePartRows = reindexAssemblySparePartRows;
+
+    function insertAssemblySparePartRowBelow(btn) {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td class="as-row-num">-</td>
+        <td class="text-left"><input type="text" class="text-input-left" placeholder="Nama sparepart/material..."></td>
+        <td><input type="text" list="masterMidList" class="part-code-input text-input-left" placeholder="Cari MID/nama..." oninput="handleAssemblyCodeSearch(this)"></td>
+        <td><input type="number" value="1"></td>
+        <td><input type="text" value="Divisi Blower"></td>
+        <td class="text-left"><input type="text" class="text-input-left" placeholder="Material terpasang..."></td>
+        <td><input type="number" value="1"></td>
+        <td class="no-print">
+          <button type="button" class="btn-insert-row" onclick="insertAssemblySparePartRowBelow(this)">➕</button>
+          <button type="button" class="btn-delete-row" onclick="deleteAssemblySparePartRow(this)">🗑️</button>
+        </td>`;
+      btn.closest('tr').parentNode.insertBefore(tr, btn.closest('tr').nextSibling);
+      reindexAssemblySparePartRows();
+    }
+    window.insertAssemblySparePartRowBelow = insertAssemblySparePartRowBelow;
+
+    function deleteAssemblySparePartRow(btn) {
+      const tbody = document.getElementById('assemblySparePartTbody');
+      if (tbody.querySelectorAll('tr').length <= 1) {
+        alert('Minimal harus ada 1 baris material.');
+        return;
+      }
+      btn.closest('tr').remove();
+      reindexAssemblySparePartRows();
+    }
+    window.deleteAssemblySparePartRow = deleteAssemblySparePartRow;
+
+    function addAssemblySparePartRow() {
+      const tbody = document.getElementById('assemblySparePartTbody');
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td class="as-row-num">-</td>
+        <td class="text-left"><input type="text" class="text-input-left" placeholder="Nama sparepart/material..."></td>
+        <td><input type="text" list="masterMidList" class="part-code-input text-input-left" placeholder="Cari MID/nama..." oninput="handleAssemblyCodeSearch(this)"></td>
+        <td><input type="number" value="1"></td>
+        <td><input type="text" value="Divisi Blower"></td>
+        <td class="text-left"><input type="text" class="text-input-left" placeholder="Material terpasang..."></td>
+        <td><input type="number" value="1"></td>
+        <td class="no-print">
+          <button type="button" class="btn-insert-row" onclick="insertAssemblySparePartRowBelow(this)">➕</button>
+          <button type="button" class="btn-delete-row" onclick="deleteAssemblySparePartRow(this)">🗑️</button>
+        </td>`;
+      tbody.appendChild(tr);
+      reindexAssemblySparePartRows();
+    }
+    window.addAssemblySparePartRow = addAssemblySparePartRow;
+
+    function handleAssemblyCodeSearch(inputElem) {
+      handleCodeSearch(inputElem);
+    }
+    window.handleAssemblyCodeSearch = handleAssemblyCodeSearch;
   </script>
 </body>
 </html>
