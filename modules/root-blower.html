@@ -117,6 +117,64 @@
       .flex-section { flex-direction: column; }
       .flex-section > div { width: 100% !important; }
     }
+
+    /* RESULT TOGGLE BUTTONS (OK - HIJAU, NG - MERAH) */
+    .res-toggle-group {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      vertical-align: middle;
+    }
+    .btn-res-dot {
+      width: 17px;
+      height: 17px;
+      border-radius: 3px;
+      border: 1px solid #cbd5e1;
+      background: #f8fafc;
+      cursor: pointer;
+      padding: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      font-weight: bold;
+      line-height: 1;
+      transition: all 0.15s ease;
+      outline: none;
+    }
+    .btn-res-dot.btn-res-ok {
+      border-color: #86efac;
+    }
+    .btn-res-dot.btn-res-ok:hover {
+      background: #dcfce7;
+      border-color: #22c55e;
+    }
+    .btn-res-dot.btn-res-ng {
+      border-color: #fca5a5;
+    }
+    .btn-res-dot.btn-res-ng:hover {
+      background: #fee2e2;
+      border-color: #ef4444;
+    }
+    .res-toggle-group.is-ok .btn-res-ok {
+      background: #16a34a !important;
+      border-color: #15803d !important;
+      color: #ffffff !important;
+      box-shadow: 0 0 3px rgba(22, 163, 74, 0.5);
+    }
+    .res-toggle-group.is-ok .btn-res-ok::after {
+      content: '✓';
+    }
+    .res-toggle-group.is-ng .btn-res-ng {
+      background: #dc2626 !important;
+      border-color: #b91c1c !important;
+      color: #ffffff !important;
+      box-shadow: 0 0 3px rgba(220, 38, 38, 0.5);
+    }
+    .res-toggle-group.is-ng .btn-res-ng::after {
+      content: '✕';
+    }
   </style>
 </head>
 <body>
@@ -1285,90 +1343,99 @@
               <div style="border: 1px solid #000; margin-bottom: 8px;">
                 <div style="background: #e2e8f0; font-weight: bold; font-size: 10.5px; padding: 2px 6px; border-bottom: 1px solid #000; text-align: left;">ASSEMBLY INSPECTION</div>
                 
-                <table class="form-table" style="margin-bottom: 0; font-size: 9.5px;">
+                <table class="form-table" style="margin-bottom: 0; font-size: 9.5px; table-layout: fixed; width: 100%;">
+                  <colgroup>
+                    <col style="width: 22px;">
+                    <col style="width: 100px;">
+                    <col style="width: 62px;">
+                    <col style="width: 18%;">
+                    <col style="width: 18%;">
+                    <col style="width: 18%;">
+                    <col style="width: 44px;">
+                  </colgroup>
                   <thead>
                     <tr style="background: #f8fafc;">
                       <th colspan="2">Clearance check</th>
                       <th style="width: 62px;">Standart</th>
-                      <th style="width: 45px;">Posisi 1</th>
-                      <th style="width: 45px;">Posisi 2</th>
-                      <th style="width: 45px;">Posisi 3</th>
-                      <th style="width: 45px;">Result</th>
+                      <th>Posisi 1</th>
+                      <th>Posisi 2</th>
+                      <th>Posisi 3</th>
+                      <th style="width: 44px;">Result</th>
                     </tr>
                   </thead>
                   <tbody>
                     <!-- Rotor to Rotor -->
                     <tr>
                       <td rowspan="2" style="width: 22px; font-weight: bold; background: #f8fafc; vertical-align: middle; writing-mode: vertical-rl; transform: rotate(180deg); padding: 2px;">Rotor to Rotor</td>
-                      <td class="text-left">Posisi DR diatas</td>
+                      <td class="text-left" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Posisi DR diatas</td>
                       <td><input type="text" class="std-input" placeholder="0.12-0.14"></td>
                       <td><input type="number" step="0.01"></td><td><input type="number" step="0.01"></td><td><input type="number" step="0.01"></td>
-                      <td><input type="text"></td>
+                      <td><div class="res-toggle-group" data-result=""><button type="button" class="btn-res-dot btn-res-ok" title="OK" onclick="toggleResultBtn(this, 'OK')"></button><button type="button" class="btn-res-dot btn-res-ng" title="NG" onclick="toggleResultBtn(this, 'NG')"></button></div></td>
                     </tr>
                     <tr>
-                      <td class="text-left">Poisisi DN diatas</td>
+                      <td class="text-left" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Poisisi DN diatas</td>
                       <td><input type="text" class="std-input" placeholder="0,12-0,14"></td>
                       <td><input type="number" step="0.01"></td><td><input type="number" step="0.01"></td><td><input type="number" step="0.01"></td>
-                      <td><input type="text"></td>
+                      <td><div class="res-toggle-group" data-result=""><button type="button" class="btn-res-dot btn-res-ok" title="OK" onclick="toggleResultBtn(this, 'OK')"></button><button type="button" class="btn-res-dot btn-res-ng" title="NG" onclick="toggleResultBtn(this, 'NG')"></button></div></td>
                     </tr>
                     <!-- Rotor to Sideplate -->
                     <tr>
                       <td rowspan="4" style="width: 22px; font-weight: bold; background: #f8fafc; vertical-align: middle; writing-mode: vertical-rl; transform: rotate(180deg); padding: 2px;">Rotor to Sideplate</td>
-                      <td class="text-left">Posisi DE DR</td>
+                      <td class="text-left" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Posisi DE DR</td>
                       <td><input type="text" class="std-input" placeholder="0.18-0.22"></td>
                       <td><input type="number" step="0.01"></td><td><input type="number" step="0.01"></td><td><input type="number" step="0.01"></td>
-                      <td><input type="text"></td>
+                      <td><div class="res-toggle-group" data-result=""><button type="button" class="btn-res-dot btn-res-ok" title="OK" onclick="toggleResultBtn(this, 'OK')"></button><button type="button" class="btn-res-dot btn-res-ng" title="NG" onclick="toggleResultBtn(this, 'NG')"></button></div></td>
                     </tr>
                     <tr>
-                      <td class="text-left">Posisi DE DN</td>
+                      <td class="text-left" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Posisi DE DN</td>
                       <td><input type="text" class="std-input" placeholder="0.18-0.22"></td>
                       <td><input type="number" step="0.01"></td><td><input type="number" step="0.01"></td><td><input type="number" step="0.01"></td>
-                      <td><input type="text"></td>
+                      <td><div class="res-toggle-group" data-result=""><button type="button" class="btn-res-dot btn-res-ok" title="OK" onclick="toggleResultBtn(this, 'OK')"></button><button type="button" class="btn-res-dot btn-res-ng" title="NG" onclick="toggleResultBtn(this, 'NG')"></button></div></td>
                     </tr>
                     <tr>
-                      <td class="text-left">Posisi NDE DR</td>
+                      <td class="text-left" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Posisi NDE DR</td>
                       <td><input type="text" class="std-input" placeholder="0.12-0.14"></td>
                       <td><input type="number" step="0.01"></td><td><input type="number" step="0.01"></td><td><input type="number" step="0.01"></td>
-                      <td><input type="text"></td>
+                      <td><div class="res-toggle-group" data-result=""><button type="button" class="btn-res-dot btn-res-ok" title="OK" onclick="toggleResultBtn(this, 'OK')"></button><button type="button" class="btn-res-dot btn-res-ng" title="NG" onclick="toggleResultBtn(this, 'NG')"></button></div></td>
                     </tr>
                     <tr>
-                      <td class="text-left">Posisi NDE DN</td>
+                      <td class="text-left" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Posisi NDE DN</td>
                       <td><input type="text" class="std-input" placeholder="0.12-0.14"></td>
                       <td><input type="number" step="0.01"></td><td><input type="number" step="0.01"></td><td><input type="number" step="0.01"></td>
-                      <td><input type="text"></td>
+                      <td><div class="res-toggle-group" data-result=""><button type="button" class="btn-res-dot btn-res-ok" title="OK" onclick="toggleResultBtn(this, 'OK')"></button><button type="button" class="btn-res-dot btn-res-ng" title="NG" onclick="toggleResultBtn(this, 'NG')"></button></div></td>
                     </tr>
                     <!-- Rotor to housing -->
                     <tr>
                       <td rowspan="4" style="width: 22px; font-weight: bold; background: #f8fafc; vertical-align: middle; writing-mode: vertical-rl; transform: rotate(180deg); padding: 2px;">Rotor to housing</td>
-                      <td class="text-left">Posisi Inlet DR</td>
+                      <td class="text-left" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Posisi Inlet DR</td>
                       <td><input type="text" class="std-input" placeholder="0.12-0.14"></td>
                       <td><input type="number" step="0.01"></td><td><input type="number" step="0.01"></td><td><input type="number" step="0.01"></td>
-                      <td><input type="text"></td>
+                      <td><div class="res-toggle-group" data-result=""><button type="button" class="btn-res-dot btn-res-ok" title="OK" onclick="toggleResultBtn(this, 'OK')"></button><button type="button" class="btn-res-dot btn-res-ng" title="NG" onclick="toggleResultBtn(this, 'NG')"></button></div></td>
                     </tr>
                     <tr>
-                      <td class="text-left">Posisi Inlet DN</td>
+                      <td class="text-left" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Posisi Inlet DN</td>
                       <td><input type="text" class="std-input" placeholder="0.12-0.14"></td>
                       <td><input type="number" step="0.01"></td><td><input type="number" step="0.01"></td><td><input type="number" step="0.01"></td>
-                      <td><input type="text"></td>
+                      <td><div class="res-toggle-group" data-result=""><button type="button" class="btn-res-dot btn-res-ok" title="OK" onclick="toggleResultBtn(this, 'OK')"></button><button type="button" class="btn-res-dot btn-res-ng" title="NG" onclick="toggleResultBtn(this, 'NG')"></button></div></td>
                     </tr>
                     <tr>
-                      <td class="text-left">Posisi Outlet DR</td>
+                      <td class="text-left" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Posisi Outlet DR</td>
                       <td><input type="text" class="std-input" placeholder="0.08-0.10"></td>
                       <td><input type="number" step="0.01"></td><td><input type="number" step="0.01"></td><td><input type="number" step="0.01"></td>
-                      <td><input type="text"></td>
+                      <td><div class="res-toggle-group" data-result=""><button type="button" class="btn-res-dot btn-res-ok" title="OK" onclick="toggleResultBtn(this, 'OK')"></button><button type="button" class="btn-res-dot btn-res-ng" title="NG" onclick="toggleResultBtn(this, 'NG')"></button></div></td>
                     </tr>
                     <tr>
-                      <td class="text-left">Posisi Outlet DN</td>
+                      <td class="text-left" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Posisi Outlet DN</td>
                       <td><input type="text" class="std-input" placeholder="0.08-0.10"></td>
                       <td><input type="number" step="0.01"></td><td><input type="number" step="0.01"></td><td><input type="number" step="0.01"></td>
-                      <td><input type="text"></td>
+                      <td><div class="res-toggle-group" data-result=""><button type="button" class="btn-res-dot btn-res-ok" title="OK" onclick="toggleResultBtn(this, 'OK')"></button><button type="button" class="btn-res-dot btn-res-ng" title="NG" onclick="toggleResultBtn(this, 'NG')"></button></div></td>
                     </tr>
                     <!-- Backlash gear -->
                     <tr>
                       <td colspan="2" class="text-left" style="font-weight: bold;">Backlash gear</td>
                       <td><input type="text" class="std-input" placeholder="0,04-0,05"></td>
                       <td><input type="number" step="0.01"></td><td><input type="number" step="0.01"></td><td><input type="number" step="0.01"></td>
-                      <td><input type="text"></td>
+                      <td><div class="res-toggle-group" data-result=""><button type="button" class="btn-res-dot btn-res-ok" title="OK" onclick="toggleResultBtn(this, 'OK')"></button><button type="button" class="btn-res-dot btn-res-ng" title="NG" onclick="toggleResultBtn(this, 'NG')"></button></div></td>
                     </tr>
                   </tbody>
                 </table>
@@ -1377,32 +1444,50 @@
                 </div>
 
                 <!-- Bolt Torque Table -->
-                <table class="form-table" style="margin-bottom: 0; font-size: 9.5px; border-top: 1px solid #000;">
+                <table class="form-table" style="margin-bottom: 0; font-size: 9.5px; border-top: 1px solid #000; table-layout: fixed; width: 100%;">
+                  <colgroup>
+                    <col style="width: 22px;">
+                    <col style="width: 100px;">
+                    <col style="width: 13%;">
+                    <col style="width: 13%;">
+                    <col style="width: 14%;">
+                    <col style="width: 14%;">
+                    <col style="width: 44px;">
+                  </colgroup>
                   <thead>
                     <tr style="background: #f8fafc;">
                       <th rowspan="5" style="width: 22px; vertical-align: middle; writing-mode: vertical-rl; transform: rotate(180deg); padding: 2px;">Bolt torque</th>
-                      <th>Posisi</th><th>Thread</th><th>Class</th><th>Standart</th><th>Aktual</th><th>Result</th>
+                      <th>Posisi</th><th>Thread</th><th>Class</th><th>Standart</th><th>Aktual</th><th style="width: 44px;">Result</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr><td class="text-left">Sideplate DE</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
-                    <tr><td class="text-left">Sideplate NDE</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
-                    <tr><td class="text-left">Cover DE</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
-                    <tr><td class="text-left">Cover NDE</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
+                    <tr><td class="text-left">Sideplate DE</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><div class="res-toggle-group" data-result=""><button type="button" class="btn-res-dot btn-res-ok" title="OK" onclick="toggleResultBtn(this, 'OK')"></button><button type="button" class="btn-res-dot btn-res-ng" title="NG" onclick="toggleResultBtn(this, 'NG')"></button></div></td></tr>
+                    <tr><td class="text-left">Sideplate NDE</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><div class="res-toggle-group" data-result=""><button type="button" class="btn-res-dot btn-res-ok" title="OK" onclick="toggleResultBtn(this, 'OK')"></button><button type="button" class="btn-res-dot btn-res-ng" title="NG" onclick="toggleResultBtn(this, 'NG')"></button></div></td></tr>
+                    <tr><td class="text-left">Cover DE</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><div class="res-toggle-group" data-result=""><button type="button" class="btn-res-dot btn-res-ok" title="OK" onclick="toggleResultBtn(this, 'OK')"></button><button type="button" class="btn-res-dot btn-res-ng" title="NG" onclick="toggleResultBtn(this, 'NG')"></button></div></td></tr>
+                    <tr><td class="text-left">Cover NDE</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><div class="res-toggle-group" data-result=""><button type="button" class="btn-res-dot btn-res-ok" title="OK" onclick="toggleResultBtn(this, 'OK')"></button><button type="button" class="btn-res-dot btn-res-ng" title="NG" onclick="toggleResultBtn(this, 'NG')"></button></div></td></tr>
                   </tbody>
                 </table>
 
                 <!-- Motor Drive Inspection Table -->
-                <table class="form-table" style="margin-bottom: 0; font-size: 9.5px; border-top: 1px solid #000;">
+                <table class="form-table" style="margin-bottom: 0; font-size: 9.5px; border-top: 1px solid #000; table-layout: fixed; width: 100%;">
+                  <colgroup>
+                    <col style="width: 22px;">
+                    <col style="width: 100px;">
+                    <col style="width: 62px;">
+                    <col style="width: 18%;">
+                    <col style="width: 18%;">
+                    <col style="width: 18%;">
+                    <col style="width: 44px;">
+                  </colgroup>
                   <tbody>
                     <tr>
                       <td rowspan="3" style="width: 22px; font-weight: bold; background: #f8fafc; vertical-align: middle; writing-mode: vertical-rl; transform: rotate(180deg); padding: 2px;">Motor Drive</td>
-                      <td class="text-left" style="font-weight: bold; width: 100px;">Resistance ( Ω )</td>
-                      <td style="font-size: 9px; width: 68px;">Unbalance R<br>&le; 5 %</td>
+                      <td class="text-left" style="font-weight: bold;">Resistance ( Ω )</td>
+                      <td style="font-size: 9px; width: 62px;">Unbalance R<br>&le; 5 %</td>
                       <td>U1 - U2<br><input type="number" step="0.01"></td>
                       <td>V1 - V2<br><input type="number" step="0.01"></td>
                       <td>W1 - W2<br><input type="number" step="0.01"></td>
-                      <td style="width: 45px;">Result<br><select><option>OK</option><option>NG</option></select></td>
+                      <td><div class="res-toggle-group" data-result=""><button type="button" class="btn-res-dot btn-res-ok" title="OK" onclick="toggleResultBtn(this, 'OK')"></button><button type="button" class="btn-res-dot btn-res-ng" title="NG" onclick="toggleResultBtn(this, 'NG')"></button></div></td>
                     </tr>
                     <tr>
                       <td class="text-left" rowspan="2" style="font-weight: bold;">Insulation ( Ω )</td>
@@ -1410,7 +1495,7 @@
                       <td>U - GND<br><input type="text" placeholder="> 1 GΩ"></td>
                       <td>V - GND<br><input type="text" placeholder="> 1 GΩ"></td>
                       <td>W - GND<br><input type="text" placeholder="> 1 GΩ"></td>
-                      <td rowspan="2"><select><option>OK</option><option>NG</option></select></td>
+                      <td rowspan="2"><div class="res-toggle-group" data-result=""><button type="button" class="btn-res-dot btn-res-ok" title="OK" onclick="toggleResultBtn(this, 'OK')"></button><button type="button" class="btn-res-dot btn-res-ng" title="NG" onclick="toggleResultBtn(this, 'NG')"></button></div></td>
                     </tr>
                     <tr>
                       <td>U - V<br><input type="text" placeholder="> 1 GΩ"></td>
@@ -1432,21 +1517,21 @@
                       <th style="width: 55px;">Before<br>(OK/NG)</th>
                       <th style="width: 55px;">After<br>(OK/NG)</th>
                       <th>Keterangan</th>
-                      <th style="width: 45px;">Result</th>
+                      <th style="width: 44px;">Result</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr><td>1</td><td class="text-left">Clearance standart</td><td><select><option>OK</option><option>NG</option></select></td><td><select><option>OK</option><option>NG</option></select></td><td><input type="text" class="text-input-left"></td><td><select><option>OK</option><option>NG</option></select></td></tr>
-                    <tr><td>2</td><td class="text-left">Shaft seal kodsisi baik</td><td><select><option>OK</option><option>NG</option></select></td><td><select><option>OK</option><option>NG</option></select></td><td><input type="text" class="text-input-left"></td><td><select><option>OK</option><option>NG</option></select></td></tr>
-                    <tr><td>3</td><td class="text-left">Tidak ada baut longgar</td><td><select><option>OK</option><option>NG</option></select></td><td><select><option>OK</option><option>NG</option></select></td><td><input type="text" class="text-input-left"></td><td><select><option>OK</option><option>NG</option></select></td></tr>
-                    <tr><td>4</td><td class="text-left">Putaran rotor normal</td><td><select><option>OK</option><option>NG</option></select></td><td><select><option>OK</option><option>NG</option></select></td><td><input type="text" class="text-input-left"></td><td><select><option>OK</option><option>NG</option></select></td></tr>
-                    <tr><td>5</td><td class="text-left">Kesesuaian oli</td><td><select><option>OK</option><option>NG</option></select></td><td><select><option>OK</option><option>NG</option></select></td><td><input type="text" class="text-input-left"></td><td><select><option>OK</option><option>NG</option></select></td></tr>
-                    <tr><td>6</td><td class="text-left">Level oli 3/4 sight glass</td><td><select><option>OK</option><option>NG</option></select></td><td><select><option>OK</option><option>NG</option></select></td><td><input type="text" class="text-input-left"></td><td><select><option>OK</option><option>NG</option></select></td></tr>
-                    <tr><td>7</td><td class="text-left">Sight glass bersih</td><td><select><option>OK</option><option>NG</option></select></td><td><select><option>OK</option><option>NG</option></select></td><td><input type="text" class="text-input-left"></td><td><select><option>OK</option><option>NG</option></select></td></tr>
-                    <tr><td>8</td><td class="text-left">Tidak ada kebocoran</td><td><select><option>OK</option><option>NG</option></select></td><td><select><option>OK</option><option>NG</option></select></td><td><input type="text" class="text-input-left"></td><td><select><option>OK</option><option>NG</option></select></td></tr>
-                    <tr><td>10</td><td class="text-left">Unit kondisi bersih</td><td><select><option>OK</option><option>NG</option></select></td><td><select><option>OK</option><option>NG</option></select></td><td><input type="text" class="text-input-left"></td><td><select><option>OK</option><option>NG</option></select></td></tr>
-                    <tr><td>11</td><td class="text-left">Scope rekondisi</td><td colspan="2"><input type="text" class="text-input-left" value="Sesuai dengan SO"></td><td><input type="text" class="text-input-left"></td><td><select><option>OK</option><option>NG</option></select></td></tr>
-                    <tr><td>12</td><td class="text-left">List material</td><td colspan="2"><input type="text" class="text-input-left" value="Sesuai dengan WO/MRT-Dev"></td><td><input type="text" class="text-input-left"></td><td><select><option>OK</option><option>NG</option></select></td></tr>
+                    <tr><td>1</td><td class="text-left">Clearance standart</td><td><select><option>OK</option><option>NG</option></select></td><td><select><option>OK</option><option>NG</option></select></td><td><input type="text" class="text-input-left"></td><td><div class="res-toggle-group" data-result=""><button type="button" class="btn-res-dot btn-res-ok" title="OK" onclick="toggleResultBtn(this, 'OK')"></button><button type="button" class="btn-res-dot btn-res-ng" title="NG" onclick="toggleResultBtn(this, 'NG')"></button></div></td></tr>
+                    <tr><td>2</td><td class="text-left">Shaft seal kodsisi baik</td><td><select><option>OK</option><option>NG</option></select></td><td><select><option>OK</option><option>NG</option></select></td><td><input type="text" class="text-input-left"></td><td><div class="res-toggle-group" data-result=""><button type="button" class="btn-res-dot btn-res-ok" title="OK" onclick="toggleResultBtn(this, 'OK')"></button><button type="button" class="btn-res-dot btn-res-ng" title="NG" onclick="toggleResultBtn(this, 'NG')"></button></div></td></tr>
+                    <tr><td>3</td><td class="text-left">Tidak ada baut longgar</td><td><select><option>OK</option><option>NG</option></select></td><td><select><option>OK</option><option>NG</option></select></td><td><input type="text" class="text-input-left"></td><td><div class="res-toggle-group" data-result=""><button type="button" class="btn-res-dot btn-res-ok" title="OK" onclick="toggleResultBtn(this, 'OK')"></button><button type="button" class="btn-res-dot btn-res-ng" title="NG" onclick="toggleResultBtn(this, 'NG')"></button></div></td></tr>
+                    <tr><td>4</td><td class="text-left">Putaran rotor normal</td><td><select><option>OK</option><option>NG</option></select></td><td><select><option>OK</option><option>NG</option></select></td><td><input type="text" class="text-input-left"></td><td><div class="res-toggle-group" data-result=""><button type="button" class="btn-res-dot btn-res-ok" title="OK" onclick="toggleResultBtn(this, 'OK')"></button><button type="button" class="btn-res-dot btn-res-ng" title="NG" onclick="toggleResultBtn(this, 'NG')"></button></div></td></tr>
+                    <tr><td>5</td><td class="text-left">Kesesuaian oli</td><td><select><option>OK</option><option>NG</option></select></td><td><select><option>OK</option><option>NG</option></select></td><td><input type="text" class="text-input-left"></td><td><div class="res-toggle-group" data-result=""><button type="button" class="btn-res-dot btn-res-ok" title="OK" onclick="toggleResultBtn(this, 'OK')"></button><button type="button" class="btn-res-dot btn-res-ng" title="NG" onclick="toggleResultBtn(this, 'NG')"></button></div></td></tr>
+                    <tr><td>6</td><td class="text-left">Level oli 3/4 sight glass</td><td><select><option>OK</option><option>NG</option></select></td><td><select><option>OK</option><option>NG</option></select></td><td><input type="text" class="text-input-left"></td><td><div class="res-toggle-group" data-result=""><button type="button" class="btn-res-dot btn-res-ok" title="OK" onclick="toggleResultBtn(this, 'OK')"></button><button type="button" class="btn-res-dot btn-res-ng" title="NG" onclick="toggleResultBtn(this, 'NG')"></button></div></td></tr>
+                    <tr><td>7</td><td class="text-left">Sight glass bersih</td><td><select><option>OK</option><option>NG</option></select></td><td><select><option>OK</option><option>NG</option></select></td><td><input type="text" class="text-input-left"></td><td><div class="res-toggle-group" data-result=""><button type="button" class="btn-res-dot btn-res-ok" title="OK" onclick="toggleResultBtn(this, 'OK')"></button><button type="button" class="btn-res-dot btn-res-ng" title="NG" onclick="toggleResultBtn(this, 'NG')"></button></div></td></tr>
+                    <tr><td>8</td><td class="text-left">Tidak ada kebocoran</td><td><select><option>OK</option><option>NG</option></select></td><td><select><option>OK</option><option>NG</option></select></td><td><input type="text" class="text-input-left"></td><td><div class="res-toggle-group" data-result=""><button type="button" class="btn-res-dot btn-res-ok" title="OK" onclick="toggleResultBtn(this, 'OK')"></button><button type="button" class="btn-res-dot btn-res-ng" title="NG" onclick="toggleResultBtn(this, 'NG')"></button></div></td></tr>
+                    <tr><td>10</td><td class="text-left">Unit kondisi bersih</td><td><select><option>OK</option><option>NG</option></select></td><td><select><option>OK</option><option>NG</option></select></td><td><input type="text" class="text-input-left"></td><td><div class="res-toggle-group" data-result=""><button type="button" class="btn-res-dot btn-res-ok" title="OK" onclick="toggleResultBtn(this, 'OK')"></button><button type="button" class="btn-res-dot btn-res-ng" title="NG" onclick="toggleResultBtn(this, 'NG')"></button></div></td></tr>
+                    <tr><td>11</td><td class="text-left">Scope rekondisi</td><td colspan="2"><input type="text" class="text-input-left" value="Sesuai dengan SO"></td><td><input type="text" class="text-input-left"></td><td><div class="res-toggle-group" data-result=""><button type="button" class="btn-res-dot btn-res-ok" title="OK" onclick="toggleResultBtn(this, 'OK')"></button><button type="button" class="btn-res-dot btn-res-ng" title="NG" onclick="toggleResultBtn(this, 'NG')"></button></div></td></tr>
+                    <tr><td>12</td><td class="text-left">List material</td><td colspan="2"><input type="text" class="text-input-left" value="Sesuai dengan WO/MRT-Dev"></td><td><input type="text" class="text-input-left"></td><td><div class="res-toggle-group" data-result=""><button type="button" class="btn-res-dot btn-res-ok" title="OK" onclick="toggleResultBtn(this, 'OK')"></button><button type="button" class="btn-res-dot btn-res-ng" title="NG" onclick="toggleResultBtn(this, 'NG')"></button></div></td></tr>
                   </tbody>
                 </table>
               </div>
@@ -1465,94 +1550,103 @@
               <!-- 1. RUNNING TEST -->
               <div style="border: 1px solid #000; margin-bottom: 8px;">
                 <div style="background: #e2e8f0; font-weight: bold; font-size: 10.5px; padding: 2px 6px; border-bottom: 1px solid #000; text-align: left;">RUNNING TEST</div>
-                <table class="form-table" style="margin-bottom: 0; font-size: 9.5px;">
+                <table class="form-table" style="margin-bottom: 0; font-size: 9.5px; table-layout: fixed; width: 100%;">
+                  <colgroup>
+                    <col style="width: 22px;">
+                    <col style="width: 20px;">
+                    <col style="width: 82px;">
+                    <col style="width: 18%;">
+                    <col style="width: 18%;">
+                    <col style="width: 18%;">
+                    <col style="width: 44px;">
+                  </colgroup>
                   <thead>
                     <tr style="background: #f8fafc;">
-                      <th style="width: 24px;">NO</th>
+                      <th style="width: 22px;">NO</th>
                       <th colspan="2">Running Test</th>
-                      <th style="width: 50px;">Test 1</th>
-                      <th style="width: 50px;">Test 2</th>
-                      <th style="width: 50px;">Test 3</th>
-                      <th style="width: 45px;">Result</th>
+                      <th>Test 1</th>
+                      <th>Test 2</th>
+                      <th>Test 3</th>
+                      <th style="width: 44px;">Result</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr><td>1</td><td colspan="2" class="text-left">Durasi (Menit)</td><td><input type="number"></td><td><input type="number"></td><td><input type="number"></td><td><select><option>OK</option><option>NG</option></select></td></tr>
-                    <tr><td>2</td><td colspan="2" class="text-left">Speed blower (Rpm)</td><td><input type="number"></td><td><input type="number"></td><td><input type="number"></td><td><select><option>OK</option><option>NG</option></select></td></tr>
-                    <tr><td>3</td><td colspan="2" class="text-left">Speed motor (Rpm)</td><td><input type="number"></td><td><input type="number"></td><td><input type="number"></td><td><select><option>OK</option><option>NG</option></select></td></tr>
-                    <tr><td>4</td><td colspan="2" class="text-left">Pressure (mbar)</td><td><input type="number"></td><td><input type="number"></td><td><input type="number"></td><td><select><option>OK</option><option>NG</option></select></td></tr>
-                    <tr><td>5</td><td colspan="2" class="text-left">Vacuum (mbar)</td><td><input type="number"></td><td><input type="number"></td><td><input type="number"></td><td><select><option>OK</option><option>NG</option></select></td></tr>
-                    <tr><td>6</td><td colspan="2" class="text-left">Ampere (A)</td><td><input type="number" step="0.1"></td><td><input type="number" step="0.1"></td><td><input type="number" step="0.1"></td><td><select><option>OK</option><option>NG</option></select></td></tr>
-                    <tr><td>7</td><td colspan="2" class="text-left">Noise (dB)</td><td><input type="number" step="0.1"></td><td><input type="number" step="0.1"></td><td><input type="number" step="0.1"></td><td><select><option>OK</option><option>NG</option></select></td></tr>
-                    <tr><td>8</td><td colspan="2" class="text-left">Flow rate (M3/min)</td><td><input type="number" step="0.1"></td><td><input type="number" step="0.1"></td><td><input type="number" step="0.1"></td><td><select><option>OK</option><option>NG</option></select></td></tr>
+                    <tr><td>1</td><td colspan="2" class="text-left" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Durasi (Menit)</td><td><input type="number"></td><td><input type="number"></td><td><input type="number"></td><td><div class="res-toggle-group" data-result=""><button type="button" class="btn-res-dot btn-res-ok" title="OK" onclick="toggleResultBtn(this, 'OK')"></button><button type="button" class="btn-res-dot btn-res-ng" title="NG" onclick="toggleResultBtn(this, 'NG')"></button></div></td></tr>
+                    <tr><td>2</td><td colspan="2" class="text-left" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Speed blower (Rpm)</td><td><input type="number"></td><td><input type="number"></td><td><input type="number"></td><td><div class="res-toggle-group" data-result=""><button type="button" class="btn-res-dot btn-res-ok" title="OK" onclick="toggleResultBtn(this, 'OK')"></button><button type="button" class="btn-res-dot btn-res-ng" title="NG" onclick="toggleResultBtn(this, 'NG')"></button></div></td></tr>
+                    <tr><td>3</td><td colspan="2" class="text-left" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Speed motor (Rpm)</td><td><input type="number"></td><td><input type="number"></td><td><input type="number"></td><td><div class="res-toggle-group" data-result=""><button type="button" class="btn-res-dot btn-res-ok" title="OK" onclick="toggleResultBtn(this, 'OK')"></button><button type="button" class="btn-res-dot btn-res-ng" title="NG" onclick="toggleResultBtn(this, 'NG')"></button></div></td></tr>
+                    <tr><td>4</td><td colspan="2" class="text-left" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Pressure (mbar)</td><td><input type="number"></td><td><input type="number"></td><td><input type="number"></td><td><div class="res-toggle-group" data-result=""><button type="button" class="btn-res-dot btn-res-ok" title="OK" onclick="toggleResultBtn(this, 'OK')"></button><button type="button" class="btn-res-dot btn-res-ng" title="NG" onclick="toggleResultBtn(this, 'NG')"></button></div></td></tr>
+                    <tr><td>5</td><td colspan="2" class="text-left" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Vacuum (mbar)</td><td><input type="number"></td><td><input type="number"></td><td><input type="number"></td><td><div class="res-toggle-group" data-result=""><button type="button" class="btn-res-dot btn-res-ok" title="OK" onclick="toggleResultBtn(this, 'OK')"></button><button type="button" class="btn-res-dot btn-res-ng" title="NG" onclick="toggleResultBtn(this, 'NG')"></button></div></td></tr>
+                    <tr><td>6</td><td colspan="2" class="text-left" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Ampere (A)</td><td><input type="number" step="0.1"></td><td><input type="number" step="0.1"></td><td><input type="number" step="0.1"></td><td><div class="res-toggle-group" data-result=""><button type="button" class="btn-res-dot btn-res-ok" title="OK" onclick="toggleResultBtn(this, 'OK')"></button><button type="button" class="btn-res-dot btn-res-ng" title="NG" onclick="toggleResultBtn(this, 'NG')"></button></div></td></tr>
+                    <tr><td>7</td><td colspan="2" class="text-left" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Noise (dB)</td><td><input type="number" step="0.1"></td><td><input type="number" step="0.1"></td><td><input type="number" step="0.1"></td><td><div class="res-toggle-group" data-result=""><button type="button" class="btn-res-dot btn-res-ok" title="OK" onclick="toggleResultBtn(this, 'OK')"></button><button type="button" class="btn-res-dot btn-res-ng" title="NG" onclick="toggleResultBtn(this, 'NG')"></button></div></td></tr>
+                    <tr><td>8</td><td colspan="2" class="text-left" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Flow rate (M3/min)</td><td><input type="number" step="0.1"></td><td><input type="number" step="0.1"></td><td><input type="number" step="0.1"></td><td><div class="res-toggle-group" data-result=""><button type="button" class="btn-res-dot btn-res-ok" title="OK" onclick="toggleResultBtn(this, 'OK')"></button><button type="button" class="btn-res-dot btn-res-ng" title="NG" onclick="toggleResultBtn(this, 'NG')"></button></div></td></tr>
 
                     <!-- Vibrasi (mm/s) -->
                     <tr>
-                      <td rowspan="17" style="width: 24px; font-weight: bold; background: #f8fafc; vertical-align: middle; writing-mode: vertical-rl; transform: rotate(180deg); padding: 2px;">9 &nbsp; Vibrasi (mm/s)</td>
+                      <td rowspan="17" style="width: 22px; font-weight: bold; background: #f8fafc; vertical-align: middle; writing-mode: vertical-rl; transform: rotate(180deg); padding: 2px;">9 &nbsp; Vibrasi (mm/s)</td>
                       <td rowspan="12" style="width: 20px; font-weight: bold; background: #f8fafc; vertical-align: middle; writing-mode: vertical-rl; transform: rotate(180deg); padding: 2px;">Blower</td>
-                      <td class="text-left">V DE DR</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td>
+                      <td class="text-left">V DE DR</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td></td>
                     </tr>
-                    <tr><td class="text-left">H DE DR</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
-                    <tr><td class="text-left">A DE DR</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
-                    <tr><td class="text-left">V NDE DR</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
-                    <tr><td class="text-left">H NDE DR</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
-                    <tr><td class="text-left">A NDE DR</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
-                    <tr><td class="text-left">V DE DN</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
-                    <tr><td class="text-left">H DE DN</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
-                    <tr><td class="text-left">A DE DN</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
-                    <tr><td class="text-left">V NDE DN</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
-                    <tr><td class="text-left">H NDE DN</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
-                    <tr><td class="text-left">A NDE DN</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
+                    <tr><td class="text-left">H DE DR</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td></td></tr>
+                    <tr><td class="text-left">A DE DR</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td></td></tr>
+                    <tr><td class="text-left">V NDE DR</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td></td></tr>
+                    <tr><td class="text-left">H NDE DR</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td></td></tr>
+                    <tr><td class="text-left">A NDE DR</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td></td></tr>
+                    <tr><td class="text-left">V DE DN</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td></td></tr>
+                    <tr><td class="text-left">H DE DN</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td></td></tr>
+                    <tr><td class="text-left">A DE DN</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td></td></tr>
+                    <tr><td class="text-left">V NDE DN</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td></td></tr>
+                    <tr><td class="text-left">H NDE DN</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td></td></tr>
+                    <tr><td class="text-left">A NDE DN</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td></td></tr>
                     <!-- Vibrasi Motor -->
                     <tr>
                       <td rowspan="5" style="width: 20px; font-weight: bold; background: #f8fafc; vertical-align: middle; writing-mode: vertical-rl; transform: rotate(180deg); padding: 2px;">Motor</td>
-                      <td class="text-left">V DE</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td>
+                      <td class="text-left">V DE</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td></td>
                     </tr>
-                    <tr><td class="text-left">H DE</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
-                    <tr><td class="text-left">A DE</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
-                    <tr><td class="text-left">V NDE</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
-                    <tr><td class="text-left">H NDE</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
+                    <tr><td class="text-left">H DE</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td></td></tr>
+                    <tr><td class="text-left">A DE</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td></td></tr>
+                    <tr><td class="text-left">V NDE</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td></td></tr>
+                    <tr><td class="text-left">H NDE</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td></td></tr>
 
                     <!-- Temperature (C) -->
                     <tr>
-                      <td rowspan="9" style="width: 24px; font-weight: bold; background: #f8fafc; vertical-align: middle; writing-mode: vertical-rl; transform: rotate(180deg); padding: 2px;">10 &nbsp; Temperature (C)</td>
+                      <td rowspan="9" style="width: 22px; font-weight: bold; background: #f8fafc; vertical-align: middle; writing-mode: vertical-rl; transform: rotate(180deg); padding: 2px;">10 &nbsp; Temperature (C)</td>
                       <td rowspan="6" style="width: 20px; font-weight: bold; background: #f8fafc; vertical-align: middle; writing-mode: vertical-rl; transform: rotate(180deg); padding: 2px;">Blower</td>
-                      <td class="text-left">DE DR</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td>
+                      <td class="text-left">DE DR</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td></td>
                     </tr>
-                    <tr><td class="text-left">Housing DR</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
-                    <tr><td class="text-left">NDE DR</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
-                    <tr><td class="text-left">DE DN</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
-                    <tr><td class="text-left">Housing DN</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
-                    <tr><td class="text-left">NDE DN</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
+                    <tr><td class="text-left">Housing DR</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td></td></tr>
+                    <tr><td class="text-left">NDE DR</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td></td></tr>
+                    <tr><td class="text-left">DE DN</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td></td></tr>
+                    <tr><td class="text-left">Housing DN</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td></td></tr>
+                    <tr><td class="text-left">NDE DN</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td></td></tr>
                     <!-- Temperature Motor -->
                     <tr>
                       <td rowspan="3" style="width: 20px; font-weight: bold; background: #f8fafc; vertical-align: middle; writing-mode: vertical-rl; transform: rotate(180deg); padding: 2px;">Motor</td>
-                      <td class="text-left">Temp. NDE</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td>
+                      <td class="text-left">Temp. NDE</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td></td>
                     </tr>
-                    <tr><td class="text-left">Temp. DE</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
-                    <tr><td class="text-left">Temp. Housing</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
+                    <tr><td class="text-left">Temp. DE</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td></td></tr>
+                    <tr><td class="text-left">Temp. Housing</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td></td></tr>
 
                     <!-- Tidak Ada (Anomali) -->
                     <tr>
-                      <td rowspan="5" style="width: 24px; font-weight: bold; background: #f8fafc; vertical-align: middle; writing-mode: vertical-rl; transform: rotate(180deg); padding: 2px;">11 &nbsp; Tidak ada</td>
+                      <td rowspan="5" style="width: 22px; font-weight: bold; background: #f8fafc; vertical-align: middle; writing-mode: vertical-rl; transform: rotate(180deg); padding: 2px;">11 &nbsp; Tidak ada</td>
                       <td colspan="2" class="text-left">Kebocoran oli</td>
-                      <td><input type="checkbox"></td><td><input type="checkbox"></td><td><input type="checkbox"></td><td><select><option>OK</option><option>NG</option></select></td>
+                      <td><input type="checkbox"></td><td><input type="checkbox"></td><td><input type="checkbox"></td><td><div class="res-toggle-group" data-result=""><button type="button" class="btn-res-dot btn-res-ok" title="OK" onclick="toggleResultBtn(this, 'OK')"></button><button type="button" class="btn-res-dot btn-res-ng" title="NG" onclick="toggleResultBtn(this, 'NG')"></button></div></td>
                     </tr>
                     <tr>
                       <td colspan="2" class="text-left">Kebocoran udara</td>
-                      <td><input type="checkbox"></td><td><input type="checkbox"></td><td><input type="checkbox"></td><td><select><option>OK</option><option>NG</option></select></td>
+                      <td><input type="checkbox"></td><td><input type="checkbox"></td><td><input type="checkbox"></td><td><div class="res-toggle-group" data-result=""><button type="button" class="btn-res-dot btn-res-ok" title="OK" onclick="toggleResultBtn(this, 'OK')"></button><button type="button" class="btn-res-dot btn-res-ng" title="NG" onclick="toggleResultBtn(this, 'NG')"></button></div></td>
                     </tr>
                     <tr>
                       <td colspan="2" class="text-left">Kebocoran coolant</td>
-                      <td><input type="checkbox"></td><td><input type="checkbox"></td><td><input type="checkbox"></td><td><select><option>OK</option><option>NG</option></select></td>
+                      <td><input type="checkbox"></td><td><input type="checkbox"></td><td><input type="checkbox"></td><td><div class="res-toggle-group" data-result=""><button type="button" class="btn-res-dot btn-res-ok" title="OK" onclick="toggleResultBtn(this, 'OK')"></button><button type="button" class="btn-res-dot btn-res-ng" title="NG" onclick="toggleResultBtn(this, 'NG')"></button></div></td>
                     </tr>
                     <tr>
                       <td colspan="2" class="text-left">Suara kasar</td>
-                      <td><input type="checkbox"></td><td><input type="checkbox"></td><td><input type="checkbox"></td><td><select><option>OK</option><option>NG</option></select></td>
+                      <td><input type="checkbox"></td><td><input type="checkbox"></td><td><input type="checkbox"></td><td><div class="res-toggle-group" data-result=""><button type="button" class="btn-res-dot btn-res-ok" title="OK" onclick="toggleResultBtn(this, 'OK')"></button><button type="button" class="btn-res-dot btn-res-ng" title="NG" onclick="toggleResultBtn(this, 'NG')"></button></div></td>
                     </tr>
                     <tr>
                       <td colspan="2" class="text-left">Lainnya</td>
-                      <td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><select><option>OK</option><option>NG</option></select></td>
+                      <td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><div class="res-toggle-group" data-result=""><button type="button" class="btn-res-dot btn-res-ok" title="OK" onclick="toggleResultBtn(this, 'OK')"></button><button type="button" class="btn-res-dot btn-res-ng" title="NG" onclick="toggleResultBtn(this, 'NG')"></button></div></td>
                     </tr>
                   </tbody>
                 </table>
@@ -2045,6 +2139,21 @@
     }
     window.switchAssemblyTab = switchAssemblyTab;
 
+    function toggleResultBtn(btn, status) {
+      const group = btn.closest('.res-toggle-group');
+      if (!group) return;
+      const current = group.getAttribute('data-result');
+      if (current === status) {
+        group.setAttribute('data-result', '');
+        group.classList.remove('is-ok', 'is-ng');
+      } else {
+        group.setAttribute('data-result', status);
+        group.classList.remove('is-ok', 'is-ng');
+        group.classList.add(status === 'OK' ? 'is-ok' : 'is-ng');
+      }
+    }
+    window.toggleResultBtn = toggleResultBtn;
+
     function openMergedReviewModal() {
       const tabIds = (currentBlowerMode === 'assembly')
         ? ['tab-assembly-clearance', 'tab-assembly-sparepart', 'tab-assembly-trial']
@@ -2058,6 +2167,18 @@
 
         const clonedSheet = mainSheet.cloneNode(true);
         clonedSheet.querySelectorAll('.btn-action, .btn-add-row, .btn-insert-row, .btn-delete-row, .no-print').forEach(el => el.remove());
+
+        // Konversi toggle tombol Result (OK hijau, NG merah) untuk review & PDF
+        clonedSheet.querySelectorAll('.res-toggle-group').forEach(group => {
+          const res = group.getAttribute('data-result');
+          if (res === 'OK') {
+            group.outerHTML = '<span style="display:inline-block; width:17px; height:17px; background:#16a34a; color:#ffffff; font-weight:bold; font-size:10px; line-height:17px; text-align:center; border-radius:3px;">✓</span>';
+          } else if (res === 'NG') {
+            group.outerHTML = '<span style="display:inline-block; width:17px; height:17px; background:#dc2626; color:#ffffff; font-weight:bold; font-size:10px; line-height:17px; text-align:center; border-radius:3px;">✕</span>';
+          } else {
+            group.outerHTML = '<span style="color:#94a3b8; font-size:10px;">-</span>';
+          }
+        });
 
         const originalInputs = mainSheet.querySelectorAll('input, select');
         const clonedInputs = clonedSheet.querySelectorAll('input, select');
