@@ -22,6 +22,19 @@
     .btn-back-home { background-color: #64748b; color: white; border: none; padding: 10px 15px; width: 100%; font-size: 13px; font-weight: bold; border-radius: 4px; cursor: pointer; margin-top: 8px; }
     .btn-back-home:hover { background-color: #475569; }
 
+    /* Mode Selector (Incoming vs Assembly) */
+    .mode-selector-wrapper { margin-bottom: 16px; text-align: left; }
+    .mode-selector-label { display: block; font-size: 12px; font-weight: bold; margin-bottom: 6px; color: #334155; }
+    .mode-selector-group { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .mode-option-btn { position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 10px 8px; border: 2px solid #e2e8f0; border-radius: 8px; background: #f8fafc; cursor: pointer; transition: all 0.2s ease; user-select: none; }
+    .mode-option-btn:hover { border-color: #94a3b8; background: #ffffff; }
+    .mode-option-btn.active { border-color: #0284c7; background: #f0f9ff; box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.15); }
+    .mode-option-title { font-size: 13px; font-weight: bold; color: #1e293b; display: flex; align-items: center; gap: 4px; }
+    .mode-option-btn.active .mode-option-title { color: #0369a1; }
+    .mode-option-desc { font-size: 10.5px; color: #64748b; margin-top: 2px; }
+    .mode-badge-dev { position: absolute; top: -7px; right: 6px; background: #f59e0b; color: #ffffff; font-size: 9px; font-weight: bold; padding: 2px 6px; border-radius: 999px; letter-spacing: 0.3px; box-shadow: 0 2px 4px rgba(0,0,0,0.12); }
+    .mode-badge-active { position: absolute; top: -7px; left: 6px; background: #10b981; color: #ffffff; font-size: 9px; font-weight: bold; padding: 2px 6px; border-radius: 999px; letter-spacing: 0.3px; }
+
     .main-system { width: 100%; display: none; overflow-x: auto; }
     .tab-container { width: 100%; min-width: 700px; display: flex; gap: 6px; }
     .tab-btn { background-color: #334155; color: #cbd5e1; border: none; padding: 12px 15px; font-weight: bold; font-size: 13px; border-radius: 8px 8px 0 0; cursor: pointer; flex: 1; text-align: center; }
@@ -113,6 +126,24 @@
     <div id="pageInit" class="auth-card">
       <h2>DATA ORDER & PERSONEL - ROOT BLOWER</h2>
       <div id="initAlert" style="display:none; color:red; margin-bottom:10px; font-weight:bold;">Isikan semua baris dengan benar!</div>
+
+      <!-- PILIHAN MODE INSPEKSI (INCOMING VS ASSEMBLY) -->
+      <div class="mode-selector-wrapper">
+        <label class="mode-selector-label">Tahap Inspeksi *</label>
+        <div class="mode-selector-group">
+          <div id="modeIncomingBtn" class="mode-option-btn active" onclick="selectInspectionMode('incoming')" title="Inspeksi saat unit baru masuk workshop">
+            <span class="mode-badge-active">AKTIF</span>
+            <div class="mode-option-title">📥 Incoming</div>
+            <div class="mode-option-desc">Kondisi Awal / Masuk Unit</div>
+          </div>
+          <div id="modeAssemblyBtn" class="mode-option-btn" onclick="selectInspectionMode('assembly')" title="Inspeksi perakitan & finishing (Tahap 2)">
+            <span class="mode-badge-dev">Tahap 2</span>
+            <div class="mode-option-title">⚙️ Assembly</div>
+            <div class="mode-option-desc">Perakitan & Finishing</div>
+          </div>
+        </div>
+      </div>
+
       <div class="form-group">
         <label>Brand Blower *</label>
         <input type="text" id="initBrand" list="brandBlowerList" class="form-control" placeholder="Pilih atau ketik Brand (Aerzen / Robuschi / Pedrogil / ...)" oninput="onBrandBlowerChange(this.value)" autocomplete="off">
@@ -129,7 +160,7 @@
       <div class="form-group"><label>Tanggal Inspeksi *</label><input type="date" id="initDate" class="form-control"></div>
       <div class="form-group"><label>Nama Operator / Teknisi *</label><input type="text" id="initOperator" class="form-control" placeholder="Nama operator..."></div>
       <div class="form-group"><label>Nama Supervisor *</label><input type="text" id="initSupervisor" class="form-control" placeholder="Nama supervisor..."></div>
-      <button type="button" class="btn-submit" onclick="processInitData()">MULAI INSPEKSI 🚀</button>
+      <button type="button" id="btnSubmitInit" class="btn-submit" onclick="processInitData()">MULAI INSPEKSI INCOMING 🚀</button>
       <button type="button" class="btn-back-home" onclick="window.location.href='../index.html'">🏠 Kembali ke Menu Utama</button>
       <button type="button" class="btn-reset-draft" style="margin-top: 10px; background: none; border: 1px dashed #ef4444; color: #ef4444; width: 100%; padding: 8px; border-radius: 4px; font-size: 12px; cursor: pointer; font-weight: bold;" onclick="clearRootBlowerDraft()">🗑️ Bersihkan Draft / Reset Form Ini</button>
     </div>
@@ -139,6 +170,7 @@
 
       <!-- MENU TAB NAVIGASI UTAMA -->
       <div class="tab-container">
+        <button class="nav-btn-home" onclick="backToDataOrder()" title="Kembali ke Form Data Order">📋 Data Order</button>
         <button class="tab-btn active" onclick="switchTab('clearance', this)">Clearance</button>
         <button class="tab-btn" onclick="switchTab('sparepart', this)">Spare Part</button>
         <button class="tab-btn" onclick="switchTab('dimensi-rotor', this)">Dimensi Rotor</button>
@@ -954,7 +986,38 @@
 
     loadMasterMID();
 
+    let currentBlowerMode = 'incoming';
+
+    function selectInspectionMode(mode) {
+      currentBlowerMode = mode;
+      const btnIn = document.getElementById('modeIncomingBtn');
+      const btnAs = document.getElementById('modeAssemblyBtn');
+      const submitBtn = document.getElementById('btnSubmitInit');
+
+      if (mode === 'incoming') {
+        if (btnIn) btnIn.classList.add('active');
+        if (btnAs) btnAs.classList.remove('active');
+        if (submitBtn) {
+          submitBtn.innerHTML = 'MULAI INSPEKSI INCOMING 🚀';
+          submitBtn.style.backgroundColor = '#28a745';
+        }
+      } else {
+        if (btnAs) btnAs.classList.add('active');
+        if (btnIn) btnIn.classList.remove('active');
+        if (submitBtn) {
+          submitBtn.innerHTML = 'MULAI INSPEKSI ASSEMBLY ⚙️';
+          submitBtn.style.backgroundColor = '#0284c7';
+        }
+      }
+    }
+    window.selectInspectionMode = selectInspectionMode;
+
     function processInitData() {
+      if (currentBlowerMode === 'assembly') {
+        alert('ℹ️ Modul Assembly Inspection saat ini sedang dalam tahap persiapan/pengembangan.\n\nUntuk saat ini, silakan gunakan modul Incoming Inspection. Modul Assembly akan segera aktif.');
+        return;
+      }
+
       const brand = document.getElementById('initBrand').value.trim();
       const type = document.getElementById('initType').value.trim();
       const sn = document.getElementById('initSN').value.trim();
@@ -972,6 +1035,10 @@
       document.getElementById('initAlert').style.display = 'none';
 
       syncAllHeaders({ brand, type, sn, customer, noso, date });
+
+      // Pastikan stage di sheet clearance otomatis terset 'Incoming'
+      const stageSelect = document.getElementById('stage');
+      if (stageSelect) stageSelect.value = 'Incoming';
 
       const opEl = document.getElementById('lblOperator');
       if (opEl) opEl.textContent = operator;
